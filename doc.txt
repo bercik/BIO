@@ -1,0 +1,90 @@
+key words:
+	def FUN_NAME(PAR1, @PAR2, ..., PARN) PAR1 is variable PAR2 is function
+		RETURN(None)
+		RETURN(value)
+	end
+
+Program posiada zmienne lokalne i globalne. Zmienne lokalne widoczne są jedynie w obrębie danej funckji, a zmienne globalne w całym skrypcie.
+Jeżeli odwołujemy się do zmiennej to najpierw sprawdzane jest czy istnieje zmienna lokalna, potem globalna.
+
+comments: starts with '%' ends on newline ('\n')
+
+built-in functions:
+	// zmienne
+	ASSIGN_GLOBAL(var_name, value) - przypisuje value do zmienniej globalnej (widocznej w skrypcie) var_name (może być var_name.a)
+	ASSIGN_LOCAL(var_name, value) - przypisuje value do zmiennej lokalnej (widocznej w funkcji) var_name
+
+	// sterowanie
+	IF(boolean, fun_if_true, fun_if_false) - instrukcja warunkowa
+	WHILE(boolean, fun_in_loop) - pętla sprawdza warunek i jeżeli prawda to wykonuje funkcję w pętli i tak w kółko
+	FOR(fun_on_start, boolean, fun_in_loop) - najpierw wykonuje funkcję na starcie, potem zachowuje się jak pętla while
+	RETURN(value) - zwraca wartość z funkcji
+
+	// wejście-wyjście
+	PRINT(value) - wypisuje wartość na ekran
+	GET_INPUT_FROM_CONSOLE() - sprawia, że program czeka na wejście od użytkownika i jeżeli je dostanie to wywoła funkcję INPUT
+	onINPUT(value) - funkcja wywoływana jeżeli użytkownik wpisze coś w konsoli
+
+	// zdarzenia
+	ATTACH_TO_EVENT(event_name, fun_name) - dołącza funkcję do wywołania innej funkcji nazywanej zdarzeniem
+	DETACH_FROM_EVENT(event_name, fun_name) - odłącza funkcję fun_name od wywołania innej funckji nazywanej zdarzeniem
+
+	UWAGA: W przpadku struktur wszyskie operacje na nich wykonywane próbują to zrobić odwołując się do pól o tej samej nazwie. 
+	
+	// operacje porównania	
+	EQ(value1, value2) returns boolean - zwraca true jeżeli wartości są równe
+	NEQ(value1, value2) returns boolean - zwraca true jeżeli wartości są różne
+	GR(value1, value2) returns boolean - zwraca true jeżeli pierwsza wartość jest większa od drugiej
+	GREQ(value1, value2) returns boolean - zwraca true jeżeli pierwsza wartość jest większa lub równa drugiej
+	LS(value1, value2) returns boolean - zwraca true jeżeli pierwsza wartość jest mniejsza od drugiej
+	LSEQ(value1, value2) returns boolean - zwraca true jeżeli pierwsza wartość jest mniejsza lub równa drugiej
+	
+	// operacje logiczne
+	AND(value1, value2) returns value
+	OR(value1, value2) returns value
+	XOR(value1, value2) returns value
+	NOT(value2) returns value
+
+	// operacje arytmetyczne
+	INC(value) - inkrementuje wartość zmiennej
+	DEC(value) - dekrementuje wartość zmiennej
+	ADD(value1, value2) returns value - dodaje wartości (w przypadku stringów łączy ze sobą)
+	SUB(value1, value2) returns value - odejmuje wartości (w przypadku stringów błąd)
+	MUL(value1, value2) returns value - mnoży wartości (w przypadku string i int powiela stringa int razy, string-string string-double to błąd)
+	DIV(value1, value2) returns value - dzieli wartości (w przypadku stringów błąd)
+	REST(value1, value2) returns value - reszta z dzielenia dwóch intów
+	POW(value1, value2) returns value - podnosi value1 do potęgi value2 (w przypadku stringów błąd)
+	ROOT(value1, value2) returns value - pierwiastek z liczby value1, value2 stopnia
+
+	// operacje bitowe
+
+	// inne
+	TO_STR(value) returns string - zamienia value na stringa
+	CALL(@fun) - wywołuje funkcję przekazaną jako parametr
+	CALL2(@fun1, @fun2) - wywołuje dwie funkcje
+	DN() - funkcja nie robiąca nic
+	
+every script need to define onSTART function which is called on script start:
+	def onSTART()
+
+	end
+
+from outside of script in programming language in which this script language is implemented you can bind functions which be called when you call there in script
+i.e. when you call PRINT function in script, print function in language above will be called.
+
+language contains:
+	-values
+	-functions which are events in the same time
+
+	Every time someone calls function, for example PRINT("Hello World"), everyone who did ATTACH_TO_EVENT(PRINT, SOME_FUN), his function will be called with the same
+		parameteres as function PRINT. So PRINT and SOME_FUN signature must be the same. Attached function return values will be ignored in every case.
+
+value can be of type:
+	None   - wartość nie istnieje
+	true   - boolean
+	"text" - STRING. Inside string you can type \" and you will get
+	10     - int
+	10.0   - float
+	var.a  - var is struct now
+
+	var_name.a.b - var_name becomes struct which contains struc var_name.a which is also struct which contains value b

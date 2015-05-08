@@ -1,0 +1,9 @@
+def READ_INPUT(input, @some_fun)
+	PRINT(ADD("Your name is ", input))
+end
+
+def onSTART()
+	ATTACH_TO_EVENT(onINPUT, READ_INPUT)
+	PRINT("Please enter your name: ")
+	GET_INPUT_FROM_CONSOLE()
+end

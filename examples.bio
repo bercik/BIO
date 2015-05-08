@@ -1,0 +1,37 @@
+example program:
+
+1. hello world
+PRINT("Hello World")
+
+2. simple assignment
+ASSIGN_LOCAL(name, "Robert")
+
+3. arithmetic operations
+def onSTART()
+	ASSIGN_LOCAL(i, 10) % i = 10
+	ASSIGN_LOCAL(i, ADD(i, 5)) % i = i + 5
+end
+
+4. logical operations, flow control and define function (find primes in range)
+def FIND_PRIME(i)
+	ASSIGN_LOCAL(found, true)
+	FOR(ASSIGN_LOCAL(j, 2), LS(j, i), CALL2(IF(EQ(REST(i, j), 0), ASSIGN_LOCAL(found, false), DN(), INC(j)))
+	PRINT(ADD(TO_STR(i), " is "))
+	IF(EQ(found, true), PRINT("prime"), PRINT("not prime"))
+end
+
+def onSTART()
+	ASSIGN_LOCAL(MAX_I, 100)
+	FOR(ASSIGN_LOCAL(i, 2), LS(i, MAX_I), CALL2(FIND_PRIME(i), INC(i)))
+end
+
+5. read input and events attach
+def READ_INPUT(input)
+	PRINT(ADD("Your name is ", input))
+end
+
+def onSTART()
+	ATTACH_TO_EVENT(onINPUT, READ_INPUT)
+	PRINT("Please enter your name: ")
+	GET_INPUT_FROM_CONSOLE()
+end

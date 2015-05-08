@@ -1,0 +1,5 @@
+ASIGN_LOCAL(i, 5)
+
+def onSTART()
+	PRINT("hello world")
+end

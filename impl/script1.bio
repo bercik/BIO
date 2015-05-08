@@ -1,0 +1,9 @@
+def onSTART(@par1)
+    ASSIGN_LOCAL(i, 10) % "STRING"
+    ASSIGN_LOCAL(i, ADD(i, -5)) % ()
+    PRINT(ADD("\"i = \"", i))
+    IF(EQ(val.alive.is, true), CALL(@par1), DN())
+    RETURN(10.0)
+    ASSIGN_LOCAL(i, 1)
+    % ASSIGN_GLOBAL(i, 0000001) % error
+end

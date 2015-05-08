@@ -1,0 +1,4 @@
+1. Create lexer
+	-recognize strings, numbers, structs [ ]
+	-recognize def, end and return keyword [ ]
+	-recognize brackets and functions names [ ]

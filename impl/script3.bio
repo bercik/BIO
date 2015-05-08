@@ -1,0 +1,11 @@
+def onSTART()
+	ASSIGN_LOCAL( i, 5 )
+	IF( EQ( i, 10 ), PRINT( "R" ), PRINT( "NR" ))
+	MY_FUN( ADD( i, 5 ), 10 )
+	RETURN( None )
+end
+
+def MY_FUN( par1, par2 )
+	PRINT( TO_STR( ADD( par1, par2 )))
+	RETURN( None )
+end

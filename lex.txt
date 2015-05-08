@@ -1,0 +1,46 @@
+-recognize def, end, return keywords
+-recognize strings(""), integers(10, -20), floats(10.5, -0.5), booleans(true, false), and None type
+-recognize variable and function names (i, var1, this.is.struct, FIND_PRIME, etc.)
+-recognize brackets and commas
+-recognize function type variable (those starts with @)
+-ignore spaces, tabs, newlines
+-ignore everything after % to newline
+
+lex create tokens list where each token has got name and value. For example the following script should in result give this result from lex:
+def onSTART()
+	ASSIGN_LOCAL(i, 10) % i = 10
+	ASSIGN_LOCAL(i, ADD(i, 5)) % i = i + 5
+	PRINT(ADD("i = ", i))
+end
+
+tokens list [name, value]:
+[keyword, def]
+[name, onSTART]
+[bracket, open]
+[bracket, close]
+[name, ASSIGN_LOCAL]
+[bracket, open]
+[name, i]
+[comma, ]
+[int, 10]
+[name, ASSIGN_LOCAL]
+[bracket, open]
+[name, i]
+[comma, ]
+[name, ADD]
+[bracket, open]
+[name, i]
+[comma, ]
+[int, 5]
+[bracket, close]
+[bracket, close]
+[name, PRINT]
+[bracket, open]
+[name, ADD]
+[bracket, open]
+[string, "i = "]
+[comma, ]
+[name, i]
+[bracket, close]
+[bracket, close]
+[keyword, end]
