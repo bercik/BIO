@@ -1,0 +1,4 @@
+def onSTART()
+	% wypisuje na ekran liczby od 0 do 9
+	FOR(ASSIGN_LOCAL(i, 0), LS(i, 10), CALL2(PRINT(TO_STR(i)), INC(i)))
+end

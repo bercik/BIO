@@ -7,6 +7,22 @@ key words:
 Program posiada zmienne lokalne i globalne. Zmienne lokalne widoczne są jedynie w obrębie danej funckji, a zmienne globalne w całym skrypcie.
 Jeżeli odwołujemy się do zmiennej to najpierw sprawdzane jest czy istnieje zmienna lokalna, potem globalna.
 
+Kiedy przekazujemy obiekt funkcyjny do funkcji, to wywoływane w nim zmienne są zmiennymi w zakresie funkcji w której wywoływaliśmy, a nie aktualnej
+funkcji w której się znajdujemy. Np. Mając funkcję:
+def onStart()
+	FOR(ASSIGN_LOCAL(i, 0), LS(i, 10), CALL2(PRINT(TO_STR(i)), INC(i)))
+end
+zmienna i będzie zmienną lokalną funkcji onSTART, a nie każdej kolejnej wywoływanej funkcji. Dzieje się tak, ponieważ definicja funkcji FOR wygląda następująco:
+def FOR(@fun_on_start, @fun_cond, @fun_in_loop), a wewnętrzna implementacja mniej więcej w tym stylu:
+CALL(fun_on_start)
+start:
+ASSIGN_LOCAL(flag, CALL(fun_cond))
+IF(NEQ(flag, false), CALL2(CALL(fun_in_loop), GOTO(start)), BREAK())
+Oczywiście w języku nie ma funkcji GOTO i BREAK, a także etykiet, więc funkcja FOR musi być zaimplementowana natywnie. Jednak co pokazuje ten kod, to każde wywołanie
+funkcji CALL z jakimiś parametrami powoduje, że te parametry są traktowane jako zmienne lokalne, ale funkcji w której zostały wywoływane. Wszystkie zmienne zainicjalizowane
+funkcją ASSIGN_LOCAL w wywoływanej funkcji są już tworzone jako zmienne lokalne tej funkcji.
+
+
 comments: starts with '%' ends on newline ('\n')
 
 built-in functions:
@@ -15,9 +31,9 @@ built-in functions:
 	ASSIGN_LOCAL(var_name, value) - przypisuje value do zmiennej lokalnej (widocznej w funkcji) var_name
 
 	// sterowanie
-	IF(boolean, fun_if_true, fun_if_false) - instrukcja warunkowa
-	WHILE(boolean, fun_in_loop) - pętla sprawdza warunek i jeżeli prawda to wykonuje funkcję w pętli i tak w kółko
-	FOR(fun_on_start, boolean, fun_in_loop) - najpierw wykonuje funkcję na starcie, potem zachowuje się jak pętla while
+	IF(@fun_cond, @fun_if_true, @fun_if_false) - instrukcja warunkowa
+	WHILE(@fun_cond, @fun_in_loop) - pętla sprawdza warunek i jeżeli prawda to wykonuje funkcję w pętli i tak w kółko
+	FOR(@fun_on_start, @fun_cond, @fun_in_loop) - najpierw wykonuje funkcję na starcie, potem zachowuje się jak pętla while
 	RETURN(value) - zwraca wartość z funkcji
 
 	// wejście-wyjście
@@ -60,14 +76,17 @@ built-in functions:
 
 	// inne
 	TO_STR(value) returns string - zamienia value na stringa
-	CALL(@fun) - wywołuje funkcję przekazaną jako parametr
-	CALL2(@fun1, @fun2) - wywołuje dwie funkcje
+	CALL(@fun) - wywołuje funkcję przekazaną jako parametr, zwraca to samo co funkcja fun
+	CALL2(@fun1, @fun2) - wywołuje dwie funkcje, nie zwraca nic
 	DN() - funkcja nie robiąca nic
 	
+Funkcja nie zwraca nic oznacza, że w rzeczywistości funkcja zwraca wartość None (każda funkcja musi zwracać jakąś wartość).
+
 every script need to define onSTART function which is called on script start:
 	def onSTART()
 
 	end
+this onSTART function in fact is attach to event start which is called when script starting execution
 
 from outside of script in programming language in which this script language is implemented you can bind functions which be called when you call there in script
 i.e. when you call PRINT function in script, print function in language above will be called.

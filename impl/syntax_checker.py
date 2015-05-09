@@ -1,0 +1,2 @@
+class SyntaxChecker:
+    pass

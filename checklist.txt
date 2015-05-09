@@ -1,4 +1,4 @@
-1. Create lexer
-	-recognize strings, numbers, structs [ ]
-	-recognize def, end and return keyword [ ]
-	-recognize brackets and functions names [ ]
+1. Create lexer [X]
+2. Create parser [X]
+3. Create binder [ ]
+4. Create syntax checker [ ]

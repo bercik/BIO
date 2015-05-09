@@ -1,0 +1,6 @@
+syntax checker:
+
+-sprawdza czy nie występuje więcej niż jedna definicja funkcji
+-sprawdza czy w wywołaniu funkcji znajdują się odpowiednie parametry:
+	* dla funkcji zdefiniowanych w skrypcie sprawdza czy są przekazane wartości albo obiekty funkcyjne i ich odpowiednia ilość
+	* dla funkcji bindowanych sprawdza poza powyższym, jeżeli ustawimy parametr funkcji jako nazwę funkcji czy przekazano nazwę funkcji

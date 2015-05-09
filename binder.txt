@@ -1,0 +1,26 @@
+binder:
+-pozwala na bindowanie funkcji natywnych dwóch typów: standardowe i użytkownika. Funkcje standardowe to takie, które są kluczowe dla działania programu
+np. funkcje ASSIGN_X, RETURN, FOR, IF, ATTACH_TO_EVENT. Mogą one zmieniać obiekty takie jak funckje itd. dlatego dostają referencję do obiektu binder.
+Funkcje użytkownika to funkcje, które umożliwiają na komunikację pomiędzy skryptami, a programem.
+
+bindowanie polega na przekazaniu nazwy bindowanej funkcji (nazwa używana w skrypcie), typów przyjmowanych parametrów jako tuplę, której wielkość
+musi być taka sama jak ilość parametrów przyjmowanych przez bindowaną funkcję poza standardowymi argumentami i bindowanej funkcji. 
+
+Sygnatura bindowanej funkcji użytkownika to: def fooName(par1, par2, ..., parN)
+dla funkcji standardowej jest taka sama z tym wyjątkiem, że ostatnim argumentem jest referencja do obiektu klasy binder: def fooName(par1, par2, ..., parN, binder)
+
+par1, par2, ..., parN - to obiekty struktury Parameter zawierającej dwa pola: parType i value. value to wartość (Call, Field), a parType to ParameterType, który może być:
+-Field
+-Call
+
+gdzie Field to struktura posiadająca pole name, pole value (które może być np. strukturą) i pole FieldType, które może być:
+-Int
+-Float
+-String
+-Boolean
+-None
+-Struct
+
+gdzie Struct to struktura Struct zawierająca listę Field fields.
+
+Sprawdzanie typów parametrów nie odbywa się na etapie bindowania funkcji (poza rozróżnieniem wartość, obiekt funkcyjny). To zadanie należy do bindowanej funkcji

@@ -5,7 +5,7 @@ class SyntaxError(Exception):
         print(token.ch)
         print(token.value)
         message += str(token) + ' in line ' + str(token.line) +\
-			' character ' + str(token.ch - len(token.value))
+            ' character ' + str(token.ch - len(token.value))
         super(SyntaxError, self).__init__(message)
 
 class LexicalError(Exception):
@@ -13,3 +13,9 @@ class LexicalError(Exception):
         # Call the base class constructor with the
         # parameters it needs
         super(LexicalError, self).__init__(message)
+
+class BindError(Exception):
+    def __init__(self, message):
+        # Call the base class constructor with the
+        # parameters it needs
+        super(BindError, self).__init__(message)
