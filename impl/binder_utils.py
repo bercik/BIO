@@ -11,6 +11,7 @@ class Parameter:
 class ParameterType(Enum):
     Field = 0
     Call = 1
+    FunName = 2
 
     def __str__(self):
         return self.name[self.name.find('.')+1:]

@@ -3,6 +3,7 @@ import sys
 from lexer import Lexer
 from parser import Parser
 from binder import Binder
+from semantic_checker import SemanticChecker
 from binder_utils import *
 from error import *
 
@@ -11,6 +12,10 @@ def start():
     print('start function')
 def add(par1, par2, binder):
     print('add function')
+    print(par1)
+    print(par2)
+def attachToEvent(par1, par2, binder):
+    print('attachToEvent function')
     print(par1)
     print(par2)
 class Foos:
@@ -27,7 +32,6 @@ def main(argv):
     lex = Lexer(argv[1])
     tokens = lex.getTokens()
     parser = Parser(tokens)
-    functions = parser.getFunctions()
     binder = Binder()
     
     # bind some example function
@@ -37,10 +41,16 @@ def main(argv):
         ParameterType.Field), add)
     binder.bindUser('PRINT', (ParameterType.Field,), foos.printFoo)
     binder.bindStandard('CALL', (ParameterType.Call,), foos.call)
+    binder.bindStandard('ATTACH_TO_EVENT', (ParameterType.FunName, \
+        ParameterType.FunName), attachToEvent)
+    # end of binding some example functions
+
+    semanticChecker = SemanticChecker(parser.getFunctions(),\
+        *binder.getFunctions())
 
     # test print
     i = 1
-    for f in functions:
+    for f in parser.getFunctions():
             print('Function ' + str(i) + ':')
             print(f)
             i += 1
@@ -48,5 +58,5 @@ def main(argv):
 if __name__ == '__main__':
 	try:
 		main(sys.argv)
-	except (LexicalError, SyntaxError) as ex:
+	except (LexicalError, SyntaxError, SemanticError) as ex:
 		print('<Error>: ' + str(ex))

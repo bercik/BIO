@@ -2,10 +2,11 @@ from enum import Enum
 from token import TokenType
 
 class Fun:
-    def __init__(self, name, funParams, node):
+    def __init__(self, name, funParams, node, line):
         self.name = name
         self.funParams = funParams
         self.node = node
+        self.line = line
 
     def __str__(self):
         result = self.name + ': '
@@ -22,9 +23,10 @@ class Fun:
         return self.__str__()
 
 class FunPar:
-    def __init__(self, funParType, value):
+    def __init__(self, funParType, value, line):
         self.funParType = funParType
         self.value = value
+        self.line = line
 
     def __str__(self):
         return self.funParType.__str__() + ':' + self.value
@@ -40,9 +42,10 @@ class FunParType(Enum):
         return self.name[self.name.find('.')+1:]
 
 class Call:
-    def __init__(self, funName, callParams):
+    def __init__(self, funName, callParams, line):
         self.funName = funName
         self.callParams = callParams
+        self.line = line
 
     def __str__(self):
         result = self.funName + '\n'
@@ -57,9 +60,10 @@ class Call:
         return self.__str__()
 
 class CallParam:
-    def __init__(self, callParType, value):
+    def __init__(self, callParType, value, line):
         self.callParType = callParType
         self.value = value
+        self.line = line
 
     def __str__(self):
         return self.callParType.__str__() + ":" + str(self.value)
@@ -134,4 +138,4 @@ def isBoolean(tok):
     return tok.tokType == TokenType.Boolean
 
 def isNoneVal(tok):
-    return tok.tokType == TokenType.NoneVal 
+    return tok.tokType == TokenType.NoneVal

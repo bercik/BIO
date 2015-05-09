@@ -1,5 +1,6 @@
 def READ_INPUT(input, @some_fun)
 	PRINT(ADD("Your name is ", input))
+	PRINT(CALL(@some_fun))
 end
 
 def onSTART()

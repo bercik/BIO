@@ -30,16 +30,17 @@ class Parser:
         return tok
 
     def createSyntaxTree(self):
-        while self.tok != None:
+        while not isKeyword(self.tok, '<EOF>'):
             self.function()
         i = 1
 
     def function(self):
         if (isKeyword(self.tok, 'def')):
+            line = self.tok.line
             self.tok = self.nextToken()
             name, params = self.functionDefinition()
             node = self.functionBody()
-            f = Fun(name, params, node)
+            f = Fun(name, params, node, line)
             self.functions.append(f)
         else:
             raise SyntaxError('Expected def keyword got ', self.tok)
@@ -56,10 +57,12 @@ class Parser:
     def call(self):
         if isName(self.tok):
             funName = self.tok.value
+            callLine = self.tok.line
             self.tok = self.nextToken()
             if isOpenBracket(self.tok):
                 callParams = []
                 self.tok = self.nextToken()
+                line = self.tok.line
                 while not isCloseBracket(self.tok):
                     value = self.tok.value
 
@@ -67,31 +70,31 @@ class Parser:
                         nextTok = self.nextTokenWithoutMove()
                         if isOpenBracket(nextTok):
                             value = self.call()
-                            c = CallParam(CallParamType.Call, value)
+                            c = CallParam(CallParamType.Call, value, line)
                         else:
-                            c = CallParam(CallParamType.VarName, value)
+                            c = CallParam(CallParamType.VarName, value, line)
                             self.tok = self.nextToken()
 
                     elif isStruct(self.tok):
-                        c = CallParam(CallParamType.StructName, value)
+                        c = CallParam(CallParamType.StructName, value, line)
                         self.tok = self.nextToken()
                     elif isInt(self.tok):
-                        c = CallParam(CallParamType.Int, value)
+                        c = CallParam(CallParamType.Int, value, line)
                         self.tok = self.nextToken()
                     elif isFloat(self.tok):
-                        c = CallParam(CallParamType.Float, value)
+                        c = CallParam(CallParamType.Float, value, line)
                         self.tok = self.nextToken()
                     elif isString(self.tok):
-                        c = CallParam(CallParamType.String, value)
+                        c = CallParam(CallParamType.String, value, line)
                         self.tok = self.nextToken()
                     elif isBoolean(self.tok):
-                        c = CallParam(CallParamType.Boolean, value)
+                        c = CallParam(CallParamType.Boolean, value, line)
                         self.tok = self.nextToken()
                     elif isNoneVal(self.tok):
-                        c = CallParam(CallParamType.NoneVal, value)
+                        c = CallParam(CallParamType.NoneVal, value, line)
                         self.tok = self.nextToken()
                     elif isFunName(self.tok):
-                        c = CallParam(CallParamType.FunName, value)
+                        c = CallParam(CallParamType.FunName, value, line)
                         self.tok = self.nextToken()
                     else:
                         raise SyntaxError('Expected variable ' + \
@@ -109,7 +112,7 @@ class Parser:
                     self.tok = self.nextToken()
                 self.tok = self.nextToken()
 
-                return Call(funName, callParams)
+                return Call(funName, callParams, callLine)
             else:
                 raise SyntaxError('Expected open bracket got ',\
                     self.tok)
@@ -144,12 +147,13 @@ class Parser:
             raise SyntaxError('Expected open bracket got ', self.tok)
 
     def functionParam(self):
+        line = self.tok.line
         if isName(self.tok):
             funParType = FunParType.VarName
-            return FunPar(funParType, self.tok.value)
+            return FunPar(funParType, self.tok.value, line)
         elif isFunName(self.tok):
             funParType = FunParType.FunName
-            return FunPar(funParType, self.tok.value)
+            return FunPar(funParType, self.tok.value, line)
         else:
             raise SyntaxError('Expected name or function name got ', \
                 self.tok)

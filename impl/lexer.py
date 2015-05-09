@@ -11,7 +11,7 @@ class Lexer:
 	comment = ('%')
 	brackets = ('(', ')')
 	comma = (',')
-	keywords = ('def', 'end')
+	keywords = ('def', 'end', '<EOF>')
 	booleanValues = ('true', 'false')
 	funPrefix = '@'
 
@@ -25,6 +25,8 @@ class Lexer:
 		# read data
 		with open(filePath) as f:
 			self.data = f.read()
+		# attach <EOF> keyword to the end of file
+		self.data += '\n<EOF> '
 
 		# analyze data
 		self.analyze()
@@ -89,7 +91,6 @@ class Lexer:
 
 	def recognizeToken(self, tok):
 		if tok != '':
-			# print(tok)
 			if tok in Lexer.keywords:
 				t = Token(TokenType.Keyword, tok, self.line, self.ch)
 				self.tokens.append(t)

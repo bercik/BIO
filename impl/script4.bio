@@ -1,5 +1,21 @@
-ASIGN_LOCAL(i, 5)
-
+% niepoprawyn skrypt testowy
 def onSTART()
-	PRINT("hello world")
+	ATTACH_TO_EVENT(MY_FUN, MY_FUN_2)
+	MY_FUN("Test: ", NAME())
 end
+
+def NAME()
+	RETURN("Robert")
+end
+
+def MY_FUN(par, @fun)
+	PRINT(par)
+	PRINT(CALL(@fun))
+end
+
+def MY_FUN_2(par, @fun)
+	PRINT("My fun 2:")
+	PRINT( ADD( par, CALL( @fun )))
+end
+
+def DN() end

@@ -1,4 +1,4 @@
 1. Create lexer [X]
 2. Create parser [X]
-3. Create binder [ ]
-4. Create syntax checker [ ]
+3. Create binder [X]
+4. Create semantic checker [ ]
