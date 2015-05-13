@@ -7,7 +7,3 @@ def onSTART(@par1)
     ASSIGN_LOCAL(i, 1)
     % ASSIGN_GLOBAL(i, 0000001) % error
 end
-
-def onSTART(par1, par1)
-    RETURN(None)
-end

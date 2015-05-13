@@ -41,6 +41,12 @@ class FunParType(Enum):
     def __str__(self):
         return self.name[self.name.find('.')+1:]
 
+    def simpleStr(self):
+        if self.name == 'VarName':
+            return 'Variable'
+        elif self.name == 'FunName':
+            return 'Function'
+
 class Call:
     def __init__(self, funName, callParams, line):
         self.funName = funName
@@ -48,11 +54,11 @@ class Call:
         self.line = line
 
     def __str__(self):
-        result = self.funName + '\n'
+        result = ' ' + self.funName + '\n'
         i = 1
         for cp in self.callParams:
-            result += 'param ' + str(i) + ':\n'
-            result += str(cp) + '\n'
+            result += ' param ' + str(i) + ':\n'
+            result += ' ' + str(cp) + '\n'
             i += 1
         return result
 
@@ -96,7 +102,7 @@ class Node:
         result = ''
         i = 1
         for c in self.calls:
-            result += 'Call ' + str(i) + ':\n'
+            result += ' Call ' + str(i) + ':\n'
             result += str(c) + '\n'
             i += 1
         return result

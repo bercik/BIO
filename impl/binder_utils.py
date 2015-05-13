@@ -1,5 +1,7 @@
 from enum import Enum
 
+from error import BindError
+
 class Parameter:
     def __init__(self, parType, value):
         self.parType = parType
@@ -9,12 +11,28 @@ class Parameter:
         return str(self.parType) + ':' + str(self.value)
 
 class ParameterType(Enum):
-    Field = 0
-    Call = 1
-    FunName = 2
+    Value = 0 # wartość, np. int, float, struct
+    Call = 1 # wywołanie funkcji np. PRINT('siems')
+    FunName = 2 # nazwa funkcji z @ na początku
+    RawFunName = 3 # czysta nazwa funkcji (bez @ na poczatku)
+    VarName = 4 # nazwa zmiennej
 
     def __str__(self):
         return self.name[self.name.find('.')+1:]
+
+    def simpleStr(self):
+        if self.name == 'Value':
+            return 'Value'
+        elif self.name == 'Call':
+            return 'Function'
+        elif self.name == 'FunName':
+            return 'Function name'
+        elif self.name == 'VarName':
+            return 'Variable name'
+        elif self.name == 'RawFunName':
+            return 'Raw function name'
+        else:
+            'DEFAULT VALUE IN PARAMETER TYPE SIMPLE STR'
 
 class Field:
     def __init__(self, name, value, fieldType):

@@ -15,16 +15,13 @@ class Lexer:
 	booleanValues = ('true', 'false')
 	funPrefix = '@'
 
-	def __init__(self, filePath):
+	def __init__(self, data):
 		# init
 		self.tokens = []
-		self.data = ""
+		self.data = data
 		self.line = 1
 		self.ch = 1
 
-		# read data
-		with open(filePath) as f:
-			self.data = f.read()
 		# attach <EOF> keyword to the end of file
 		self.data += '\n<EOF> '
 
