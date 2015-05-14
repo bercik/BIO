@@ -23,3 +23,9 @@ class SemanticError(Exception):
         # Call the base class constructor with the
         # parameters it needs
         super(SemanticError, self).__init__(message)
+
+class InterpreterError(Exception):
+    def __init__(self, message):
+        # Call the base class constructor with the
+        # parameters it needs
+        super(InterpreterError, self).__init__(message)

@@ -7,9 +7,14 @@ from binder import Binder
 from semantic_checker import SemanticChecker
 from binder_utils import *
 from error import *
+from stdlib.error import *
 from performance import Performance
-from standard_lib import StdLib
+from stdlib.standard_lib import StdLib
 from interpreter import Interpreter
+
+def testFun(par):
+    print('test fun')
+    print(par)
 
 def main(argv):
     if len(argv) < 2:
@@ -36,12 +41,10 @@ def main(argv):
     perf.start('Binder')
     binder = Binder()
 
+    # bind standard functions from standard lib
+    StdLib.bindStandardFunctions(binder)
     # bind some example function
-    binder.bindStandard('CALL', (ParameterType.Call,), StdLib.callFun)
-    binder.bindStandard('PRINT', (ParameterType.Value,), StdLib.printFun)
-    binder.bindStandard('ASSIGN_LOCAL', (ParameterType.VarName, \
-        ParameterType.Value), StdLib.assignLocal)
-    binder.bindStandard('RETURN', (ParameterType.Value,), StdLib.returnFun)
+    binder.bindUser('TEST_FUN', (ParameterType.Value, ), testFun)
     # end of binding some example functions
     perf.end('Binder')
 
@@ -57,6 +60,7 @@ def main(argv):
     perf.end('Interpreter')
 
     perf.end()
+    print('--------------------------------------------------')
     perf.printSummary()
 
     # test print
@@ -71,5 +75,6 @@ def main(argv):
 if __name__ == '__main__':
 	try:
 		main(sys.argv)
-	except (LexicalError, SyntaxError, SemanticError) as ex:
-		print('<Error>: ' + str(ex))
+	except (LexicalError, SyntaxError, SemanticError, InterpreterError, \
+        BadParamsError) as ex:
+		print('<' + ex.__class__.__name__ + '>: ' + str(ex))

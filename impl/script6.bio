@@ -1,7 +1,9 @@
 def onSTART()
-    ASSIGN_LOCAL(x, 5)
-    PRINT(x)
-    ASSIGN_LOCAL(x, 10.5)
-    PRINT(x)
-    PRINT("Boreq powiedział: \'Siems Wam!\'\n\tI nastała noc.")
+    PRINT(MY_FUN(10, -250.0))
+end
+
+def MY_FUN(par1, par2)
+    PRINT(par1)
+    PRINT(par2)
+    RETURN(ADD(par1, par2))
 end

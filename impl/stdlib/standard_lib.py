@@ -1,7 +1,7 @@
 from binder_utils import *
 from parser_utils import *
 from error import InterpreterError
-from stdlib import *
+from stdlib.arithmetic import *
 
 class StdLib:
     def bindStandardFunctions(binder):
@@ -13,8 +13,8 @@ class StdLib:
             ParameterType.Value), StdLib.assignGlobal)
         binder.bindStandard('RETURN', (ParameterType.Value,), \
             StdLib.returnFun)
-        binder.bindUser('ADD2', (ParameterType.Value, ParameterType.Value), \
-            stdlib.Arithmetic.add)
+        binder.bindUser('ADD', (ParameterType.Value, ParameterType.Value), \
+            Arithmetic.add)
 
     # funkcja rekursywnie wywołująca wywołanie funkcji
     def callFun(interpreter, localVars, call):
@@ -141,6 +141,9 @@ class StdLib:
     def assignGlobal(interpreter, localVars, varName, value):
         interpreter.globalVars[varName.value] = value.value
         return Field.NONE
+
+    def add(par1, par2):
+        return par1.value.value + par2.value.value
 
     def attachToEvent(interpreter, localVars, eventName, funName):
         # TODO

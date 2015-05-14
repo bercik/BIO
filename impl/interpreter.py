@@ -10,12 +10,18 @@ class Interpreter:
         self.events = {}
 
     # run function in script
-    def runFun(self, funName):
-        # słownik string:Field
-        localVars = {}
+    def runFun(self, funName, **params):
+        localVars = params
         for call in self.scriptFuns[funName].node.calls:
-            if self.standardFuns['CALL'].func(self, localVars, call):
-                break
+            returnVal, localVars = self.runFunCall(call, **localVars)
+            if call.funName == 'RETURN':
+                return returnVal
+
+    def runFunCall(self, call, **params):
+        # słownik string:Field
+        localVars = params
+        returnVal = self.standardFuns['CALL'].func(self, localVars, call)
+        return returnVal, localVars
 
     def start(self):
         self.runFun('onSTART')

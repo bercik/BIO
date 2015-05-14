@@ -55,9 +55,11 @@ class FieldType(Enum):
     def __str__(self):
         return self.name[self.name.find('.')+1:]
 
+Field.NONE = Field('', 'none', FieldType.NoneVal)
+
 class Struct:
     def __init__(self):
-        self.fields = []
+        self.fields = {}
 
     def appendField(self, f):
         self.fields.append(f)

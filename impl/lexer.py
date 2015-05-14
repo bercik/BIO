@@ -161,8 +161,8 @@ class Lexer:
 			return False
 
 	def recognizeNone(self, tok):
-		if tok == 'None':
-			t = Token(TokenType.NoneVal, '', self.line, self.ch)
+		if tok == 'none':
+			t = Token(TokenType.NoneVal, 'none', self.line, self.ch)
 			self.tokens.append(t)
 			return True
 		else:
