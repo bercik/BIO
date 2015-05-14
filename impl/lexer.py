@@ -5,6 +5,14 @@ from error import LexicalError
 
 import re
 import sys
+import builtins
+
+def static_vars(**kwargs):
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])
+        return func
+    return decorate
 
 class Lexer:
 	ignoreCharacters = ('\r', '\n', '\t', ' ')
@@ -44,7 +52,23 @@ class Lexer:
 				if ch == '\n':
 					isComment = False
 			elif specialChar:
-				tok += ch
+				if ch == 'n':
+					tok += '\n'
+				elif ch == 'r':
+					tok += '\r'
+				elif ch == 't':
+					tok += '\t'
+				elif ch == '\\':
+					tok += '\\'
+				elif ch == '\"':
+					tok += '\"'
+				elif ch == '\'':
+					tok += '\''
+				else:
+					msg = 'Urecognized special character ' + \
+						'\\' + ch + ' in line ' + str(self.line) + \
+						' character ' + str(self.ch)
+					raise LexicalError(msg)
 				specialChar = False
 			elif isStr and ch == '\\':
 				specialChar = True
@@ -78,6 +102,10 @@ class Lexer:
 			if ch == '\n':
 				self.ch = 1
 				self.line += 1
+		if isStr:
+			msg = 'EOF while scanning string literal ' + \
+				'(propably you don\'t put closing quote)'
+			raise LexicalError(msg)
 
 	def addStringToken(self, string):
 		self.tokens.append(Token(TokenType.String, string, \
@@ -112,9 +140,9 @@ class Lexer:
 					' znak ' + str(self.ch - len(tok))
 				raise LexicalError(msg)
 
+	@static_vars(p = re.compile('^[\-]?[1-9][0-9]*$|^[0]*$'))
 	def recognizeInt(self, tok):
-		p = re.compile('^[\-]?[1-9][0-9]*$|^[0]*$')
-		m = p.match(tok)
+		m = self.recognizeInt.p.match(tok)
 		if m != None:
 			t = Token(TokenType.Int, tok, self.line, self.ch)
 			self.tokens.append(t)
@@ -122,9 +150,9 @@ class Lexer:
 		else:
 			return False
 
+	@static_vars(p = re.compile('^[\-]?([0]|[1-9][0-9]*)[\.][0-9]+$'))
 	def recognizeFloat(self, tok):
-		p = re.compile('^[\-]?([0]|[1-9][0-9]*)[\.][0-9]+$')
-		m = p.match(tok)
+		m = self.recognizeFloat.p.match(tok)
 		if m != None:
 			t = Token(TokenType.Float, tok, self.line, self.ch)
 			self.tokens.append(t)
@@ -140,10 +168,10 @@ class Lexer:
 		else:
 			return False
 
+	@static_vars(p = re.compile('^(([a-zA-Z_][a-zA-Z_0-9]*)\.)+' + \
+			'([a-zA-Z_][a-zA-Z_0-9]*)$'))
 	def recognizeStruct(self, tok):
-		p = re.compile('^(([a-zA-Z_][a-zA-Z_0-9]*)\.)+' + \
-			'([a-zA-Z_][a-zA-Z_0-9]*)$')
-		m = p.match(tok)
+		m = self.recognizeStruct.p.match(tok)
 		if m != None:
 			t = Token(TokenType.Struct, tok, self.line, self.ch)
 			self.tokens.append(t)
@@ -168,10 +196,10 @@ class Lexer:
 		else:
 			return False
 
+	@static_vars(p = re.compile('^[a-zA-Z_][a-zA-Z_0-9]*$'))
 	def isName(tok):
-		 p = re.compile('^[a-zA-Z_][a-zA-Z_0-9]*$')
-		 m = p.match(tok)
-		 return m != None
+		m = Lexer.isName.p.match(tok)
+		return m != None
 
 	def recognizeBracket(self, brack):
 		if brack == '(':

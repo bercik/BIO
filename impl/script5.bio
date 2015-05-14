@@ -2,3 +2,19 @@ def onSTART()
 	% wypisuje na ekran liczby od 0 do 9
 	FOR(ASSIGN_LOCAL(i, 0), LS(i, 10), CALL2(PRINT(TO_STR(i)), INC(i)))
 end
+
+% funkcje zaślepki
+def FOR(@fun1, @fun2, @fun3)
+end
+
+def LS(val1, val2)
+end
+
+def CALL2(@fun1, @fun2)
+end
+
+def TO_STR(val)
+end
+
+def INC(val)
+end

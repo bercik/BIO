@@ -1,0 +1,7 @@
+def onSTART()
+    ASSIGN_LOCAL(x, 5)
+    PRINT(x)
+    ASSIGN_LOCAL(x, 10.5)
+    PRINT(x)
+    PRINT("Boreq powiedział: \'Siems Wam!\'\n\tI nastała noc.")
+end

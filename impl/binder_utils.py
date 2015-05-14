@@ -11,7 +11,7 @@ class Parameter:
         return str(self.parType) + ':' + str(self.value)
 
 class ParameterType(Enum):
-    Value = 0 # wartość, np. int, float, struct
+    Value = 0 # wartość, typ Field
     Call = 1 # wywołanie funkcji np. PRINT('siems')
     FunName = 2 # nazwa funkcji z @ na początku
     RawFunName = 3 # czysta nazwa funkcji (bez @ na poczatku)
@@ -40,6 +40,10 @@ class Field:
         self.value = value
         self.fieldType = fieldType
 
+    def __str__(self):
+        return '[' + self.name + ']' + str(self.fieldType) + \
+            ': ' + str(self.value)
+
 class FieldType(Enum):
     Int = 0
     Float = 1
@@ -47,6 +51,9 @@ class FieldType(Enum):
     Boolean = 3
     NoneVal = 4
     Struct = 5
+
+    def __str__(self):
+        return self.name[self.name.find('.')+1:]
 
 class Struct:
     def __init__(self):
@@ -60,9 +67,9 @@ class BindFunc:
         # sprawdzamy czy funkcja przyjmuje 
         # odpowiednia liczbe argumentow
         args = func.__code__.co_argcount
-        # jeżeli funkcja standardowa (czyli mająca dodatkowy parametr binder)
+        # jeżeli funkcja standardowa to odejmujemy 2 argumenty
         if isStandard:
-            args -= 1
+            args -= 2
         # jeżeli funkcja klasy
         if 'self' in func.__code__.co_varnames:
             args -= 1
