@@ -1,0 +1,22 @@
+Lexer - jednostka zamieniająca wejściowy ciąg znaków na 
+   zbiór tokenów.
+
+Typy tokenów:
+- identyfikator ([a-zA-Z_][a-zA-Z0-9_]*)
+- liczby całkowite ([+-]?\d+)
+- liczby zmiennoprzecinkowe ([+-]?\d+\.\d+)
+- łańcuchy znaków (\"(\\.|[^"])*\")
+- wartość boolean (true, false)
+- brak wartości (none)
+- przecinek (,)
+- nawias otwierający (
+- nawias zamykający )
+- słowa kluczowe: def, end, <EOF>
+Komentarz: 
+- procent (\%.*\n)
+
+Znaki separujące: przecinek, nawiasy, białe znaki (\n \t spacja), 
+   komentarz
+
+Przed analizą do końca analizowanego ciągu doklejany jest 
+   ciąg <EOF> informujący o końcu ciągu
