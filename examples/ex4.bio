@@ -1,0 +1,11 @@
+def SOME_EVENT(input)
+end
+
+def FOO(param)
+   PRINT(param)
+end
+
+def onSTART()
+   ATTACH_TO_EVENT(SOME_EVENT, FOO)
+   SOME_EVENT("test") % zostanie wypisane na ekran "test"
+end

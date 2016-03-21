@@ -1,0 +1,3 @@
+def onSTART()
+   PRINT("hello world")
+end
