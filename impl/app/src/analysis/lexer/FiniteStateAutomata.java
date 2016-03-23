@@ -24,11 +24,42 @@ public class FiniteStateAutomata
     // pary stan-symbol. -1 oznacza zabronione przejście
     private final Integer[][] transitionsTable = new Integer[states][symbols];
 
+    private Integer state;
+    private String token;
+    
     public FiniteStateAutomata()
     {
         fillTransitionsTable();
+        reset();
     }
     
+    // resetuje stan
+    public final void reset()
+    {
+        state = 0;
+        token = "";
+    }
+    
+    // podanie kolejnego znaku, zwraca parę token lub null i wartość bool
+    // informującą czy ostatni znak został zwrócony
+    public Pair<Token, Boolean> putChar(char ch)
+    {
+        Integer col = getCharCol(ch);
+        
+        Integer newState = transitionsTable[state][col];
+        
+        if (newState != -1)
+        {
+            state = newState;
+            // sprawdź czy stan jest jednym ze stanów akceptujących końcowych
+        }
+        else
+        {
+            
+        }
+    }
+    
+    // wypełnia tablicę przejść
     private void fillTransitionsTable()
     {
         // ustawiamy -1 w całej tablicy przejść
