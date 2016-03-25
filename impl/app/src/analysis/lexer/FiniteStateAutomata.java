@@ -1,5 +1,9 @@
 package analysis.lexer;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author robert
@@ -7,7 +11,7 @@ package analysis.lexer;
 public class FiniteStateAutomata
 {
     // separatory po których następuje rozpoznanie tokenu
-    private final String[] separators = 
+    public final String[] separators = 
             new String[] { "(", ")", " ", "\t", "\n", "%", "," };
     // stany w których dozwolone jest wystąpienie separatora
     private final Integer[] allowSeparatorStates = 
@@ -17,15 +21,58 @@ public class FiniteStateAutomata
     // funkcja przejścia dla każdego znaku
     private final Integer[] allowNotCharStates = 
             new Integer[] { 5, 8, 9 };
+    // stany akceptujące końcowe (nie posiadające dalszych przejść)
+    private final Integer[] acceptedEndStates =
+            new Integer[] { 7, 10, 13, 14, 15, 20 };
+    // słownik stan:typ tokenu (jeżeli typ tokenu to null oznacza to, że
+    // dany stan jest specjalny (np. komentarz))
+    private final Map<Integer, TokenType> stateTokenTypeMap =
+            new HashMap<Integer, TokenType>()
+            {{
+                        put(2, TokenType.INT);
+                        put(3, null); // id, bool, keyword, none
+                        put(4, TokenType.ID);
+                        put(7, TokenType.STRING);
+                        put(10, null); // komentarz
+                        put(12, TokenType.FLOAT);
+                        put(13, TokenType.COMMA);
+                        put(14, TokenType.OPEN_BRACKET);
+                        put(15, TokenType.CLOSE_BRACKET);
+                        put(20, TokenType.END);
+            }};
+    // słowo kluczowe def
+    public final String defKeyword = "def";
+    // słowo kluczowe end
+    public final String endKeyword = "end";
+    // słowa kluczowe
+    public final String[] keywords = 
+            new String[] { defKeyword, endKeyword };
+    // wartości nic
+    public final String[] nones =
+            new String[] { "none", "None", "NONE" };
+    // wartości true
+    public final String[] trues =
+            new String[] { "true", "True", "TRUE" };
+    // wartości false
+    public final String[] falses = 
+            new String[] { "false", "False", "FALSE" };
+    // stan komentarza
+    private final Integer commentState = 10;
+    // stan nierozstrzygnięty (id, bool, keyword lub none)
+    private final Integer unrecognizeAcceptedState = 3;
     
+    // liczba stanów
     private final Integer states = 21;
+    // liczba symboli (maksymalna wartość zwracana przez getCharCol() plus dwa)
     private final Integer symbols = 20;
     // tablica przejść, zawiera informację o następnym stanie dla danej 
     // pary stan-symbol. -1 oznacza zabronione przejście
     private final Integer[][] transitionsTable = new Integer[states][symbols];
 
     private Integer state;
-    private String token;
+    private String tokenValue;
+    private Integer line;
+    private Integer chNum;
     
     public FiniteStateAutomata()
     {
@@ -37,26 +84,98 @@ public class FiniteStateAutomata
     public final void reset()
     {
         state = 0;
-        token = "";
+        tokenValue = "";
     }
     
     // podanie kolejnego znaku, zwraca parę token lub null i wartość bool
     // informującą czy ostatni znak został zwrócony
     public Pair<Token, Boolean> putChar(char ch)
     {
+        ++chNum;
+        tokenValue += ch;
         Integer col = getCharCol(ch);
         
         Integer newState = transitionsTable[state][col];
         
+        Token token;
+        Boolean retCh;
+        
         if (newState != -1)
         {
+            retCh = false;
             state = newState;
             // sprawdź czy stan jest jednym ze stanów akceptujących końcowych
+            if (Arrays.asList(acceptedEndStates).contains(state))
+            {
+                // pobierz typ tokenu dla danego stanu
+                TokenType tokenType = stateTokenTypeMap.get(state);
+                // sprawdź czy null, jeżeli tak to specjalna procedura obsługi stanu
+                if (tokenType == null)
+                {
+                    if (state == commentState)
+                    {
+                        token = null;
+                    }
+                    else
+                    {
+                        throw new RuntimeException(
+                                "Unknown accepted end state " + state);
+                    }
+                }
+                else
+                {
+                    switch (tokenType)
+                    {
+                        case CLOSE_BRACKET:
+                        case OPEN_BRACKET:
+                        case COMMA:
+                        case END:
+                            token = new Token(tokenType, null, line, chNum);
+                            break;
+                        case STRING:
+                            token = new Token(tokenType, tokenValue, line, chNum);
+                            break;
+                        default:
+                                throw new RuntimeException(
+                                        "Unknown accepted end token type " + tokenType);
+                    }
+                }
+                
+                reset();
+            }
         }
         else
         {
             
         }
+        
+        token = null;
+        retCh = false;
+        return new Pair<>(token, retCh);
+    }
+    
+    private Token recognizeAcceptedState(Integer state, String token, 
+            Integer line, Integer chNum)
+    {
+        if (Arrays.asList(keywords).contains(token))
+        {
+            return new Token(TokenType.KEYWORD, token, line, chNum);
+        }
+        if (Arrays.asList(trues).contains(token))
+        {
+            return new Token(TokenType.BOOL, true, line, chNum);
+        }
+        if (Arrays.asList(falses).contains(token))
+        {
+            return new Token(TokenType.BOOL, false, line, chNum);
+        }
+        if (Arrays.asList(nones).contains(token))
+        {
+            return new Token(TokenType.NONE, null, line, chNum);
+        }
+
+        // jeżeli nic z powyższych to traktujemy jako ID
+        return new Token(TokenType.ID, token, line, chNum);
     }
     
     // wypełnia tablicę przejść

@@ -16,14 +16,50 @@
  */
 package analysis.lexer;
 
+import java.io.IOException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
 /**
  *
  * @author robert
  */
-public class LexerError extends Exception
+public class LexerTest
 {
-    public LexerError(int line, int chNum, String message)
+    
+    public LexerTest()
     {
-        super("[linia: " + line + ", znak: " + chNum + "]: " + message);
     }
+    
+    @BeforeClass
+    public static void setUpClass()
+    {
+    }
+    
+    @AfterClass
+    public static void tearDownClass()
+    {
+    }
+    
+    @Before
+    public void setUp()
+    {
+    }
+    
+    @After
+    public void tearDown()
+    {
+    }
+
+    @Test
+    public void testSomeMethod()
+            throws IOException
+    {
+        Lexer lexer = new Lexer("/res/ex1.bio");
+    }
+    
 }

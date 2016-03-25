@@ -26,9 +26,9 @@ public class Token<T>
     private final TokenType tokenType;
     private final T value;
     private final int line;
-    private final int ch;
+    private final int chNum;
 
-    public Token(TokenType tokenType, T value, int line, int ch)
+    public Token(TokenType tokenType, T value, int line, int chNum)
     {
         if (tokenType.getValueType() != null && 
                 !tokenType.getValueType().equals(value.getClass()))
@@ -40,7 +40,7 @@ public class Token<T>
         this.tokenType = tokenType;
         this.value = value;
         this.line = line;
-        this.ch = ch;
+        this.chNum = chNum;
     }
 
     public TokenType getTokenType()
@@ -58,8 +58,8 @@ public class Token<T>
         return line;
     }
 
-    public int getCh()
+    public int getChNum()
     {
-        return ch;
+        return chNum;
     }
 }

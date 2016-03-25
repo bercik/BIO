@@ -105,7 +105,7 @@ public class TokenTest
     {
         System.out.println("getCh");
         int expResult = ch;
-        int result = token.getCh();
+        int result = token.getChNum();
         assertEquals(expResult, result);
     }
     
