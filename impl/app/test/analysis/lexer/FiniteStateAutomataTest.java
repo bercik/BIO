@@ -176,11 +176,11 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata();
 
-        testToken(fsa, "identifier(", TokenType.OPEN_BRACKET, null, 10, 0, false);
+        testToken(fsa, "identifier(", TokenType.OPEN_BRACKET, null, 11, 1, false);
 
-        testToken(fsa, "num1\nidentifier)", TokenType.CLOSE_BRACKET, null, 10, 1, false);
+        testToken(fsa, "num1\nidentifier)", TokenType.CLOSE_BRACKET, null, 11, 2, false);
 
-        testToken(fsa, "al ( x,", TokenType.COMMA, null, 6, 0, false);
+        testToken(fsa, "al ( x,", TokenType.COMMA, null, 7, 1, false);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata();
 
-        testToken(fsa, "_NUM1_\n<EOF>", TokenType.END, null, 0, 1, false);
+        testToken(fsa, "_NUM1_\n<EOF>", TokenType.END, null, 1, 2, false);
     }
 
     @Test
@@ -200,18 +200,18 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata();
 
-        testToken(fsa, "100)", TokenType.INT, 100, 0, 0, true);
+        testToken(fsa, "100)", TokenType.INT, 100, 1, 1, true);
 
-        testToken(fsa, "+100 ", TokenType.INT, 100, 0, 0, true);
+        testToken(fsa, "+100 ", TokenType.INT, 100, 1, 1, true);
 
-        testToken(fsa, "-2561 ", TokenType.INT, -2561, 0, 0, true);
+        testToken(fsa, "-2561 ", TokenType.INT, -2561, 1, 1, true);
 
-        testToken(fsa, "0 ", TokenType.INT, 0, 0, 0, true);
+        testToken(fsa, "0 ", TokenType.INT, 0, 1, 1, true);
 
         boolean catched = false;
         try
         {
-            testToken(fsa, "011", TokenType.INT, 011, 0, 0, true);
+            testToken(fsa, "011", TokenType.INT, 011, 1, 1, true);
         }
         catch (LexerError ex)
         {
@@ -229,15 +229,15 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata();
 
-        testToken(fsa, "100.54)", TokenType.FLOAT, 100.54f, 0, 0, true);
+        testToken(fsa, "100.54)", TokenType.FLOAT, 100.54f, 1, 1, true);
 
-        testToken(fsa, "+100.023 ", TokenType.FLOAT, 100.023f, 0, 0, true);
+        testToken(fsa, "+100.023 ", TokenType.FLOAT, 100.023f, 1, 1, true);
 
-        testToken(fsa, "-2561.555 ", TokenType.FLOAT, -2561.555f, 0, 0, true);
+        testToken(fsa, "-2561.555 ", TokenType.FLOAT, -2561.555f, 1, 1, true);
 
-        testToken(fsa, "0.5 ", TokenType.FLOAT, 0.5f, 0, 0, true);
+        testToken(fsa, "0.5 ", TokenType.FLOAT, 0.5f, 1, 1, true);
 
-        testToken(fsa, "0.0 ", TokenType.FLOAT, 0.0f, 0, 0, true);
+        testToken(fsa, "0.0 ", TokenType.FLOAT, 0.0f, 1, 1, true);
     }
 
     @Test
@@ -248,7 +248,10 @@ public class FiniteStateAutomataTest
         FiniteStateAutomata fsa = new FiniteStateAutomata();
 
         String text = "Żółć jest gorzka\n \n i źle smakuje";
-        testToken(fsa, "ADD(x, \"" + text + "\"", TokenType.STRING, text, 7, 0, false);
+        testToken(fsa, "ADD(x, \"" + text + "\"", TokenType.STRING, text, 8, 1, false);
+        
+        testToken(fsa, "\"\\n \\\\ \\t \\r \\f \\b \\\" \"", TokenType.STRING, 
+                                    "\n \\ \t \r \f \b \" ", 1, 1, false);
     }
 
     @Test

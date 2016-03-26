@@ -1,7 +1,11 @@
 package analysis.lexer;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -40,25 +44,96 @@ public class Lexer
         "false", "False", "FALSE"
     };
 
-    public Lexer(String path) throws IOException
+    private final List<Token<?>> tokens;
+
+    public Lexer(String input)
+            throws LexerError
     {
-        String content = readFile(path, "UTF-8");
-
-        for (int i = 0; i < content.length(); ++i)
-        {
-            char ch = content.charAt(i);
-
-            if (ch == '\n')
-            {
-                int a = 10;
-            }
-        }
+        tokens = addEOFAndAnalyse(input);
     }
 
-    private String readFile(String path, String encoding)
+    public Lexer(String path, boolean internal)
+            throws IOException, LexerError
+    {
+        String input;
+
+        if (internal)
+        {
+            input = readInternalFile(path, "UTF-8");
+        }
+        else
+        {
+            input = readExternalFile(path, "UTF-8");
+        }
+
+        tokens = addEOFAndAnalyse(input);
+    }
+
+    private final List<Token<?>> addEOFAndAnalyse(String input)
+            throws LexerError
+    {
+        // dodajemy na końcu znacznik <EOF>
+        input += "\n<EOF>";
+
+        return analyse(input);
+    }
+
+    public List<Token<?>> getTokens()
+    {
+        return tokens;
+    }
+
+    private List<Token<?>> analyse(String input)
+            throws LexerError
+    {
+        List<Token<?>> tokens = new ArrayList<>();
+        FiniteStateAutomata fsa = new FiniteStateAutomata();
+
+        for (int i = 0; i < input.length(); ++i)
+        {
+            Pair<Token<?>, Boolean> pair = fsa.putChar(input.charAt(i));
+
+            /// sprawdzamy czy nie zwrócono nam znaku
+            if (pair.getRight() == true)
+            {
+                --i;
+            }
+            Token<?> token = pair.getLeft();
+            if (token != null)
+            {
+                // jeżeli token END to przerywamy
+                if (token.getTokenType().equals(TokenType.END))
+                {
+                    break;
+                }
+                // dodajemy do listy tokenów
+                else
+                {
+                    tokens.add(token);
+                }
+            }
+        }
+
+        return tokens;
+    }
+
+    private String readExternalFile(String path, String encoding)
+            throws IOException
+    {
+        String dirPath = System.getProperty("user.dir");
+        InputStream is = new FileInputStream(dirPath + "/" + path);
+        return readInputStreamToString(is, encoding);
+    }
+
+    private String readInternalFile(String path, String encoding)
             throws IOException
     {
         InputStream is = getClass().getResourceAsStream(path);
+        return readInputStreamToString(is, encoding);
+    }
+
+    private String readInputStreamToString(InputStream is, String encoding)
+    {
         try (Scanner s = new Scanner(is, encoding))
         {
             return s.useDelimiter("\\A").hasNext() ? s.next() : "";

@@ -17,6 +17,9 @@
 package analysis.lexer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,10 +59,37 @@ public class LexerTest
     }
 
     @Test
-    public void testSomeMethod()
-            throws IOException
+    public void testReadInternal()
+            throws Exception
     {
-        Lexer lexer = new Lexer("/res/ex1.bio");
+        System.out.println("testReadInternal");
+        
+        Lexer lexer = new Lexer("/res/ex1.bio", true);
     }
     
+    @Test
+    public void testHelloWorld()
+            throws Exception
+    {
+        String input = "def onSTART()\n" +
+                               "    PRINT(\"Hello World!\\n\")\n" +
+                               "end";
+        
+        List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
+        {{
+                    add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
+                    add(new Token<>(TokenType.ID, "onSTART", 1, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
+                    add(new Token<>(TokenType.ID, "PRINT", 2, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
+                    add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
+                    add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
+        }};
+        
+        Lexer lexer = new Lexer(input);
+        List<Token<?>> tokens = lexer.getTokens();
+        assertThat(tokens, is(expectedTokens));
+    }
 }

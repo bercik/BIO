@@ -29,21 +29,21 @@ public class FiniteStateAutomata
     // dany stan jest specjalny (np. komentarz))
     private final Map<Integer, TokenType> stateTokenTypeMap
             = new HashMap<Integer, TokenType>()
-    {
-        {
-            put(2, TokenType.INT);
-            put(3, null); // id, bool, keyword, none
-            put(4, TokenType.ID);
-            put(7, TokenType.STRING);
-            put(9, null); // komentarz
-            put(10, TokenType.INT);
-            put(12, TokenType.FLOAT);
-            put(13, TokenType.COMMA);
-            put(14, TokenType.OPEN_BRACKET);
-            put(15, TokenType.CLOSE_BRACKET);
-            put(20, TokenType.END);
-        }
-    };
+            {
+                {
+                    put(2, TokenType.INT);
+                    put(3, null); // id, bool, keyword, none
+                    put(4, TokenType.ID);
+                    put(7, TokenType.STRING);
+                    put(9, null); // komentarz
+                    put(10, TokenType.INT);
+                    put(12, TokenType.FLOAT);
+                    put(13, TokenType.COMMA);
+                    put(14, TokenType.OPEN_BRACKET);
+                    put(15, TokenType.CLOSE_BRACKET);
+                    put(20, TokenType.END);
+                }
+            };
     // stan komentarza
     private final Integer commentState = 9;
 
@@ -76,10 +76,10 @@ public class FiniteStateAutomata
         currentTokenChNum = chNum;
         currentTokenLine = line;
     }
-    
+
     public final void fullReset()
     {
-        line = chNum = 0;
+        line = chNum = 1;
         reset();
     }
 
@@ -90,7 +90,7 @@ public class FiniteStateAutomata
         if (ch == '\n')
         {
             ++line;
-            chNum = 0;
+            chNum = 1;
         }
         else
         {
@@ -138,8 +138,9 @@ public class FiniteStateAutomata
                             token = new Token(tokenType, null, currentTokenLine, currentTokenChNum);
                             break;
                         case STRING:
-                            // usuwamy początkowy i końcowy cudzysłów
-                            token = new Token(tokenType, tokenValue.substring(1, tokenValue.length() - 1), 
+                            // usuwamy początkowy i końcowy cudzysłów i zamieniamy znaki specjalne
+                            token = new Token(tokenType, 
+                                    parseString(tokenValue, currentTokenLine, currentTokenChNum),
                                     currentTokenLine, currentTokenChNum);
                             break;
                         default:
@@ -147,7 +148,7 @@ public class FiniteStateAutomata
                                     "Unknown accepted end token type " + tokenType);
                     }
                 }
-                
+
                 reset();
             }
             else
@@ -160,7 +161,7 @@ public class FiniteStateAutomata
             // jeżeli stan jest stanem pozwalającym na wystąpienie separatora i wystąpił separator
             if (Arrays.asList(allowSeparatorStates).contains(state)
                     && Arrays.asList(Lexer.separators).contains(ch))
-            {  
+            {
                 // jeżeli stan nie jest stanem początkowym
                 if (!Objects.equals(state, startState))
                 {
@@ -175,9 +176,9 @@ public class FiniteStateAutomata
                         --chNum;
                     }
                     tokenValue = tokenValue.substring(0, tokenValue.length() - 1);
-                    
+
                     TokenType tokenType = stateTokenTypeMap.get(state);
-                    
+
                     // jeżeli null oznacza to, że jesteśmy w stanie id, keyword, none, true lub false
                     if (tokenType == null)
                     {
@@ -223,7 +224,7 @@ public class FiniteStateAutomata
                     retCh = false;
                     token = null;
                 }
-                
+
                 reset();
             }
             else
@@ -238,16 +239,78 @@ public class FiniteStateAutomata
                 }
                 else
                 {
-                    throw new LexerError(line, chNum, 
-                            "Unexpected character " + ch + " in token \"" + 
-                                    tokenValue.substring(0, tokenValue.length() - 1) + "\"");
+                    throw new LexerError(line, chNum,
+                            "Unexpected character " + ch + " in token \""
+                            + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
                 }
             }
         }
 
         return new Pair<>(token, retCh);
     }
-    
+
+    private String parseString(String str, int line, int chNum)
+            throws LexerError
+    {
+        // usuwamy początkowy i końcowy cudzysłów
+        str = str.substring(1, str.length() - 1);
+
+        String newStr = "";
+        Map<Character, Character> specialCharacters
+                = new HashMap<Character, Character>()
+                {
+                    {
+                        put('n', '\n');
+                        put('r', '\r');
+                        put('"', '"');
+                        put('f', '\f');
+                        put('b', '\b');
+                        put('\\', '\\');
+                        put('t', '\t');
+                    }
+                };
+
+        // przechodzimy po całym napisie i szukamy znaków specjalnych
+        boolean specChar = false;
+        for (int i = 0; i < str.length(); ++i)
+        {
+            Character ch = str.charAt(i);
+
+            if (specChar)
+            {
+                if (!specialCharacters.containsKey(ch))
+                {
+                    throw new LexerError(line, chNum, 
+                            "Illegal special character \\" + ch + 
+                                    " in string \"" + str + "\"");
+                }
+                
+                newStr += specialCharacters.get(ch);
+                specChar = false;
+            }
+            else
+            {
+                if (ch.equals('\\'))
+                {
+                    specChar = true;
+                }
+                else
+                {
+                    newStr += ch;
+                }
+            }
+        }
+
+        if (specChar)
+        {
+            throw new LexerError(line, chNum,
+                    "Not completed special character in string \""
+                    + str + "\"");
+        }
+
+        return newStr;
+    }
+
     private Token recognizeStateID(Integer state, String token,
             Integer line, Integer chNum)
     {
@@ -342,7 +405,7 @@ public class FiniteStateAutomata
 
         // stan 10
         transitionsTable[10][getCharCol('.')] = 11; // kropka
-        
+
         // stan 11
         transitionsTable[11][getCharCol('0')] = 12; // cyfra zero
         transitionsTable[11][getCharCol('1')] = 12; // dowolna cyfra poza zerem

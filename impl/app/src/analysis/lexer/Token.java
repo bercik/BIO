@@ -16,6 +16,8 @@
  */
 package analysis.lexer;
 
+import java.util.Objects;
+
 /**
  *
  * @author robert
@@ -62,4 +64,48 @@ public class Token<T>
     {
         return chNum;
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.tokenType);
+        hash = 83 * hash + Objects.hashCode(this.value);
+        hash = 83 * hash + this.line;
+        hash = 83 * hash + this.chNum;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Token<?> other = (Token<?>)obj;
+        if (this.tokenType != other.tokenType)
+        {
+            return false;
+        }
+        if (!Objects.equals(this.value, other.value))
+        {
+            return false;
+        }
+        if (this.line != other.line)
+        {
+            return false;
+        }
+        if (this.chNum != other.chNum)
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
