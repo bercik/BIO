@@ -16,7 +16,6 @@
  */
 package analysis.lexer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
@@ -92,4 +91,88 @@ public class LexerTest
         List<Token<?>> tokens = lexer.getTokens();
         assertThat(tokens, is(expectedTokens));
     }
+    
+    /*
+    def SOME_EVENT(input)
+    end
+
+    def FOO(param)
+       PRINT(param)
+    end
+
+    def onSTART()
+       ATTACH_TO_EVENT(SOME_EVENT, FOO)
+       SOME_EVENT("test") % zostanie wypisane na ekran "test"
+    end
+    */
+    @Test
+    public void testEvents()
+            throws Exception
+    {
+        String input = "def SOME_EVENT(input)\n" +
+                               "end\n" + 
+                               "def FOO(param)\n" + 
+                               "    PRINT(param)\n" +
+                               "end\n" + 
+                               "def onSTART()\n" + 
+                               "    ATTACH_TO_EVENT(SOME_EVENT, FOO)\n" + 
+                               "    SOME_EVENT(\"test\") % zostanie wypisane na ekran \"test\"\n" +
+                               "end";
+        
+        List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
+        {{
+                    // def SOME_EVENT(input)
+                    add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", 1, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 15));
+                    add(new Token<>(TokenType.ID, "input", 1, 16));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 21));
+                    
+                    // end
+                    add(new Token<>(TokenType.KEYWORD, "end", 2, 1));
+                    
+                    // def FOO(param)
+                    add(new Token<>(TokenType.KEYWORD, "def", 3, 1));
+                    add(new Token<>(TokenType.ID, "FOO", 3, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 3, 8));
+                    add(new Token<>(TokenType.ID, "param", 3, 9));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 3, 14));
+                    
+                    //     PRINT(param)
+                    add(new Token<>(TokenType.ID, "PRINT", 4, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 4, 10));
+                    add(new Token<>(TokenType.ID, "param", 4, 11));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 4, 16));
+                    
+                    // end
+                    add(new Token<>(TokenType.KEYWORD, "end", 5, 1));
+                    
+                    // def onSTART()
+                    add(new Token<>(TokenType.KEYWORD, "def", 6, 1));
+                    add(new Token<>(TokenType.ID, "onSTART", 6, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 6, 12));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 6, 13));
+                    
+                    //     ATTACH_TO_EVENT(SOME_EVENT, FOO)
+                    add(new Token<>(TokenType.ID, "ATTACH_TO_EVENT", 7, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 7, 20));
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", 7, 21));
+                    add(new Token<>(TokenType.COMMA, null, 7, 31));
+                    add(new Token<>(TokenType.ID, "FOO", 7, 33));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 7, 36));
+                    
+                    //     SOME_EVENT(\"test\")
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", 8, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 8, 15));
+                    add(new Token<>(TokenType.STRING, "test", 8, 16));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 8, 22));
+                    
+                    // end
+                    add(new Token<>(TokenType.KEYWORD, "end", 9, 1));
+        }};
+        
+        Lexer lexer = new Lexer(input);
+        List<Token<?>> tokens = lexer.getTokens();
+        assertThat(tokens, is(expectedTokens));
+    } 
 }
