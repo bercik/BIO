@@ -1,6 +1,5 @@
 package analysis.lexer;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,6 +87,7 @@ public class Lexer
     {
         List<Token<?>> tokens = new ArrayList<>();
         FiniteStateAutomata fsa = new FiniteStateAutomata();
+        boolean endWithEndToken = false;
 
         for (int i = 0; i < input.length(); ++i)
         {
@@ -104,6 +104,7 @@ public class Lexer
                 // jeżeli token END to przerywamy
                 if (token.getTokenType().equals(TokenType.END))
                 {
+                    endWithEndToken = true;
                     break;
                 }
                 // dodajemy do listy tokenów
@@ -114,6 +115,12 @@ public class Lexer
             }
         }
 
+        if (!endWithEndToken)
+        {
+            throw new LexerError(-1, -1, "Unexpected end of file. "
+                    + "Possibly missed string closing quotation mark");
+        }
+        
         return tokens;
     }
 

@@ -70,6 +70,8 @@ public class LexerTest
     public void testHelloWorld()
             throws Exception
     {
+        System.out.println("testHelloWorld");
+        
         String input = "def onSTART()\n" +
                                "    PRINT(\"Hello World!\\n\")\n" +
                                "end";
@@ -109,6 +111,8 @@ public class LexerTest
     public void testEvents()
             throws Exception
     {
+        System.out.println("testEvents");
+        
         String input = "def SOME_EVENT(input)\n" +
                                "end\n" + 
                                "def FOO(param)\n" + 
@@ -174,5 +178,28 @@ public class LexerTest
         Lexer lexer = new Lexer(input);
         List<Token<?>> tokens = lexer.getTokens();
         assertThat(tokens, is(expectedTokens));
-    } 
+    }
+    
+    @Test
+    public void unclosedStringTest()
+            throws Exception
+    {
+        System.out.println("unclosedStringTest");
+        
+        String input = "\"Hello world\n\n";
+        
+        boolean catched = false;
+        try
+        {
+            Lexer lexer = new Lexer(input);
+        }
+        catch (LexerError ex)
+        {
+            catched = true;
+            
+            System.out.println(ex.getMessage());
+        }
+        
+        assertEquals(true, catched);
+    }
 }

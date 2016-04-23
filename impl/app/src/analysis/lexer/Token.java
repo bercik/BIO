@@ -105,7 +105,5 @@ public class Token<T>
             return false;
         }
         return true;
-    }
-    
-    
+    }    
 }

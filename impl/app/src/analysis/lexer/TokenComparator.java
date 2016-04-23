@@ -16,14 +16,26 @@
  */
 package analysis.lexer;
 
+import java.util.Comparator;
+
 /**
  *
  * @author robert
  */
-public class LexerError extends Exception
+public class TokenComparator implements Comparator<Token>
 {
-    public LexerError(int line, int chNum, String message)
+    @Override
+    public int compare(Token o1, Token o2)
     {
-        super("[line: " + line + ", character: " + chNum + "]: " + message);
+        if (!o1.getTokenType().equals(o2.getTokenType()))
+        {
+            return -1;
+        }
+        if (!o1.getValue().equals(o2.getValue()))
+        {
+            return -1;
+        }
+        
+        return 0;
     }
 }

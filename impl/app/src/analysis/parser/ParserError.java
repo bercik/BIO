@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package analysis.lexer;
+package analysis.parser;
 
 /**
  *
  * @author robert
  */
-public class LexerError extends Exception
+public class ParserError extends Exception
 {
-    public LexerError(int line, int chNum, String message)
+    public ParserError(int line, int chNum, String message)
     {
         super("[line: " + line + ", character: " + chNum + "]: " + message);
     }
