@@ -1,4 +1,5 @@
 def SOME_EVENT(input)
+   DN()
 end
 
 def FOO(param)
