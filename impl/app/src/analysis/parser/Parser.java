@@ -68,6 +68,10 @@ public class Parser
         currentToken = tokensIterator.next();
 
         D();
+        if (!compareTokenType(currentToken, TokenType.END))
+        {
+            fail(false, endToken);
+        }
     }
 
     private void D()
@@ -123,7 +127,7 @@ public class Parser
             fail(false, defKeywordToken);
         }
     }
-    
+
     private void P()
             throws ParserError
     {
@@ -141,7 +145,7 @@ public class Parser
             fail(false, closeBracketToken, idToken);
         }
     }
-    
+
     private void P_1()
             throws ParserError
     {
@@ -156,7 +160,7 @@ public class Parser
             fail(false, idToken);
         }
     }
-    
+
     private void P_2()
             throws ParserError
     {
@@ -175,7 +179,7 @@ public class Parser
             fail(false, closeBracketToken, commaToken);
         }
     }
-    
+
     private void F()
             throws ParserError
     {
@@ -190,7 +194,7 @@ public class Parser
             fail(false, idToken);
         }
     }
-    
+
     private void F_1()
             throws ParserError
     {
@@ -221,8 +225,105 @@ public class Parser
             C_1();
             readTokenAndMove(closeBracketToken);
         }
+        else
+        {
+            fail(false, idToken);
+        }
     }
-    
+
+    private void C_1()
+            throws ParserError
+    {
+        if (compareTokenType(currentToken, TokenType.ID) || isConstValue(currentToken))
+        {
+            steps.add(13);
+            C_2();
+        }
+        else if (compareTokenType(currentToken, TokenType.CLOSE_BRACKET))
+        {
+            steps.add(14);
+        }
+        else
+        {
+            fail(true, idToken, closeBracketToken);
+        }
+    }
+
+    private void C_2()
+            throws ParserError
+    {
+        if (compareTokenType(currentToken, TokenType.ID) || isConstValue(currentToken))
+        {
+            steps.add(15);
+            C_3();
+            R();
+        }
+        else
+        {
+            fail(true, idToken);
+        }
+    }
+
+    private void R()
+            throws ParserError
+    {
+        if (compareTokenType(currentToken, TokenType.COMMA))
+        {
+            steps.add(16);
+            readTokenAndMove(commaToken);
+            C_2();
+        }
+        else if (compareTokenType(currentToken, TokenType.CLOSE_BRACKET))
+        {
+            steps.add(17);
+        }
+        else
+        {
+            fail(false, commaToken, closeBracketToken);
+        }
+    }
+
+    private void C_3()
+            throws ParserError
+    {
+        if (compareTokenType(currentToken, TokenType.ID))
+        {
+            steps.add(18);
+            readTokenAndMove(idToken);
+            R_1();
+        }
+        else if (isConstValue(currentToken))
+        {
+            steps.add(19);
+            readConstValueAndMove();
+        }
+        else
+        {
+            fail(true, idToken);
+        }
+    }
+
+    private void R_1()
+            throws ParserError
+    {
+        if (compareTokenType(currentToken, TokenType.OPEN_BRACKET))
+        {
+            steps.add(20);
+            readTokenAndMove(openBracketToken);
+            C_1();
+            readTokenAndMove(closeBracketToken);
+        }
+        else if (compareTokenType(currentToken, TokenType.CLOSE_BRACKET) ||
+                compareTokenType(currentToken, TokenType.COMMA))
+        {
+            steps.add(21);
+        }
+        else
+        {
+            fail(false, openBracketToken, closeBracketToken, commaToken);
+        }
+    }
+
     private void fail(boolean constValue, Token... expectedTokens)
             throws ParserError
     {

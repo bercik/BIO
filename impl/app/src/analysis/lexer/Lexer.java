@@ -101,16 +101,14 @@ public class Lexer
             Token<?> token = pair.getLeft();
             if (token != null)
             {
+                // dodajemy do listy tokenów
+                tokens.add(token);
+                
                 // jeżeli token END to przerywamy
                 if (token.getTokenType().equals(TokenType.END))
                 {
                     endWithEndToken = true;
                     break;
-                }
-                // dodajemy do listy tokenów
-                else
-                {
-                    tokens.add(token);
                 }
             }
         }

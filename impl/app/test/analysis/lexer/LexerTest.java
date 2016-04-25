@@ -87,6 +87,7 @@ public class LexerTest
                     add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
                     add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
                     add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
+                    add(new Token<>(TokenType.END, null, 4, 1));
         }};
         
         Lexer lexer = new Lexer(input);
@@ -173,6 +174,10 @@ public class LexerTest
                     
                     // end
                     add(new Token<>(TokenType.KEYWORD, "end", 9, 1));
+                    
+                    // EOF
+                    add(new Token<>(TokenType.END, null, 10, 1));
+                    
         }};
         
         Lexer lexer = new Lexer(input);

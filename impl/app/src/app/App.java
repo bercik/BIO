@@ -1,6 +1,12 @@
 package app;
 
 import analysis.lexer.Lexer;
+import analysis.lexer.LexerError;
+import analysis.lexer.Token;
+import analysis.parser.Parser;
+import analysis.parser.ParserError;
+import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -21,7 +27,24 @@ public class App
             return;
         }
         // TODO code application logic here
-        Lexer lexer = new Lexer(args[0], false);
+        try
+        {
+            Lexer lexer = new Lexer(args[0], false);
+            List<Token<?>> tokens = lexer.getTokens();
+            Parser parser = new Parser(tokens);
+        }
+        catch (LexerError ex)
+        {
+            System.err.println("Lexer error: " + ex.getMessage());
+        }
+        catch (ParserError ex)
+        {
+            System.err.println("Parser error: " + ex.getMessage());
+        }
+        catch (IOException ex)
+        {
+            System.err.println("IOException: " + ex.getMessage());
+        }
     }
 
 }

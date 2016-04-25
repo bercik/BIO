@@ -19,7 +19,9 @@ package analysis.parser;
 import analysis.lexer.Token;
 import analysis.lexer.TokenType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,6 +79,7 @@ public class ParserTest
                     add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
                     add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
                     add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
+                    add(new Token<>(TokenType.END, null, 4, 1));
         }};
         
         boolean catched = false;
@@ -93,4 +96,31 @@ public class ParserTest
         assertEquals(true, catched);
     }
     
+    @Test
+    public void testHelloWorld() throws Exception
+    {
+        System.out.println("testHelloWorld");
+        
+        List<Token<?>> inputTokens = new ArrayList<Token<?>>()
+        {{
+                    add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
+                    add(new Token<>(TokenType.ID, "onSTART", 1, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
+                    add(new Token<>(TokenType.ID, "PRINT", 2, 5));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
+                    add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
+                    add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
+                    add(new Token<>(TokenType.END, null, 4, 1));
+        }};
+        
+        List<Integer> expectedSteps = Arrays.asList(0, 3, 5, 9, 12, 13, 15, 19, 17, 11, 2);
+        
+        Parser parser = new Parser(inputTokens);
+        
+        List<Integer> steps = parser.getSteps();
+        
+        assertThat(steps, is(expectedSteps));
+    }
 }
