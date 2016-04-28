@@ -68,4 +68,88 @@ public class ProgramTree
         }
         return true;
     }
+
+    @Override
+    public String toString()
+    {
+        String toReturn = "";
+        int indent = 0;
+        
+        for (UserFunction uf : userFunctions)
+        {
+            toReturn += uf.getName() + "\n";
+            
+            toReturn += "params: [";
+            boolean comma = false;
+            for (Param p : uf.getParams())
+            {
+                toReturn += p.getName() + ", ";
+                comma = true;
+            }
+            if (comma)
+            {
+                toReturn = toReturn.substring(0, toReturn.length() - 2);
+            }
+            toReturn += "]\n";
+            
+            indent += 4;
+            for (Call c : uf.getCalls())
+            {
+                toReturn += indent(indent) + c.getName() + "\n";
+                indent += 4;
+                toReturn += callToString(c, indent);
+                indent -= 4;
+                toReturn += "\n";
+            }
+            indent -= 4;
+            
+            toReturn += "\n";
+        }
+        
+        return toReturn;
+    }
+    
+    private String callToString(Call c, int indent)
+    {
+        String toReturn = "";
+        
+        for (CallParam cp : c.getCallParams())
+        {
+            if (cp instanceof IdCallParam)
+            {
+                IdCallParam icp = (IdCallParam)cp;
+                toReturn += indent(indent) + "id: " + icp.getName();
+            }
+            else if (cp instanceof ConstCallParam)
+            {
+                ConstCallParam ccp = (ConstCallParam)cp;
+                toReturn += indent(indent) + 
+                        ccp.getValueType().toString() + ": " + (ccp.getValue() != null ? ccp.getValue() : "");
+            }
+            else if (cp instanceof Call)
+            {
+                Call cc = (Call)cp;
+                toReturn += indent(indent) + cc.getName() + "\n";
+                indent += 4;
+                    toReturn += callToString(cc, indent);
+                indent -= 4;
+            }
+            
+            toReturn += "\n";
+        }
+        
+        return toReturn;
+    }
+    
+    private String indent(int indent)
+    {
+        String toReturn = "";
+        
+        for (int i = 0; i < indent; ++i)
+        {
+            toReturn += " ";
+        }
+        
+        return toReturn;
+    }
 }
