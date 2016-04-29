@@ -1,0 +1,17 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 10),
+      CALL2
+      (
+         FOR
+         (
+            ASSIGN_LOCAL(j, 0),
+            LS(j, 10),
+            PRINT(ADD(TO_STR(MUL(i, j)), " "))
+         ),
+         PRINTLN("")
+      )
+   )
+end

@@ -124,7 +124,19 @@ public class ProgramTree
             {
                 ConstCallParam ccp = (ConstCallParam)cp;
                 toReturn += indent(indent) + 
-                        ccp.getValueType().toString() + ": " + (ccp.getValue() != null ? ccp.getValue() : "");
+                        ccp.getValueType().toString() + ": ";
+                
+                if (ccp.getValueType().equals(ValueType.STRING))
+                {
+                    toReturn += "\"";
+                }
+                
+                toReturn += (ccp.getValue() != null ? ccp.getValue() : "");
+                
+                if (ccp.getValueType().equals(ValueType.STRING))
+                {
+                    toReturn += "\"";
+                }
             }
             else if (cp instanceof Call)
             {
