@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<functions>
+    <!-- funkcje lokalne-->
+    <function>
+        <name>
+            ASSIGN_LOCAL
+        </name>
+        <special>
+            false
+        </special>
+        <call_loc>
+            true
+        </call_loc>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- funkcje specjalne-->
+    <function>
+        <name>
+            FOR
+        </name>
+        <special>
+            true
+        </special>
+        <call_loc>
+            true
+        </call_loc>
+        <params>
+            <param>
+                call
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                call
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            BREAK
+        </name>
+        <special>
+            true
+        </special>
+        <call_loc>
+            true
+        </call_loc>
+        <params>
+        </params>
+    </function>
+    
+    <!-- funkcje inne -->
+    <function>
+        <name>
+            ADD
+        </name>
+        <special>
+            false
+        </special>
+        <call_loc>
+            false
+        </call_loc>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+</functions>
