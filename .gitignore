@@ -8,3 +8,4 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+/impl/bio_shared/nbproject/private/
