@@ -22,6 +22,11 @@ package pl.rcebula.analysis.lexer;
  */
 public class LexerError extends Exception
 {
+    public LexerError(String message)
+    {
+        super(message);
+    }
+    
     public LexerError(int line, int chNum, String message)
     {
         super("[line: " + line + ", character: " + chNum + "]: " + message);

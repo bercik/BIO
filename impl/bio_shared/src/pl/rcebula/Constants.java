@@ -9,8 +9,9 @@ package pl.rcebula;
  *
  * @author robert
  */
-public class Constans
+public class Constants
 {
-    private static final String mainFunctionName = "onSTART";
-    private static final int[] mainFunctionParameters = { 0, 2 };
+    public static final String mainFunctionName = "onSTART";
+    public static final int[] mainFunctionParameters = { 0, 2 };
+    public static final String returnFunctionName = "RETURN";
 }

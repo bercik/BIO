@@ -22,6 +22,11 @@ package pl.rcebula.analysis.semantic;
  */
 public class SemanticError extends Exception
 {
+    public SemanticError(String message)
+    {
+        super(message);
+    }
+    
     public SemanticError(int line, int chNum, String message)
     {
         super("[line: " + line + ", character: " + chNum + "]: " + message);

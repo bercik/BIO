@@ -9,6 +9,8 @@ import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.ProgramTreeCreator;
 import java.io.IOException;
 import java.util.List;
+import pl.rcebula.analysis.semantic.BuiltinFunction;
+import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
 
 /**
  *
@@ -42,9 +44,12 @@ public class App
             // program tree creator
             ProgramTreeCreator ptc = new ProgramTreeCreator(tokens, steps);
             ProgramTree pt = ptc.getProgramTree();
-            
             // print
             System.out.println(pt);
+            
+            // builtin functions parser
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions.xml", false);
+            List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
         }
         catch (LexerError ex)
         {

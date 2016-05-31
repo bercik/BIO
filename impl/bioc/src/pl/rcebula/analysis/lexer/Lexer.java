@@ -115,7 +115,7 @@ public class Lexer
 
         if (!endWithEndToken)
         {
-            throw new LexerError(-1, -1, "Unexpected end of file. "
+            throw new LexerError("Unexpected end of file. "
                     + "Possibly missed string closing quotation mark");
         }
         
