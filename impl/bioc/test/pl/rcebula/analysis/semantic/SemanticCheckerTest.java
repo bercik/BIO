@@ -25,6 +25,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import pl.rcebula.Constants;
+import pl.rcebula.analysis.lexer.Token;
+import pl.rcebula.analysis.lexer.TokenType;
+import pl.rcebula.analysis.tree.Call;
+import pl.rcebula.analysis.tree.ConstCallParam;
+import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
@@ -197,6 +202,162 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.out.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testFunctionDoesntExist()
+    {
+        System.out.println("testFunctionDoesntExist()");
+        
+        // def onSTART()
+        //     foo2()
+        // end
+        ProgramTree pt = new ProgramTree();
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        Call call = new Call("foo2", null, 2, 1);
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.out.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testPassingArgumentsToUserFunction()
+    {
+        System.out.println("testPassingArgumentsToUserFunction()");
+        
+        // def onSTART()
+        //     foo(10)
+        // end
+        // def foo(p1, p2)
+        // end
+        
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        Call call = new Call("foo", null, 2, 1);
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 2, 10), 2, 10));
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+        
+        // foo
+        uf = new UserFunction("foo", 4, 1);
+        uf.addParam(new Param("p1", 4, 2));
+        uf.addParam(new Param("p2", 4, 5));
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.out.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testPassingArgumentsToBuiltinFunction()
+    {
+        System.out.println("testPassingArgumentsToBuiltinFunction()");
+        
+        // def onSTART()
+        //     FOR(DN(), flaga, 10)
+        // end
+        
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        Call call = new Call(Constants.forLoopFunctionName, null, 2, 1);
+        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 5));
+        call.addCallParam(new IdCallParam("flaga", 2, 10));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 2, 15), 2, 15));
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, true, ParamType.CALL, 
+                ParamType.ALL, ParamType.CALL));
+        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true, true));
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.out.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testBreakInsideForLoop()
+    {
+        System.out.println("testBreakInsideForLoop()");
+        
+        // def onSTART()
+        //     FOR(DN(), flaga, 10)
+        //     BREAK()
+        // end
+        
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        Call call = new Call(Constants.forLoopFunctionName, null, 2, 1);
+        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 5));
+        call.addCallParam(new IdCallParam("flaga", 2, 10));
+        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 15));
+        uf.addCall(call);
+        
+        call = new Call(Constants.breakFunctionName, null, 3, 1);
+        uf.addCall(call);
+        
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, true, ParamType.CALL, 
+                ParamType.ALL, ParamType.CALL));
+        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true, true));
+        builtinFunctions.add(new BuiltinFunction(Constants.breakFunctionName, true, true));
         
         boolean catched = false;
         try

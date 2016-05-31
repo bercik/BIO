@@ -64,6 +64,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            DN
+        </name>
+        <special>
+            true
+        </special>
+        <call_loc>
+            true
+        </call_loc>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             BREAK
         </name>
         <special>

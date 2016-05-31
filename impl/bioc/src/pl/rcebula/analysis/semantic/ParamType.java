@@ -16,6 +16,11 @@
  */
 package pl.rcebula.analysis.semantic;
 
+import pl.rcebula.analysis.tree.Call;
+import pl.rcebula.analysis.tree.CallParam;
+import pl.rcebula.analysis.tree.ConstCallParam;
+import pl.rcebula.analysis.tree.IdCallParam;
+
 /**
  *
  * @author robert
@@ -24,5 +29,45 @@ public enum ParamType
 {
     ID, // identyfikator
     CALL, // wywołanie funkcyjne
+    CONST, // stała
     ALL; // wszystko
+    
+    @Override
+    public String toString()
+    {
+        return this.name().toLowerCase().replace("_", " ");
+    }
+    
+    public static ParamType convert(CallParam callParam)
+    {
+        if (callParam instanceof Call)
+        {
+            return ParamType.CALL;
+        }
+        else if (callParam instanceof IdCallParam)
+        {
+            return ParamType.ID;
+        }
+        else if (callParam instanceof ConstCallParam)
+        {
+            return ParamType.CONST;
+        }
+        else
+        {
+            throw new RuntimeException("Unrecognized call param");
+        }
+    }
+    
+    public static boolean compare(ParamType pt1, ParamType pt2)
+    {
+        // jeżeli pt1 jest all to zawsze true
+        if (pt1.equals(ParamType.ALL))
+        {
+            return true;
+        }
+        else
+        {
+            return pt1.equals(pt2);
+        }
+    }
 }
