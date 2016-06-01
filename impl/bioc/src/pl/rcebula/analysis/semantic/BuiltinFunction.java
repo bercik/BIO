@@ -30,24 +30,19 @@ public class BuiltinFunction
 {
     private final String name;
     private final boolean special;
-    private final boolean callLoc;
     private final List<ParamType> params;
 
-    public BuiltinFunction(String name, boolean special, boolean callLoc,
-            List<ParamType> params)
+    public BuiltinFunction(String name, boolean special, List<ParamType> params)
     {
         this.name = name;
         this.special = special;
-        this.callLoc = callLoc;
         this.params = new ArrayList<>(params);
     }
     
-    public BuiltinFunction(String name, boolean special, boolean callLoc,
-            ParamType... params)
+    public BuiltinFunction(String name, boolean special, ParamType... params)
     {
         this.name = name;
         this.special = special;
-        this.callLoc = callLoc;
         this.params = Arrays.asList(params);
     }
 
@@ -61,11 +56,6 @@ public class BuiltinFunction
         return special;
     }
 
-    public boolean isCallLoc()
-    {
-        return callLoc;
-    }
-
     public List<ParamType> getParams()
     {
         return Collections.unmodifiableList(params);
@@ -77,7 +67,6 @@ public class BuiltinFunction
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.name);
         hash = 97 * hash + (this.special ? 1 : 0);
-        hash = 97 * hash + (this.callLoc ? 1 : 0);
         hash = 97 * hash + Objects.hashCode(this.params);
         return hash;
     }
@@ -99,10 +88,6 @@ public class BuiltinFunction
         }
         final BuiltinFunction other = (BuiltinFunction)obj;
         if (this.special != other.special)
-        {
-            return false;
-        }
-        if (this.callLoc != other.callLoc)
         {
             return false;
         }

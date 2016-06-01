@@ -124,10 +124,25 @@ public class SemanticChecker
                 }
             }
 
-            // dodajemy instrukcję RETURN(none) na koniec funkcji
-            Call returnCall = new Call(Constants.returnFunctionName, null, -1, -1);
-            returnCall.addCallParam(new ConstCallParam(new Token<>(TokenType.NONE, null, -1, -1), -1, -1));
-            uf.addCall(returnCall);
+            // dodajemy instrukcję RETURN(none) na koniec funkcji jeżeli na końcu nie znajduje się już
+            // instrukcja RETURN
+            boolean lastCallReturn = false;
+            Call lastCall = uf.getCalls().get(uf.getCalls().size() - 1);
+            if (lastCall instanceof Call)
+            {
+                Call c = (Call)lastCall;
+                if (c.getName().equals(Constants.returnFunctionName))
+                {
+                    lastCallReturn = true;
+                }
+            }
+            
+            if (!lastCallReturn)
+            {
+                Call returnCall = new Call(Constants.returnFunctionName, null, -1, -1);
+                returnCall.addCallParam(new ConstCallParam(new Token<>(TokenType.NONE, null, -1, -1), -1, -1));
+                uf.addCall(returnCall);
+            }
         }
 
         // sprawdzamy czy funkcja main występuje w programie

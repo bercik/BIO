@@ -71,13 +71,10 @@ public class BuiltinFunctionsParserTest
         
         List<BuiltinFunction> expResult = new ArrayList<BuiltinFunction>()
         {{
-                    add(new BuiltinFunction("ASSIGN_LOCAL", false, true, 
-                            ParamType.ID, ParamType.ALL));
-                    add(new BuiltinFunction("FOR", true, true, 
-                            ParamType.CALL, ParamType.ALL, ParamType.CALL));
-                    add(new BuiltinFunction("BREAK", true, true));
-                    add(new BuiltinFunction("ADD", false, false, 
-                            ParamType.ALL, ParamType.ALL));
+                    add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
+                    add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
+                    add(new BuiltinFunction("BREAK", true));
+                    add(new BuiltinFunction("ADD", false, ParamType.ALL, ParamType.ALL));
         }};
         
         List<BuiltinFunction> result = instance.getBuiltinFunctions();

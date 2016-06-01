@@ -25,9 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <special>
             false
         </special>
-        <call_loc>
-            true
-        </call_loc>
         <params>
             <param>
                 id
@@ -46,9 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <special>
             true
         </special>
-        <call_loc>
-            true
-        </call_loc>
         <params>
             <param>
                 call
@@ -69,9 +63,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <special>
             true
         </special>
-        <call_loc>
-            true
-        </call_loc>
         <params>
         </params>
     </function>
@@ -83,9 +74,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <special>
             true
         </special>
-        <call_loc>
-            true
-        </call_loc>
         <params>
         </params>
     </function>
@@ -98,9 +86,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <special>
             false
         </special>
-        <call_loc>
-            false
-        </call_loc>
         <params>
             <param>
                 all

@@ -75,9 +75,6 @@ public class BuiltinFunctionsParser
                 boolean special = Boolean.parseBoolean(elem.getElementsByTagName("special").item(0)
                         .getChildNodes().item(0).getNodeValue().trim());
 
-                boolean callLoc = Boolean.parseBoolean(elem.getElementsByTagName("call_loc")
-                        .item(0).getChildNodes().item(0).getNodeValue().trim());
-
                 List<ParamType> params = new ArrayList<>();
                 
                 Element e = (Element)elem.getElementsByTagName("params").item(0);
@@ -91,7 +88,7 @@ public class BuiltinFunctionsParser
                     params.add(param);
                 }
                 
-                builtinFunctions.add(new BuiltinFunction(name, special, callLoc, params));
+                builtinFunctions.add(new BuiltinFunction(name, special, params));
             }
         }
     }

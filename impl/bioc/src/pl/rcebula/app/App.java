@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.List;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
+import pl.rcebula.analysis.semantic.SemanticChecker;
+import pl.rcebula.analysis.semantic.SemanticError;
 
 /**
  *
@@ -48,8 +50,11 @@ public class App
             System.out.println(pt);
             
             // builtin functions parser
-            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions.xml", false);
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions.xml", true);
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
+            
+            // semantic checker
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
         }
         catch (LexerError ex)
         {
@@ -59,10 +64,13 @@ public class App
         {
             System.err.println("Parser error: " + ex.getMessage());
         }
+        catch (SemanticError ex)
+        {
+            System.err.println("Semantic error: " + ex.getMessage());
+        }
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
         }
     }
-
 }

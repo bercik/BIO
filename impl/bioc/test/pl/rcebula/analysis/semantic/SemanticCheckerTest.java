@@ -102,13 +102,18 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
+        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        
         UserFunction uf = new UserFunction("foo", 1, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         uf = new UserFunction("foo2", 2, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         uf = new UserFunction("foo", 3, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
@@ -134,14 +139,18 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
+        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        
         UserFunction uf = new UserFunction("foo", 1, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         uf = new UserFunction("ASSIGN_LOCAL", 2, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        BuiltinFunction bf = new BuiltinFunction("ASSIGN_LOCAL", false, true);
+        BuiltinFunction bf = new BuiltinFunction("ASSIGN_LOCAL", false);
         builtinFunctions.add(bf);
         
         boolean catched = false;
@@ -165,10 +174,14 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
+        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        
         UserFunction uf = new UserFunction("foo", 1, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         uf = new UserFunction("foo2", 2, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
@@ -194,10 +207,14 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
+        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        
         UserFunction uf = new UserFunction("foo", 1, 1);
+        uf.addCall(c);
         pt.addUserFunction(uf);
         
         uf = new UserFunction(Constants.mainFunctionName, 2, 1);
+        uf.addCall(c);
         uf.addParam(new Param("a", 2, 10));
         pt.addUserFunction(uf);
         
@@ -267,8 +284,11 @@ public class SemanticCheckerTest
         uf.addCall(call);
         pt.addUserFunction(uf);
         
+        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        
         // foo
         uf = new UserFunction("foo", 4, 1);
+        uf.addCall(c);
         uf.addParam(new Param("p1", 4, 2));
         uf.addParam(new Param("p2", 4, 5));
         pt.addUserFunction(uf);
@@ -310,9 +330,9 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, true, ParamType.CALL, 
+        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, ParamType.CALL, 
                 ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true, true));
+        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true));
         
         boolean catched = false;
         try
@@ -354,10 +374,10 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, true, ParamType.CALL, 
+        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, ParamType.CALL, 
                 ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true, true));
-        builtinFunctions.add(new BuiltinFunction(Constants.breakFunctionName, true, true));
+        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(Constants.breakFunctionName, true));
         
         boolean catched = false;
         try
