@@ -18,7 +18,9 @@ package pl.rcebula.code_generation.intermediate;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.rcebula.Constants;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
+import pl.rcebula.analysis.semantic.ParamType;
 import pl.rcebula.analysis.tree.Call;
 import pl.rcebula.analysis.tree.CallParam;
 import pl.rcebula.analysis.tree.ConstCallParam;
@@ -34,11 +36,12 @@ import pl.rcebula.analysis.tree.UserFunction;
 public class CodeGenerator
 {
     private final IntermediateCode ic;
-    
+
     private final ProgramTree pt;
     private final List<BuiltinFunction> builtinFunctions;
-    
+
     private final InterpreterFunctionsGenerator ifg;
+    private final SpecialFunctionsGenerator sfg;
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions)
     {
@@ -46,16 +49,18 @@ public class CodeGenerator
         ic = new IntermediateCode();
         this.pt = pt;
         this.builtinFunctions = builtinFunctions;
-        
+
+        this.sfg = new SpecialFunctionsGenerator(this);
+
         for (UserFunction uf : pt.getUserFunctions())
         {
             eval(uf);
         }
-        
+
         // dodajemy pustą linię na koniec
         ic.appendLine(new Line());
     }
-    
+
     private void eval(UserFunction uf)
     {
         // deklaracja funkcji
@@ -74,10 +79,10 @@ public class CodeGenerator
         Line line = new Line(fields);
         // dodaj do kodu na początku
         ic.insertLine(line, 0);
-        
+
         // dodaj pustą linię na koniec
         ic.appendLine(new Line());
-        
+
         // definicja funkcji
         // pierwsza linia: nazwa funkcji, parametr1, parametr2, ..., parametrN
         fields = new ArrayList<>();
@@ -87,25 +92,29 @@ public class CodeGenerator
         {
             fields.add(new StringField(p.getName()));
         }
-        
+
         // tworzymy linię
         line = new Line(fields);
         // dodajemy etykietę występowania funkcji
         line.addLabel(functionOccurenceLabel);
         // dodajemy na końcu
         ic.appendLine(line);
-        
+
         // generujemy kod dla wywołań funkcji
-        for (Call c : uf.getCalls())
+        for (int i = 0; i < uf.getCalls().size(); ++i)
         {
+            Call c = uf.getCalls().get(i);
             // tworzymy kod rekurencyjnie
             eval(c, null, null);
-            // na końcu dodajemy komendę clear stack
-            ic.appendLine(ifg.generateClearStack());
+            // na końcu dodajemy komendę clear stack o ile nie jest to koniec funkcji
+            if (i < uf.getCalls().size() - 1)
+            {
+                ic.appendLine(ifg.generateClearStack());
+            }
         }
     }
-    
-    private void eval(CallParam cp, Label forStart, Label forEnd)
+
+    public void eval(CallParam cp, Label forStart, Label forEnd)
     {
         if (cp instanceof Call)
         {
@@ -113,7 +122,7 @@ public class CodeGenerator
         }
         else if (cp instanceof IdCallParam)
         {
-            eval((IdCallParam)cp);
+            eval((IdCallParam)cp, true);
         }
         else if (cp instanceof ConstCallParam)
         {
@@ -124,7 +133,7 @@ public class CodeGenerator
             throw new RuntimeException("Unknown CallParam subclass");
         }
     }
-    
+
     private UserFunction isUserFunction(Call c)
     {
         for (UserFunction uf : pt.getUserFunctions())
@@ -134,10 +143,10 @@ public class CodeGenerator
                 return uf;
             }
         }
-        
+
         return null;
     }
-    
+
     private BuiltinFunction isBuiltinFunction(Call c)
     {
         for (BuiltinFunction bf : builtinFunctions)
@@ -147,11 +156,11 @@ public class CodeGenerator
                 return bf;
             }
         }
-        
+
         return null;
     }
-    
-    private void eval(Call call, Label forStart, Label forEnd)
+
+    public void eval(Call call, Label forStart, Label forEnd)
     {
         BuiltinFunction bf = isBuiltinFunction(call);
         if (bf != null)
@@ -160,10 +169,53 @@ public class CodeGenerator
             if (bf.isSpecial())
             {
                 // funkcja specjalna
+                switch (bf.getName())
+                {
+                    case Constants.forLoopFunctionName:
+                        Call call1 = (Call)call.getCallParams().get(0);
+                        CallParam cp = call.getCallParams().get(1);
+                        Call call2 = (Call)call.getCallParams().get(2);
+                        sfg.generateFor(call1, cp, call2);
+                        break;
+                    default:
+                        String message = "There is no special function generator for " + bf.getName() + " function";
+                        throw new RuntimeException(message);
+                }
             }
             else
             {
                 // funkcja regularna
+                for (int i = 0; i < bf.getParams().size(); ++i)
+                {
+                    // push, id:x
+                    // call2
+                    // ...
+                    // pop, 2
+                    // call_loc, nazwa_funkcji
+
+                    ParamType pt = bf.getParams().get(i);
+                    CallParam cp = call.getCallParams().get(i);
+
+                    if (pt.equals(ParamType.ID))
+                    {
+                        eval((IdCallParam)cp, false);
+                    }
+                    else
+                    {
+                        eval(cp, forStart, forEnd);
+                    }
+                }
+
+                Line line;
+
+                if (bf.getParams().size() != 0)
+                {
+                    line = ifg.generatePop(bf.getParams().size());
+                    ic.appendLine(line);
+                }
+
+                line = ifg.generateCallLoc(call.getName(), call.getLine(), call.getChNum());
+                ic.appendLine(line);
             }
         }
         else
@@ -172,6 +224,26 @@ public class CodeGenerator
             if (uf != null)
             {
                 // funkcja użytkownika
+                // call1
+                // call2
+                // ...
+                // pop, 2
+                // call, nazwa_funkcji
+                for (CallParam cp : call.getCallParams())
+                {
+                    eval(cp, forStart, forEnd);
+                }
+
+                Line line;
+
+                if (uf.getParams().size() != 0)
+                {
+                    line = ifg.generatePop(uf.getParams().size());
+                    ic.appendLine(line);
+                }
+
+                line = ifg.generateCall(call.getName(), call.getLine(), call.getChNum());
+                ic.appendLine(line);
             }
             else
             {
@@ -179,16 +251,16 @@ public class CodeGenerator
             }
         }
     }
-    
+
     private void eval(IdCallParam icp, boolean isVar)
     {
-        Line line = ifg.generatePush(icp, isVar, icp.getLine(), icp.getChNum());
+        Line line = ifg.generatePush(icp, isVar);
         ic.appendLine(line);
     }
-    
+
     private void eval(ConstCallParam ccp)
     {
-        Line line = ifg.generatePush(ccp, ccp.getLine(), ccp.getChNum());
+        Line line = ifg.generatePush(ccp);
         ic.appendLine(line);
     }
 

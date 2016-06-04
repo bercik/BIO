@@ -56,7 +56,7 @@ public class InterpreterFunctionsGenerator
         return new Line(fields);
     }
 
-    public Line generatePush(ConstCallParam ccp, Integer line, Integer chNum)
+    public Line generatePush(ConstCallParam ccp)
     {
         String str = "";
 
@@ -69,10 +69,10 @@ public class InterpreterFunctionsGenerator
             str += val.toString();
         }
 
-        return generatePush(str, line, chNum);
+        return generatePush(str, ccp.getLine(), ccp.getChNum());
     }
 
-    public Line generatePush(IdCallParam icp, boolean isVar, Integer line, Integer chNum)
+    public Line generatePush(IdCallParam icp, boolean isVar)
     {
         // id/var:value
         String str = "";
@@ -88,7 +88,7 @@ public class InterpreterFunctionsGenerator
         str += Constants.valueSeparator;
         str += icp.getName();
 
-        return generatePush(str, line, chNum);
+        return generatePush(str, icp.getLine(), icp.getChNum());
     }
 
     private Line generatePush(String str, Integer line, Integer chNum)

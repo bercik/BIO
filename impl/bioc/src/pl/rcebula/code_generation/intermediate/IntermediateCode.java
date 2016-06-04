@@ -79,4 +79,31 @@ public class IntermediateCode
     {
         return lines.size();
     }
+
+    @Override
+    public String toString()
+    {
+        String result = "";
+        
+        for (Line l : lines)
+        {
+            result += l.toString() + "\n";
+        }
+        
+        return result;
+    }
+    
+    public String toStringWithLinesNumber()
+    {
+        String result = "";
+        
+        Integer c = 1;
+        for (Line l : lines)
+        {
+            result += "[" + c.toString() + "] " +  l.toString() + "\n";
+            ++c;
+        }
+        
+        return result;
+    }
 }

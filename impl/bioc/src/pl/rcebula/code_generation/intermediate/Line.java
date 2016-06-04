@@ -19,6 +19,7 @@ package pl.rcebula.code_generation.intermediate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import pl.rcebula.Constants;
 
 /**
  *
@@ -98,5 +99,23 @@ public class Line
         }
         
         line += shift;
+    }
+
+    @Override
+    public String toString()
+    {
+        String result = "";
+        
+        for (IField f : fields)
+        {
+            result += f.toString() + Constants.fieldsSeparator;
+        }
+        
+        if (fields.size() > 0)
+        {
+            result = result.substring(0, result.length() - 1);
+        }
+        
+        return result;
     }
 }
