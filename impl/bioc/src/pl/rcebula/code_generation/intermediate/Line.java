@@ -38,6 +38,11 @@ public class Line
     {
         this.fields.addAll(Arrays.asList(fields));
     }
+    
+    public Line(List<IField> fields)
+    {
+        this.fields.addAll(fields);
+    }
 
     public int getLine()
     {

@@ -20,7 +20,7 @@ package pl.rcebula.code_generation.intermediate;
  *
  * @author robert
  */
-public class LabelField
+public class LabelField implements IField
 {
     private final Label label;
 

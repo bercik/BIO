@@ -43,6 +43,11 @@ public class IntermediateCode
         }
     }
     
+    public void appendLine(Line l)
+    {
+        insertLine(l, numberOfLines());
+    }
+    
     public Line getLine(int index)
     {
         return lines.get(index);

@@ -21,4 +21,9 @@ public class Constants
     public static final String forLoopFunctionName = "FOR";
     public static final String breakFunctionName = "BREAK";
     public static final String continueFunctionName = "CONTINUE";
+    
+    // rozgranicznik pól
+    public static final String fieldsSeparator = ",";
+    // rozgranicznik wartości
+    public static final String valueSeparator = ":";
 }
