@@ -23,6 +23,8 @@ import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.code.IdValueType;
+import pl.rcebula.code.ValueType;
+import pl.rcebula.utils.StringUtils;
 
 /**
  *
@@ -66,7 +68,27 @@ public class InterpreterFunctionsGenerator
         Object val = ccp.getValue();
         if (val != null)
         {
-            str += val.toString();
+            String s = val.toString();
+            // jeżeli string to otaczamy cudzysłowiem i dodajemy \ przed każdym \
+            if (ccp.getValueType().equals(ValueType.STRING))
+            {
+                for (Character key : StringUtils.specialCharacters.keySet())
+                {
+                    Character value = StringUtils.specialCharacters.get(key);
+                    if (value.equals('\\'))
+                    {
+                        s = s.replaceAll("\\\\", "\\\\\\\\");
+                    }
+                    else
+                    {
+                        s = s.replaceAll(value.toString(), "\\\\" + key.toString());
+                    }
+                }
+
+                s = "\"" + s + "\"";
+            }
+
+            str += s;
         }
 
         return generatePush(str, ccp.getLine(), ccp.getChNum());
@@ -114,7 +136,7 @@ public class InterpreterFunctionsGenerator
 
         return new Line(fields);
     }
-    
+
     public Line generatePopc(Integer number)
     {
         List<IField> fields = new ArrayList<>();
@@ -129,32 +151,32 @@ public class InterpreterFunctionsGenerator
     public Line generateJmp(Label label)
     {
         List<IField> fields = new ArrayList<>();
-        
+
         // jmp, label
         fields.add(new StringField(InterpreterFunction.JMP.toString()));
         fields.add(new LabelField(label));
-        
+
         return new Line(fields);
     }
-    
+
     public Line generateJmpIfFalse(Label label)
     {
         List<IField> fields = new ArrayList<>();
-        
+
         // jmp_if_false, label
         fields.add(new StringField(InterpreterFunction.JMP_IF_FALSE.toString()));
         fields.add(new LabelField(label));
-        
+
         return new Line(fields);
     }
-    
+
     public Line generateClearStack()
     {
         List<IField> fields = new ArrayList<>();
-        
+
         // clear_stack
         fields.add(new StringField(InterpreterFunction.CLEAR_STACK.toString()));
-        
+
         return new Line(fields);
     }
 }

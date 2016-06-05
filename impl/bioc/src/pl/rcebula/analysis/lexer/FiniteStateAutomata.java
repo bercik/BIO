@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import pl.rcebula.utils.StringUtils;
 
 /**
  *
@@ -256,19 +257,7 @@ public class FiniteStateAutomata
         str = str.substring(1, str.length() - 1);
 
         String newStr = "";
-        Map<Character, Character> specialCharacters
-                = new HashMap<Character, Character>()
-                {
-                    {
-                        put('n', '\n');
-                        put('r', '\r');
-                        put('"', '"');
-                        put('f', '\f');
-                        put('b', '\b');
-                        put('\\', '\\');
-                        put('t', '\t');
-                    }
-                };
+        
 
         // przechodzimy po całym napisie i szukamy znaków specjalnych
         boolean specChar = false;
@@ -278,14 +267,14 @@ public class FiniteStateAutomata
 
             if (specChar)
             {
-                if (!specialCharacters.containsKey(ch))
+                if (!StringUtils.specialCharacters.containsKey(ch))
                 {
                     throw new LexerError(line, chNum, 
                             "Illegal special character \\" + ch + 
                                     " in string \"" + str + "\"");
                 }
                 
-                newStr += specialCharacters.get(ch);
+                newStr += StringUtils.specialCharacters.get(ch);
                 specChar = false;
             }
             else

@@ -142,4 +142,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </param>
         </params>
     </function>
+    
+    <function>
+        <name>
+            PRINT
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            RETURN
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
 </functions>
