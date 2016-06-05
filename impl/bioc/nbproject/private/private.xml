@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/robert/programowanie/BIO/impl/bioc/src/pl/rcebula/code_generation/intermediate/IntermediateCode.java</file>
+            <file>file:/home/robert/programowanie/BIO/impl/bioc/src/pl/rcebula/code_generation/intermediate/SpecialFunctionsGenerator.java</file>
             <file>file:/home/robert/programowanie/BIO/impl/bioc/src/pl/rcebula/code_generation/intermediate/InterpreterFunctionsGenerator.java</file>
+            <file>file:/home/robert/programowanie/BIO/impl/bioc/test/pl/rcebula/code_generation/intermediate/CodeGeneratorTest.java</file>
             <file>file:/home/robert/programowanie/BIO/impl/bioc/src/pl/rcebula/code_generation/intermediate/CodeGenerator.java</file>
         </group>
     </open-files>

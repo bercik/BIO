@@ -17,24 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <functions>
-    <!-- funkcje lokalne-->
-    <function>
-        <name>
-            ASSIGN_LOCAL
-        </name>
-        <special>
-            false
-        </special>
-        <params>
-            <param>
-                id
-            </param>
-            <param>
-                all
-            </param>
-        </params>
-    </function>
-    
     <!-- funkcje specjalne-->
     <function>
         <name>
@@ -49,6 +31,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </param>
             <param>
                 all
+            </param>
+            <param>
+                call
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IF
+        </name>
+        <special>
+            true
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                call
+            </param>
+            <param>
+                call
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CALL2
+        </name>
+        <special>
+            true
+        </special>
+        <params>
+            <param>
+                call
             </param>
             <param>
                 call
@@ -78,6 +97,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </params>
     </function>
     
+    <function>
+        <name>
+            CONTINUE
+        </name>
+        <special>
+            true
+        </special>
+        <params>
+        </params>
+    </function>
+    
     <!-- funkcje inne -->
     <function>
         <name>
@@ -89,6 +119,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <params>
             <param>
                 all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSIGN_LOCAL
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
             </param>
             <param>
                 all

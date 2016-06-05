@@ -171,11 +171,31 @@ public class CodeGenerator
                 // funkcja specjalna
                 switch (bf.getName())
                 {
-                    case Constants.forLoopFunctionName:
+                    case SpecialFunctionsName.forLoopFunctionName:
                         Call call1 = (Call)call.getCallParams().get(0);
                         CallParam cp = call.getCallParams().get(1);
                         Call call2 = (Call)call.getCallParams().get(2);
                         sfg.generateFor(call1, cp, call2);
+                        break;
+                    case SpecialFunctionsName.ifFunctionName:
+                        cp = call.getCallParams().get(0);
+                        call1 = (Call)call.getCallParams().get(1);
+                        call2 = (Call)call.getCallParams().get(2);
+                        sfg.generateIf(cp, call1, call2, forStart, forEnd);
+                        break;
+                    case SpecialFunctionsName.call2FunctionName:
+                        call1 = (Call)call.getCallParams().get(0);
+                        call2 = (Call)call.getCallParams().get(1);
+                        sfg.generateCall2(call1, call2, forStart, forEnd);
+                        break;
+                    case SpecialFunctionsName.doNothingFunctionName:
+                        sfg.generateDN();
+                        break;
+                    case SpecialFunctionsName.breakFunctionName:
+                        sfg.generateBreak(forEnd);
+                        break;
+                    case SpecialFunctionsName.continueFunctionName:
+                        sfg.generateContinue(forStart);
                         break;
                     default:
                         String message = "There is no special function generator for " + bf.getName() + " function";

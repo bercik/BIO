@@ -16,6 +16,7 @@
  */
 package pl.rcebula.analysis.tree;
 
+import pl.rcebula.code.ValueType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

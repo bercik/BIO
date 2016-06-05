@@ -13,6 +13,8 @@ import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
 import pl.rcebula.analysis.semantic.SemanticChecker;
 import pl.rcebula.analysis.semantic.SemanticError;
+import pl.rcebula.code_generation.intermediate.CodeGenerator;
+import pl.rcebula.code_generation.intermediate.IntermediateCode;
 
 /**
  *
@@ -47,6 +49,8 @@ public class App
             ProgramTreeCreator ptc = new ProgramTreeCreator(tokens, steps);
             ProgramTree pt = ptc.getProgramTree();
             // print
+            System.out.println("PARSE TREE");
+            System.out.println("-------------------------");
             System.out.println(pt);
             
             // builtin functions parser
@@ -55,6 +59,16 @@ public class App
             
             // semantic checker
             SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+            
+            // intermediate code generator
+            CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+            IntermediateCode ic = cg.getIc();
+            
+            // print
+            System.out.println("");
+            System.out.println("INTERMEDIATE CODE");
+            System.out.println("-------------------------");
+            System.out.println(ic.toStringWithLinesNumber());
         }
         catch (LexerError ex)
         {

@@ -54,11 +54,21 @@ public class CodeGeneratorTest
         {
             {
                 add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
-                add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
+                add(new BuiltinFunction("CALL2", true, ParamType.CALL, ParamType.CALL));
+                add(new BuiltinFunction("DN", true));
+                add(new BuiltinFunction("IF", true, ParamType.ALL, ParamType.CALL, ParamType.CALL));
+                add(new BuiltinFunction("BREAK", true));
+                add(new BuiltinFunction("CONTINUE", true));
+
+                add(new BuiltinFunction("LS", false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("GT", false, ParamType.ALL, ParamType.ALL));
                 add(new BuiltinFunction("LE", false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
                 add(new BuiltinFunction("PRINT", false, ParamType.ALL));
-                add(new BuiltinFunction("DEC", false, ParamType.ALL));
+                add(new BuiltinFunction("DEC", false, ParamType.ID));
+                add(new BuiltinFunction("INC", false, ParamType.ID));
                 add(new BuiltinFunction("RETURN", false, ParamType.ALL));
+                add(new BuiltinFunction("MUL", false, ParamType.ALL, ParamType.ALL));
             }
         };
     }
@@ -238,7 +248,7 @@ public class CodeGeneratorTest
                 + "call_loc,LE,7,1\n"
                 + "pop,1\n"
                 + "jmp_if_false,33\n"
-                + "push,var:p,8,2\n"
+                + "push,id:p,8,2\n"
                 + "pop,1\n"
                 + "call_loc,DEC,8,1\n"
                 + "popc,1\n"
@@ -249,7 +259,253 @@ public class CodeGeneratorTest
                 + "pop,1\n"
                 + "call_loc,RETURN,9,1\n"
                 + "\n";
-                
-                assertEquals(expected, ic.toString());
+
+        assertEquals(expected, ic.toString());
+    }
+
+    @Test
+    public void testNestedForLoops()
+    {
+        /*
+        def onSTART()
+            FOR(
+                ASSIGN_LOCAL(i, 0),
+                LS(i, 10),
+                CALL2(
+                    FOR(
+                        ASSIGN_LOCAL(j, 0),
+                        LS(j, 10),
+                        CALL2(
+                            PRINT(MUL(i, j)),
+                            INC(j)) % CALL2
+                           ), % FOR
+                    INC(i)) % CALL2
+                   ) % FOR
+        end
+         */
+
+        ProgramTree pt = new ProgramTree();
+
+        // def onSTART()
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        pt.addUserFunction(uf);
+
+        // FOR
+        Call callFor = new Call("FOR", null, 2, 1);
+        uf.addCall(callFor);
+
+        // ASSIGN_LOCAL(i, 0),
+        Call call1 = new Call("ASSIGN_LOCAL", callFor, 3, 1);
+        callFor.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("i", 3, 2));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, 3, 3), 3, 3));
+
+        // LS(i, 10),
+        call1 = new Call("LS", callFor, 4, 1);
+        callFor.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("i", 4, 2));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 4, 3), 4, 3));
+
+        // CALL2(
+        Call call2 = new Call("CALL2", callFor, 5, 1);
+        callFor.addCallParam(call2);
+
+        // FOR(
+        Call insideFor = new Call("FOR", call2, 6, 1);
+        call2.addCallParam(insideFor);
+
+        // ASSIGN_LOCAL(j, 0),
+        call1 = new Call("ASSIGN_LOCAL", insideFor, 7, 1);
+        insideFor.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("j", 7, 2));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, 7, 3), 7, 3));
+
+        // LS(j, 10),
+        call1 = new Call("LS", insideFor, 8, 1);
+        insideFor.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("j", 8, 2));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 8, 3), 8, 3));
+
+        // CALL2(
+        Call insideCall2 = new Call("CALL2", insideFor, 9, 1);
+        insideFor.addCallParam(insideCall2);
+
+        // PRINT(MUL(i, j)),
+        call1 = new Call("PRINT", insideCall2, 10, 1);
+        insideCall2.addCallParam(call1);
+        Call call22 = new Call("MUL", call1, 10, 2);
+        call1.addCallParam(call22);
+        call22.addCallParam(new IdCallParam("i", 10, 3));
+        call22.addCallParam(new IdCallParam("j", 10, 4));
+
+        // INC(j)
+        call1 = new Call("INC", insideCall2, 11, 1);
+        insideCall2.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("j", 11, 2));
+
+        //  INC(i)
+        call1 = new Call("INC", call2, 12, 1);
+        call2.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("i", 12, 2));
+
+        CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+        IntermediateCode ic = cg.getIc();
+
+        String expected = "onSTART,3,1,1\n"
+                + "\n"
+                + "onSTART\n"
+                + "push,id:i,3,2\n"
+                + "push,int:0,3,3\n"
+                + "pop,2\n"
+                + "call_loc,ASSIGN_LOCAL,3,1\n"
+                + "popc,1\n"
+                + "push,var:i,4,2\n"
+                + "push,int:10,4,3\n"
+                + "pop,2\n"
+                + "call_loc,LS,4,1\n"
+                + "pop,1\n"
+                + "jmp_if_false,45\n"
+                + "push,id:j,7,2\n"
+                + "push,int:0,7,3\n"
+                + "pop,2\n"
+                + "call_loc,ASSIGN_LOCAL,7,1\n"
+                + "popc,1\n"
+                + "push,var:j,8,2\n"
+                + "push,int:10,8,3\n"
+                + "pop,2\n"
+                + "call_loc,LS,8,1\n"
+                + "pop,1\n"
+                + "jmp_if_false,38\n"
+                + "push,var:i,10,3\n"
+                + "push,var:j,10,4\n"
+                + "pop,2\n"
+                + "call_loc,MUL,10,2\n"
+                + "pop,1\n"
+                + "call_loc,PRINT,10,1\n"
+                + "popc,1\n"
+                + "push,id:j,11,2\n"
+                + "pop,1\n"
+                + "call_loc,INC,11,1\n"
+                + "popc,1\n"
+                + "jmp,20\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
+                + "push,id:i,12,2\n"
+                + "pop,1\n"
+                + "call_loc,INC,12,1\n"
+                + "popc,1\n"
+                + "jmp,9\n"
+                + "push,none:,-1,-1\n"
+                + "\n";
+
+        assertEquals(expected, ic.toString());
+    }
+
+    @Test
+    public void testBreak()
+    {
+        /*
+        def onSTART()
+            ASSIGN_LOCAL(i, 0),
+            FOR(
+                DN(),
+                true,
+                CALL2(
+                    PRINT(INC(i)),
+                    IF(GT(i, 9), BREAK(), CONTINUE())
+                    ) % CALL2
+                ) % FOR
+        end
+         */
+
+        ProgramTree pt = new ProgramTree();
+
+        // onSTART()
+        UserFunction uf = new UserFunction("onSTART", 1, 1);
+        pt.addUserFunction(uf);
+
+        // ASSIGN_LOCAL(i, 0),
+        Call call1 = new Call("ASSIGN_LOCAL", null, 2, 1);
+        uf.addCall(call1);
+        call1.addCallParam(new IdCallParam("i", 2, 2));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, 2, 3), 2, 3));
+
+        // FOR(
+        Call forCall = new Call("FOR", null, 3, 1);
+        uf.addCall(forCall);
+
+        // DN(),
+        call1 = new Call("DN", forCall, 4, 1);
+        forCall.addCallParam(call1);
+
+        // true,
+        forCall.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, 5, 1), 5, 1));
+
+        // CALL2(
+        Call call2 = new Call("CALL2", forCall, 6, 1);
+        forCall.addCallParam(call2);
+
+        // PRINT(INC(i)),
+        call1 = new Call("PRINT", call2, 7, 1);
+        call2.addCallParam(call1);
+        Call call22 = new Call("INC", call1, 7, 2);
+        call1.addCallParam(call22);
+        call22.addCallParam(new IdCallParam("i", 7, 3));
+
+        // IF(GT(i, 9), BREAK(), CONTINUE())
+        Call ifCall = new Call("IF", call2, 8, 1);
+        call2.addCallParam(ifCall);
+        // GT(i, 9)
+        call1 = new Call("GT", ifCall, 8, 2);
+        ifCall.addCallParam(call1);
+        call1.addCallParam(new IdCallParam("i", 8, 3));
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 9, 8, 4), 8, 4));
+        // BREAK()
+        call1 = new Call("BREAK", ifCall, 8, 5);
+        ifCall.addCallParam(call1);
+        // CONTINUE()
+        call1 = new Call("CONTINUE", ifCall, 8, 6);
+        ifCall.addCallParam(call1);
+
+        CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+        IntermediateCode ic = cg.getIc();
+
+        String expected = "onSTART,3,1,1\n"
+                + "\n"
+                + "onSTART\n"
+                + "push,id:i,2,2\n"
+                + "push,int:0,2,3\n"
+                + "pop,2\n"
+                + "call_loc,ASSIGN_LOCAL,2,1\n"
+                + "clear_stack\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
+                + "push,bool:true,5,1\n"
+                + "pop,1\n"
+                + "jmp_if_false,34\n"
+                + "push,id:i,7,3\n"
+                + "pop,1\n"
+                + "call_loc,INC,7,2\n"
+                + "pop,1\n"
+                + "call_loc,PRINT,7,1\n"
+                + "popc,1\n"
+                + "push,var:i,8,3\n"
+                + "push,int:9,8,4\n"
+                + "pop,2\n"
+                + "call_loc,GT,8,2\n"
+                + "pop,1\n"
+                + "jmp_if_false,29\n"
+                + "jmp,34\n"
+                + "popc,1\n"
+                + "jmp,31\n"
+                + "jmp,11\n"
+                + "popc,1\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
+                + "jmp,11\n"
+                + "push,none:,-1,-1\n"
+                + "\n";
+        
+        assertEquals(expected, ic.toString());
     }
 }

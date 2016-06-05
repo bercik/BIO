@@ -33,6 +33,7 @@ import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
+import pl.rcebula.code_generation.intermediate.SpecialFunctionsName;
 
 /**
  *
@@ -102,7 +103,7 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
-        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        Call c = new Call(SpecialFunctionsName.doNothingFunctionName, null, 2, 1);
         
         UserFunction uf = new UserFunction("foo", 1, 1);
         uf.addCall(c);
@@ -139,7 +140,7 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
-        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        Call c = new Call(SpecialFunctionsName.doNothingFunctionName, null, 2, 1);
         
         UserFunction uf = new UserFunction("foo", 1, 1);
         uf.addCall(c);
@@ -174,7 +175,7 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
-        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        Call c = new Call(SpecialFunctionsName.doNothingFunctionName, null, 2, 1);
         
         UserFunction uf = new UserFunction("foo", 1, 1);
         uf.addCall(c);
@@ -207,7 +208,7 @@ public class SemanticCheckerTest
         
         ProgramTree pt = new ProgramTree();
         
-        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        Call c = new Call(SpecialFunctionsName.doNothingFunctionName, null, 2, 1);
         
         UserFunction uf = new UserFunction("foo", 1, 1);
         uf.addCall(c);
@@ -284,7 +285,7 @@ public class SemanticCheckerTest
         uf.addCall(call);
         pt.addUserFunction(uf);
         
-        Call c = new Call(Constants.doNothingFunctionName, null, 2, 1);
+        Call c = new Call(SpecialFunctionsName.doNothingFunctionName, null, 2, 1);
         
         // foo
         uf = new UserFunction("foo", 4, 1);
@@ -322,17 +323,17 @@ public class SemanticCheckerTest
         
         // onSTART
         UserFunction uf = new UserFunction("onSTART", 1, 1);
-        Call call = new Call(Constants.forLoopFunctionName, null, 2, 1);
-        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 5));
+        Call call = new Call(SpecialFunctionsName.forLoopFunctionName, null, 2, 1);
+        call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, 2, 5));
         call.addCallParam(new IdCallParam("flaga", 2, 10));
         call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 2, 15), 2, 15));
         uf.addCall(call);
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, ParamType.CALL, 
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, true, ParamType.CALL, 
                 ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
         
         boolean catched = false;
         try
@@ -362,22 +363,22 @@ public class SemanticCheckerTest
         
         // onSTART
         UserFunction uf = new UserFunction("onSTART", 1, 1);
-        Call call = new Call(Constants.forLoopFunctionName, null, 2, 1);
-        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 5));
+        Call call = new Call(SpecialFunctionsName.forLoopFunctionName, null, 2, 1);
+        call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, 2, 5));
         call.addCallParam(new IdCallParam("flaga", 2, 10));
-        call.addCallParam(new Call(Constants.doNothingFunctionName, call, 2, 15));
+        call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, 2, 15));
         uf.addCall(call);
         
-        call = new Call(Constants.breakFunctionName, null, 3, 1);
+        call = new Call(SpecialFunctionsName.breakFunctionName, null, 3, 1);
         uf.addCall(call);
         
         pt.addUserFunction(uf);
         
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(Constants.forLoopFunctionName, true, ParamType.CALL, 
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, true, ParamType.CALL, 
                 ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(Constants.doNothingFunctionName, true));
-        builtinFunctions.add(new BuiltinFunction(Constants.breakFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.breakFunctionName, true));
         
         boolean catched = false;
         try

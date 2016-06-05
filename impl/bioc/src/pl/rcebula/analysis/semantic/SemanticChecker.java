@@ -27,6 +27,7 @@ import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
+import pl.rcebula.code_generation.intermediate.SpecialFunctionsName;
 
 /**
  *
@@ -238,20 +239,20 @@ public class SemanticChecker
 
                     // warunki specjalne
                     // sprawdź czy funkcja jest pętlą FOR
-                    if (call.getName().equals(Constants.forLoopFunctionName))
+                    if (call.getName().equals(SpecialFunctionsName.forLoopFunctionName))
                     {
                         forLoopFunction = true;
                         ++insideForLoopCounter;
                     }
                     // sprawdź czy funkcja jest instrukcją BREAK lub CONTINUE
-                    else if (call.getName().equals(Constants.breakFunctionName) ||
-                            call.getName().equals(Constants.continueFunctionName))
+                    else if (call.getName().equals(SpecialFunctionsName.breakFunctionName) ||
+                            call.getName().equals(SpecialFunctionsName.continueFunctionName))
                     {
                         // sprawdź czy występuje wewnątrz pętli FOR
                         if (insideForLoopCounter <= 0)
                         {
                             String message = "Function " + call.getName() + " must occurs inside " +
-                                    Constants.forLoopFunctionName + " loop";
+                                    SpecialFunctionsName.forLoopFunctionName + " loop";
                             throw new SemanticError(call.getLine(), call.getChNum(), message);
                         }
                     }

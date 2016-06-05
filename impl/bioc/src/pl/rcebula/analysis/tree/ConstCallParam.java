@@ -16,6 +16,7 @@
  */
 package pl.rcebula.analysis.tree;
 
+import pl.rcebula.code.ValueType;
 import pl.rcebula.analysis.lexer.Token;
 
 /**

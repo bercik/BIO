@@ -87,4 +87,86 @@ public class SpecialFunctionsGenerator
         line.addLabel(forEnd);
         ic.appendLine(line);
     }
+    
+    public void generateIf(CallParam callParam, Call call1, Call call2, Label forStart, Label forEnd)
+    {
+        // callParam
+        // pop, 1
+        // jmp_if_false, etykieta1
+        // call1
+        // popc, 1
+        // jmp, etykieta2
+        // etykieta1:
+        // call2
+        // popc, 1
+        // etykieta2:
+        // push, none:
+        Label l1 = new Label();
+        Label l2 = new Label();
+        
+        cg.eval(callParam, forStart, forEnd);
+        Line line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        line = ifg.generateJmpIfFalse(l1);
+        ic.appendLine(line);
+        
+        cg.eval(call1, forStart, forEnd);
+        line = ifg.generatePopc(1);
+        ic.appendLine(line);
+        
+        line = ifg.generateJmp(l2);
+        ic.appendLine(line);
+        
+        // dodajemy fałszywą linię, która posłuży nam jedynie do dodania etykiety
+        // potem ją usuniemy, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        Line fakeLine = new Line();
+        Integer fakeLineLine = ic.numberOfLines();
+        fakeLine.addLabel(l1);
+        ic.appendLine(fakeLine);
+        
+        cg.eval(call2, forStart, forEnd);
+        
+        // usuwamy wcześniej dodaną fałszywą linię
+        ic.removeLine(fakeLineLine);
+        
+        line = ifg.generatePopc(1);
+        ic.appendLine(line);
+        
+        line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
+        line.addLabel(l2);
+        ic.appendLine(line);
+    }
+    
+    public void generateCall2(Call call1, Call call2, Label forStart, Label forEnd)
+    {
+        // call1
+        // popc, 1
+        // call2
+        cg.eval(call1, forStart, forEnd);
+        Line line = ifg.generatePopc(1);
+        ic.appendLine(line);
+        cg.eval(call2, forStart, forEnd);
+    }
+    
+    public void generateDN()
+    {
+        // push, none:
+        Line line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
+        ic.appendLine(line);
+    }
+    
+    public void generateBreak(Label forEnd)
+    {
+        // jmp, forEnd
+        Line line = ifg.generateJmp(forEnd);
+        ic.appendLine(line);
+    }
+    
+    public void generateContinue(Label forStart)
+    {
+        // jmp, forStart
+        Line line = ifg.generateJmp(forStart);
+        ic.appendLine(line);
+    }
 }
