@@ -22,5 +22,13 @@ package pl.rcebula.code_generation.optimization;
  */
 public class CodeOptimizationError extends Exception
 {
+    public CodeOptimizationError(String message)
+    {
+        super(message);
+    }
     
+    public CodeOptimizationError(String message, int line, int chNum)
+    {
+        super("[line: " + line + ", character: " + chNum + "]: " + message);
+    }
 }

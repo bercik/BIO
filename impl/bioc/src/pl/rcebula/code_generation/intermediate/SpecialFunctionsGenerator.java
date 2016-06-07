@@ -39,7 +39,7 @@ public class SpecialFunctionsGenerator
         this.ifg = new InterpreterFunctionsGenerator();
     }
     
-    public void generateFor(Call call1, CallParam callParam, Call call2, Call call3)
+    public void generateFor(Call call1, CallParam callParam, Call call2, Call call3, int forLine, int forChNum)
     {
         Label forStart = new Label();
         Label forContinue = new Label();
@@ -77,7 +77,7 @@ public class SpecialFunctionsGenerator
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
         
-        line = ifg.generateJmpIfFalse(forEnd);
+        line = ifg.generateJmpIfFalse(forEnd, forLine, forChNum);
         ic.appendLine(line);
         
         cg.eval(call2, forContinue, forEnd);
@@ -99,7 +99,7 @@ public class SpecialFunctionsGenerator
         line = ifg.generatePopc(1);
         ic.appendLine(line);
         
-        line = ifg.generateJmp(forStart);
+        line = ifg.generateJmp(forStart, forLine, forChNum);
         ic.appendLine(line);
         
         line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
@@ -107,7 +107,8 @@ public class SpecialFunctionsGenerator
         ic.appendLine(line);
     }
     
-    public void generateIf(CallParam callParam, Call call1, Call call2, Label forStart, Label forEnd)
+    public void generateIf(CallParam callParam, Call call1, Call call2, Label forStart, Label forEnd, 
+            int ifLine, int ifChNum)
     {
         // callParam
         // pop, 1
@@ -127,14 +128,14 @@ public class SpecialFunctionsGenerator
         Line line = ifg.generatePop(1);
         ic.appendLine(line);
         
-        line = ifg.generateJmpIfFalse(l1);
+        line = ifg.generateJmpIfFalse(l1, ifLine, ifChNum);
         ic.appendLine(line);
         
         cg.eval(call1, forStart, forEnd);
         line = ifg.generatePopc(1);
         ic.appendLine(line);
         
-        line = ifg.generateJmp(l2);
+        line = ifg.generateJmp(l2, ifLine, ifChNum);
         ic.appendLine(line);
         
         // dodajemy fałszywą linię, która posłuży nam jedynie do dodania etykiety
@@ -175,17 +176,17 @@ public class SpecialFunctionsGenerator
         ic.appendLine(line);
     }
     
-    public void generateBreak(Label forEnd)
+    public void generateBreak(Label forEnd, int breakLine, int breakChNum)
     {
         // jmp, forEnd
-        Line line = ifg.generateJmp(forEnd);
+        Line line = ifg.generateJmp(forEnd, breakLine, breakChNum);
         ic.appendLine(line);
     }
     
-    public void generateContinue(Label forStart)
+    public void generateContinue(Label forStart, int continueLine, int continueChNum)
     {
         // jmp, forStart
-        Line line = ifg.generateJmp(forStart);
+        Line line = ifg.generateJmp(forStart, continueLine, continueChNum);
         ic.appendLine(line);
     }
 }

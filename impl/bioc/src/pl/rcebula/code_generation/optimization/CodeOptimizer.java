@@ -27,6 +27,7 @@ public class CodeOptimizer
     private final IntermediateCode ic;
     
     public CodeOptimizer(IntermediateCode ic)
+            throws CodeOptimizationError
     {
         this.ic = ic;
         

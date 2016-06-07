@@ -15,6 +15,7 @@ import pl.rcebula.analysis.semantic.SemanticChecker;
 import pl.rcebula.analysis.semantic.SemanticError;
 import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
 
 /**
@@ -93,6 +94,10 @@ public class App
         catch (SemanticError ex)
         {
             System.err.println("Semantic error: " + ex.getMessage());
+        }
+        catch (CodeOptimizationError ex)
+        {
+            System.err.println("Code optimization error: " + ex.getMessage());
         }
         catch (IOException ex)
         {

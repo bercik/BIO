@@ -175,13 +175,13 @@ public class CodeGenerator
                         CallParam cp = call.getCallParams().get(1);
                         Call call2 = (Call)call.getCallParams().get(2);
                         Call call3 = (Call)call.getCallParams().get(3);
-                        sfg.generateFor(call1, cp, call2, call3);
+                        sfg.generateFor(call1, cp, call2, call3, call.getLine(), call.getChNum());
                         break;
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);
                         call1 = (Call)call.getCallParams().get(1);
                         call2 = (Call)call.getCallParams().get(2);
-                        sfg.generateIf(cp, call1, call2, forStart, forEnd);
+                        sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getLine(), call.getChNum());
                         break;
                     case SpecialFunctionsName.call2FunctionName:
                         call1 = (Call)call.getCallParams().get(0);
@@ -192,10 +192,10 @@ public class CodeGenerator
                         sfg.generateDN();
                         break;
                     case SpecialFunctionsName.breakFunctionName:
-                        sfg.generateBreak(forEnd);
+                        sfg.generateBreak(forEnd, call.getLine(), call.getChNum());
                         break;
                     case SpecialFunctionsName.continueFunctionName:
-                        sfg.generateContinue(forStart);
+                        sfg.generateContinue(forStart, call.getLine(), call.getChNum());
                         break;
                     default:
                         String message = "There is no special function generator for " + bf.getName() + " function";

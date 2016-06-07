@@ -22,6 +22,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
+import pl.rcebula.code_generation.intermediate.Label;
+import pl.rcebula.code_generation.intermediate.Line;
 
 /**
  *
@@ -29,26 +33,27 @@ import static org.junit.Assert.*;
  */
 public class RemoveRedundantJumpsTest
 {
-    
+    private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
+
     public RemoveRedundantJumpsTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
     }
-    
+
     @AfterClass
     public static void tearDownClass()
     {
     }
-    
+
     @Before
     public void setUp()
     {
     }
-    
+
     @After
     public void tearDown()
     {
@@ -56,7 +61,112 @@ public class RemoveRedundantJumpsTest
 
     @Test
     public void test()
+            throws Exception
     {
         System.out.println("RemoveRedundantJumpsTest.test()");
+
+        IntermediateCode ic = new IntermediateCode();
+
+        Label l1 = new Label();
+        Label l2 = new Label();
+        Label l3 = new Label();
+        Label l4 = new Label();
+        Label l5 = new Label();
+        Label l6 = new Label();
+
+        ic.appendLine(generateCall()); // 0
+
+        Line line = generateJmp(l2); // 1
+        line.addLabel(l1);
+        ic.appendLine(line);
+
+        line = generateJmp(l5); // 2
+        line.addLabel(l2);
+        ic.appendLine(line);
+
+        line = generateJmp(l6); // 3
+        line.addLabel(l3);
+        ic.appendLine(line);
+
+        line = generateJmp(l1); // 4
+        line.addLabel(l4);
+        ic.appendLine(line);
+
+        line = generateJmpIfFalse(l3); // 5
+        line.addLabel(l5);
+        ic.appendLine(line);
+
+        line = generateClearStack();
+        line.addLabel(l6);
+        ic.appendLine(line); // 6
+
+        RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic);
+
+        String expected = "call,foo,-1,-1\n"
+                + "jmp,6,-1,-1\n"
+                + "jmp,6,-1,-1\n"
+                + "jmp,7,-1,-1\n"
+                + "jmp,6,-1,-1\n"
+                + "jmp_if_false,7,-1,-1\n"
+                + "clear_stack\n";
+
+        assertEquals(expected, ic.toString());
+    }
+
+    @Test
+    public void testInfiniteLoop()
+    {
+        System.out.println("RemoveRedundantJumpsTest.testInfiniteLoop()");
+
+        IntermediateCode ic = new IntermediateCode();
+
+        Label l1 = new Label();
+        Label l2 = new Label();
+        Label l3 = new Label();
+
+        Line line = generateJmp(l2); // 1
+        line.addLabel(l1);
+        ic.appendLine(line);
+
+        line = generateJmp(l3); // 2
+        line.addLabel(l2);
+        ic.appendLine(line);
+
+        line = generateJmpIfFalse(l1); // 3
+        line.addLabel(l3);
+        ic.appendLine(line);
+
+        boolean catched = false;
+        try
+        {
+            RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic);
+        }
+        catch (CodeOptimizationError ex)
+        {
+            catched = true;
+            System.out.println(ex.getMessage());
+        }
+        
+        assertEquals(true, catched);
+    }
+
+    private Line generateJmp(Label l)
+    {
+        return ifg.generateJmp(l, -1, -1);
+    }
+
+    private Line generateJmpIfFalse(Label l)
+    {
+        return ifg.generateJmpIfFalse(l, -1, -1);
+    }
+
+    private Line generateClearStack()
+    {
+        return ifg.generateClearStack();
+    }
+
+    private Line generateCall()
+    {
+        return ifg.generateCall("foo", -1, -1);
     }
 }

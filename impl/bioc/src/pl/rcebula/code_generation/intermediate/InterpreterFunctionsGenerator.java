@@ -148,24 +148,28 @@ public class InterpreterFunctionsGenerator
         return new Line(fields);
     }
 
-    public Line generateJmp(Label label)
+    public Line generateJmp(Label label, Integer line, Integer chNum)
     {
         List<IField> fields = new ArrayList<>();
 
-        // jmp, label
+        // jmp, label, line, chNum
         fields.add(new StringField(InterpreterFunction.JMP.toString()));
         fields.add(new LabelField(label));
+        fields.add(new StringField(line.toString()));
+        fields.add(new StringField(chNum.toString()));
 
         return new Line(fields);
     }
 
-    public Line generateJmpIfFalse(Label label)
+    public Line generateJmpIfFalse(Label label, Integer line, Integer chNum)
     {
         List<IField> fields = new ArrayList<>();
 
-        // jmp_if_false, label
+        // jmp_if_false, label, line, chNum
         fields.add(new StringField(InterpreterFunction.JMP_IF_FALSE.toString()));
         fields.add(new LabelField(label));
+        fields.add(new StringField(line.toString()));
+        fields.add(new StringField(chNum.toString()));
 
         return new Line(fields);
     }

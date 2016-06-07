@@ -32,6 +32,7 @@ public class RemoveRedundantJumps
     private final IntermediateCode ic;
 
     public RemoveRedundantJumps(IntermediateCode ic)
+            throws CodeOptimizationError
     {
         this.ic = ic;
         
@@ -39,6 +40,7 @@ public class RemoveRedundantJumps
     }
     
     private void analyseAndRemove()
+            throws CodeOptimizationError
     {
         int line = 0;
         while (line < ic.numberOfLines())
@@ -53,6 +55,7 @@ public class RemoveRedundantJumps
     }
     
     private boolean removeRedundantJump(int lineNumber)
+            throws CodeOptimizationError
     {
         Line line = ic.getLine(lineNumber);
         
@@ -65,9 +68,18 @@ public class RemoveRedundantJumps
             if (funName.equals(InterpreterFunction.JMP.toString()) ||
                     funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
             {
-                LabelField lf = (LabelField)line.getField(1);
-                Label labelOrig = lf.getLabel();
+                LabelField lfOrig = (LabelField)line.getField(1);
+                Label labelOrig = lfOrig.getLabel();
                 int jmpDest = labelOrig.getLine();
+                
+                // jeżeli skaczemy do samego siebie to błąd
+                if (jmpDest == lineNumber)
+                {
+                    int errorLine = Integer.parseInt(((StringField)line.getField(2)).getStr());
+                    int errorChNum = Integer.parseInt(((StringField)line.getField(3)).getStr());
+                    String message = "Infinite loop near";
+                    throw new CodeOptimizationError(message, errorLine, errorChNum);
+                }
                 
                 Line jmpDestLine = ic.getLine(jmpDest);
                 if (jmpDestLine.numberOfFields() > 0)
@@ -79,10 +91,10 @@ public class RemoveRedundantJumps
                     // o ten skok pośredni
                     if (funName.equals(InterpreterFunction.JMP.toString()))
                     {
-                        lf = (LabelField)jmpDestLine.getField(1);
+                        LabelField lf = (LabelField)jmpDestLine.getField(1);
                         Label labelDest = lf.getLabel();
                         // podmieniamy etykietę
-                        labelOrig = labelDest;
+                        lfOrig.setLabel(labelDest);
                         
                         return true;
                     }

@@ -22,7 +22,7 @@ package pl.rcebula.code_generation.intermediate;
  */
 public class LabelField implements IField
 {
-    private final Label label;
+    private Label label;
 
     public LabelField(Label label)
     {
@@ -32,6 +32,11 @@ public class LabelField implements IField
     public Label getLabel()
     {
         return label;
+    }
+
+    public void setLabel(Label label)
+    {
+        this.label = label;
     }
 
     @Override
