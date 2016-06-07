@@ -16,21 +16,11 @@
  */
 package pl.rcebula.code_generation.optimization;
 
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
-
 /**
  *
  * @author robert
  */
-public class CodeOptimizer
+public class CodeOptimizationError extends Exception
 {
-    private final IntermediateCode ic;
     
-    public CodeOptimizer(IntermediateCode ic)
-    {
-        this.ic = ic;
-        
-        new RemovePushSequences(ic);
-        new RemoveRedundantJumps(ic);
-    }
 }

@@ -26,9 +26,7 @@ import pl.rcebula.Constants;
  * @author robert
  */
 public class Line
-{
-    public static Line emptyLine = new Line();
-    
+{  
     private final List<IField> fields = new ArrayList<>();
     private final List<Label> labels = new ArrayList<>();
     private int line = 0;
@@ -119,5 +117,10 @@ public class Line
         }
         
         return result;
+    }
+    
+    public boolean isEmptyLine()
+    {
+        return numberOfFields() == 0;
     }
 }

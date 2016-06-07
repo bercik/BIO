@@ -15,6 +15,7 @@ import pl.rcebula.analysis.semantic.SemanticChecker;
 import pl.rcebula.analysis.semantic.SemanticError;
 import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.optimization.CodeOptimizer;
 
 /**
  *
@@ -34,7 +35,6 @@ public class App
             System.out.println("Usage: java -jar app.jar path_to_script");
             return;
         }
-        // TODO code application logic here
         try
         {
             // lexer
@@ -69,6 +69,18 @@ public class App
             System.out.println("INTERMEDIATE CODE");
             System.out.println("-------------------------");
             System.out.println(ic.toStringWithLinesNumber());
+            int linesBeforeOpt = ic.numberOfLines();
+            
+            // optimizations
+            CodeOptimizer co = new CodeOptimizer(ic);
+            
+            System.out.println("");
+            System.out.println("AFTER OPTIMIZATIONS");
+            System.out.println("-------------------------");
+            System.out.println(ic.toStringWithLinesNumber());
+            int linesAfterOpt = ic.numberOfLines();
+            float percentOpt = ((float)linesBeforeOpt - (float)linesAfterOpt) / (float)linesBeforeOpt;
+            System.out.println("Optimized: " + percentOpt);
         }
         catch (LexerError ex)
         {

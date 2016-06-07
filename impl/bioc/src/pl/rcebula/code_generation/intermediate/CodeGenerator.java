@@ -57,7 +57,7 @@ public class CodeGenerator
         }
 
         // dodajemy pustą linię na koniec
-        ic.appendLine(Line.emptyLine);
+        ic.appendLine(new Line());
     }
 
     private void eval(UserFunction uf)
@@ -80,7 +80,7 @@ public class CodeGenerator
         ic.insertLine(line, 0);
 
         // dodaj pustą linię na koniec
-        ic.appendLine(Line.emptyLine);
+        ic.appendLine(new Line());
 
         // definicja funkcji
         // pierwsza linia: nazwa funkcji, parametr1, parametr2, ..., parametrN

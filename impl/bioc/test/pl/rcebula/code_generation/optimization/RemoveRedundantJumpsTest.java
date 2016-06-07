@@ -16,21 +16,47 @@
  */
 package pl.rcebula.code_generation.optimization;
 
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author robert
  */
-public class CodeOptimizer
+public class RemoveRedundantJumpsTest
 {
-    private final IntermediateCode ic;
     
-    public CodeOptimizer(IntermediateCode ic)
+    public RemoveRedundantJumpsTest()
     {
-        this.ic = ic;
-        
-        new RemovePushSequences(ic);
-        new RemoveRedundantJumps(ic);
+    }
+    
+    @BeforeClass
+    public static void setUpClass()
+    {
+    }
+    
+    @AfterClass
+    public static void tearDownClass()
+    {
+    }
+    
+    @Before
+    public void setUp()
+    {
+    }
+    
+    @After
+    public void tearDown()
+    {
+    }
+
+    @Test
+    public void test()
+    {
+        System.out.println("RemoveRedundantJumpsTest.test()");
     }
 }

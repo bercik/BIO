@@ -45,6 +45,11 @@ public class Token<T>
         this.chNum = chNum;
     }
 
+    public Token(TokenType tokenType, int i, int i0)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public TokenType getTokenType()
     {
         return tokenType;
