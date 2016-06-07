@@ -17,6 +17,7 @@
 package pl.rcebula.code_generation.optimization;
 
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.utils.Statistics;
 
 /**
  *
@@ -26,12 +27,12 @@ public class CodeOptimizer
 {
     private final IntermediateCode ic;
     
-    public CodeOptimizer(IntermediateCode ic)
+    public CodeOptimizer(IntermediateCode ic, Statistics statistics)
             throws CodeOptimizationError
     {
         this.ic = ic;
         
         new RemovePushSequences(ic);
-        new RemoveRedundantJumps(ic);
+        new RemoveRedundantJumps(ic, statistics);
     }
 }

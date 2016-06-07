@@ -17,6 +17,7 @@ import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
+import pl.rcebula.utils.Statistics;
 
 /**
  *
@@ -38,6 +39,9 @@ public class App
         }
         try
         {
+            // statistics tool
+            Statistics statistic = new Statistics();
+            
             // lexer
             Lexer lexer = new Lexer(args[0], false);
             List<Token<?>> tokens = lexer.getTokens();
@@ -70,18 +74,21 @@ public class App
             System.out.println("INTERMEDIATE CODE");
             System.out.println("-------------------------");
             System.out.println(ic.toStringWithLinesNumber());
-            int linesBeforeOpt = ic.numberOfLines();
+            statistic.setLinesBeforeOptimization(ic.numberOfLines());
             
             // optimizations
-            CodeOptimizer co = new CodeOptimizer(ic);
+            CodeOptimizer co = new CodeOptimizer(ic, statistic);
             
             System.out.println("");
             System.out.println("AFTER OPTIMIZATIONS");
             System.out.println("-------------------------");
             System.out.println(ic.toStringWithLinesNumber());
-            int linesAfterOpt = ic.numberOfLines();
-            float percentOpt = ((float)linesBeforeOpt - (float)linesAfterOpt) / (float)linesBeforeOpt;
-            System.out.println("Optimized: " + percentOpt);
+            statistic.setLinesAfterOptimization(ic.numberOfLines());
+            
+            System.out.println("");
+            System.out.println("STATISTICS");
+            System.out.println("-------------------------");
+            System.err.println(statistic);
         }
         catch (LexerError ex)
         {

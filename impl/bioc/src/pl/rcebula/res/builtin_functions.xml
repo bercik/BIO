@@ -236,7 +236,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </special>
         <params>
             <param>
-                id
+                all
             </param>
             <param>
                 all
@@ -256,7 +256,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </special>
         <params>
             <param>
-                id
+                all
             </param>
             <param>
                 all
@@ -297,6 +297,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <function>
         <name>
             LS
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GT
         </name>
         <special>
             false
