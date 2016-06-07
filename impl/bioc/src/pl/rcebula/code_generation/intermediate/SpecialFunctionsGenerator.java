@@ -39,9 +39,10 @@ public class SpecialFunctionsGenerator
         this.ifg = new InterpreterFunctionsGenerator();
     }
     
-    public void generateFor(Call call1, CallParam callParam, Call call2)
+    public void generateFor(Call call1, CallParam callParam, Call call2, Call call3)
     {
         Label forStart = new Label();
+        Label forContinue = new Label();
         Label forEnd = new Label();
         
         // call1
@@ -52,10 +53,13 @@ public class SpecialFunctionsGenerator
         // jmp_if_false, forEnd
         // call2
         // popc, 1
+        // forContinue:
+        // call3
+        // popc, 1
         // jmp, forStart
         // forEnd:
         // push, none:
-        cg.eval(call1, forStart, forEnd);
+        cg.eval(call1, forContinue, forEnd);
         Line line = ifg.generatePopc(1);
         ic.appendLine(line);
         
@@ -66,7 +70,7 @@ public class SpecialFunctionsGenerator
         fakeLine.addLabel(forStart);
         ic.appendLine(fakeLine);
         
-        cg.eval(callParam, forStart, forEnd);
+        cg.eval(callParam, forContinue, forEnd);
         line = ifg.generatePop(1);
         ic.appendLine(line);
         
@@ -76,7 +80,22 @@ public class SpecialFunctionsGenerator
         line = ifg.generateJmpIfFalse(forEnd);
         ic.appendLine(line);
         
-        cg.eval(call2, forStart, forEnd);
+        cg.eval(call2, forContinue, forEnd);
+        line = ifg.generatePopc(1);
+        ic.appendLine(line);
+        
+        // dodajemy fałszywą linię, która posłuży nam jedynie do dodania etykiety
+        // potem ją usuniemy, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        fakeLine = new Line();
+        fakeLineLine = ic.numberOfLines();
+        fakeLine.addLabel(forContinue);
+        ic.appendLine(fakeLine);
+        
+        cg.eval(call3, forContinue, forEnd);
+        
+        // usuwamy wcześniej dodaną fałszywą linię
+        ic.removeLine(fakeLineLine);
+        
         line = ifg.generatePopc(1);
         ic.appendLine(line);
         

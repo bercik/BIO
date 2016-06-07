@@ -3,8 +3,11 @@ def onSTART()
    SET(tab, 5, 20) % tab[5] = 20
    PRINT(GET(tab, 5)) % 20
 
-   FOR(
+   FOR
+   (
       ASSIGN_LOCAL(i, 0), % i = 0
       LS(i, 10), % i < 10
-      PRINTLN(GET(tab, i))) % print(tab[i])
+      PRINTLN(GET(tab, i)), % println(tab[i])
+      DN()
+   ) 
 end

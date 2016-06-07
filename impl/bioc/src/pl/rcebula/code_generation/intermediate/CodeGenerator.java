@@ -18,7 +18,6 @@ package pl.rcebula.code_generation.intermediate;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.rcebula.Constants;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.ParamType;
 import pl.rcebula.analysis.tree.Call;
@@ -175,7 +174,8 @@ public class CodeGenerator
                         Call call1 = (Call)call.getCallParams().get(0);
                         CallParam cp = call.getCallParams().get(1);
                         Call call2 = (Call)call.getCallParams().get(2);
-                        sfg.generateFor(call1, cp, call2);
+                        Call call3 = (Call)call.getCallParams().get(3);
+                        sfg.generateFor(call1, cp, call2, call3);
                         break;
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);

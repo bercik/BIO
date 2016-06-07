@@ -35,6 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 call
             </param>
+            <param>
+                call
+            </param>
         </params>
     </function>
     
@@ -108,7 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </params>
     </function>
     
-    <!-- funkcje inne -->
+    <!-- funkcje matematyczne -->
     <function>
         <name>
             ADD
@@ -128,7 +131,88 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            MUL
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            REST
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            INC
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEC
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <!-- funkcje przypisania -->
+    <function>
+        <name>
             ASSIGN_LOCAL
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- operacje na tablicach -->
+    <function>
+        <name>
+            ASSIGN_LOCAL_TABLE
         </name>
         <special>
             false
@@ -145,6 +229,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            SET
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- operacje wejścia/wyjścia -->
+    <function>
+        <name>
             PRINT
         </name>
         <special>
@@ -157,6 +279,106 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </params>
     </function>
     
+    <function>
+        <name>
+            PRINTLN
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- operacje logiczne -->
+    <function>
+        <name>
+            LS
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            EQ
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- operacje na łańcuchach -->
+    <function>
+        <name>
+            TO_STR
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <!-- wzorzec obserwatora -->
+    <function>
+        <name>
+            ATTACH_TO_EVENT
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DETACH_FROM_EVENT
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <!-- inne -->
     <function>
         <name>
             RETURN

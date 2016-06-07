@@ -147,7 +147,8 @@ public class CodeGeneratorTest
             FOR(
                 ASSIGN_LOCAL(sum, 0),
                 LE(p, 0),
-                DEC(p))
+                DEC(p),
+                DN())
             RETURN(sum)
         end
          */
@@ -208,11 +209,15 @@ public class CodeGeneratorTest
         call2.addCallParam(icp);
         call.addCallParam(call2);
 
+        // DN()
+        call2 = new Call("DN", call, 9, 1);
+        call.addCallParam(call2);
+
         uf.addCall(call);
 
         // RETURN(sum)
-        call = new Call("RETURN", null, 9, 1);
-        icp = new IdCallParam("sum", 9, 2);
+        call = new Call("RETURN", null, 10, 1);
+        icp = new IdCallParam("sum", 10, 2);
         call.addCallParam(icp);
         uf.addCall(call);
 
@@ -247,17 +252,19 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LE,7,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,33\n"
+                + "jmp_if_false,35\n"
                 + "push,id:p,8,2\n"
                 + "pop,1\n"
                 + "call_loc,DEC,8,1\n"
                 + "popc,1\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
                 + "jmp,22\n"
                 + "push,none:,-1,-1\n"
                 + "clear_stack\n"
-                + "push,var:sum,9,2\n"
+                + "push,var:sum,10,2\n"
                 + "pop,1\n"
-                + "call_loc,RETURN,9,1\n"
+                + "call_loc,RETURN,10,1\n"
                 + "\n";
 
         assertEquals(expected, ic.toString());
@@ -277,10 +284,12 @@ public class CodeGeneratorTest
                         LS(j, 10),
                         CALL2(
                             PRINT(MUL(i, j)),
-                            INC(j)) % CALL2
+                            INC(j)), % CALL2
+                        DN()
                            ), % FOR
-                    INC(i)) % CALL2
-                   ) % FOR
+                    INC(i)), % CALL2
+                DN()
+                ) % FOR
         end
          */
 
@@ -343,10 +352,18 @@ public class CodeGeneratorTest
         insideCall2.addCallParam(call1);
         call1.addCallParam(new IdCallParam("j", 11, 2));
 
+        // DN()
+        call1 = new Call("DN", insideFor, 12, 1);
+        insideFor.addCallParam(call1);
+
         //  INC(i)
-        call1 = new Call("INC", call2, 12, 1);
+        call1 = new Call("INC", call2, 13, 1);
         call2.addCallParam(call1);
-        call1.addCallParam(new IdCallParam("i", 12, 2));
+        call1.addCallParam(new IdCallParam("i", 13, 2));
+
+        // DN()
+        call1 = new Call("DN", callFor, 14, 1);
+        callFor.addCallParam(call1);
 
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
@@ -364,7 +381,7 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LS,4,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,45\n"
+                + "jmp_if_false,49\n"
                 + "push,id:j,7,2\n"
                 + "push,int:0,7,3\n"
                 + "pop,2\n"
@@ -375,7 +392,7 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LS,8,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,38\n"
+                + "jmp_if_false,40\n"
                 + "push,var:i,10,3\n"
                 + "push,var:j,10,4\n"
                 + "pop,2\n"
@@ -387,16 +404,19 @@ public class CodeGeneratorTest
                 + "pop,1\n"
                 + "call_loc,INC,11,1\n"
                 + "popc,1\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
                 + "jmp,20\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
-                + "push,id:i,12,2\n"
+                + "push,id:i,13,2\n"
                 + "pop,1\n"
-                + "call_loc,INC,12,1\n"
+                + "call_loc,INC,13,1\n"
+                + "popc,1\n"
+                + "push,none:,-1,-1\n"
                 + "popc,1\n"
                 + "jmp,9\n"
-                + "push,none:,-1,-1\n"
-                + "\n";
+                + "push,none:,-1,-1\n\n";
 
         assertEquals(expected, ic.toString());
     }
@@ -413,7 +433,8 @@ public class CodeGeneratorTest
                 CALL2(
                     PRINT(INC(i)),
                     IF(GT(i, 9), BREAK(), CONTINUE())
-                    ) % CALL2
+                    ), % CALL2
+                DN()
                 ) % FOR
         end
          */
@@ -467,6 +488,10 @@ public class CodeGeneratorTest
         call1 = new Call("CONTINUE", ifCall, 8, 6);
         ifCall.addCallParam(call1);
 
+        // DN()
+        call1 = new Call("DN", forCall, 9, 1);
+        forCall.addCallParam(call1);
+
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
 
@@ -482,7 +507,7 @@ public class CodeGeneratorTest
                 + "popc,1\n"
                 + "push,bool:true,5,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,34\n"
+                + "jmp_if_false,36\n"
                 + "push,id:i,7,3\n"
                 + "pop,1\n"
                 + "call_loc,INC,7,2\n"
@@ -495,17 +520,19 @@ public class CodeGeneratorTest
                 + "call_loc,GT,8,2\n"
                 + "pop,1\n"
                 + "jmp_if_false,29\n"
-                + "jmp,34\n"
+                + "jmp,36\n"
                 + "popc,1\n"
                 + "jmp,31\n"
-                + "jmp,11\n"
+                + "jmp,33\n"
+                + "popc,1\n"
+                + "push,none:,-1,-1\n"
                 + "popc,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
                 + "jmp,11\n"
                 + "push,none:,-1,-1\n"
                 + "\n";
-        
+
         assertEquals(expected, ic.toString());
     }
 }
