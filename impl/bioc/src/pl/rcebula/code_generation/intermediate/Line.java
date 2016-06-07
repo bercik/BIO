@@ -27,6 +27,8 @@ import pl.rcebula.Constants;
  */
 public class Line
 {
+    public static Line emptyLine = new Line();
+    
     private final List<IField> fields = new ArrayList<>();
     private final List<Label> labels = new ArrayList<>();
     private int line = 0;

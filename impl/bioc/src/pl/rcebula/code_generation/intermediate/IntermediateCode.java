@@ -75,6 +75,17 @@ public class IntermediateCode
         }
     }
     
+    public void removeLineWithLabels(int index)
+    {
+        lines.remove(index);
+        // przesuń etykiety o -1, które są za usuniętą linią
+        for (int i = index; i < lines.size(); ++i)
+        {
+            Line line = lines.get(i);
+            line.move(-1);
+        }
+    }
+    
     public int numberOfLines()
     {
         return lines.size();
