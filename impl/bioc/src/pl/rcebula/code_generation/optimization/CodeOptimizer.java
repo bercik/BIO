@@ -32,7 +32,8 @@ public class CodeOptimizer
     {
         this.ic = ic;
         
-        new RemovePushSequences(ic);
+        new RemovePushSequences(ic, statistics);
+        new RemovePushBoolJmpSequences(ic, statistics);
         new RemoveRedundantJumps(ic, statistics);
     }
 }

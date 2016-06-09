@@ -23,14 +23,30 @@ package pl.rcebula.utils;
 public class Statistics
 {
     private int redundantJumpsRemoved;
+    private int pushSequencesRemoved;
+    private int pushBoolJmpSequencesRemoved;
+            
     private int linesBeforeOptimization;
     private int linesAfterOptimization;
 
     public Statistics()
     {
         redundantJumpsRemoved = 0;
+        pushBoolJmpSequencesRemoved = 0;
+        pushSequencesRemoved = 0;
+        
         linesAfterOptimization = 0;
         linesBeforeOptimization = 0;
+    }
+
+    public int getPushSequencesRemoved()
+    {
+        return pushSequencesRemoved;
+    }
+
+    public int getPushBoolJmpSequencesRemoved()
+    {
+        return pushBoolJmpSequencesRemoved;
     }
 
     public int getRedundantJumpsRemoved()
@@ -52,6 +68,21 @@ public class Statistics
     {
         ++redundantJumpsRemoved;
     }
+    
+    public void addPushSequenceRemoved()
+    {
+        ++pushSequencesRemoved;
+    }
+    
+    public void addPushBoolSequenceRemoved()
+    {
+        ++pushBoolJmpSequencesRemoved;
+    }
+    
+    public void removePushBoolSequenceRemoved()
+    {
+        --pushBoolJmpSequencesRemoved;
+    }
 
     public void setLinesBeforeOptimization(int linesBeforeOptimization)
     {
@@ -63,15 +94,26 @@ public class Statistics
         this.linesAfterOptimization = linesAfterOptimization;
     }
 
+    private float relativeDiffrence(float a, float b)
+    {
+        return (a - b) * 100.0f / a;
+    }
+    
     @Override
     public String toString()
     {
         String result = "";
         
-        float percentOpt = ((float)linesBeforeOptimization - (float)linesAfterOptimization) * 100.0f
-                / (float)linesBeforeOptimization;
-            System.out.println("Removed lines of code: " + percentOpt + "%");
-            System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
+        float lbo = (float)linesBeforeOptimization;
+        float lao = (float)linesAfterOptimization;
+        
+        float percentOpt = relativeDiffrence(lbo, lao);
+        float pushSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushSequencesRemoved);
+        float pushBoolJmpSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushBoolJmpSequencesRemoved);
+        System.out.println("Removed lines of code: " + percentOpt + "%");
+        System.out.println("  Removed push sequences: " + pushSequencesOpt + "%");
+        System.out.println("  Removed push bool jmp sequences: " + pushBoolJmpSequencesOpt + "%");
+        System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
         
         return result;
     }

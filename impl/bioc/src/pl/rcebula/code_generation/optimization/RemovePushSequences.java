@@ -20,6 +20,7 @@ import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.Line;
 import pl.rcebula.code_generation.intermediate.StringField;
+import pl.rcebula.utils.Statistics;
 
 /**
  *
@@ -28,10 +29,12 @@ import pl.rcebula.code_generation.intermediate.StringField;
 public class RemovePushSequences
 {
     private final IntermediateCode ic;
+    private final Statistics statistics;
 
-    public RemovePushSequences(IntermediateCode ic)
+    public RemovePushSequences(IntermediateCode ic, Statistics statistics)
     {
         this.ic = ic;
+        this.statistics = statistics;
         
         // powtarzamy proces tak długo aż nie dokonujemy żadnych usunięć w kodzie
         while (analyseAndRemove()) { }
@@ -104,6 +107,7 @@ public class RemovePushSequences
             while (c-- > 0)
             {
                 ic.removeLine(lineStart);
+                statistics.addPushSequenceRemoved();
             }
 
             lineEnd = lineStart - 1;

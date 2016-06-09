@@ -27,6 +27,7 @@ import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
+import pl.rcebula.code_generation.intermediate.Label;
 import pl.rcebula.code_generation.intermediate.Line;
 import pl.rcebula.utils.Statistics;
 
@@ -34,29 +35,29 @@ import pl.rcebula.utils.Statistics;
  *
  * @author robert
  */
-public class RemovePushSequencesTest
+public class RemovePushBoolJmpSequencesTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
-
-    public RemovePushSequencesTest()
+    
+    public RemovePushBoolJmpSequencesTest()
     {
     }
-
+    
     @BeforeClass
     public static void setUpClass()
     {
     }
-
+    
     @AfterClass
     public static void tearDownClass()
     {
     }
-
+    
     @Before
     public void setUp()
     {
     }
-
+    
     @After
     public void tearDown()
     {
@@ -65,64 +66,68 @@ public class RemovePushSequencesTest
     @Test
     public void test()
     {
-        System.out.println("RemovePushSequencesTest.test()");
+        System.out.println("RemovePushBoolPopJmpIfFalseSequencesTest.test()");
         
         IntermediateCode ic = new IntermediateCode();
-
-        ic.appendLine(generateCallLine());
-        ic.appendLine(generatePopcLine(1));
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePopcLine(1));
-        ic.appendLine(generateClearStackLine());
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePopcLine(3));
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generateClearStackLine());
+        
+        Label l1 = new Label();
+        Label l6 = new Label();
+        
+        Line line = generateCall();
+        line.addLabel(l1);
+        ic.appendLine(line);
+        
+        ic.appendLine(generatePushBool(false));
+        ic.appendLine(generatePop1());
+        ic.appendLine(generateJmpIfFalse(l1));
+        ic.appendLine(generateClearStack());
+        
+        line = generatePushBool(true);
+        line.addLabel(l6);
+        ic.appendLine(line);
+        
+        ic.appendLine(generatePop1());
+        ic.appendLine(generateJmpIfFalse(l6));
+        ic.appendLine(generateCall());
         ic.appendLine(new Line());
-        ic.appendLine(generatePushNoneLine());
-        ic.appendLine(generatePopcLine(2));
-
-        new RemovePushSequences(ic, new Statistics());
-
-        String expected = "call,foo,-1,-1\n"
-                + "popc,1\n"
+        
+        RemovePushBoolJmpSequences rpbpjifs = new RemovePushBoolJmpSequences(ic, new Statistics());
+        
+        String expected = "call,foo,-1,-1\n" 
+                + "jmp,1,-1,-1\n"
                 + "clear_stack\n"
-                + "push,none:,-1,-1\n"
-                + "push,none:,-1,-1\n"
-                + "popc,3\n"
-                + "clear_stack\n"
-                + "\n"
-                + "push,none:,-1,-1\n"
-                + "popc,2\n";
+                + "call,foo,-1,-1\n\n";
         
         assertEquals(expected, ic.toString());
     }
+    
+    private Line generateJmp(Label l)
+    {
+        return ifg.generateJmp(l, -1, -1);
+    }
 
-    private Line generateCallLine()
+    private Line generateJmpIfFalse(Label l)
+    {
+        return ifg.generateJmpIfFalse(l, -1, -1);
+    }
+
+    private Line generateClearStack()
+    {
+        return ifg.generateClearStack();
+    }
+
+    private Line generateCall()
     {
         return ifg.generateCall("foo", -1, -1);
     }
-
-    private Line generatePushNoneLine()
+    
+    private Line generatePushBool(boolean val)
     {
-        return ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
+        return ifg.generatePush(new ConstCallParam(new Token(TokenType.BOOL, val, -1, -1), -1, -1));
     }
 
-    private Line generatePopcLine(int pops)
+    private Line generatePop1()
     {
-        return ifg.generatePopc(pops);
-    }
-
-    private Line generatePopLine(int pops)
-    {
-        return ifg.generatePop(pops);
-    }
-
-    private Line generateClearStackLine()
-    {
-        return ifg.generateClearStack();
+        return ifg.generatePop(1);
     }
 }
