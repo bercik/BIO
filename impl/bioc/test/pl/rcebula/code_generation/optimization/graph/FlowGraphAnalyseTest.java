@@ -178,9 +178,39 @@ public class FlowGraphAnalyseTest
         assertTrue(statistics.getUnusedCodeBlocksLinesRemoved() == 1);
     }
     
+    @Test
+    public void testInfiniteLoop()
+            throws Exception
+    {
+        /*
+        [0] push, none
+        [1] 
+        [2] push, none %header
+        [3] push, none %bs
+        [4] jmp_if_false, 6 
+        [5] call_loc, return %end
+        [6] jmp_if_false, 8 %b1
+        [7] push, none %b2
+        [8] push, none %b3
+        [9] jmp_if_false, 7 %b4
+        [10] push, none, -1, -1 %b5
+        [11] push, none, 10, 12
+        [12] jmp, 8
+        [13]
+        */
+        
+        IntermediateCode ic = new IntermediateCode();
+        
+    }
+    
     private Line generatePushNone()
     {
         return ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
+    }
+    
+    private Line generatePushNone(int line, int chNum)
+    {
+        return ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, line, chNum), line, chNum));
     }
     
     private Line generateCallLoc()
