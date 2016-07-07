@@ -86,7 +86,7 @@ public class App
             statistic.setLinesAfterOptimization(ic.numberOfLines());
             
             System.out.println("");
-            System.out.println("STATISTICS");
+            System.out.println("OPTIMIZATION STATISTICS");
             System.out.println("-------------------------");
             System.err.println(statistic);
         }

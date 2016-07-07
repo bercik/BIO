@@ -30,6 +30,7 @@ public class CodeBlock
     private final int end;
     private List<CodeBlock> out = new ArrayList<>();
     private boolean visited = false;
+    private List<Integer> cyclesLength = new ArrayList<>();
 
     public CodeBlock(int start, int end)
     {
@@ -56,22 +57,59 @@ public class CodeBlock
     {
         return out;
     }
-    
-    public void visit()
-    {
-        visited = true;
-    }
 
     public boolean isVisited()
     {
         return visited;
     }
     
-    public void resetVisited()
+    public void resetVisitedAndCyclesLength()
     {
         visited = false;
+        cyclesLength.clear();
     }
 
+    public void traverse()
+    {
+        visited = true;
+        
+        for (CodeBlock cb : out)
+        {
+            if (!cb.isVisited())
+            {
+                cb.traverse();
+            }
+        }
+    }
+    
+    public void traverse(CodeBlock origin)
+    {
+        traverse(origin, 0);
+    }
+    
+    private void traverse(CodeBlock origin, int length)
+    {
+        visited = true;
+        
+        for (CodeBlock cb : out)
+        {
+            // jeżeli wierzchołek początkowy to mamy cykl
+            if (cb == origin)
+            {
+                cyclesLength.add(length + 1);
+            }
+            else if (!cb.isVisited())
+            {
+                cb.traverse(origin, length + 1);
+            }
+        }
+    }
+
+    public List<Integer> getCyclesLength()
+    {
+        return cyclesLength;
+    }
+    
     @Override
     public boolean equals(Object obj)
     {

@@ -53,6 +53,8 @@ public class FlowGraph
     {
         // pomocnicza tablica ln
         TreeSet<Integer> ln = new TreeSet<>();
+        // dodajemy pierwszą linjkę
+        ln.add(start);
 
         // przejdź po wszystkich linijkach kodu
         for (int i = start; i < end; ++i)
@@ -175,11 +177,51 @@ public class FlowGraph
         return startBlock;
     }
     
-    public void resetVisited()
+    public void resetVisitedAndCyclesLength()
     {
         for (CodeBlock cb : codeBlocks)
         {
-            cb.resetVisited();
+            cb.resetVisitedAndCyclesLength();
+        }
+    }
+    
+    public List<CodeBlock> getVisited()
+    {
+        List<CodeBlock> visitedCodeBlocks = new ArrayList<>();
+        
+        for (CodeBlock cb : codeBlocks)
+        {
+            if (cb.isVisited())
+            {
+                visitedCodeBlocks.add(cb);
+            }
+        }
+        
+        return visitedCodeBlocks;
+    }
+    
+    public List<CodeBlock> getNotVisited()
+    {
+        List<CodeBlock> notVisitedCodeBlocks = new ArrayList<>();
+        
+        for (CodeBlock cb : codeBlocks)
+        {
+            if (!cb.isVisited())
+            {
+                notVisitedCodeBlocks.add(cb);
+            }
+        }
+        
+        return notVisitedCodeBlocks;
+    }
+    
+    public void removeCodeBlock(CodeBlock cb)
+    {
+        codeBlocks.remove(cb);
+        endBlocks.remove(cb);
+        if (startBlock == cb)
+        {
+            startBlock = null;
         }
     }
 }

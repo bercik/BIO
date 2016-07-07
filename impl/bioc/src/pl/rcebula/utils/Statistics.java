@@ -25,6 +25,7 @@ public class Statistics
     private int redundantJumpsRemoved;
     private int pushSequencesRemoved;
     private int pushBoolJmpSequencesRemoved;
+    private int unusedCodeBlocksLinesRemoved;
             
     private int linesBeforeOptimization;
     private int linesAfterOptimization;
@@ -34,6 +35,7 @@ public class Statistics
         redundantJumpsRemoved = 0;
         pushBoolJmpSequencesRemoved = 0;
         pushSequencesRemoved = 0;
+        unusedCodeBlocksLinesRemoved = 0;
         
         linesAfterOptimization = 0;
         linesBeforeOptimization = 0;
@@ -63,6 +65,11 @@ public class Statistics
     {
         return linesAfterOptimization;
     }
+
+    public int getUnusedCodeBlocksLinesRemoved()
+    {
+        return unusedCodeBlocksLinesRemoved;
+    }
     
     public void addRedundantJumpRemoved()
     {
@@ -77,6 +84,11 @@ public class Statistics
     public void addPushBoolSequenceRemoved()
     {
         ++pushBoolJmpSequencesRemoved;
+    }
+    
+    public void addUnusedCodeBlocksLinesRemoved()
+    {
+        ++unusedCodeBlocksLinesRemoved;
     }
     
     public void removePushBoolSequenceRemoved()
@@ -110,9 +122,16 @@ public class Statistics
         float percentOpt = relativeDiffrence(lbo, lao);
         float pushSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushSequencesRemoved);
         float pushBoolJmpSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushBoolJmpSequencesRemoved);
-        System.out.println("Removed lines of code: " + percentOpt + "%");
-        System.out.println("  Removed push sequences: " + pushSequencesOpt + "%");
-        System.out.println("  Removed push bool jmp sequences: " + pushBoolJmpSequencesOpt + "%");
+        float unusedCodeBlocksLinesRemovedOpt = relativeDiffrence(lbo, lbo - (float)unusedCodeBlocksLinesRemoved);
+        
+        System.out.println("Removed lines of code: " + percentOpt + "% (" 
+                + (linesBeforeOptimization - linesAfterOptimization) + ")");
+        System.out.println("  Removed push sequences: " + pushSequencesOpt + "% (" 
+                + pushSequencesRemoved + ")");
+        System.out.println("  Removed push bool jmp sequences: " + pushBoolJmpSequencesOpt + "% (" 
+                + pushBoolJmpSequencesRemoved + ")");
+        System.out.println("  Removed unused code blocks lines: " + unusedCodeBlocksLinesRemovedOpt + "% (" 
+                + unusedCodeBlocksLinesRemoved + ")");
         System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
         
         return result;

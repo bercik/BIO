@@ -70,6 +70,19 @@ public class RemovePushBoolJmpSequencesTest
         
         IntermediateCode ic = new IntermediateCode();
         
+        /*
+        [1] call, foo
+        [2] push, bool:false
+        [3] pop, 1
+        [4] jmp_if_false, 1
+        [5] clear_stack
+        [6] push, bool:true
+        [7] pop, 1
+        [8] jmp_if_false, 6
+        [9] call, foo
+        [10] 
+        */
+        
         Label l1 = new Label();
         Label l6 = new Label();
         

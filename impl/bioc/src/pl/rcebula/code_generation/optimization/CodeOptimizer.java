@@ -17,6 +17,7 @@
 package pl.rcebula.code_generation.optimization;
 
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
 import pl.rcebula.utils.Statistics;
 
 /**
@@ -35,5 +36,6 @@ public class CodeOptimizer
         new RemovePushSequences(ic, statistics);
         new RemovePushBoolJmpSequences(ic, statistics);
         new RemoveRedundantJumps(ic, statistics);
+        new FlowGraphAnalyse(ic, statistics);
     }
 }

@@ -43,11 +43,15 @@ public class FlowGraphAnalyse
     {
         // szukamy początku pierwszej funkcji
         int firstFunctionStart = 0;
-        while (!ic.getLine(firstFunctionStart).isEmptyLine()) {}
+        while (!ic.getLine(firstFunctionStart).isEmptyLine()) 
+        {
+            firstFunctionStart++;
+        }
         
         int end = ic.numberOfLines() - 1;
         
         // analizujemy kod od końca wyodrębniając funkcję
+        // ostatnia linijka kodu jest zawsze pusta
         for (int i = end - 1; i >= firstFunctionStart; --i)
         {
             if (ic.getLine(i).isEmptyLine())
@@ -65,8 +69,13 @@ public class FlowGraphAnalyse
     
     // <start, end)
     private void analyseFunction(int start, int end)
+            throws CodeOptimizationError
     {
         // tworzymy graf przepływu
         FlowGraph fg = new FlowGraph(ic, start, end);
+        // usuwamy nieużywane bloki kodu
+        new RemoveUnusedCodeBlocks(ic, statistics, fg);
+        // szukamy nieskończonych pętli
+        new FindInfiniteLoops(ic, fg);
     }
 }
