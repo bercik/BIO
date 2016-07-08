@@ -60,18 +60,18 @@ public class FindInfiniteLoops
                 continue;
             }
             
-            fg.resetVisitedAndCyclesLength();
-            cb.traverse(cb);
+            fg.resetVisited();
+            List<Integer> cycles = cb.traverse(cb);
             
             List<CodeBlock> visitedCodeBlocks = fg.getVisited();
             // sprawdź czy został odwiedzony któryś z bloków końcowych, jeżeli nie to
             if (Collections.disjoint(visitedCodeBlocks, endBlocks))
             {
                 // sprawdź czy znaleziono jakiś cykl
-                if (cb.getCyclesLength().size() > 0)
+                if (cycles.size() > 0)
                 {
                     // znajdź najmniejszy element
-                    int minVal = Collections.min(cb.getCyclesLength());
+                    int minVal = Collections.min(cycles);
                     // jeżeli mniejszy niż dotychczasowy to zapisz
                     if (minVal < minLengthCycle)
                     {

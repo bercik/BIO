@@ -177,11 +177,11 @@ public class FlowGraph
         return startBlock;
     }
     
-    public void resetVisitedAndCyclesLength()
+    public void resetVisited()
     {
         for (CodeBlock cb : codeBlocks)
         {
-            cb.resetVisitedAndCyclesLength();
+            cb.resetVisited();
         }
     }
     

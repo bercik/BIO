@@ -18,7 +18,6 @@ package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -30,7 +29,6 @@ public class CodeBlock
     private final int end;
     private List<CodeBlock> out = new ArrayList<>();
     private boolean visited = false;
-    private List<Integer> cyclesLength = new ArrayList<>();
 
     public CodeBlock(int start, int end)
     {
@@ -63,10 +61,9 @@ public class CodeBlock
         return visited;
     }
     
-    public void resetVisitedAndCyclesLength()
+    public void resetVisited()
     {
         visited = false;
-        cyclesLength.clear();
     }
 
     public void traverse()
@@ -82,12 +79,14 @@ public class CodeBlock
         }
     }
     
-    public void traverse(CodeBlock origin)
+    public List<Integer> traverse(CodeBlock origin)
     {
-        traverse(origin, 0);
+        List<Integer> cyclesLength = new ArrayList<>();
+        traverse(origin, 0, cyclesLength);
+        return cyclesLength;
     }
     
-    private void traverse(CodeBlock origin, int length)
+    private void traverse(CodeBlock origin, int length, List<Integer> cyclesLength)
     {
         visited = true;
         
@@ -100,14 +99,9 @@ public class CodeBlock
             }
             else if (!cb.isVisited())
             {
-                cb.traverse(origin, length + 1);
+                cb.traverse(origin, length + 1, cyclesLength);
             }
         }
-    }
-
-    public List<Integer> getCyclesLength()
-    {
-        return cyclesLength;
     }
     
     @Override

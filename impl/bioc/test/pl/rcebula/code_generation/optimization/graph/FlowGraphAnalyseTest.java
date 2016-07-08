@@ -30,6 +30,7 @@ import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.Label;
 import pl.rcebula.code_generation.intermediate.Line;
+import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.utils.Statistics;
 
 /**
@@ -195,12 +196,64 @@ public class FlowGraphAnalyseTest
         [9] jmp_if_false, 7 %b4
         [10] push, none, -1, -1 %b5
         [11] push, none, 10, 12
-        [12] jmp, 8
+        [12] jmp, 6
         [13]
         */
         
         IntermediateCode ic = new IntermediateCode();
         
+        Label l6 = new Label();
+        Label l7 = new Label();
+        Label l8 = new Label();
+        
+        // 0
+        ic.appendLine(generatePushNone());
+        // 1
+        ic.appendLine(new Line());
+        // 2
+        ic.appendLine(generatePushNone());
+        // 3
+        ic.appendLine(generatePushNone());
+        // 4
+        ic.appendLine(generateJmpIfFalse(l6));
+        // 5
+        ic.appendLine(generateCallLocReturn());
+        // 6
+        Line line = generateJmpIfFalse(l8);
+        line.addLabel(l6);
+        ic.appendLine(line);
+        // 7
+        line = generatePushNone();
+        line.addLabel(l7);
+        ic.appendLine(line);
+        // 8
+        line = generatePushNone();
+        line.addLabel(l8);
+        ic.appendLine(line);
+        // 9
+        ic.appendLine(generateJmpIfFalse(l7));
+        // 10
+        ic.appendLine(generatePushNone());
+        // 11
+        ic.appendLine(generatePushNone(10, 12));
+        // 12
+        ic.appendLine(generateJmp(l6));
+        // 13
+        ic.appendLine(new Line());
+        
+        Statistics statistics = new Statistics();
+        boolean catched = false;
+        try
+        {
+            FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
+        }
+        catch (CodeOptimizationError er)
+        {
+            System.out.println(er.getMessage());
+            catched = true;
+        }
+        
+        assertTrue(catched);
     }
     
     private Line generatePushNone()

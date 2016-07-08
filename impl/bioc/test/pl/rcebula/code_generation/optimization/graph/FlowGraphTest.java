@@ -251,7 +251,7 @@ public class FlowGraphTest
         assertTrue(visitedCodeBlocks.contains(cb3));
         assertFalse(visitedCodeBlocks.contains(cb4));
         
-        fg.resetVisitedAndCyclesLength();
+        fg.resetVisited();
         
         cb3.traverse();
         visitedCodeBlocks = fg.getVisited();

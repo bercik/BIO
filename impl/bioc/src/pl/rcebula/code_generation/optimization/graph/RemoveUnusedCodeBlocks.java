@@ -42,7 +42,7 @@ public class RemoveUnusedCodeBlocks
     private void analyseAndRemove()
     {
         // wykrywamy nieużywane bloki kodu przechodząc graf od bloku startowego
-        fg.resetVisitedAndCyclesLength();
+        fg.resetVisited();
         fg.getStartBlock().traverse();
         // wszystkie bloki, które nie zostały odwiedzone są nieosiągalne i można je bezpiecznie usunąć
         List<CodeBlock> notVisited = fg.getNotVisited();
