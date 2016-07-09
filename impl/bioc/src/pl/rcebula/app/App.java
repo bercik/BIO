@@ -17,6 +17,8 @@ import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
+import pl.rcebula.utils.Opts;
+import pl.rcebula.utils.OptsError;
 import pl.rcebula.utils.Statistics;
 
 /**
@@ -41,54 +43,74 @@ public class App
         {
             // statistics tool
             Statistics statistic = new Statistics();
-            
+
+            // opts
+            Opts opts = new Opts(args);
+
             // lexer
-            Lexer lexer = new Lexer(args[0], false);
+            Lexer lexer = new Lexer(opts.getInputFilePath(), false);
             List<Token<?>> tokens = lexer.getTokens();
-            
+
             // parser
             Parser parser = new Parser(tokens);
             List<Integer> steps = parser.getSteps();
-            
+
             // program tree creator
             ProgramTreeCreator ptc = new ProgramTreeCreator(tokens, steps);
             ProgramTree pt = ptc.getProgramTree();
-            // print
-            System.out.println("PARSE TREE");
-            System.out.println("-------------------------");
-            System.out.println(pt);
-            
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("PARSE TREE");
+                System.out.println("-------------------------");
+                System.out.println(pt);
+            }
+
             // builtin functions parser
             BuiltinFunctionsParser bfp = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions.xml", true);
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
-            
+
             // semantic checker
             SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
-            
+
             // intermediate code generator
             CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
             IntermediateCode ic = cg.getIc();
-            
-            // print
-            System.out.println("");
-            System.out.println("INTERMEDIATE CODE");
-            System.out.println("-------------------------");
-            System.out.println(ic.toStringWithLinesNumber());
             statistic.setLinesBeforeOptimization(ic.numberOfLines());
-            
+
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("");
+                System.out.println("INTERMEDIATE CODE");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringWithLinesNumber());
+            }
+
             // optimizations
             CodeOptimizer co = new CodeOptimizer(ic, statistic);
-            
-            System.out.println("");
-            System.out.println("AFTER OPTIMIZATIONS");
-            System.out.println("-------------------------");
-            System.out.println(ic.toStringWithLinesNumber());
             statistic.setLinesAfterOptimization(ic.numberOfLines());
+
+            if (opts.isVerbose())
+            {
+                System.out.println("");
+                System.out.println("AFTER OPTIMIZATIONS");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringWithLinesNumber());
+            }
+
+            if (opts.isStatistics() || opts.isVerbose())
+            {
+                System.out.println("");
+                System.out.println("OPTIMIZATION STATISTICS");
+                System.out.println("-------------------------");
+                System.out.println(statistic);
+            }
             
-            System.out.println("");
-            System.out.println("OPTIMIZATION STATISTICS");
-            System.out.println("-------------------------");
-            System.err.println(statistic);
+            if (!opts.isNotWrite())
+            {
+                ic.writeToFile(opts.getOutputFilePath());
+            }
         }
         catch (LexerError ex)
         {
@@ -105,6 +127,10 @@ public class App
         catch (CodeOptimizationError ex)
         {
             System.err.println("Code optimization error: " + ex.getMessage());
+        }
+        catch (OptsError ex)
+        {
+            System.err.println("Options error: " + ex.getMessage());
         }
         catch (IOException ex)
         {

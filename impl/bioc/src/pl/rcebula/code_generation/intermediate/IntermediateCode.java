@@ -16,6 +16,13 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +111,18 @@ public class IntermediateCode
         return result;
     }
     
+    private List<String> toLines()
+    {
+        List<String> stringLines = new ArrayList<>();
+        
+        for (Line l : lines)
+        {
+            stringLines.add(l.toString());
+        }
+        
+        return stringLines;
+    }
+    
     public String toStringWithLinesNumber()
     {
         String result = "";
@@ -116,5 +135,11 @@ public class IntermediateCode
         }
         
         return result;
+    }
+    
+    public void writeToFile(String path) throws IOException
+    {
+        Path p = Paths.get(path);
+        Files.write(p, toLines(), Charset.forName("UTF-8"));
     }
 }
