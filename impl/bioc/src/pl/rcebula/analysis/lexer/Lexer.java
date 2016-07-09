@@ -3,6 +3,8 @@ package pl.rcebula.analysis.lexer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -125,8 +127,9 @@ public class Lexer
     private String readExternalFile(String path, String encoding)
             throws IOException
     {
-        String dirPath = System.getProperty("user.dir");
-        InputStream is = new FileInputStream(dirPath + "/" + path);
+        Path p = Paths.get(path);
+        String filePath = p.toAbsolutePath().toString();
+        InputStream is = new FileInputStream(filePath);
         return readInputStreamToString(is, encoding);
     }
 
