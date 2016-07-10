@@ -17,6 +17,8 @@ import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
+import pl.rcebula.preprocessor.Preprocessor;
+import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
 import pl.rcebula.utils.Statistics;
@@ -47,8 +49,18 @@ public class App
             // opts
             Opts opts = new Opts(args);
 
+            // preprocessor
+            Preprocessor preprocessor = new Preprocessor(opts.getInputFilePath());
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("SOURCE CODE");
+                System.out.println("-------------------------");
+                System.out.println(preprocessor.getInput());
+            }
+            
             // lexer
-            Lexer lexer = new Lexer(opts.getInputFilePath(), false);
+            Lexer lexer = new Lexer(preprocessor.getInput());
             List<Token<?>> tokens = lexer.getTokens();
 
             // parser
@@ -132,9 +144,14 @@ public class App
         {
             System.err.println("Options error: " + ex.getMessage());
         }
+        catch (PreprocessorError ex)
+        {
+            System.err.println("Preprocessor error: " + ex.getMessage());
+        }
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

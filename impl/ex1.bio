@@ -1,0 +1,6 @@
+#INCLUDE("/home/robert/programowanie/BIO/examples/math.biol")
+   #INCLUDE("./bioc/ex1.bio")   
+
+def ex1()
+   DN()
+end

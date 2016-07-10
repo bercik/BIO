@@ -60,15 +60,6 @@ public class LexerTest
     public void tearDown()
     {
     }
-
-    @Test
-    public void testReadInternal()
-            throws Exception
-    {
-        System.out.println("testReadInternal");
-        
-        Lexer lexer = new Lexer("/pl/rcebula/res/ex1.bio", true);
-    }
     
     @Test
     public void testHelloWorld()

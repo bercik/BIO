@@ -1,0 +1,5 @@
+#INCLUDE("./math2.biol")
+
+def math()
+   DN()
+end

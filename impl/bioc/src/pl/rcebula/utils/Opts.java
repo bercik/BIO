@@ -40,6 +40,17 @@ public class Opts
     private void analyse()
             throws OptsError
     {
+        // TODELETE
+        if (args.length == 1)
+        {
+            inputFilePath = args[0];
+            verbose = true;
+            statistics = true;
+            notWrite = true;
+            outputFilePath = "";
+            return;
+        }
+        
         if (args.length < 2)
         {
             String message = "usage: java -jar bioc.jar input_file [options] output_file";

@@ -131,7 +131,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            SUB
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             MUL
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SQRT
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            POW
         </name>
         <special>
             false

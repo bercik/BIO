@@ -1,3 +1,9 @@
+#INCLUDE("ex2.bio")
+#INCLUDE("ex1.bio")
+
 def onSTART()
-   PRINT("Hello World\n")
+   ex2()
+   ex1()
+   math()
+   math2()
 end

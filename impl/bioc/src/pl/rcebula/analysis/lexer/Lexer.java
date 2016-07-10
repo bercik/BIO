@@ -1,13 +1,6 @@
 package pl.rcebula.analysis.lexer;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -50,23 +43,6 @@ public class Lexer
     public Lexer(String input)
             throws LexerError
     {
-        tokens = addEOFAndAnalyse(input);
-    }
-
-    public Lexer(String path, boolean internal)
-            throws IOException, LexerError
-    {
-        String input;
-
-        if (internal)
-        {
-            input = readInternalFile(path, "UTF-8");
-        }
-        else
-        {
-            input = readExternalFile(path, "UTF-8");
-        }
-
         tokens = addEOFAndAnalyse(input);
     }
 
@@ -122,29 +98,5 @@ public class Lexer
         }
         
         return tokens;
-    }
-
-    private String readExternalFile(String path, String encoding)
-            throws IOException
-    {
-        Path p = Paths.get(path);
-        String filePath = p.toAbsolutePath().toString();
-        InputStream is = new FileInputStream(filePath);
-        return readInputStreamToString(is, encoding);
-    }
-
-    private String readInternalFile(String path, String encoding)
-            throws IOException
-    {
-        InputStream is = getClass().getResourceAsStream(path);
-        return readInputStreamToString(is, encoding);
-    }
-
-    private String readInputStreamToString(InputStream is, String encoding)
-    {
-        try (Scanner s = new Scanner(is, encoding))
-        {
-            return s.useDelimiter("\\A").hasNext() ? s.next() : "";
-        }
     }
 }

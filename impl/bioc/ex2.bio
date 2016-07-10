@@ -1,3 +1,5 @@
-def onSTART()
-   PRINT("Hello World\\n\\.")
+#INCLUDE("../ex1.bio")
+
+def ex2()
+   DN()
 end
