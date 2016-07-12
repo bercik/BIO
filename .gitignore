@@ -1,11 +1,9 @@
 impl/__pycache__/
-/impl/app/nbproject/private/
 
-nbproject/private/
 build/
 nbbuild/
 dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
-/impl/bio_shared/nbproject/private/
+private/
