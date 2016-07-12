@@ -145,7 +145,7 @@ public class RemoveRedundantJumpsTest
         catch (CodeOptimizationError ex)
         {
             catched = true;
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         
         assertEquals(true, catched);

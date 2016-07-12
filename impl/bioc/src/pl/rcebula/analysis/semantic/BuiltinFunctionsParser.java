@@ -68,9 +68,17 @@ public class BuiltinFunctionsParser
             {
                 Element elem = (Element)node;
 
-                // Get the value of all sub-elements.
+                // Pobierz wartość wszystkich podelementów
                 String name = elem.getElementsByTagName("name")
                         .item(0).getChildNodes().item(0).getNodeValue().trim();
+                
+                // Sprawdź czy ta nazwa się nie powtarza
+                if (contains(builtinFunctions, name))
+                {
+                    // jeżeli tak to rzuć wyjątek
+                    String msg = "Function " + name + " in builtin functions XML is already defined";
+                    throw new RuntimeException(msg);
+                }
 
                 boolean special = Boolean.parseBoolean(elem.getElementsByTagName("special").item(0)
                         .getChildNodes().item(0).getNodeValue().trim());
@@ -93,6 +101,19 @@ public class BuiltinFunctionsParser
         }
     }
 
+    private boolean contains(List<BuiltinFunction> bfs, String name)
+    {
+        for (BuiltinFunction bf : bfs)
+        {
+            if (bf.getName().equals(name))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     public List<BuiltinFunction> getBuiltinFunctions()
     {
         return builtinFunctions;

@@ -16,6 +16,8 @@
  */
 package pl.rcebula.utils;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author robert
@@ -124,14 +126,17 @@ public class Statistics
         float pushBoolJmpSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushBoolJmpSequencesRemoved);
         float unusedCodeBlocksLinesRemovedOpt = relativeDiffrence(lbo, lbo - (float)unusedCodeBlocksLinesRemoved);
         
-        System.out.println("Removed lines of code: " + percentOpt + "% (" 
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        
+        System.out.println("Removed lines of code: " + df.format(percentOpt) + "% (" 
                 + (linesBeforeOptimization - linesAfterOptimization) + ")");
-        System.out.println("  Removed push sequences: " + pushSequencesOpt + "% (" 
+        System.out.println("  Removed push sequences: " + df.format(pushSequencesOpt) + "% (" 
                 + pushSequencesRemoved + ")");
-        System.out.println("  Removed push bool jmp sequences: " + pushBoolJmpSequencesOpt + "% (" 
-                + pushBoolJmpSequencesRemoved + ")");
-        System.out.println("  Removed unused code blocks lines: " + unusedCodeBlocksLinesRemovedOpt + "% (" 
-                + unusedCodeBlocksLinesRemoved + ")");
+        System.out.println("  Removed push bool jmp sequences: " + df.format(pushBoolJmpSequencesOpt) + 
+                "% (" + pushBoolJmpSequencesRemoved + ")");
+        System.out.println("  Removed unused code blocks lines: " + 
+                df.format(unusedCodeBlocksLinesRemovedOpt) + "% (" + unusedCodeBlocksLinesRemoved + ")");
         System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
         
         return result;

@@ -249,7 +249,7 @@ public class FlowGraphAnalyseTest
         }
         catch (CodeOptimizationError er)
         {
-            System.out.println(er.getMessage());
+            System.err.println(er.getMessage());
             catched = true;
         }
         

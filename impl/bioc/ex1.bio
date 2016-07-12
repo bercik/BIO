@@ -1,9 +1,0 @@
-#INCLUDE("ex2.bio")
-#INCLUDE("ex1.bio")
-
-def onSTART()
-   ex2()
-   ex1()
-   math()
-   math2()
-end

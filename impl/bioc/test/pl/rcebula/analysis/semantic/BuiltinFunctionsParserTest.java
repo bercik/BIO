@@ -32,26 +32,26 @@ import static org.junit.Assert.*;
  */
 public class BuiltinFunctionsParserTest
 {
-    
+
     public BuiltinFunctionsParserTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
     }
-    
+
     @AfterClass
     public static void tearDownClass()
     {
     }
-    
+
     @Before
     public void setUp()
     {
     }
-    
+
     @After
     public void tearDown()
     {
@@ -65,20 +65,43 @@ public class BuiltinFunctionsParserTest
             throws Exception
     {
         System.out.println("getBuiltinFunctions");
-        
-        BuiltinFunctionsParser instance = 
-                new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test.xml", true);
-        
+
+        BuiltinFunctionsParser instance
+                = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test.xml", true);
+
         List<BuiltinFunction> expResult = new ArrayList<BuiltinFunction>()
-        {{
-                    add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
-                    add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
-                    add(new BuiltinFunction("BREAK", true));
-                    add(new BuiltinFunction("ADD", false, ParamType.ALL, ParamType.ALL));
-        }};
-        
+        {
+            {
+                add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
+                add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
+                add(new BuiltinFunction("BREAK", true));
+                add(new BuiltinFunction("ADD", false, ParamType.ALL, ParamType.ALL));
+            }
+        };
+
         List<BuiltinFunction> result = instance.getBuiltinFunctions();
-        
+
         assertThat(expResult, is(result));
+    }
+
+    @Test
+    public void testBuiltinFunctionsDuplicateName()
+            throws Exception
+    {
+        System.out.println("testBuiltinFunctionsDuplicateName");
+
+        boolean catched = false;
+        try
+        {
+            BuiltinFunctionsParser instance
+                    = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test_duplicate.xml", true);
+        }
+        catch (RuntimeException ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+
+        assertTrue(catched);
     }
 }

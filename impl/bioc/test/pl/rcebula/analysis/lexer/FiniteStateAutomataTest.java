@@ -114,7 +114,7 @@ public class FiniteStateAutomataTest
         }
         catch (LexerError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             return true;
         }
 
@@ -221,7 +221,7 @@ public class FiniteStateAutomataTest
         }
         catch (LexerError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
 

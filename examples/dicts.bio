@@ -1,0 +1,22 @@
+% używamy słownika jak struktury, definiując metody tworzące
+% i operujące na nim
+
+def onSTART()
+   % tworzymy wektor
+   ASSIGN_LOCAL(vect, create_vect(2, 3))
+   % wypisujemy jego długość
+   PRINTLN(dist(vect))
+end
+
+def create_vect(x, y)
+   ASSIGN_LOCAL(dict, CREATE_DICT())
+   SET(dict, "x", x)
+   SET(dict, "y", y)
+   RETURN(dict)
+end
+
+def dist(vect)
+   ASSIGN_LOCAL(x, GET(vect, "x"))
+   ASSIGN_LOCAL(y, GET(vect, "y"))
+   RETURN(SQRT(ADD(POW(x, 2), POW(y, 2))))
+end

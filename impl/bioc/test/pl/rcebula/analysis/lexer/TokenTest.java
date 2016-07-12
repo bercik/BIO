@@ -122,7 +122,7 @@ public class TokenTest
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -147,7 +147,7 @@ public class TokenTest
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         

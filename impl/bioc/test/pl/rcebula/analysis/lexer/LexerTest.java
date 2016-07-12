@@ -197,7 +197,7 @@ public class LexerTest
         {
             catched = true;
             
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         
         assertEquals(true, catched);

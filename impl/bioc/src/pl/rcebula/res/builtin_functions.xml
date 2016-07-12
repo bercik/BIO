@@ -260,14 +260,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- operacje na tablicach -->
     <function>
         <name>
-            ASSIGN_LOCAL_TABLE
+            CREATE_ARRAY
         </name>
         <special>
             false
         </special>
         <params>
             <param>
-                id
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CREATE_DICT
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CONTAINS
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
+                all
             </param>
             <param>
                 all
@@ -306,6 +331,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SIZE
+        </name>
+        <special>
+            false
+        </special>
+        <params>
             <param>
                 all
             </param>

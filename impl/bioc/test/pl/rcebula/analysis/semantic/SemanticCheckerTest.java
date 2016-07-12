@@ -90,7 +90,7 @@ public class SemanticCheckerTest
         catch (SemanticError ex)
         {
             catched = true;
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         
         assertEquals(true, catched);
@@ -126,7 +126,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -161,7 +161,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -194,7 +194,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -228,7 +228,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -258,7 +258,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -303,7 +303,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -342,7 +342,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         
@@ -387,7 +387,7 @@ public class SemanticCheckerTest
         }
         catch (SemanticError ex)
         {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             catched = true;
         }
         

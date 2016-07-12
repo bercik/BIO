@@ -94,7 +94,7 @@ public class ParserTest
         catch (ParserError ex)
         {
             catched = true;
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
 
         assertEquals(true, catched);

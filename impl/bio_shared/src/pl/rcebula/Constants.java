@@ -12,7 +12,7 @@ package pl.rcebula;
 public class Constants
 {
     public static final String mainFunctionName = "onSTART";
-    public static final Integer[] mainFunctionParameters = { 0, 2 };
+    public static final Integer[] mainFunctionParameters = { 0, 1 };
     
     public static final String returnFunctionName = "RETURN";
     

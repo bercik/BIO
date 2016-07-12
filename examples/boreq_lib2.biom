@@ -1,0 +1,13 @@
+def condition(i)
+   IF 
+   (  
+      EQ(REST(i, 2), 0), 
+      PRINT("FIZZ"), 
+      IF
+      (
+         EQ(REST(i, 5), 0),
+         PRINT("FIZZBUZZ"),
+         PRINT("BUZZ")
+      )
+   )
+end
