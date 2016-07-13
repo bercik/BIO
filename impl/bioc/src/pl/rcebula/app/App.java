@@ -36,11 +36,6 @@ public class App
     public static void main(String[] args)
             throws Exception
     {
-        if (args.length < 1)
-        {
-            System.out.println("Usage: java -jar app.jar path_to_script");
-            return;
-        }
         try
         {
             // statistics tool

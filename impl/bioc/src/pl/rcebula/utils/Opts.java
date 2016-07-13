@@ -55,7 +55,12 @@ public class Opts
         
         if (args.length < 2)
         {
-            String message = "usage: java -jar bioc.jar input_file [options] output_file";
+            String message = "usage: java -jar bioc.jar input_file [options] output_file\n";
+            message += "options:\n";
+            message += "  -d print compiled code in readable form\n";
+            message += "  -s print optimization statistics\n";
+            message += "  -n don't write compiled code to output file\n";
+            message += "  -v verbose, print all informations about compiling process\n";
             throw new OptsError(message);
         }
         
