@@ -22,17 +22,25 @@ package pl.rcebula.code;
  */
 public enum ValueType
 {
-    INT(Integer.class),
-    FLOAT(Float.class),
-    STRING(String.class),
-    BOOL(Boolean.class),
-    NONE(null);
+    // UWAGA! Upewnij się, że wartości opcode są różne od wartości w IdValueType
+    INT(Integer.class, (byte)3),
+    FLOAT(Float.class, (byte)4),
+    STRING(String.class, (byte)5),
+    BOOL(Boolean.class, (byte)6),
+    NONE(null, (byte)7);
     
     private final Class type;
+    private final byte opcode;
 
-    private ValueType(Class type)
+    private ValueType(Class type, byte opcode)
     {
         this.type = type;
+        this.opcode = opcode;
+    }
+
+    public byte getOpcode()
+    {
+        return opcode;
     }
 
     public Class getType()

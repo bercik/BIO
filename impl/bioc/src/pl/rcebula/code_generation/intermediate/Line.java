@@ -16,6 +16,8 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,20 +31,44 @@ public class Line
 {  
     private final List<IField> fields = new ArrayList<>();
     private final List<Label> labels = new ArrayList<>();
+    private final boolean empty;
     private int line = 0;
     
     public Line()
     {
+        this.empty = true;
     }
     
     public Line(IField... fields)
     {
         this.fields.addAll(Arrays.asList(fields));
+        empty = this.fields.size() == 0;
     }
     
     public Line(List<IField> fields)
     {
         this.fields.addAll(fields);
+        empty = this.fields.size() == 0;
+    }
+    
+    private Line(IField field, boolean empty)
+    {
+        this.fields.add(field);
+        this.empty = true;
+    }
+    
+    public static Line generateEmptyStringLine()
+    {
+        StringField sf = new StringField("");
+        Line line = new Line(sf, true);
+        return line;
+    }
+    
+    public static Line generateEmptyIntLine()
+    {
+        IntStringField isf = new IntStringField(0, "");
+        Line line = new Line(isf, true);
+        return line;
     }
 
     public int getLine()
@@ -106,12 +132,17 @@ public class Line
     {
         String result = "";
         
+        int added = 0;
         for (IField f : fields)
         {
-            result += f.toString() + Constants.fieldsSeparator;
+            if (f.toString() != "")
+            {
+                result += f.toString() + Constants.fieldsSeparator;
+                ++added;
+            }
         }
         
-        if (fields.size() > 0)
+        if (added > 0)
         {
             result = result.substring(0, result.length() - 1);
         }
@@ -121,6 +152,14 @@ public class Line
     
     public boolean isEmptyLine()
     {
-        return numberOfFields() == 0;
+        return empty;
+    }
+    
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
+    {
+        for (IField f : fields)
+        {
+            f.writeToBinaryFile(dos);
+        }
     }
 }

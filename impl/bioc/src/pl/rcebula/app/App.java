@@ -119,9 +119,16 @@ public class App
                 System.out.println(statistic);
             }
             
+            if (opts.isDisassemble() && !opts.isVerbose())
+            {
+                System.out.println("DISASSEMBLE CODE");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringWithLinesNumber());
+            }
+            
             if (!opts.isNotWrite())
             {
-                ic.writeToFile(opts.getOutputFilePath());
+                ic.writeToBinaryFile(opts.getOutputFilePath());
             }
         }
         catch (LexerError ex)

@@ -16,6 +16,9 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  *
  * @author robert
@@ -43,5 +46,11 @@ public class LabelField implements IField
     public String toString()
     {
         return label.toString();
+    }
+
+    @Override
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
+    {
+        dos.writeInt(label.getLine());
     }
 }

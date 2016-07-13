@@ -16,6 +16,9 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  *
  * @author robert
@@ -24,4 +27,6 @@ public interface IField
 {
     @Override
     public String toString();
+    
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException;
 }

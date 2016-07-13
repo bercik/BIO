@@ -16,7 +16,7 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
-import java.io.FileNotFoundException;
+import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -127,7 +127,7 @@ public class IntermediateCode
     {
         String result = "";
         
-        Integer c = 1;
+        Integer c = 0;
         for (Line l : lines)
         {
             result += "[" + c.toString() + "] " +  l.toString() + "\n";
@@ -137,9 +137,25 @@ public class IntermediateCode
         return result;
     }
     
+    public void writeToBinaryFile(DataOutputStream dos)
+            throws IOException
+    {
+        for (Line l : lines)
+        {
+            l.writeToBinaryFile(dos);
+        }
+    }
+    
     public void writeToFile(String path) throws IOException
     {
         Path p = Paths.get(path);
         Files.write(p, toLines(), Charset.forName("UTF-8"));
+    }
+    
+    public void writeToBinaryFile(String path) throws IOException
+    {
+        DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
+        
+        writeToBinaryFile(dos);
     }
 }

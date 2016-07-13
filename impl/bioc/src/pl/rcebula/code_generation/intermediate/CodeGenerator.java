@@ -41,6 +41,8 @@ public class CodeGenerator
 
     private final InterpreterFunctionsGenerator ifg;
     private final SpecialFunctionsGenerator sfg;
+    
+    private boolean firstFunction = true;
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions)
     {
@@ -57,7 +59,7 @@ public class CodeGenerator
         }
 
         // dodajemy pustą linię na koniec
-        ic.appendLine(new Line());
+        ic.appendLine(Line.generateEmptyIntLine());
     }
 
     private void eval(UserFunction uf)
@@ -71,19 +73,28 @@ public class CodeGenerator
         Label functionOccurenceLabel = new Label();
         fields.add(new LabelField(functionOccurenceLabel));
         // linia w kodzie źródłowym
-        fields.add(new StringField(uf.getLine().toString()));
+        fields.add(new IntStringField(uf.getLine()));
         // znak w kodzie źródłowym
-        fields.add(new StringField(uf.getChNum().toString()));
+        fields.add(new IntStringField(uf.getChNum()));
         // stwórz linię
         Line line = new Line(fields);
         // dodaj do kodu na początku
         ic.insertLine(line, 0);
 
-        // dodaj pustą linię na koniec
-        ic.appendLine(new Line());
+        if (firstFunction)
+        {
+            firstFunction = false;
+            // dodaj pustą linię na koniec
+            ic.appendLine(Line.generateEmptyStringLine());
+        }
+        else
+        {
+            // dodaj pustą linię na koniec
+            ic.appendLine(Line.generateEmptyIntLine());
+        }
 
         // definicja funkcji
-        // pierwsza linia: nazwa funkcji, parametr1, parametr2, ..., parametrN
+        // pierwsza linia: nazwa funkcji, parametr1, parametr2, ..., parametrN, pusty string
         fields = new ArrayList<>();
         fields.add(new StringField(uf.getName()));
         // nazwy parametrów
@@ -91,6 +102,7 @@ public class CodeGenerator
         {
             fields.add(new StringField(p.getName()));
         }
+        fields.add(new StringField(""));
 
         // tworzymy linię
         line = new Line(fields);

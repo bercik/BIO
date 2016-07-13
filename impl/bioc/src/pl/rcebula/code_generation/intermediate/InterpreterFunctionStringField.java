@@ -18,35 +18,25 @@ package pl.rcebula.code_generation.intermediate;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import pl.rcebula.code.InterpreterFunction;
 
 /**
  *
  * @author robert
  */
-public class StringField implements IField
+public class InterpreterFunctionStringField extends StringField
 {
-    private final String str;
+    private final InterpreterFunction interpreterFunction;
 
-    public StringField(String str)
+    public InterpreterFunctionStringField(InterpreterFunction interpreterFunction)
     {
-        this.str = str;
-    }
-
-    public String getStr()
-    {
-        return str;
+        super(interpreterFunction.toString());
+        this.interpreterFunction = interpreterFunction;
     }
 
     @Override
-    public String toString()
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {
-        return str;
-    }
-
-    @Override
-    public void writeToBinaryFile(DataOutputStream dos)
-            throws IOException
-    {
-        dos.writeUTF(str);
+        dos.writeByte(interpreterFunction.getOpcode());
     }
 }

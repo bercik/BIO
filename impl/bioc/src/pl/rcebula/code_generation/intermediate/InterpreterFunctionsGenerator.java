@@ -18,13 +18,9 @@ package pl.rcebula.code_generation.intermediate;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.analysis.tree.IdCallParam;
-import pl.rcebula.code.IdValueType;
-import pl.rcebula.code.ValueType;
-import pl.rcebula.utils.StringUtils;
 
 /**
  *
@@ -37,10 +33,10 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // call, function_name, line, chNum
-        fields.add(new StringField(InterpreterFunction.CALL.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.CALL));
         fields.add(new StringField(functionName));
-        fields.add(new StringField(line.toString()));
-        fields.add(new StringField(chNum.toString()));
+        fields.add(new IntStringField(line));
+        fields.add(new IntStringField(chNum));
 
         return new Line(fields);
     }
@@ -50,78 +46,37 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // call_loc, function_name, line, chNum
-        fields.add(new StringField(InterpreterFunction.CALL_LOC.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.CALL_LOC));
         fields.add(new StringField(functionName));
-        fields.add(new StringField(line.toString()));
-        fields.add(new StringField(chNum.toString()));
+        fields.add(new IntStringField(line));
+        fields.add(new IntStringField(chNum));
 
         return new Line(fields);
     }
 
     public Line generatePush(ConstCallParam ccp)
     {
-        String str = "";
+        ConstCallParamStringField ccpsf = new ConstCallParamStringField(ccp);
 
-        str += ccp.getValueType().toString();
-        str += Constants.valueSeparator;
-
-        Object val = ccp.getValue();
-        if (val != null)
-        {
-            String s = val.toString();
-            // jeżeli string to otaczamy cudzysłowiem i dodajemy \ przed każdym \
-            if (ccp.getValueType().equals(ValueType.STRING))
-            {
-                for (Character key : StringUtils.specialCharacters.keySet())
-                {
-                    Character value = StringUtils.specialCharacters.get(key);
-                    if (value.equals('\\'))
-                    {
-                        s = s.replaceAll("\\\\", "\\\\\\\\");
-                    }
-                    else
-                    {
-                        s = s.replaceAll(value.toString(), "\\\\" + key.toString());
-                    }
-                }
-
-                s = "\"" + s + "\"";
-            }
-
-            str += s;
-        }
-
-        return generatePush(str, ccp.getLine(), ccp.getChNum());
+        return generatePush(ccpsf, ccp.getLine(), ccp.getChNum());
     }
 
     public Line generatePush(IdCallParam icp, boolean isVar)
     {
-        // id/var:value
-        String str = "";
-        if (isVar)
-        {
-            str += IdValueType.VAR.toString();
-        }
-        else
-        {
-            str += IdValueType.ID.toString();
-        }
+        IdCallParamStringField icpsf = new IdCallParamStringField(icp, isVar);
 
-        str += Constants.valueSeparator;
-        str += icp.getName();
-
-        return generatePush(str, icp.getLine(), icp.getChNum());
+        return generatePush(icpsf, icp.getLine(), icp.getChNum());
     }
 
-    private Line generatePush(String str, Integer line, Integer chNum)
+    private Line generatePush(StringField strField, Integer line, Integer chNum)
     {
         List<IField> fields = new ArrayList<>();
 
         // push, str, line, chNum
-        fields.add(new StringField(InterpreterFunction.PUSH.toString()));
-        fields.add(new StringField(str));
-        fields.add(new StringField(line.toString()));
-        fields.add(new StringField(chNum.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.PUSH));
+        fields.add(strField);
+        fields.add(new IntStringField(line));
+        fields.add(new IntStringField(chNum));
 
         return new Line(fields);
     }
@@ -131,8 +86,8 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // pop, number
-        fields.add(new StringField(InterpreterFunction.POP.toString()));
-        fields.add(new StringField(number.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.POP));
+        fields.add(new IntStringField(number));
 
         return new Line(fields);
     }
@@ -142,8 +97,8 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // pop, number
-        fields.add(new StringField(InterpreterFunction.POPC.toString()));
-        fields.add(new StringField(number.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.POPC));
+        fields.add(new IntStringField(number));
 
         return new Line(fields);
     }
@@ -153,10 +108,10 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // jmp, label, line, chNum
-        fields.add(new StringField(InterpreterFunction.JMP.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.JMP));
         fields.add(new LabelField(label));
-        fields.add(new StringField(line.toString()));
-        fields.add(new StringField(chNum.toString()));
+        fields.add(new IntStringField(line));
+        fields.add(new IntStringField(chNum));
 
         return new Line(fields);
     }
@@ -166,10 +121,10 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // jmp_if_false, label, line, chNum
-        fields.add(new StringField(InterpreterFunction.JMP_IF_FALSE.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.JMP_IF_FALSE));
         fields.add(new LabelField(label));
-        fields.add(new StringField(line.toString()));
-        fields.add(new StringField(chNum.toString()));
+        fields.add(new IntStringField(line));
+        fields.add(new IntStringField(chNum));
 
         return new Line(fields);
     }
@@ -179,7 +134,7 @@ public class InterpreterFunctionsGenerator
         List<IField> fields = new ArrayList<>();
 
         // clear_stack
-        fields.add(new StringField(InterpreterFunction.CLEAR_STACK.toString()));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.CLEAR_STACK));
 
         return new Line(fields);
     }

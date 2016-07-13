@@ -46,7 +46,6 @@ public class Label
     @Override
     public String toString()
     {
-        // +1, ponieważ numerujemy linie w kodzie od 1
-        return Integer.toString(line+1);
+        return Integer.toString(line);
     }
 }

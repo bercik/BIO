@@ -117,8 +117,8 @@ public class CodeGeneratorTest
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
 
-        String expected = "foo,11,4,1\n"
-                + "onSTART,4,1,1\n"
+        String expected = "foo,10,4,1\n"
+                + "onSTART,3,1,1\n"
                 + "\n"
                 + "onSTART\n"
                 + "push,int:10,2,10\n"
@@ -226,8 +226,8 @@ public class CodeGeneratorTest
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
 
-        String expected = "foo,16,4,1\n"
-                + "onSTART,4,1,1\n"
+        String expected = "foo,15,4,1\n"
+                + "onSTART,3,1,1\n"
                 + "\n"
                 + "onSTART\n"
                 + "push,id:x,2,2\n"
@@ -252,14 +252,14 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LE,7,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,35,5,1\n"
+                + "jmp_if_false,34,5,1\n"
                 + "push,id:p,8,2\n"
                 + "pop,1\n"
                 + "call_loc,DEC,8,1\n"
                 + "popc,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
-                + "jmp,22,5,1\n"
+                + "jmp,21,5,1\n"
                 + "push,none:,-1,-1\n"
                 + "clear_stack\n"
                 + "push,var:sum,10,2\n"
@@ -368,7 +368,7 @@ public class CodeGeneratorTest
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
 
-        String expected = "onSTART,3,1,1\n"
+        String expected = "onSTART,2,1,1\n"
                 + "\n"
                 + "onSTART\n"
                 + "push,id:i,3,2\n"
@@ -381,7 +381,7 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LS,4,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,49,2,1\n"
+                + "jmp_if_false,48,2,1\n"
                 + "push,id:j,7,2\n"
                 + "push,int:0,7,3\n"
                 + "pop,2\n"
@@ -392,7 +392,7 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,LS,8,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,40,6,1\n"
+                + "jmp_if_false,39,6,1\n"
                 + "push,var:i,10,3\n"
                 + "push,var:j,10,4\n"
                 + "pop,2\n"
@@ -406,7 +406,7 @@ public class CodeGeneratorTest
                 + "popc,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
-                + "jmp,20,6,1\n"
+                + "jmp,19,6,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
                 + "push,id:i,13,2\n"
@@ -415,7 +415,7 @@ public class CodeGeneratorTest
                 + "popc,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
-                + "jmp,9,2,1\n"
+                + "jmp,8,2,1\n"
                 + "push,none:,-1,-1\n"
                 + "\n";
 
@@ -496,7 +496,7 @@ public class CodeGeneratorTest
         CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
         IntermediateCode ic = cg.getIc();
 
-        String expected = "onSTART,3,1,1\n"
+        String expected = "onSTART,2,1,1\n"
                 + "\n"
                 + "onSTART\n"
                 + "push,id:i,2,2\n"
@@ -508,7 +508,7 @@ public class CodeGeneratorTest
                 + "popc,1\n"
                 + "push,bool:true,5,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,36,3,1\n"
+                + "jmp_if_false,35,3,1\n"
                 + "push,id:i,7,3\n"
                 + "pop,1\n"
                 + "call_loc,INC,7,2\n"
@@ -520,17 +520,17 @@ public class CodeGeneratorTest
                 + "pop,2\n"
                 + "call_loc,GT,8,2\n"
                 + "pop,1\n"
-                + "jmp_if_false,29,8,1\n"
-                + "jmp,36,8,5\n"
+                + "jmp_if_false,28,8,1\n"
+                + "jmp,35,8,5\n"
                 + "popc,1\n"
-                + "jmp,31,8,1\n"
-                + "jmp,33,8,6\n"
-                + "popc,1\n"
-                + "push,none:,-1,-1\n"
+                + "jmp,30,8,1\n"
+                + "jmp,32,8,6\n"
                 + "popc,1\n"
                 + "push,none:,-1,-1\n"
                 + "popc,1\n"
-                + "jmp,11,3,1\n"
+                + "push,none:,-1,-1\n"
+                + "popc,1\n"
+                + "jmp,10,3,1\n"
                 + "push,none:,-1,-1\n"
                 + "\n";
 

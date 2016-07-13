@@ -107,7 +107,7 @@ public class RemovePushBoolJmpSequencesTest
         RemovePushBoolJmpSequences rpbpjifs = new RemovePushBoolJmpSequences(ic, new Statistics());
         
         String expected = "call,foo,-1,-1\n" 
-                + "jmp,1,-1,-1\n"
+                + "jmp,0,-1,-1\n"
                 + "clear_stack\n"
                 + "call,foo,-1,-1\n\n";
         

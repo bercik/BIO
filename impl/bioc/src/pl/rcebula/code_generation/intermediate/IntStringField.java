@@ -23,30 +23,25 @@ import java.io.IOException;
  *
  * @author robert
  */
-public class StringField implements IField
+public class IntStringField extends StringField
 {
-    private final String str;
+    private final int number;
 
-    public StringField(String str)
+    public IntStringField(int number)
     {
-        this.str = str;
+        super(Integer.toString(number));
+        this.number = number;
     }
 
-    public String getStr()
+    public IntStringField(int number, String str)
     {
-        return str;
-    }
-
-    @Override
-    public String toString()
-    {
-        return str;
+        super(str);
+        this.number = number;
     }
 
     @Override
-    public void writeToBinaryFile(DataOutputStream dos)
-            throws IOException
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {
-        dos.writeUTF(str);
+        dos.writeInt(number);
     }
 }

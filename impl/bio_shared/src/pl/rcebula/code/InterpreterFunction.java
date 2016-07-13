@@ -11,15 +11,27 @@ package pl.rcebula.code;
  */
 public enum InterpreterFunction
 {
-    CALL,
-    CALL_LOC,
-    PUSH,
-    POP,
-    POPC,
-    JMP,
-    JMP_IF_FALSE,
-    CLEAR_STACK;
+    CALL((byte)1),
+    CALL_LOC((byte)2),
+    PUSH((byte)3),
+    POP((byte)4),
+    POPC((byte)5),
+    JMP((byte)6),
+    JMP_IF_FALSE((byte)7),
+    CLEAR_STACK((byte)8);
+    
+    private final byte opcode;
 
+    private InterpreterFunction(byte opcode)
+    {
+        this.opcode = opcode;
+    }
+
+    public byte getOpcode()
+    {
+        return opcode;
+    }
+    
     @Override
     public String toString()
     {

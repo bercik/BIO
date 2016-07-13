@@ -104,11 +104,11 @@ public class RemoveRedundantJumpsTest
         RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new Statistics());
 
         String expected = "call,foo,-1,-1\n"
+                + "jmp,5,-1,-1\n"
+                + "jmp,5,-1,-1\n"
                 + "jmp,6,-1,-1\n"
-                + "jmp,6,-1,-1\n"
-                + "jmp,7,-1,-1\n"
-                + "jmp,6,-1,-1\n"
-                + "jmp_if_false,7,-1,-1\n"
+                + "jmp,5,-1,-1\n"
+                + "jmp_if_false,6,-1,-1\n"
                 + "clear_stack\n";
 
         assertEquals(expected, ic.toString());

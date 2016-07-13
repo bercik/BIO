@@ -26,6 +26,7 @@ public class Opts
     private boolean verbose = false;
     private boolean statistics = false;
     private boolean notWrite = false;
+    private boolean disassemble = false;
     private String inputFilePath;
     private String outputFilePath;
 
@@ -47,6 +48,7 @@ public class Opts
             verbose = true;
             statistics = true;
             notWrite = true;
+            disassemble = true;
             outputFilePath = "";
             return;
         }
@@ -79,12 +81,21 @@ public class Opts
             {
                 notWrite = true;
             }
+            else if (opt.equals("-d"))
+            {
+                disassemble = true;
+            }
             else
             {
                 String message = "Unrecognized option " + opt;
                 throw new OptsError(message);
             }
         }
+    }
+
+    public boolean isDisassemble()
+    {
+        return disassemble;
     }
 
     public boolean isNotWrite()
