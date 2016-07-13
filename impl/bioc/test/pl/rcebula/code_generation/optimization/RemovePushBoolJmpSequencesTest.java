@@ -29,7 +29,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Inter
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -104,7 +104,7 @@ public class RemovePushBoolJmpSequencesTest
         ic.appendLine(generateCall());
         ic.appendLine(new Line());
         
-        RemovePushBoolJmpSequences rpbpjifs = new RemovePushBoolJmpSequences(ic, new Statistics());
+        RemovePushBoolJmpSequences rpbpjifs = new RemovePushBoolJmpSequences(ic, new OptimizationStatistics());
         
         String expected = "call,foo,-1,-1\n" 
                 + "jmp,0,-1,-1\n"

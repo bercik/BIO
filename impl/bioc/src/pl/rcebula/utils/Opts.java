@@ -27,6 +27,7 @@ public class Opts
     private boolean statistics = false;
     private boolean notWrite = false;
     private boolean disassemble = false;
+    private boolean times = false;
     private String inputFilePath;
     private String outputFilePath;
 
@@ -49,6 +50,7 @@ public class Opts
             statistics = true;
             notWrite = true;
             disassemble = true;
+            times = true;
             outputFilePath = "";
             return;
         }
@@ -61,6 +63,7 @@ public class Opts
             message += "  -s print optimization statistics\n";
             message += "  -n don't write compiled code to output file\n";
             message += "  -v verbose, print all informations about compiling process\n";
+            message += "  -t print times spent on each module\n";
             throw new OptsError(message);
         }
         
@@ -90,6 +93,10 @@ public class Opts
             {
                 disassemble = true;
             }
+            else if (opt.equals("-t"))
+            {
+                times = true;
+            }
             else
             {
                 String message = "Unrecognized option " + opt;
@@ -98,6 +105,11 @@ public class Opts
         }
     }
 
+    public boolean isTimes()
+    {
+        return times;
+    }
+    
     public boolean isDisassemble()
     {
         return disassemble;

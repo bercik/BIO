@@ -18,7 +18,7 @@ package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.List;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -27,10 +27,10 @@ import pl.rcebula.utils.Statistics;
 public class RemoveUnusedCodeBlocks
 {
     private final IntermediateCode ic;
-    private final Statistics statistics;
+    private final OptimizationStatistics statistics;
     private final FlowGraph fg;
 
-    public RemoveUnusedCodeBlocks(IntermediateCode ic, Statistics statistics, FlowGraph fg)
+    public RemoveUnusedCodeBlocks(IntermediateCode ic, OptimizationStatistics statistics, FlowGraph fg)
     {
         this.ic = ic;
         this.statistics = statistics;

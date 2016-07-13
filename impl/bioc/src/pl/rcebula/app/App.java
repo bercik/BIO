@@ -21,7 +21,8 @@ import pl.rcebula.preprocessor.Preprocessor;
 import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
+import pl.rcebula.utils.TimeProfiler;
 
 /**
  *
@@ -38,14 +39,22 @@ public class App
     {
         try
         {
+            // time profiler
+            TimeProfiler timeProfiler = new TimeProfiler();
+            timeProfiler.startTotal();
+            
             // statistics tool
-            Statistics statistic = new Statistics();
+            OptimizationStatistics statistic = new OptimizationStatistics();
 
             // opts
+            timeProfiler.start("Opts");
             Opts opts = new Opts(args);
+            timeProfiler.stop();
 
             // preprocessor
+            timeProfiler.start("Preprocessor");
             Preprocessor preprocessor = new Preprocessor(opts.getInputFilePath());
+            timeProfiler.stop();
             if (opts.isVerbose())
             {
                 // print
@@ -55,15 +64,21 @@ public class App
             }
             
             // lexer
+            timeProfiler.start("Lexer");
             Lexer lexer = new Lexer(preprocessor.getInput());
+            timeProfiler.stop();
             List<Token<?>> tokens = lexer.getTokens();
 
             // parser
+            timeProfiler.start("Parser");
             Parser parser = new Parser(tokens);
+            timeProfiler.stop();
             List<Integer> steps = parser.getSteps();
 
             // program tree creator
+            timeProfiler.start("ProgramTreeCreator");
             ProgramTreeCreator ptc = new ProgramTreeCreator(tokens, steps);
+            timeProfiler.stop();
             ProgramTree pt = ptc.getProgramTree();
             if (opts.isVerbose())
             {
@@ -74,14 +89,20 @@ public class App
             }
 
             // builtin functions parser
+            timeProfiler.start("BuiltinFunctionsParser");
             BuiltinFunctionsParser bfp = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions.xml", true);
+            timeProfiler.stop();
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 
             // semantic checker
+            timeProfiler.start("SemanticChecker");
             SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+            timeProfiler.stop();
 
             // intermediate code generator
+            timeProfiler.start("CodeGenerator");
             CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+            timeProfiler.stop();
             IntermediateCode ic = cg.getIc();
             statistic.setLinesBeforeOptimization(ic.numberOfLines());
 
@@ -95,7 +116,9 @@ public class App
             }
 
             // optimizations
+            timeProfiler.start("CodeOptimizer");
             CodeOptimizer co = new CodeOptimizer(ic, statistic);
+            timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
 
             if (opts.isVerbose())
@@ -123,7 +146,17 @@ public class App
             
             if (!opts.isNotWrite())
             {
+                timeProfiler.start("WriteToBinaryFile");
                 ic.writeToBinaryFile(opts.getOutputFilePath());
+                timeProfiler.stop();
+            }
+            
+            timeProfiler.stopTotal();
+            if (opts.isTimes())
+            {
+                System.out.println("TIMES");
+                System.out.println("-------------------------");
+                System.out.println(timeProfiler.toString());
             }
         }
         catch (LexerError ex)

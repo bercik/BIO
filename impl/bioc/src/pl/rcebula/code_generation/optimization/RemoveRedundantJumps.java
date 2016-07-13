@@ -22,7 +22,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -31,9 +31,9 @@ import pl.rcebula.utils.Statistics;
 public class RemoveRedundantJumps
 {
     private final IntermediateCode ic;
-    private final Statistics statistics;
+    private final OptimizationStatistics statistics;
 
-    public RemoveRedundantJumps(IntermediateCode ic, Statistics statistics)
+    public RemoveRedundantJumps(IntermediateCode ic, OptimizationStatistics statistics)
             throws CodeOptimizationError
     {
         this.ic = ic;

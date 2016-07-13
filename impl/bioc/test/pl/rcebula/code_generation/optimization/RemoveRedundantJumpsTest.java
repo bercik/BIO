@@ -26,7 +26,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Inter
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -101,7 +101,7 @@ public class RemoveRedundantJumpsTest
         line.addLabel(l6);
         ic.appendLine(line); // 6
 
-        RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new Statistics());
+        RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new OptimizationStatistics());
 
         String expected = "call,foo,-1,-1\n"
                 + "jmp,5,-1,-1\n"
@@ -140,7 +140,7 @@ public class RemoveRedundantJumpsTest
         boolean catched = false;
         try
         {
-            RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new Statistics());
+            RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new OptimizationStatistics());
         }
         catch (CodeOptimizationError ex)
         {

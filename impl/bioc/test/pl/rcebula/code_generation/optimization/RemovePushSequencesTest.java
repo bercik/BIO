@@ -28,7 +28,7 @@ import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -85,7 +85,7 @@ public class RemovePushSequencesTest
         ic.appendLine(generatePushNoneLine());
         ic.appendLine(generatePopcLine(2));
 
-        new RemovePushSequences(ic, new Statistics());
+        new RemovePushSequences(ic, new OptimizationStatistics());
 
         String expected = "call,foo,-1,-1\n"
                 + "popc,1\n"

@@ -31,7 +31,7 @@ import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -104,7 +104,7 @@ public class FlowGraphAnalyseTest
         ic.appendLine(generateCallLocReturn());
         ic.appendLine(new Line());
         
-        Statistics statistics = new Statistics();
+        OptimizationStatistics statistics = new OptimizationStatistics();
         FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
         
         assertTrue(statistics.getUnusedCodeBlocksLinesRemoved() == 0);
@@ -173,7 +173,7 @@ public class FlowGraphAnalyseTest
         // 12
         ic.appendLine(new Line());
         
-        Statistics statistics = new Statistics();
+        OptimizationStatistics statistics = new OptimizationStatistics();
         FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
         
         assertTrue(statistics.getUnusedCodeBlocksLinesRemoved() == 1);
@@ -241,7 +241,7 @@ public class FlowGraphAnalyseTest
         // 13
         ic.appendLine(new Line());
         
-        Statistics statistics = new Statistics();
+        OptimizationStatistics statistics = new OptimizationStatistics();
         boolean catched = false;
         try
         {

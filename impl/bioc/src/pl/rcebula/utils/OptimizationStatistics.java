@@ -22,7 +22,7 @@ import java.text.DecimalFormat;
  *
  * @author robert
  */
-public class Statistics
+public class OptimizationStatistics
 {
     private int redundantJumpsRemoved;
     private int pushSequencesRemoved;
@@ -32,7 +32,7 @@ public class Statistics
     private int linesBeforeOptimization;
     private int linesAfterOptimization;
 
-    public Statistics()
+    public OptimizationStatistics()
     {
         redundantJumpsRemoved = 0;
         pushBoolJmpSequencesRemoved = 0;

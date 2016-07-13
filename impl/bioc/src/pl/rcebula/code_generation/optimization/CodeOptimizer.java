@@ -18,7 +18,7 @@ package pl.rcebula.code_generation.optimization;
 
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
-import pl.rcebula.utils.Statistics;
+import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -28,7 +28,7 @@ public class CodeOptimizer
 {
     private final IntermediateCode ic;
     
-    public CodeOptimizer(IntermediateCode ic, Statistics statistics)
+    public CodeOptimizer(IntermediateCode ic, OptimizationStatistics statistics)
             throws CodeOptimizationError
     {
         this.ic = ic;
