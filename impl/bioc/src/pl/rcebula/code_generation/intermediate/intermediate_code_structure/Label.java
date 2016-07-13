@@ -14,29 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import pl.rcebula.code.InterpreterFunction;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
 /**
  *
  * @author robert
  */
-public class InterpreterFunctionStringField extends StringField
+public class Label
 {
-    private final InterpreterFunction interpreterFunction;
+    private int line = 0;
 
-    public InterpreterFunctionStringField(InterpreterFunction interpreterFunction)
+    public Label()
     {
-        super(interpreterFunction.toString());
-        this.interpreterFunction = interpreterFunction;
+    }
+
+    public int getLine()
+    {
+        return line;
+    }
+
+    public void setLine(int line)
+    {
+        this.line = line;
+    }
+    
+    public void move(int shift)
+    {
+        line += shift;
     }
 
     @Override
-    public void writeToBinaryFile(DataOutputStream dos) throws IOException
+    public String toString()
     {
-        dos.writeByte(interpreterFunction.getOpcode());
+        return Integer.toString(line);
     }
 }

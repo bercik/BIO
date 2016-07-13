@@ -17,7 +17,7 @@
 package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.List;
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.utils.Statistics;
 
 /**

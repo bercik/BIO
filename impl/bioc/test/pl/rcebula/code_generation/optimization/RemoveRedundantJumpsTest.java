@@ -22,10 +22,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
-import pl.rcebula.code_generation.intermediate.Label;
-import pl.rcebula.code_generation.intermediate.Line;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.utils.Statistics;
 
 /**

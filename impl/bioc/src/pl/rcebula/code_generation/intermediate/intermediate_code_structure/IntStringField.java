@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -23,34 +24,25 @@ import java.io.IOException;
  *
  * @author robert
  */
-public class LabelField implements IField
+public class IntStringField extends StringField
 {
-    private Label label;
+    private final int number;
 
-    public LabelField(Label label)
+    public IntStringField(int number)
     {
-        this.label = label;
+        super(Integer.toString(number));
+        this.number = number;
     }
 
-    public Label getLabel()
+    public IntStringField(int number, String str)
     {
-        return label;
-    }
-
-    public void setLabel(Label label)
-    {
-        this.label = label;
-    }
-
-    @Override
-    public String toString()
-    {
-        return label.toString();
+        super(str);
+        this.number = number;
     }
 
     @Override
     public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {
-        dos.writeInt(label.getLine());
+        dos.writeInt(number);
     }
 }

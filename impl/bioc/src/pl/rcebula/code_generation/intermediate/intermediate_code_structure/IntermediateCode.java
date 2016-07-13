@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -16,6 +16,9 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

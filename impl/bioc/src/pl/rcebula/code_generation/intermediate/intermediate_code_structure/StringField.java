@@ -14,38 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
  * @author robert
  */
-public class Label
+public class StringField implements IField
 {
-    private int line = 0;
+    private final String str;
 
-    public Label()
+    public StringField(String str)
     {
+        this.str = str;
     }
 
-    public int getLine()
+    public String getStr()
     {
-        return line;
-    }
-
-    public void setLine(int line)
-    {
-        this.line = line;
-    }
-    
-    public void move(int shift)
-    {
-        line += shift;
+        return str;
     }
 
     @Override
     public String toString()
     {
-        return Integer.toString(line);
+        return str;
+    }
+
+    @Override
+    public void writeToBinaryFile(DataOutputStream dos)
+            throws IOException
+    {
+        dos.writeUTF(str);
     }
 }

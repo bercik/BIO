@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -23,30 +24,25 @@ import java.io.IOException;
  *
  * @author robert
  */
-public class StringField implements IField
+public class ByteStringField extends StringField
 {
-    private final String str;
+    private final byte number;
 
-    public StringField(String str)
+    public ByteStringField(byte number)
     {
-        this.str = str;
+        super(Byte.toString(number));
+        this.number = number;
     }
 
-    public String getStr()
+    public ByteStringField(byte number, String str)
     {
-        return str;
-    }
-
-    @Override
-    public String toString()
-    {
-        return str;
+        super(str);
+        this.number = number;
     }
 
     @Override
-    public void writeToBinaryFile(DataOutputStream dos)
-            throws IOException
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {
-        dos.writeUTF(str);
+        dos.writeByte(number);
     }
 }

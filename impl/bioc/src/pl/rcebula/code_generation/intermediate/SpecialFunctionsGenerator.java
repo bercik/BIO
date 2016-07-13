@@ -16,6 +16,9 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.Call;

@@ -17,9 +17,9 @@
 package pl.rcebula.code_generation.optimization;
 
 import pl.rcebula.code.InterpreterFunction;
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
-import pl.rcebula.code_generation.intermediate.Line;
-import pl.rcebula.code_generation.intermediate.StringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import pl.rcebula.utils.Statistics;
 
 /**

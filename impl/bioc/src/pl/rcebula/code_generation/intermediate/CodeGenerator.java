@@ -16,6 +16,13 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntStringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.util.ArrayList;
 import java.util.List;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
@@ -59,7 +66,7 @@ public class CodeGenerator
         }
 
         // dodajemy pustą linię na koniec
-        ic.appendLine(Line.generateEmptyIntLine());
+        ic.appendLine(Line.generateEmptyByteLine());
     }
 
     private void eval(UserFunction uf)
@@ -90,7 +97,7 @@ public class CodeGenerator
         else
         {
             // dodaj pustą linię na koniec
-            ic.appendLine(Line.generateEmptyIntLine());
+            ic.appendLine(Line.generateEmptyByteLine());
         }
 
         // definicja funkcji

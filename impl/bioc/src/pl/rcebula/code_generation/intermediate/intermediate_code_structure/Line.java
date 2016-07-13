@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.intermediate;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -64,10 +64,10 @@ public class Line
         return line;
     }
     
-    public static Line generateEmptyIntLine()
+    public static Line generateEmptyByteLine()
     {
-        IntStringField isf = new IntStringField(0, "");
-        Line line = new Line(isf, true);
+        ByteStringField bsf = new ByteStringField((byte)0, "");
+        Line line = new Line(bsf, true);
         return line;
     }
 

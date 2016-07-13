@@ -14,28 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.optimization;
+package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
-import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
-import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
-import pl.rcebula.utils.Statistics;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  *
  * @author robert
  */
-public class CodeOptimizer
+public class LabelField implements IField
 {
-    private final IntermediateCode ic;
-    
-    public CodeOptimizer(IntermediateCode ic, Statistics statistics)
-            throws CodeOptimizationError
+    private Label label;
+
+    public LabelField(Label label)
     {
-        this.ic = ic;
-        
-        new RemovePushSequences(ic, statistics);
-        new RemovePushBoolJmpSequences(ic, statistics);
-        new RemoveRedundantJumps(ic, statistics);
-        new FlowGraphAnalyse(ic, statistics);
+        this.label = label;
+    }
+
+    public Label getLabel()
+    {
+        return label;
+    }
+
+    public void setLabel(Label label)
+    {
+        this.label = label;
+    }
+
+    @Override
+    public String toString()
+    {
+        return label.toString();
+    }
+
+    @Override
+    public void writeToBinaryFile(DataOutputStream dos) throws IOException
+    {
+        dos.writeInt(label.getLine());
     }
 }

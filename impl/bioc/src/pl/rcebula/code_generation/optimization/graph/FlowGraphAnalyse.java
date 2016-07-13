@@ -16,7 +16,7 @@
  */
 package pl.rcebula.code_generation.optimization.graph;
 
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.utils.Statistics;
 

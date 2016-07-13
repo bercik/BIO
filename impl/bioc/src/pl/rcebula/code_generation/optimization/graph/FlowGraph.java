@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.TreeSet;
 import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
-import pl.rcebula.code_generation.intermediate.IntermediateCode;
-import pl.rcebula.code_generation.intermediate.LabelField;
-import pl.rcebula.code_generation.intermediate.Line;
-import pl.rcebula.code_generation.intermediate.StringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 
 /**
  *

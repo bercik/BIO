@@ -16,6 +16,7 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

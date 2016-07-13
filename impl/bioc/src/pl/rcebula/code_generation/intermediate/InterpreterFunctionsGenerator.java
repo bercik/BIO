@@ -16,6 +16,15 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IdCallParamStringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntStringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.InterpreterFunctionStringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.ConstCallParamStringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.util.ArrayList;
 import java.util.List;
 import pl.rcebula.code.InterpreterFunction;
