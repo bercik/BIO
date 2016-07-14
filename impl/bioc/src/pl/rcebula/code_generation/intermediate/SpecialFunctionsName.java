@@ -24,7 +24,7 @@ public class SpecialFunctionsName
 {
     public static final String doNothingFunctionName = "DN";
     public static final String forLoopFunctionName = "FOR";
-    public static final String call2FunctionName = "CALL2";
+    public static final String callFunctionName = "CALL";
     public static final String ifFunctionName = "IF";
     public static final String breakFunctionName = "BREAK";
     public static final String continueFunctionName = "CONTINUE";

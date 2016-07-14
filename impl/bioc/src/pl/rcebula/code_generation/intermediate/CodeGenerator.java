@@ -48,7 +48,7 @@ public class CodeGenerator
 
     private final InterpreterFunctionsGenerator ifg;
     private final SpecialFunctionsGenerator sfg;
-    
+
     private boolean firstFunction = true;
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions)
@@ -202,10 +202,14 @@ public class CodeGenerator
                         call2 = (Call)call.getCallParams().get(2);
                         sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getLine(), call.getChNum());
                         break;
-                    case SpecialFunctionsName.call2FunctionName:
+                    case SpecialFunctionsName.callFunctionName:
                         call1 = (Call)call.getCallParams().get(0);
-                        call2 = (Call)call.getCallParams().get(1);
-                        sfg.generateCall2(call1, call2, forStart, forEnd);
+                        List<Call> calls = new ArrayList<>();
+                        for (int i = 1; i < call.getCallParams().size(); ++i)
+                        {
+                            calls.add((Call)call.getCallParams().get(i));
+                        }
+                        sfg.generateCall(call1, calls, forStart, forEnd);
                         break;
                     case SpecialFunctionsName.doNothingFunctionName:
                         sfg.generateDN();
@@ -224,38 +228,55 @@ public class CodeGenerator
             else
             {
                 // funkcja regularna
-                for (int i = 0; i < bf.getParams().size(); ++i)
+                List<CallParam> callParams = call.getCallParams();
+                // push, id:x
+                // call2
+                // pop, 2
+                // call_loc, nazwa_funkcji
+                // początkowe parametry
+                int i;
+                for (i = 0; i < bf.getStartParams(); ++i)
                 {
-                    // push, id:x
-                    // call2
-                    // ...
-                    // pop, 2
-                    // call_loc, nazwa_funkcji
-
                     ParamType pt = bf.getParams().get(i);
-                    CallParam cp = call.getCallParams().get(i);
+                    CallParam cp = callParams.get(i);
+                    eval(pt, cp, forStart, forEnd);
+                }
+                // cykliczne parametry
+                List<ParamType> repeatPatternTypes = bf.getRepeatPatternTypes();
+                // tyle razy ile cykl występuje
+                for (int j = 0; j < call.getRepeatCycles(); ++j)
+                {
+                    // wykonaj jeden cykl
+                    for (int k = 0; k < repeatPatternTypes.size(); ++k)
+                    {
+                        ParamType pt = repeatPatternTypes.get(k);
+                        CallParam cp = callParams.get(i);
+                        eval(pt, cp, forStart, forEnd);
+                        ++i;
+                    }
+                }
+                // to co zostało
+                int k = bf.getStartParams() + repeatPatternTypes.size();
+                for (; i < callParams.size(); ++i)
+                {
+                    ParamType pt = bf.getParams().get(k);
+                    CallParam cp = callParams.get(i);
+                    eval(pt, cp, forStart, forEnd);
 
-                    if (pt.equals(ParamType.ID))
-                    {
-                        eval((IdCallParam)cp, false);
-                    }
-                    else
-                    {
-                        eval(cp, forStart, forEnd);
-                    }
+                    ++k;
                 }
 
                 Line line;
 
-                if (bf.getParams().size() != 0)
+                if (callParams.size() != 0)
                 {
-                    line = ifg.generatePop(bf.getParams().size());
+                    line = ifg.generatePop(callParams.size());
                     ic.appendLine(line);
                 }
 
                 line = ifg.generateCallLoc(call.getName(), call.getLine(), call.getChNum());
                 ic.appendLine(line);
-            }
+            } // koniec funkcja regularna
         }
         else
         {
@@ -288,6 +309,18 @@ public class CodeGenerator
             {
                 throw new RuntimeException("Unknown function " + call.getName());
             }
+        }
+    }
+
+    private void eval(ParamType pt, CallParam cp, Label forStart, Label forEnd)
+    {
+        if (pt.equals(ParamType.ID))
+        {
+            eval((IdCallParam)cp, false);
+        }
+        else
+        {
+            eval(cp, forStart, forEnd);
         }
     }
 

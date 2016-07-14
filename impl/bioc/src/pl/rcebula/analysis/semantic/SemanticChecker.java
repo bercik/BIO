@@ -137,7 +137,7 @@ public class SemanticChecker
                     lastCallReturn = true;
                 }
             }
-            
+
             if (!lastCallReturn)
             {
                 Call returnCall = new Call(Constants.returnFunctionName, null, -1, -1);
@@ -180,7 +180,7 @@ public class SemanticChecker
     {
         List<CallParam> callParams = call.getCallParams();
         List<UserFunction> userFunctions = programTree.getUserFunctions();
-        
+
         boolean forLoopFunction = false;
 
         boolean functionExists = false;
@@ -203,7 +203,7 @@ public class SemanticChecker
                 break;
             }
         }
-        
+
         if (!functionExists)
         {
             // szukaj czy funkcja występuje wśród funkcji wbudowanych
@@ -214,28 +214,81 @@ public class SemanticChecker
                 {
                     functionExists = true;
 
-                    // sprawdź czy ilość przekazywanych parametrów się zgadza
-                    if (callParams.size() != bf.getParams().size())
+                    // sprawdź czy ilość i typy przekazywanych argumentów się zgadzają 
+                    // biorąc pod uwagę repeatPattern
+                    // sprawdź ilość
+                    if (!bf.isGoodNumberOfParams(callParams.size()))
                     {
-                        String message = "Function " + call.getName() + " takes " + bf.getParams().size()
+                        List<Integer> gnop = bf.getGoodNumberOfParamsList(3);
+                        String goodParamsStr = gnop.get(0).toString() + ", " + gnop.get(1).toString() + ", "
+                                + gnop.get(2).toString() + "...";
+
+                        String message = "Function " + call.getName() + " takes " + goodParamsStr
                                 + " parameters, got " + callParams.size();
                         throw new SemanticError(call.getLine(), call.getChNum(), message);
                     }
-
-                    // sprawdź czy typy przekazywanych argumentów się zgadzają
+                    // sprawdź typy
+                    List<Boolean> repeatPattern = bf.getRepeatPattern();
+                    // <startCycle, endCycle>
+                    // jeżeli nie ma żadnego repeatPattern to dzięki tym wartościom warunek w 
+                    // trzeciej pętli for nie zostanie spełniony
+                    int startCycle = -1;
+                    int endCycle = -2;
+                    // idź od początku do napotkania repeat true
                     for (int k = 0; k < callParams.size(); ++k)
                     {
+                        boolean repeat = repeatPattern.get(k);
+                        if (repeat)
+                        {
+                            startCycle = k;
+                            break;
+                        }
+
                         ParamType pt1 = bf.getParams().get(k);
                         ParamType pt2 = ParamType.convert(callParams.get(k));
 
-                        if (!ParamType.compare(pt1, pt2))
-                        {
-                            String message = "In function " + call.getName() + " expected " + (k+1) + 
-                                    " parameter to be " + pt1.toString() + ", got " + pt2.toString();
-                            throw new SemanticError(callParams.get(k).getLine(), callParams.get(k).getChNum(), 
-                                    message);
-                        }
+                        compareThrowIfNotEqual(pt1, pt2, call, k);
                     }
+                    // idź od końca do napotkania repeat true
+                    int x = repeatPattern.size() - 1;
+                    for (int k = callParams.size() - 1; k >= 0; --k)
+                    {
+                        if (x < 0)
+                        {
+                            break;
+                        }
+                        
+                        boolean repeat = repeatPattern.get(x);
+                        if (repeat)
+                        {
+                            endCycle = k;
+                            break;
+                        }
+
+                        ParamType pt1 = bf.getParams().get(x);
+                        ParamType pt2 = ParamType.convert(callParams.get(k));
+
+                        compareThrowIfNotEqual(pt1, pt2, call, k);
+                        
+                        --x;
+                    }
+                    // idź od startCycle do endCycle sprawdzając ilość cykli i parametry
+                    int cycles = 0;
+                    List<ParamType> repeatPatternTypes = bf.getRepeatPatternTypes();
+                    for (int k = startCycle; k <= endCycle;)
+                    {
+                        for (int z = 0; z < repeatPatternTypes.size(); ++z)
+                        {
+                            ParamType pt1 = repeatPatternTypes.get(z);
+                            ParamType pt2 = ParamType.convert(callParams.get(k));
+
+                            compareThrowIfNotEqual(pt1, pt2, call, k);
+                            
+                            ++k;
+                        }
+                        ++cycles;
+                    }
+                    call.setRepeatCycles(cycles);
 
                     // warunki specjalne
                     // sprawdź czy funkcja jest pętlą FOR
@@ -245,14 +298,14 @@ public class SemanticChecker
                         ++insideForLoopCounter;
                     }
                     // sprawdź czy funkcja jest instrukcją BREAK lub CONTINUE
-                    else if (call.getName().equals(SpecialFunctionsName.breakFunctionName) ||
-                            call.getName().equals(SpecialFunctionsName.continueFunctionName))
+                    else if (call.getName().equals(SpecialFunctionsName.breakFunctionName)
+                            || call.getName().equals(SpecialFunctionsName.continueFunctionName))
                     {
                         // sprawdź czy występuje wewnątrz pętli FOR
                         if (insideForLoopCounter <= 0)
                         {
-                            String message = "Function " + call.getName() + " must occurs inside " +
-                                    SpecialFunctionsName.forLoopFunctionName + " loop";
+                            String message = "Function " + call.getName() + " must occurs inside "
+                                    + SpecialFunctionsName.forLoopFunctionName + " loop";
                             throw new SemanticError(call.getLine(), call.getChNum(), message);
                         }
                     }
@@ -261,13 +314,13 @@ public class SemanticChecker
                 }
             }
         }
-        
+
         if (!functionExists)
         {
             String message = "Function " + call.getName() + " doesn't exist";
             throw new SemanticError(call.getLine(), call.getChNum(), message);
         }
-        
+
         // wywołaj rekurencyjnie metodę dla następnych call
         for (CallParam cp : callParams)
         {
@@ -276,11 +329,23 @@ public class SemanticChecker
                 checkCall((Call)cp);
             }
         }
-        
+
         // jeżeli funkcja for to zdekrementuj licznik
         if (forLoopFunction)
         {
             --insideForLoopCounter;
+        }
+    }
+
+    private void compareThrowIfNotEqual(ParamType pt1, ParamType pt2, Call call, int k)
+            throws SemanticError
+    {
+        if (!ParamType.compare(pt1, pt2))
+        {
+            String message = "In function " + call.getName() + " expected " + (k + 1)
+                    + " parameter to be " + pt1.toString() + ", got " + pt2.toString();
+            throw new SemanticError(call.getCallParams().get(k).getLine(), call.getCallParams().get(k).getChNum(),
+                    message);
         }
     }
 }

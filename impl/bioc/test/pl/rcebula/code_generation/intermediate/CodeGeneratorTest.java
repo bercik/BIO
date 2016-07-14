@@ -18,6 +18,7 @@ package pl.rcebula.code_generation.intermediate;
 
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -55,7 +56,9 @@ public class CodeGeneratorTest
         {
             {
                 add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
-                add(new BuiltinFunction("CALL2", true, ParamType.CALL, ParamType.CALL));
+                add(new BuiltinFunction("CALL", true, 
+                        Arrays.asList(ParamType.CALL, ParamType.CALL),
+                        Arrays.asList(false, true)));
                 add(new BuiltinFunction("DN", true));
                 add(new BuiltinFunction("IF", true, ParamType.ALL, ParamType.CALL, ParamType.CALL));
                 add(new BuiltinFunction("BREAK", true));
@@ -70,6 +73,9 @@ public class CodeGeneratorTest
                 add(new BuiltinFunction("INC", false, ParamType.ID));
                 add(new BuiltinFunction("RETURN", false, ParamType.ALL));
                 add(new BuiltinFunction("MUL", false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("FOO", false, 
+                        Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL), 
+                        Arrays.asList(false, true, true, false)));
             }
         };
     }
@@ -279,11 +285,11 @@ public class CodeGeneratorTest
             FOR(
                 ASSIGN_LOCAL(i, 0),
                 LS(i, 10),
-                CALL2(
+                CALL(
                     FOR(
                         ASSIGN_LOCAL(j, 0),
                         LS(j, 10),
-                        CALL2(
+                        CALL(
                             PRINT(MUL(i, j)),
                             INC(j)), % CALL2
                         DN()
@@ -317,7 +323,7 @@ public class CodeGeneratorTest
         call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 4, 3), 4, 3));
 
         // CALL2(
-        Call call2 = new Call("CALL2", callFor, 5, 1);
+        Call call2 = new Call("CALL", callFor, 5, 1);
         callFor.addCallParam(call2);
 
         // FOR(
@@ -336,8 +342,8 @@ public class CodeGeneratorTest
         call1.addCallParam(new IdCallParam("j", 8, 2));
         call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, 8, 3), 8, 3));
 
-        // CALL2(
-        Call insideCall2 = new Call("CALL2", insideFor, 9, 1);
+        // CALL(
+        Call insideCall2 = new Call("CALL", insideFor, 9, 1);
         insideFor.addCallParam(insideCall2);
 
         // PRINT(MUL(i, j)),
@@ -465,7 +471,7 @@ public class CodeGeneratorTest
         forCall.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, 5, 1), 5, 1));
 
         // CALL2(
-        Call call2 = new Call("CALL2", forCall, 6, 1);
+        Call call2 = new Call("CALL", forCall, 6, 1);
         forCall.addCallParam(call2);
 
         // PRINT(INC(i)),
@@ -535,6 +541,50 @@ public class CodeGeneratorTest
                 + "push,none:,-1,-1\n"
                 + "\n";
 
+        assertEquals(expected, ic.toString());
+    }
+    
+    @Test
+    public void testMultipleArgumentsBuiltinFunction()
+    {
+        System.out.println("testMultipleArgumentsBuiltinFunction()");
+
+        /*
+        def onSTART()
+            FOO(x, y, 10, z, DN(), true)
+        end
+         */
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", -1, -1);
+        Call call = new Call("FOO", null, -1, -1);
+        call.addCallParam(new IdCallParam("x", -1, -1));
+        call.addCallParam(new IdCallParam("y", -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, -1, -1), -1, -1));
+        call.addCallParam(new IdCallParam("z", -1, -1));
+        call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, -1, -1), -1, -1));
+        call.setRepeatCycles(2);
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+
+        CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+        IntermediateCode ic = cg.getIc();
+
+        String expected = "onSTART,2,-1,-1\n"
+                + "\n"
+                + "onSTART\n"
+                + "push,id:x,-1,-1\n"
+                + "push,id:y,-1,-1\n"
+                + "push,int:10,-1,-1\n"
+                + "push,id:z,-1,-1\n"
+                + "push,none:,-1,-1\n"
+                + "push,bool:true,-1,-1\n"
+                + "pop,6\n"
+                + "call_loc,FOO,-1,-1\n\n";
+
+        String str = ic.toString();
         assertEquals(expected, ic.toString());
     }
 }

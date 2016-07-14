@@ -3,7 +3,7 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 0),
       true,
-      CALL2
+      CALL
       (
          PRINT(ADD(TO_STR(i), " jest ")),
          IF(EQ(REST(i, 2), 0), PRINT("parzysta"), PRINT("nieparzysta"))

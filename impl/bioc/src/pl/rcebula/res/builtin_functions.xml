@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            CALL2
+            CALL
         </name>
         <special>
             true
@@ -72,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 call
             </param>
-            <param>
+            <param repeat="true">
                 call
             </param>
         </params>

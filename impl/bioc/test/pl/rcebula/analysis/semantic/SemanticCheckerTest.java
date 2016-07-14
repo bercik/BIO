@@ -17,6 +17,7 @@
 package pl.rcebula.analysis.semantic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -379,6 +380,91 @@ public class SemanticCheckerTest
                 ParamType.ALL, ParamType.CALL));
         builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
         builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.breakFunctionName, true));
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testPassingMultipleArgumentsToBuiltinFunction()
+    {
+        System.out.println("testPassingMultipleArgumentsToBuiltinFunction()");
+        
+        // def onSTART()
+        //     FOO(x, y, 10, 20, DN(), true)
+        // end
+        
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", -1, -1);
+        Call call = new Call("FOO", null, -1, -1);
+        call.addCallParam(new IdCallParam("x", -1, -1));
+        call.addCallParam(new IdCallParam("y", -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, -1, -1), -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 20, -1, -1), -1, -1));
+        call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, -1, -1), -1, -1));
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        builtinFunctions.add(new BuiltinFunction("FOO", false, 
+                Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL), 
+                Arrays.asList(false, true, true, false)));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
+        
+        boolean catched = false;
+        try
+        {
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+        }
+        catch (SemanticError ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+        
+        assertEquals(true, catched);
+    }
+    
+    @Test
+    public void testPassingMultipleArgumentsToBuiltinFunction2()
+    {
+        System.out.println("testPassingMultipleArgumentsToBuiltinFunction()");
+        
+        // def onSTART()
+        //     FOO(x, y, 10, 20, z)
+        // end
+        
+        ProgramTree pt = new ProgramTree();
+        
+        // onSTART
+        UserFunction uf = new UserFunction("onSTART", -1, -1);
+        Call call = new Call("FOO", null, -1, -1);
+        call.addCallParam(new IdCallParam("x", -1, -1));
+        call.addCallParam(new IdCallParam("y", -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, -1, -1), -1, -1));
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 20, -1, -1), -1, -1));
+        call.addCallParam(new IdCallParam("z", -1, -1));
+        uf.addCall(call);
+        pt.addUserFunction(uf);
+        
+        List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+        builtinFunctions.add(new BuiltinFunction("FOO", false, 
+                Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL), 
+                Arrays.asList(false, true, true, false)));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
         
         boolean catched = false;
         try

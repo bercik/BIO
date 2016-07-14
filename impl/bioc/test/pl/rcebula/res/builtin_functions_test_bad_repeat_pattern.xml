@@ -68,6 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </function>
     
     <!-- funkcje inne -->
+    <!-- zły wzorzec powtarzania -->
     <function>
         <name>
             ADD
@@ -79,6 +80,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param repeat="true">
+                all
+            </param>
             <param>
                 all
             </param>
@@ -87,4 +91,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </param>
         </params>
     </function>
+    
 </functions>

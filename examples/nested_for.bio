@@ -3,7 +3,7 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, 10),
-      CALL2
+      CALL
       (
          FOR
          (

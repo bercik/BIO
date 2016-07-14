@@ -29,6 +29,8 @@ public class Call extends CallParam
     private final String name;
     private final Call parentCall;
     private final List<CallParam> callParams = new ArrayList<>();
+    // używane przy generowaniu funkcji wbudowanych o zmiennej ilości parametrów
+    private int repeatCycles = 0;
 
     public Call(String name, Call parentCall, Integer line, Integer chNum)
     {
@@ -57,12 +59,23 @@ public class Call extends CallParam
         return callParams;
     }
 
+    public int getRepeatCycles()
+    {
+        return repeatCycles;
+    }
+
+    public void setRepeatCycles(int repeatCycles)
+    {
+        this.repeatCycles = repeatCycles;
+    }
+    
     @Override
     public int hashCode()
     {
         int hash = 7;
         hash = 59 * hash + Objects.hashCode(this.name);
         hash = 59 * hash + Objects.hashCode(this.callParams);
+        hash = 59 * hash + Objects.hashCode(this.repeatCycles);
         return hash;
     }
 
@@ -87,6 +100,10 @@ public class Call extends CallParam
             return false;
         }
         if (!Objects.equals(this.callParams, other.callParams))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.repeatCycles, other.repeatCycles))
         {
             return false;
         }

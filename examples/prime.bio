@@ -7,7 +7,7 @@ def FIND_PRIME(i)
       IF
       (
          EQ(REST(i, j), 0), 
-         CALL2
+         CALL
          (
             ASSIGN_LOCAL(found, false), 
             BREAK()

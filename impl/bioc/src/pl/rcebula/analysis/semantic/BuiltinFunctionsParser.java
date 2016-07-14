@@ -84,19 +84,27 @@ public class BuiltinFunctionsParser
                         .getChildNodes().item(0).getNodeValue().trim());
 
                 List<ParamType> params = new ArrayList<>();
+                List<Boolean> repeatPattern = new ArrayList<>();
                 
                 Element e = (Element)elem.getElementsByTagName("params").item(0);
                 NodeList nl = e.getElementsByTagName("param");
                 for (int j = 0; j < nl.getLength(); ++j)
                 {
                     Node n = nl.item(j);
+                    boolean repeat = false;
+                    Node attr = n.getAttributes().getNamedItem("repeat");
+                    if (attr != null)
+                    {
+                        repeat = Boolean.parseBoolean(attr.getNodeValue());
+                    }
                     String s = n.getChildNodes().item(0).getNodeValue().trim().toUpperCase();
                     ParamType param = ParamType.valueOf(s);
                     
                     params.add(param);
+                    repeatPattern.add(repeat);
                 }
                 
-                builtinFunctions.add(new BuiltinFunction(name, special, params));
+                builtinFunctions.add(new BuiltinFunction(name, special, params, repeatPattern));
             }
         }
     }

@@ -16,6 +16,7 @@
  */
 package pl.rcebula.code_generation.intermediate;
 
+import java.util.List;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
@@ -161,15 +162,22 @@ public class SpecialFunctionsGenerator
         ic.appendLine(line);
     }
     
-    public void generateCall2(Call call1, Call call2, Label forStart, Label forEnd)
+    public void generateCall(Call call1, List<Call> calls, Label forStart, Label forEnd)
     {
         // call1
         // popc, 1
         // call2
+        // popc, 1
+        // ...
+        // calln
         cg.eval(call1, forStart, forEnd);
-        Line line = ifg.generatePopc(1);
-        ic.appendLine(line);
-        cg.eval(call2, forStart, forEnd);
+        
+        for (Call c : calls)
+        {
+            Line line = ifg.generatePopc(1);
+            ic.appendLine(line);
+            cg.eval(c, forStart, forEnd);
+        }
     }
     
     public void generateDN()

@@ -17,6 +17,7 @@
 package pl.rcebula.analysis.semantic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
@@ -75,7 +76,8 @@ public class BuiltinFunctionsParserTest
                 add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
                 add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
                 add(new BuiltinFunction("BREAK", true));
-                add(new BuiltinFunction("ADD", false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("ADD", false, Arrays.asList(ParamType.ALL, ParamType.ALL, ParamType.ALL), 
+                        Arrays.asList(false, false, true)));
             }
         };
 
@@ -95,6 +97,27 @@ public class BuiltinFunctionsParserTest
         {
             BuiltinFunctionsParser instance
                     = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test_duplicate.xml", true);
+        }
+        catch (RuntimeException ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+
+        assertTrue(catched);
+    }
+    
+    @Test
+    public void testBadRepeatPattern()
+            throws Exception
+    {
+        System.out.println("testBadRepeatPattern");
+
+        boolean catched = false;
+        try
+        {
+            BuiltinFunctionsParser instance
+                    = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test_bad_repeat_pattern.xml", true);
         }
         catch (RuntimeException ex)
         {

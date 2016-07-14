@@ -34,7 +34,7 @@ def print_tab(tab)
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, SIZE(tab)),
-      CALL2
+      CALL
       (
          FOR
          (
