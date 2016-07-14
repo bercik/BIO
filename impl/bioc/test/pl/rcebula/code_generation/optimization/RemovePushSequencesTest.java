@@ -74,6 +74,7 @@ public class RemovePushSequencesTest
         ic.appendLine(generatePushNoneLine());
         ic.appendLine(generatePushNoneLine());
         ic.appendLine(generatePopcLine(1));
+        ic.appendLine(generateCallLine());
         ic.appendLine(generateClearStackLine());
         ic.appendLine(generatePushNoneLine());
         ic.appendLine(generatePushNoneLine());
@@ -85,14 +86,13 @@ public class RemovePushSequencesTest
         ic.appendLine(generatePushNoneLine());
         ic.appendLine(generatePopcLine(2));
 
-        new RemovePushSequences(ic, new OptimizationStatistics());
+        new RemovePushPopcSequences(ic, new OptimizationStatistics());
 
         String expected = "call,foo,-1,-1\n"
                 + "popc,1\n"
+                + "push,none:,-1,-1\n"
+                + "call,foo,-1,-1\n"
                 + "clear_stack\n"
-                + "push,none:,-1,-1\n"
-                + "push,none:,-1,-1\n"
-                + "popc,3\n"
                 + "clear_stack\n"
                 + "\n"
                 + "push,none:,-1,-1\n"

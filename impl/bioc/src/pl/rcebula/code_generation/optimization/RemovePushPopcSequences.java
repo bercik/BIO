@@ -26,12 +26,12 @@ import pl.rcebula.utils.OptimizationStatistics;
  *
  * @author robert
  */
-public class RemovePushSequences
+public class RemovePushPopcSequences
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
 
-    public RemovePushSequences(IntermediateCode ic, OptimizationStatistics statistics)
+    public RemovePushPopcSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
         this.ic = ic;
         this.statistics = statistics;
@@ -61,7 +61,7 @@ public class RemovePushSequences
             if (toRemove > 0)
             {
                 boolean cont = false;
-                // jeżeli się da to usuń toRemove ilość pushy od tego miejsca i to miejsce
+                // jeżeli się da to usuń toRemove ilość pushy od tego miejsca i to miejsce, jeżeli nie to nie rób nic
                 while (toRemove-- > 0)
                 {
                     if (isPush(ic.getLine(lineStart-1)))
@@ -86,10 +86,12 @@ public class RemovePushSequences
             {
                 // przesuwamy o jeden do góry, ponieważ nie chcemy usunąć CLEAR_STACK
                 --lineEnd;
-                // usuń wszystkie pushe od tego miejsca (bez tego miejsca)
+                // usuń wszystkie pushe i popc od tego miejsca (bez tego miejsca)
                 while (true)
                 {
-                    if (!isPush(ic.getLine(lineStart-1)))
+                    Line currLine = ic.getLine(lineStart-1);
+                    if (!isPush(currLine) && 
+                            !isPopc(currLine))
                     {
                         break;
                     }
@@ -123,6 +125,18 @@ public class RemovePushSequences
             String functionName = ((StringField)line.getField(0)).getStr();
 
             return functionName.equals(InterpreterFunction.PUSH.toString());
+        }
+
+        return false;
+    }
+    
+    private boolean isPopc(Line line)
+    {
+        if (line.numberOfFields() > 0)
+        {
+            String functionName = ((StringField)line.getField(0)).getStr();
+
+            return functionName.equals(InterpreterFunction.POPC.toString());
         }
 
         return false;
