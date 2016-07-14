@@ -126,6 +126,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param repeat="true">
+                all
+            </param>
         </params>
     </function>
     
@@ -143,6 +146,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param repeat="true">
+                all
+            </param>
         </params>
     </function>
     
@@ -158,6 +164,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 all
             </param>
             <param>
+                all
+            </param>
+            <param repeat="true">
                 all
             </param>
         </params>
@@ -254,6 +263,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
         </params>
     </function>
     
@@ -280,6 +295,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             false
         </special>
         <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CREATE_TUPLE
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            UNPACK
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param repeat="true">
+                id
+            </param>
+            <param>
+                all
+            </param>
         </params>
     </function>
     
@@ -363,6 +409,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
+            <param repeat="true">
+                all
+            </param>
         </params>
     </function>
     
@@ -374,7 +423,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             false
         </special>
         <params>
-            <param>
+            <param repeat="true">
                 all
             </param>
         </params>

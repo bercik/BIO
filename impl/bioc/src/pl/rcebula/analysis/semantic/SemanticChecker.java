@@ -249,28 +249,32 @@ public class SemanticChecker
 
                         compareThrowIfNotEqual(pt1, pt2, call, k);
                     }
+                    // jeżeli napotkano repeat true to
                     // idź od końca do napotkania repeat true
-                    int x = repeatPattern.size() - 1;
-                    for (int k = callParams.size() - 1; k >= 0; --k)
+                    if (startCycle >= 0)
                     {
-                        if (x < 0)
+                        int x = repeatPattern.size() - 1;
+                        for (int k = callParams.size() - 1; k >= 0; --k)
                         {
-                            break;
-                        }
-                        
-                        boolean repeat = repeatPattern.get(x);
-                        if (repeat)
-                        {
-                            endCycle = k;
-                            break;
-                        }
+                            if (x < 0)
+                            {
+                                break;
+                            }
 
-                        ParamType pt1 = bf.getParams().get(x);
-                        ParamType pt2 = ParamType.convert(callParams.get(k));
+                            boolean repeat = repeatPattern.get(x);
+                            if (repeat)
+                            {
+                                endCycle = k;
+                                break;
+                            }
 
-                        compareThrowIfNotEqual(pt1, pt2, call, k);
-                        
-                        --x;
+                            ParamType pt1 = bf.getParams().get(x);
+                            ParamType pt2 = ParamType.convert(callParams.get(k));
+
+                            compareThrowIfNotEqual(pt1, pt2, call, k);
+
+                            --x;
+                        }
                     }
                     // idź od startCycle do endCycle sprawdzając ilość cykli i parametry
                     int cycles = 0;
