@@ -68,7 +68,7 @@ public class BuiltinFunctionsParserTest
         System.out.println("getBuiltinFunctions");
 
         BuiltinFunctionsParser instance
-                = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test.xml", true);
+                = new BuiltinFunctionsParser(true, "/pl/rcebula/res/builtin_functions_test.xml");
 
         List<BuiltinFunction> expResult = new ArrayList<BuiltinFunction>()
         {
@@ -96,7 +96,7 @@ public class BuiltinFunctionsParserTest
         try
         {
             BuiltinFunctionsParser instance
-                    = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test_duplicate.xml", true);
+                    = new BuiltinFunctionsParser(true, "/pl/rcebula/res/builtin_functions_test_duplicate.xml");
         }
         catch (RuntimeException ex)
         {
@@ -117,7 +117,7 @@ public class BuiltinFunctionsParserTest
         try
         {
             BuiltinFunctionsParser instance
-                    = new BuiltinFunctionsParser("/pl/rcebula/res/builtin_functions_test_bad_repeat_pattern.xml", true);
+                    = new BuiltinFunctionsParser(true, "/pl/rcebula/res/builtin_functions_test_bad_repeat_pattern.xml");
         }
         catch (RuntimeException ex)
         {

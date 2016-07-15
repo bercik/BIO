@@ -1,5 +1,10 @@
-#INCLUDE("boreq_lib2.biom")
-
-def butt(penis)
-   PRINT(penis)
+def display(text)
+   PRINT(text, "text")
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0, j, 0),
+      LS(i, 100),
+      PRINT(i),
+      INC(i)
+   )
 end

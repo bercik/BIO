@@ -5,8 +5,7 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, 100),
-      condition(i),
+      display(i),
       INC(i)
    )
-   butt("robert")
 end

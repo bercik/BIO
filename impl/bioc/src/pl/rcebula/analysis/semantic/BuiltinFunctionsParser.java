@@ -38,20 +38,29 @@ public class BuiltinFunctionsParser
 {
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
 
-    public BuiltinFunctionsParser(String path, boolean internal)
+    public BuiltinFunctionsParser(boolean internal, String... paths)
             throws IOException, SAXException, ParserConfigurationException
     {
-        InputStream is;
-
-        if (internal)
+        for (String path : paths)
         {
-            is = readInternalFile(path, "UTF-8");
-        }
-        else
-        {
-            is = readExternalFile(path, "UTF-8");
-        }
+            InputStream is;
 
+            if (internal)
+            {
+                is = readInternalFile(path, "UTF-8");
+            }
+            else
+            {
+                is = readExternalFile(path, "UTF-8");
+            }
+            
+            readXMLFile(is);
+        }
+    }
+
+    private void readXMLFile(InputStream is) 
+            throws SAXException, IOException, ParserConfigurationException
+    {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -80,8 +89,13 @@ public class BuiltinFunctionsParser
                     throw new RuntimeException(msg);
                 }
 
-                boolean special = Boolean.parseBoolean(elem.getElementsByTagName("special").item(0)
-                        .getChildNodes().item(0).getNodeValue().trim());
+                NodeList tmpNL = elem.getElementsByTagName("special");
+                boolean special = false;
+                if (tmpNL.getLength() > 0)
+                {
+                    special = Boolean.parseBoolean(tmpNL.item(0)
+                            .getChildNodes().item(0).getNodeValue().trim());
+                }
 
                 List<ParamType> params = new ArrayList<>();
                 List<Boolean> repeatPattern = new ArrayList<>();
@@ -108,7 +122,7 @@ public class BuiltinFunctionsParser
             }
         }
     }
-
+    
     private boolean contains(List<BuiltinFunction> bfs, String name)
     {
         for (BuiltinFunction bf : bfs)
