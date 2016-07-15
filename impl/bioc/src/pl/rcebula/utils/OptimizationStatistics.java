@@ -137,6 +137,7 @@ public class OptimizationStatistics
         float pushSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushSequencesRemoved);
         float pushBoolJmpSequencesOpt = relativeDiffrence(lbo, lbo - (float)pushBoolJmpSequencesRemoved);
         float unusedCodeBlocksLinesRemovedOpt = relativeDiffrence(lbo, lbo - (float)unusedCodeBlocksLinesRemoved);
+        float removedJumpsToNextLineOpt = relativeDiffrence(lbo, lbo - (float)jumpsToNextLineRemoved);
         
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
@@ -149,8 +150,9 @@ public class OptimizationStatistics
                 "% (" + pushBoolJmpSequencesRemoved + ")");
         System.out.println("  Removed unused code blocks lines: " + 
                 df.format(unusedCodeBlocksLinesRemovedOpt) + "% (" + unusedCodeBlocksLinesRemoved + ")");
+        System.out.println("  Removed jumps to next line: " + removedJumpsToNextLineOpt + 
+                df.format(removedJumpsToNextLineOpt) + "% (" + jumpsToNextLineRemoved + ")");
         System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
-        System.out.println("Removed jumps to next line: " + jumpsToNextLineRemoved);
         
         return result;
     }
