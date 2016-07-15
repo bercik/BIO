@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <functions>
     <!-- operacje na tablicach -->
     <!-- tworzą tablice, słowniki, tuple -->
+    <!-- kopiowanie tablicy, słownika -->
     <!-- pozwalają rozszerzyć tablice -->
     <!-- pobierają element, ustawiają element, pobierają rozmiar -->
     <!-- pozwalają spakować i rozpakować tuple i tablice -->
@@ -55,6 +56,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </name>
         <params>
             <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            COPY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEEP_COPY
+        </name>
+        <params>
+            <param>
                 all
             </param>
         </params>

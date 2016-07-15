@@ -1,0 +1,90 @@
+def CREATE_LIST(size)
+   RETURN(CREATE_DICT("count", 0, "arr", CREATE_ARRAY(size)))
+end
+
+def GET_LIST_TUPLE(list)
+   ASSIGN_LOCAL(count, GET(list, "count"))
+   ASSIGN_LOCAL(arr, GET(list, "arr"))
+   RETURN(CREATE_TUPLE(count, arr))
+end
+
+def EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   ASSIGN_LOCAL(arr_size, SIZE(arr))
+   % jeżeli nie ma już miejsca w tablicy
+   IF
+   (
+      GE(count, arr_size), 
+      CALL
+      (
+         % nowy rozmiar jest dwa razy większy niż obecny
+         ASSIGN_LOCAL(new_size, MUL(arr_size, 2)),
+         % rozszerzamy listę
+         EXTEND_ARRAY(arr, new_size)
+      ),
+      DN()
+   )
+end
+
+def APPEND_TO_LIST(list, item)
+   EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   SET(arr, count, item)
+   SET(list, "count", INC(count))
+end
+
+def INSERT_INTO_LIST(list, index, item)
+   EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   % pętla od count-1 do -1 co -1
+   FOR
+   (
+      ASSIGN_LOCAL(i, SUB(count, 1)),
+      GE(i, -1),
+      % jeżeli i == index-1 to wstaw w miejsce o jeden w prawo item i zatrzymaj
+      % inaczej przenieś element z arr[i] do arr[i+1]
+      IF
+      (
+         EQ(i, SUB(index, 1)),
+         CALL
+         (
+            SET(arr, ADD(i, 1), item),
+            BREAK()
+         ),
+         SET(arr, ADD(i, 1), GET(arr, i))
+      ),
+      DEC(i)
+   )
+   SET(list, "count", INC(count))
+end
+
+def REMOVE_FROM_LIST(list, index)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   % iterujemy od index do count-2 co +1
+   % przesuwając element z arr[i+1] do arr[i]
+   FOR
+   (
+      ASSIGN_LOCAL(i, index),
+      LS(i, SUB(count, 1)),
+      SET(arr, i, GET(arr, ADD(i, 1))),
+      INC(i)
+   )
+   SET(list, "count", DEC(count))
+end
+
+def INDEX_OF_ITEM_LIST(list, item)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, count),
+      IF
+      (
+         EQ(item, GET(arr, i)),
+         RETURN(i),
+         DN()
+      ),
+      INC(i)
+   )
+   RETURN(none)
+end
