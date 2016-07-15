@@ -28,13 +28,13 @@ syn match stringEscape "\\[nrfbt\\]" display contained
 syn region string start="\"" skip="\\\"" end="\"" contains=stringEscape
 
 syn match comma "," display contained
-syn match none "\(\s\|\n\|,\|(\)\(none\|NONE\|None\)\(\s\|\n\|,\|)\)" display contains=openPar,closePar,comma
+syn match none "\((\|\s*\|\n\|,\|(\)\(none\|NONE\|None\)\(\s*\|\n\|,\|)\)" display contains=openPar,closePar,comma
 
-syn match bool "\(\s\|\n\|,\|(\)\(true\|TRUE\|True\|false\|False\|FALSE\)\(\s\|\n\|,\|)\)" display contains=openPar,closePar,comma
+syn match bool "\((\|\s*\|\n\|,\|(\)\(true\|TRUE\|True\|false\|False\|FALSE\)\(\s*\|\n\|,\|)\)" display contains=openPar,closePar,comma
 
-syn match int "\(\s\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\)\|0\)\(\s\|\n\|,\|)\)" display contains=openPar,closePar,comma
+syn match int "\((\|\s*\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\)\|0\)\(\s*\|\n\|,\|)\)" display contains=openPar,closePar,comma
 
-syn match float "\(\s\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.0\)\(\s\|\n\|,\|)\)" display contains=openPar,closePar,comma
+syn match float "\((\|\s*\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.0\)\(\s*\|\n\|,\|)\)" display contains=openPar,closePar,comma
 
 let b:current_syntax = "bio"
 
