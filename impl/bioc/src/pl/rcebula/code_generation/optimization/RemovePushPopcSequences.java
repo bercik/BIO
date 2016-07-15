@@ -16,6 +16,7 @@
  */
 package pl.rcebula.code_generation.optimization;
 
+import java.util.logging.Logger;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
@@ -33,6 +34,10 @@ public class RemovePushPopcSequences
 
     public RemovePushPopcSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("RemovePushPopcSequences");
+        logger.fine(ic.toStringWithLinesNumber());
+        
         this.ic = ic;
         this.statistics = statistics;
         

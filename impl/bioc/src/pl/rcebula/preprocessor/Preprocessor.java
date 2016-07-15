@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +49,9 @@ public class Preprocessor
     public Preprocessor(String path)
             throws IOException, PreprocessorError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("Preprocessor");
+        
         Path p = Paths.get(path);
         List<String> lines = readExternalFile(p, "UTF-8", -1);
 
@@ -57,6 +61,9 @@ public class Preprocessor
     public Preprocessor(List<String> lines)
             throws PreprocessorError, IOException
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("Preprocessor");
+        
         input = linesToString(analyse(lines));
     }
 

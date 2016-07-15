@@ -25,6 +25,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Strin
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.ParamType;
 import pl.rcebula.analysis.tree.Call;
@@ -53,6 +54,9 @@ public class CodeGenerator
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions)
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("CodeGenerator");
+        
         ifg = new InterpreterFunctionsGenerator();
         ic = new IntermediateCode();
         this.pt = pt;

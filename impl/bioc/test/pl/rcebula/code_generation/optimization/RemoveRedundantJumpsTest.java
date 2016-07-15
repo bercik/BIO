@@ -137,18 +137,7 @@ public class RemoveRedundantJumpsTest
         line.addLabel(l3);
         ic.appendLine(line);
 
-        boolean catched = false;
-        try
-        {
-            RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new OptimizationStatistics());
-        }
-        catch (CodeOptimizationError ex)
-        {
-            catched = true;
-            System.err.println(ex.getMessage());
-        }
-        
-        assertEquals(true, catched);
+        RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new OptimizationStatistics());
     }
 
     private Line generateJmp(Label l)

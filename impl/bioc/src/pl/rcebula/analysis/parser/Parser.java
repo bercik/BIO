@@ -23,6 +23,7 @@ import pl.rcebula.analysis.lexer.TokenType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
@@ -64,6 +65,9 @@ public class Parser
     public Parser(List<Token<?>> tokens)
             throws ParserError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("Parser");
+        
         tokensIterator = tokens.iterator();
         currentToken = tokensIterator.next();
 

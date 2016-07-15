@@ -1,6 +1,7 @@
 package pl.rcebula.analysis.lexer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,6 +44,8 @@ public class Lexer
     public Lexer(String input)
             throws LexerError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("Lexer");
         tokens = addEOFAndAnalyse(input);
     }
 

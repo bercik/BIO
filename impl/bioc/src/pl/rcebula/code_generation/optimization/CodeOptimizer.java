@@ -16,6 +16,7 @@
  */
 package pl.rcebula.code_generation.optimization;
 
+import java.util.logging.Logger;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
 import pl.rcebula.utils.OptimizationStatistics;
@@ -31,11 +32,18 @@ public class CodeOptimizer
     public CodeOptimizer(IntermediateCode ic, OptimizationStatistics statistics)
             throws CodeOptimizationError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("CodeOptimizer");
+        logger.fine(ic.toStringWithLinesNumber());
+        
         this.ic = ic;
         
         new RemovePushPopcSequences(ic, statistics);
         new RemovePushBoolJmpSequences(ic, statistics);
         new RemoveRedundantJumps(ic, statistics);
         new FlowGraphAnalyse(ic, statistics);
+        new RemoveJmpsToNextLine(ic, statistics);
+        
+        logger.fine(ic.toStringWithLinesNumber());
     }
 }

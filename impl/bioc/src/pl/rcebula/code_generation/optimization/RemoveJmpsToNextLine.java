@@ -29,45 +29,34 @@ import pl.rcebula.utils.OptimizationStatistics;
  *
  * @author robert
  */
-public class RemoveRedundantJumps
+public class RemoveJmpsToNextLine
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final Logger logger = Logger.getGlobal();
 
-    public RemoveRedundantJumps(IntermediateCode ic, OptimizationStatistics statistics)
+    public RemoveJmpsToNextLine(IntermediateCode ic, OptimizationStatistics statistics)
     {
-        logger.info("RemoveRedundantJumps");
+        logger.info("RemoveJmpsToNextLine");
         logger.fine(ic.toStringWithLinesNumber());
-
+        
         this.ic = ic;
         this.statistics = statistics;
-
+        
         analyseAndRemove();
     }
-
+    
     private void analyseAndRemove()
     {
-        int line = 0;
-        while (line < ic.numberOfLines())
+        for (int lnr = ic.numberOfLines() - 1; lnr >= 0; --lnr)
         {
-            // usuwaj niepotrzebne skoki z danej linjki tak długo jak się da, jeżeli nie usunięto
-            // przejdź do następnej linii
-            if (!removeRedundantJump(line))
-            {
-                ++line;
-            }
-            else
-            {
-                statistics.addRedundantJumpRemoved();
-            }
+            analyseAndRemove(lnr);
         }
     }
-
-    private boolean removeRedundantJump(int lineNumber)
+    
+    private void analyseAndRemove(int lnr)
     {
-        Line line = ic.getLine(lineNumber);
-
+        Line line = ic.getLine(lnr);
         if (line.numberOfFields() > 0)
         {
             StringField sf = (StringField)line.getField(0);
@@ -77,42 +66,48 @@ public class RemoveRedundantJumps
             if (funName.equals(InterpreterFunction.JMP.toString())
                     || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
             {
-                LabelField lfOrig = (LabelField)line.getField(1);
-                Label labelOrig = lfOrig.getLabel();
-                int jmpDest = labelOrig.getLine();
-
-                // jeżeli skaczemy do samego siebie to zwróc false
-                if (jmpDest == lineNumber)
+                LabelField lf = (LabelField)line.getField(1);
+                Label l = lf.getLabel();
+                int jmpDest = l.getLine();
+                
+                // jeżeli skok do następnej lini
+                if (jmpDest == lnr + 1)
                 {
-                    return false;
-                }
-
-                Line jmpDestLine = ic.getLine(jmpDest);
-                if (jmpDestLine.numberOfFields() > 0)
-                {
-                    sf = (StringField)jmpDestLine.getField(0);
-                    funName = sf.getStr();
-
-                    // jeżeli docelowa linijka do której skaczemy też jest skokiem, to możemy zredukować
-                    // o ten skok pośredni, chyba, że skacze sama do siebie to tego nie robimy
+                    statistics.addJumpsToNextLineRemoved();
+                    // jeżeli JMP to po prostu usuń
                     if (funName.equals(InterpreterFunction.JMP.toString()))
                     {
-                        LabelField lf = (LabelField)jmpDestLine.getField(1);
-                        Label labelDest = lf.getLabel();
-                        int jmpLabelDest = labelDest.getLine();
-                        if (jmpLabelDest == jmpDest)
+                        ic.removeLine(lnr);
+                    }
+                    // jeżeli JMP_IF_FALSE to usuń i zamień powyższy POP na POPC
+                    else if (funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
+                    {
+                        // wiadomość błędu
+                        String errorMsg = "Line above JMP_IF_FALSE should be POP";
+                        // pobierz linię wyżej
+                        Line lineAbove = ic.getLine(lnr - 1);
+                        // sprawdź czy ma jakieś pola
+                        if (lineAbove.numberOfFields() == 0)
                         {
-                            return false;
+                            throw new RuntimeException(errorMsg);
                         }
-                        // podmieniamy etykietę
-                        lfOrig.setLabel(labelDest);
-
-                        return true;
+                        // sprawdź czy to na pewno POP
+                        sf = (StringField)lineAbove.getField(0);
+                        if (!sf.getStr().equals(InterpreterFunction.POP.toString()))
+                        {
+                            throw new RuntimeException(errorMsg);
+                        }
+                        // zamień na POPC
+                        sf.setStr(InterpreterFunction.POPC.toString());
+                        
+                        ic.removeLine(lnr);
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Something go really bad");
                     }
                 }
             }
         }
-
-        return false;
     }
 }

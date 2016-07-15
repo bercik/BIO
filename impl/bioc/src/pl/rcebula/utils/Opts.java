@@ -16,6 +16,8 @@
  */
 package pl.rcebula.utils;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author robert
@@ -34,6 +36,9 @@ public class Opts
     public Opts(String[] args)
             throws OptsError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("Opts");
+        
         this.args = args;
         
         analyse();

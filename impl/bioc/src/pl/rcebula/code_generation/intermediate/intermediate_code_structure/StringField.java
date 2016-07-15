@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class StringField implements IField
 {
-    private final String str;
+    private String str;
 
     public StringField(String str)
     {
@@ -37,6 +37,11 @@ public class StringField implements IField
         return str;
     }
 
+    public void setStr(String str)
+    {
+        this.str = str;
+    }
+    
     @Override
     public String toString()
     {

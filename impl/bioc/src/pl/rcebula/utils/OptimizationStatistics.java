@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 public class OptimizationStatistics
 {
     private int redundantJumpsRemoved;
+    private int jumpsToNextLineRemoved;
     private int pushSequencesRemoved;
     private int pushBoolJmpSequencesRemoved;
     private int unusedCodeBlocksLinesRemoved;
@@ -35,6 +36,7 @@ public class OptimizationStatistics
     public OptimizationStatistics()
     {
         redundantJumpsRemoved = 0;
+        jumpsToNextLineRemoved = 0;
         pushBoolJmpSequencesRemoved = 0;
         pushSequencesRemoved = 0;
         unusedCodeBlocksLinesRemoved = 0;
@@ -43,6 +45,11 @@ public class OptimizationStatistics
         linesBeforeOptimization = 0;
     }
 
+    public int getJumpsToNextLineRemoved()
+    {
+        return jumpsToNextLineRemoved;
+    }
+    
     public int getPushSequencesRemoved()
     {
         return pushSequencesRemoved;
@@ -71,6 +78,11 @@ public class OptimizationStatistics
     public int getUnusedCodeBlocksLinesRemoved()
     {
         return unusedCodeBlocksLinesRemoved;
+    }
+    
+    public void addJumpsToNextLineRemoved()
+    {
+        ++jumpsToNextLineRemoved;
     }
     
     public void addRedundantJumpRemoved()
@@ -138,6 +150,7 @@ public class OptimizationStatistics
         System.out.println("  Removed unused code blocks lines: " + 
                 df.format(unusedCodeBlocksLinesRemovedOpt) + "% (" + unusedCodeBlocksLinesRemoved + ")");
         System.out.println("Removed redundant jumps: " + redundantJumpsRemoved);
+        System.out.println("Removed jumps to next line: " + jumpsToNextLineRemoved);
         
         return result;
     }

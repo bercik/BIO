@@ -16,6 +16,7 @@
  */
 package pl.rcebula.code_generation.optimization.graph;
 
+import java.util.logging.Logger;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.utils.OptimizationStatistics;
@@ -32,6 +33,9 @@ public class FlowGraphAnalyse
     public FlowGraphAnalyse(IntermediateCode ic, OptimizationStatistics statistics)
             throws CodeOptimizationError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("FlowGraphAnalyse");
+        
         this.ic = ic;
         this.statistics = statistics;
         

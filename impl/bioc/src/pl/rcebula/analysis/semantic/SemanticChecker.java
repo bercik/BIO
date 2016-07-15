@@ -18,6 +18,7 @@ package pl.rcebula.analysis.semantic;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import pl.rcebula.Constants;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
@@ -43,6 +44,9 @@ public class SemanticChecker
     public SemanticChecker(ProgramTree programTree, List<BuiltinFunction> builtinFunctions)
             throws SemanticError
     {
+        Logger logger = Logger.getGlobal();
+        logger.info("SemanticChecker");
+        
         this.programTree = programTree;
         this.builtinFunctions = builtinFunctions;
 

@@ -8,7 +8,12 @@ import pl.rcebula.analysis.parser.ParserError;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.ProgramTreeCreator;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
 import pl.rcebula.analysis.semantic.SemanticChecker;
@@ -39,6 +44,9 @@ public class App
     {
         try
         {
+            // init logger
+            initLogger();
+            
             // time profiler
             TimeProfiler timeProfiler = new TimeProfiler();
             timeProfiler.startTotal();
@@ -199,5 +207,23 @@ public class App
             System.err.println("IOException: " + ex.getMessage());
             ex.printStackTrace();
         }
+    }
+    
+    private static void initLogger() throws IOException
+    {
+        Logger logger = Logger.getGlobal();
+        
+        String path = App.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String decodedPath = URLDecoder.decode(path, "UTF-8");
+        decodedPath = decodedPath.substring(0, decodedPath.lastIndexOf("/"));
+        FileHandler fh = new FileHandler(decodedPath + "/log.txt");
+        logger.addHandler(fh);
+        SimpleFormatter sf = new SimpleFormatter();
+        fh.setFormatter(sf);
+        
+        logger.setUseParentHandlers(false);
+        logger.setLevel(Level.FINE);
+        
+        logger.info("Init logger");
     }
 }
