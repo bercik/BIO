@@ -1,0 +1,33 @@
+def foo(n)
+   % jeżeli n podzielne przez 5 rzuć wyjątek
+   % THROW(msg, additional_object, cause)
+   IF
+   (
+      EQ(REST(n, 5), 0), 
+      THROW("ERROR IN FOO", None, None),
+      %do some stuff
+      RETURN(TO_STR(n))
+   )
+end
+
+def iter_foo(n)
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(n))
+   FOR
+   (
+      ASSIGN_LOCAL(i, 1),
+      LE(i, n),
+      TRY_CATCH_FINALLLY
+      (
+         SET(arr, i, foo(i)),
+         ex,
+         SET(arr, i, "ERROR"),
+         DN()
+      ),
+      INC(i)
+   )
+   RETURN(arr)
+end
+
+def onSTART()
+   PRINT(iter_foo(20))
+end

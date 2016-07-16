@@ -1,0 +1,30 @@
+def lvl1()
+   RETURN(CREATE_ERROR("lvl1", None, None))
+end
+
+def lvl2()
+   ASSIGN_LOCAL(val, lvl1())
+   % ew. funkcja ASSIGN_LOCAL_RETURN_IF_ERROR
+   % ASSIGN_LOCAL_RETURN_IF_ERROR(val, lvl1())
+   IF(IS_ERROR(val), RETURN(val), DN())
+end
+
+def lvl3()
+   ASSIGN_LOCAL(val, lvl2())
+   IF(IS_ERROR(val), RETURN(val), DN())
+end
+
+def lvl4()
+   ASSIGN_LOCAL(val, lvl3())
+   IF(IS_ERROR(val), RETURN(CREATE_ERROR("lvl4", val), DN()))
+end
+
+def onSTART()
+   ASSIGN_LOCAL(val, lvl4())
+   IF
+   (
+      IS_ERROR(val),
+      PRINT(val),
+      DN()
+   )
+end

@@ -1,0 +1,13 @@
+def div(a, b)
+   RETURN(DIV(a, b))
+end
+
+def onSTART()
+   TRY_CATCH_FINALLY
+   (
+      PRINT(div(10, 0)),
+      ex,
+      PRINT(ex),
+      DN()
+   )
+end

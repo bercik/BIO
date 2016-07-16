@@ -1,0 +1,52 @@
+def foo(n)
+   IF
+   (
+      LS(n, 0),
+      RETURN(MUL(n, -1)),
+      DN()
+   )
+   IF
+   (
+      AND(GE(n, 0), LE(n, 10)),
+      THROW("n: <0, 10>", 1, None),
+      IF
+      (
+         AND(GT(n, 10), LE(n, 20)),
+         THROW("n: (10, 20>", 2, None),
+         THROW("n > 20", 3, None)
+      )
+   )
+end
+
+def onSTART()
+   TRY_CATCH_FINALL
+   (
+      CALL
+      (
+         ASSIGN_LOCAL(positive, foo(40)),
+         PRINT("NORMAL FLOW")
+      ),
+      ex,
+      CALL
+      (
+         ASSIGN_LOCAL(ex, GET_ERROR_OBJECT(positive)),
+         IF
+         (
+            EQ(ex, 1),
+            PRINT("Obsługa błędu 1"),
+            IF
+            (
+               EQ(ex, 2),
+               PRINT("Obsługa błędu 2"),
+               IF
+               (
+                  EQ(ex, 3),
+                  PRINT("Obsługa błędu 3"),
+                  PRINT("Obsługa innego błędu")
+               )
+            )
+         )
+      ),
+      PRINT("FINALLY")
+   )
+end

@@ -1,0 +1,31 @@
+def lvl1()
+   THROW("lvl1", None, None)
+end
+
+def lvl2()
+   lvl1()
+end
+
+def lvl3()
+   lvl2()
+end
+
+def lvl4()
+   TRY_CATCH_FINALLY
+   (
+      lvl3(),
+      ex,
+      THROW("lvl4", None, ex),
+      DN()
+   )
+end
+
+def onSTART()
+   TRY_CATCH_FINALLY
+   (
+      lvl4(),
+      ex,
+      PRINT(ex),
+      DN()
+   )
+end

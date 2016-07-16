@@ -1,0 +1,40 @@
+def foo1()
+   RETURN(CREATE_ERROR("foo1", None, None))
+end
+
+def foo2()
+   RETURN(CREATE_ERROR("foo2", None, None))
+end
+
+def foo3()
+   RETURN(CREATE_ERROR("foo3", None, None))
+end
+
+def foo4()
+   RETURN(CREATE_ERROR("foo4", None, None))
+end
+
+def callFoos()
+   ASSIGN_LOCAL_RETURN_IF_ERROR(val, foo1())
+   ASSIGN_LOCAL_RETURN_IF_ERROR(val, foo2())
+   ASSIGN_LOCAL_RETURN_IF_ERROR(val, foo3())
+   ASSIGN_LOCAL_RETURN_IF_ERROR(val, foo4())
+end
+
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 10),
+      CALL
+      (
+         IF
+         (
+            IS_ERROR(ASSIGN_LOCAL(val, callFoos())),
+            PRINT(val),
+            DN()
+         ),
+      ),
+      INC(i)
+   )
+end

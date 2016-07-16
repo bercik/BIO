@@ -1,0 +1,37 @@
+def foo1()
+   THROW("foo1", None, None)
+end
+
+def foo2()
+   THROW("foo2", None, None)
+end
+
+def foo3()
+   THROW("foo3", None, None)
+end
+
+def foo4()
+   THROW("foo4", None, None)
+end
+
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 10),
+      TRY_CATCH_FINALLY
+      (
+         CALL
+         (
+            foo1(),
+            foo2(),
+            foo3(),
+            foo4()
+         ),
+         ex,
+         PRINT(ex),
+         DN()
+      ),
+      INC(i)
+   )
+end

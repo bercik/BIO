@@ -1,0 +1,7 @@
+def div(a, b)
+   RETURN(DIV(a, b))
+end
+
+def onSTART()
+   PRINT(div(10, 0))
+end
