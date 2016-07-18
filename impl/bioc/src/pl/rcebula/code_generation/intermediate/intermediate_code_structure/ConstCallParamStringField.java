@@ -52,19 +52,7 @@ public class ConstCallParamStringField extends StringField
             // jeżeli string to otaczamy cudzysłowiem i dodajemy \ przed każdym \
             if (ccp.getValueType().equals(ValueType.STRING))
             {
-                for (Character key : StringUtils.specialCharacters.keySet())
-                {
-                    Character value = StringUtils.specialCharacters.get(key);
-                    if (value.equals('\\'))
-                    {
-                        s = s.replaceAll("\\\\", "\\\\\\\\");
-                    }
-                    else
-                    {
-                        s = s.replaceAll(value.toString(), "\\\\" + key.toString());
-                    }
-                }
-
+                s = StringUtils.addSlashToSpecialCharacters(s);
                 s = "\"" + s + "\"";
             }
 

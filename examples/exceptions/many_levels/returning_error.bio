@@ -16,7 +16,7 @@ end
 
 def lvl4()
    ASSIGN_LOCAL(val, lvl3())
-   IF(IS_ERROR(val), RETURN(CREATE_ERROR("lvl4", val), DN()))
+   IF(IS_ERROR(val), RETURN(CREATE_ERROR("lvl4", None, val)), DN())
 end
 
 def onSTART()

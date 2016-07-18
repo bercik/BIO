@@ -16,8 +16,6 @@
  */
 package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
-import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
-import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

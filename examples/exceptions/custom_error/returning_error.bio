@@ -24,7 +24,7 @@ def iter_foo(n)
             SET(arr, i, "ERROR"),
             SET(arr, i, tmp)
          )
-      )
+      ),
       INC(i)
    )
    RETURN(arr)

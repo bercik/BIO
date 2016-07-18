@@ -103,13 +103,15 @@ public class App
                     "/pl/rcebula/res/basic.xml",
                     "/pl/rcebula/res/compare.xml",
                     "/pl/rcebula/res/conversion.xml",
+                    "/pl/rcebula/res/errors.xml",
                     "/pl/rcebula/res/ints.xml",
                     "/pl/rcebula/res/io.xml",
                     "/pl/rcebula/res/logic.xml",
                     "/pl/rcebula/res/math.xml",
                     "/pl/rcebula/res/observer.xml",
                     "/pl/rcebula/res/special.xml",
-                    "/pl/rcebula/res/strings.xml");
+                    "/pl/rcebula/res/strings.xml",
+                    "/pl/rcebula/res/type_check.xml");
             timeProfiler.stop();
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 
@@ -205,7 +207,6 @@ public class App
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
-            ex.printStackTrace();
         }
     }
     

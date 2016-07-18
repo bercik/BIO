@@ -26,14 +26,11 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, 10),
-      CALL
+      IF
       (
-         IF
-         (
-            IS_ERROR(ASSIGN_LOCAL(val, callFoos())),
-            PRINT(val),
-            DN()
-         ),
+         IS_ERROR(ASSIGN_LOCAL(val, callFoos())),
+         PRINT(val),
+         DN()
       ),
       INC(i)
    )

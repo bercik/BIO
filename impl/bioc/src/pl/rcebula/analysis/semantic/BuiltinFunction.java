@@ -38,6 +38,8 @@ public class BuiltinFunction
     private final int startParams;
     private final int minParams;
     private final int additionalParams;
+    
+    private final boolean isRepeated;
 
     public BuiltinFunction(String name, boolean special, List<ParamType> params)
     {
@@ -52,6 +54,7 @@ public class BuiltinFunction
         this.startParams = this.minParams;
         this.additionalParams = 0;
         this.repeatPatternTypes = new ArrayList<>();
+        this.isRepeated = false;
     }
 
     public BuiltinFunction(String name, boolean special, ParamType... params)
@@ -115,8 +118,14 @@ public class BuiltinFunction
         // policz minimalną ilość parametrów i dodatkową ilość parametrów
         this.additionalParams = repeatPatternTypes.size();
         this.minParams = params.size() - this.additionalParams;
+        this.isRepeated = (repeatPatternTypes.size() > 0);
     }
 
+    public boolean isRepeated()
+    {
+        return isRepeated;
+    }
+    
     public int getStartParams()
     {
         return startParams;

@@ -19,7 +19,6 @@ package pl.rcebula.utils;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import pl.rcebula.analysis.lexer.Pair;
 
 /**
  * Pozwala na mierzenie rzeczywistego czasu jaki upłynął między wywołaniem metod start i stop

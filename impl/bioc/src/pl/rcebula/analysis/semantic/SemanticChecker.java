@@ -223,13 +223,22 @@ public class SemanticChecker
                     // sprawdź ilość
                     if (!bf.isGoodNumberOfParams(callParams.size()))
                     {
-                        List<Integer> gnop = bf.getGoodNumberOfParamsList(3);
-                        String goodParamsStr = gnop.get(0).toString() + ", " + gnop.get(1).toString() + ", "
-                                + gnop.get(2).toString() + "...";
+                        if (bf.isRepeated())
+                        {
+                            List<Integer> gnop = bf.getGoodNumberOfParamsList(3);
+                            String goodParamsStr = gnop.get(0).toString() + ", " + gnop.get(1).toString() + ", "
+                                    + gnop.get(2).toString() + "...";
 
-                        String message = "Function " + call.getName() + " takes " + goodParamsStr
-                                + " parameters, got " + callParams.size();
-                        throw new SemanticError(call.getLine(), call.getChNum(), message);
+                            String message = "Function " + call.getName() + " takes " + goodParamsStr
+                                    + " parameters, got " + callParams.size();
+                            throw new SemanticError(call.getLine(), call.getChNum(), message);
+                        }
+                        else
+                        {
+                            String message = "Function " + call.getName() + " takes " + bf.getParams().size()
+                                    + " parameters, got " + callParams.size();
+                            throw new SemanticError(call.getLine(), call.getChNum(), message);
+                        }
                     }
                     // sprawdź typy
                     List<Boolean> repeatPattern = bf.getRepeatPattern();

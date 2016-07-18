@@ -26,16 +26,34 @@ import java.util.Map;
 public class StringUtils
 {
     public static Map<Character, Character> specialCharacters
-                = new HashMap<Character, Character>()
-                {
-                    {
-                        put('n', '\n');
-                        put('r', '\r');
-                        put('"', '"');
-                        put('f', '\f');
-                        put('b', '\b');
-                        put('\\', '\\');
-                        put('t', '\t');
-                    }
-                };
+            = new HashMap<Character, Character>()
+    {
+        {
+            put('n', '\n');
+            put('r', '\r');
+            put('"', '"');
+            put('f', '\f');
+            put('b', '\b');
+            put('\\', '\\');
+            put('t', '\t');
+        }
+    };
+
+    public static String addSlashToSpecialCharacters(String s)
+    {
+        for (Character key : specialCharacters.keySet())
+        {
+            Character value = specialCharacters.get(key);
+            if (value.equals('\\'))
+            {
+                s = s.replaceAll("\\\\", "\\\\\\\\");
+            }
+            else
+            {
+                s = s.replaceAll(value.toString(), "\\\\" + key.toString());
+            }
+        }
+        
+        return s;
+    }
 }

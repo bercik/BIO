@@ -37,4 +37,17 @@ public enum InterpreterFunction
     {
         return this.name().toLowerCase();
     }
+    
+    public static InterpreterFunction getInterpreterFunction(byte opcode)
+    {
+        for (InterpreterFunction ifun : InterpreterFunction.values())
+        {
+            if (ifun.getOpcode() == opcode)
+            {
+                return ifun;
+            }
+        }
+        
+        throw new RuntimeException("No InterpreterFunction for " + opcode + " opcode");
+    }
 }

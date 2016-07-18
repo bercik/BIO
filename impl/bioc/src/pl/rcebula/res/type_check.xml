@@ -16,84 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-
 <functions>
-    <!-- funkcje matematyczne -->
-    <!-- działa na liczbach całkowitych i zmiennoprzecinkowych z wyjątkami -->
-    <!-- dodawanie (także dla stringów), odejmowanie, mnożenie (także dla stringów),
-           dzielenie, reszta z dzielenia, potęgowanie, pierwiastek kwadratowy, inkrementacja, dekrementacja,
-           zmiana znaku liczby -->
+    <!-- sprawdzanie typów zmiennych -->
+    <!-- sprawdza czy zmienna jest tego konkretnego typu (nie czy można ją na ten typ zamienić! -->
     <function>
         <name>
-            ADD
-        </name>
-        <params>
-            <param>
-                all
-            </param>
-            <param>
-                all
-            </param>
-            <param repeat="true">
-                all
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            SUB
-        </name>
-        <params>
-            <param>
-                all
-            </param>
-            <param>
-                all
-            </param>
-            <param repeat="true">
-                all
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            MUL
-        </name>
-        <params>
-            <param>
-                all
-            </param>
-            <param>
-                all
-            </param>
-            <param repeat="true">
-                all
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            DIV
-        </name>
-        <params>
-            <param>
-                all
-            </param>
-            <param>
-                all
-            </param>
-            <param repeat="true">
-                all
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            SQRT
+            IS_ERROR
         </name>
         <params>
             <param>
@@ -104,12 +32,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            POW
+            IS_INT
         </name>
         <params>
-            <param>
-                all
-            </param>
             <param>
                 all
             </param>
@@ -118,12 +43,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            REST
+            IS_FLOAT
         </name>
         <params>
             <param>
                 all
             </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_BOOL
+        </name>
+        <params>
             <param>
                 all
             </param>
@@ -132,29 +65,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            INC
+            IS_STRING
         </name>
         <params>
             <param>
-                id
+                all
             </param>
         </params>
     </function>
     
     <function>
         <name>
-            DEC
+            IS_NONE
         </name>
         <params>
             <param>
-                id
+                all
             </param>
         </params>
     </function>
     
     <function>
         <name>
-            CHANGE_SIGN
+            IS_ARRAY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_DICT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_TUPLE
         </name>
         <params>
             <param>
