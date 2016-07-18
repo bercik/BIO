@@ -6,7 +6,7 @@
 package pl.rcebula.intermediate_code;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import pl.rcebula.Constants;
 import pl.rcebula.intermediate_code.line.Line;
@@ -22,6 +22,8 @@ public class UserFunction
     private final int line;
     private final int chNum;
     private final List<Line> lines = new ArrayList<Line>();
+    
+    private final HashSet<String> observers = new HashSet<>();
 
     public UserFunction(String name, int line, int chNum)
     {
@@ -63,6 +65,11 @@ public class UserFunction
     public List<Line> getLines()
     {
         return lines;
+    }
+
+    public HashSet<String> getObservers()
+    {
+        return observers;
     }
     
     public String toStringWithLineNumbers()
