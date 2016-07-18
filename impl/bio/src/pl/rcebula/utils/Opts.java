@@ -26,12 +26,10 @@ public class Opts
 {
     private final String[] args;
     private boolean verbose = false;
-    private boolean statistics = false;
     private boolean disassemble = false;
     private boolean times = false;
+    private boolean run = true;
     private String inputFilePath;
-    private boolean outputFile = false;
-    private String outputFilePath;
 
     public Opts(String[] args)
             throws OptsError
@@ -49,14 +47,13 @@ public class Opts
     {
         if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
         {
-            String message = "usage: java -jar bioc.jar input_file [options]\n";
+            String message = "usage: java -jar bio.jar input_file [options]\n";
+            message += "using any options causes code to not run\n";
             message += "options:\n";
             message += "  -d disassemble, print compiled code in readable form\n";
             message += "  -h --help, show this text\n";
-            message += "  -o <file> place the output into <file>, if won't given compiled code won't be saved\n";
-            message += "  -s statistics, print optimization statistics\n";
-            message += "  -t times, print times spent in each module\n";
-            message += "  -v verbose, print all informations about compiling process\n";
+            message += "  -v verbose, print all informations about processing code\n";
+            message += "  -t times, print times spent on each module\n";
             throw new OptsError(message);
         }
         
@@ -71,31 +68,17 @@ public class Opts
             if (opt.equals("-v"))
             {
                 verbose = true;
-            }
-            else if (opt.equals("-s"))
-            {
-                statistics = true;
-            }
-            else if (opt.equals("-o"))
-            {
-                outputFile = true;
-                if (++i < args.length)
-                {
-                    outputFilePath = args[i];
-                }
-                else
-                {
-                    String message = "You must specify <file> for -o option";
-                    throw new OptsError(message);
-                }
+                run = false;
             }
             else if (opt.equals("-d"))
             {
                 disassemble = true;
+                run = false;
             }
             else if (opt.equals("-t"))
             {
                 times = true;
+                run = false;
             }
             else
             {
@@ -115,28 +98,18 @@ public class Opts
         return disassemble;
     }
 
-    public boolean isOutputFile()
-    {
-        return outputFile;
-    }
-    
     public boolean isVerbose()
     {
         return verbose;
     }
 
-    public boolean isStatistics()
+    public boolean isRun()
     {
-        return statistics;
+        return run;
     }
 
     public String getInputFilePath()
     {
         return inputFilePath;
-    }
-
-    public String getOutputFilePath()
-    {
-        return outputFilePath;
     }
 }

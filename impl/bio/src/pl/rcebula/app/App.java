@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import pl.rcebula.intermediate_code.IntermediateCode;
+import pl.rcebula.utils.Opts;
+import pl.rcebula.utils.OptsError;
 import pl.rcebula.utils.TimeProfiler;
 
 /**
@@ -35,19 +37,39 @@ public class App
             TimeProfiler timeProfiler = new TimeProfiler();
             timeProfiler.startTotal();
             
-            if (args.length < 1)
-            {
-                System.out.println("Usage: java -jar bio.jar input_file");
-                return;
-            }
-            String path = args[0];
+            // Opts
+            timeProfiler.start("Opts");
+            Opts opts = new Opts(args);
+            timeProfiler.stop();
             
             // read intermediate code
-            IntermediateCode ic = new IntermediateCode(path);
+            timeProfiler.start("ReadIntermediateCode");
+            IntermediateCode ic = new IntermediateCode(opts.getInputFilePath());
+            timeProfiler.stop();
             
-            System.out.println("INTERMEDIATE CODE");
-            System.out.println("-------------------------");
-            System.out.println(ic.toStringWithLineNumbers());
+            if (opts.isDisassemble() || opts.isVerbose())
+            {
+                System.out.println("DISASSEMBLE CODE");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringWithLineNumbers());
+            }
+            
+            timeProfiler.stopTotal();
+            if (opts.isTimes() || opts.isVerbose())
+            {
+                System.out.println("TIMES");
+                System.out.println("-------------------------");
+                System.out.println(timeProfiler.toString());
+            }
+            
+            if (opts.isRun())
+            {
+                // run interpreter
+            }
+        }
+        catch (OptsError ex)
+        {
+            System.err.println("Options error: " + ex.getMessage());
         }
         catch (IOException ex)
         {

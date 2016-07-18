@@ -165,7 +165,7 @@ public class App
                 System.out.println(ic.toStringWithLinesNumber());
             }
             
-            if (!opts.isNotWrite())
+            if (opts.isOutputFile())
             {
                 timeProfiler.start("WriteToBinaryFile");
                 ic.writeToBinaryFile(opts.getOutputFilePath());
