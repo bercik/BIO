@@ -1,0 +1,9 @@
+def onSTART()
+   ASSIGN_LOCAL(żółć, 10)
+   PRINT(MUL(żółć, 2))
+   ąśð()
+end
+
+def ąśð()
+   DN()
+end
