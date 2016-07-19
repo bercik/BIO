@@ -30,6 +30,7 @@ public class Opts
     private boolean run = true;
     private boolean profiler = false;
     private String inputFilePath;
+    private String[] passedArgs;
 
     public Opts(String[] args)
             throws OptsError
@@ -47,7 +48,7 @@ public class Opts
     {
         if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
         {
-            String message = "usage: java -jar bio.jar input_file [options]\n";
+            String message = "usage: java -jar bio.jar [options] input_file [args]\n";
             message += "using any options causes code to not run except -p and -r\n";
             message += "options:\n";
             message += "  -d disassemble, print compiled code in readable form\n";
@@ -58,41 +59,69 @@ public class Opts
             throw new OptsError(message);
         }
         
-        // pierwszy argument to ścieżka do pliku wejściowego
-        inputFilePath = args[0];
-        
         // opcje
-        for (int i = 1; i < args.length; ++i)
+        int i = 0;
+        boolean readInputFile = false;
+        while (i < args.length)
         {
             String opt = args[i];
             
-            if (opt.equals("-d"))
+            if (opt.startsWith("-"))
             {
-                disassemble = true;
-                run = false;
-            }
-            else if (opt.equals("-t"))
-            {
-                times = true;
-                run = false;
-            }
-            else if (opt.equals("-p"))
-            {
-                profiler = true;
-                run = true;
-            }
-            else if (opt.equals("-r"))
-            {
-                run = true;
+                if (opt.equals("-d"))
+                {
+                    disassemble = true;
+                    run = false;
+                }
+                else if (opt.equals("-t"))
+                {
+                    times = true;
+                    run = false;
+                }
+                else if (opt.equals("-p"))
+                {
+                    profiler = true;
+                    run = true;
+                }
+                else if (opt.equals("-r"))
+                {
+                    run = true;
+                }
+                else
+                {
+                    String message = "Unrecognized option " + opt;
+                    throw new OptsError(message);
+                }
             }
             else
             {
-                String message = "Unrecognized option " + opt;
-                throw new OptsError(message);
+                readInputFile = true;
+                inputFilePath = opt;
+                ++i;
+                int argsCount = args.length - i;
+                passedArgs = new String[argsCount];
+                
+                int j = 0;
+                for ( ; i < args.length; ++i)
+                {
+                    passedArgs[j++] = args[i];
+                }
             }
+            
+            ++i;
+        }
+        
+        if (!readInputFile)
+        {
+            throw new OptsError("You need to specify input file");
         }
     }
 
+    public String[] getPassedArgs()
+    {
+        return passedArgs;
+    }
+    
     public boolean isTimes()
     {
         return times;

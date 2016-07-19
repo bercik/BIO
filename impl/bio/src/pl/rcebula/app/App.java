@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import pl.rcebula.intermediate_code.IntermediateCode;
-import pl.rcebula.internals.Interpreter;
+import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.BuiltinFunctions;
 import pl.rcebula.tools.IProfiler;
 import pl.rcebula.tools.NullProfiler;
@@ -72,7 +72,8 @@ public class App
                 BuiltinFunctions builtinFunctions = new BuiltinFunctions();
                 timeProfiler.stop();
                 // run interpreter
-                Interpreter interpreter = new Interpreter(ic.getUserFunctions(), builtinFunctions, timeProfiler, profiler);
+                Interpreter interpreter = new Interpreter(opts.getPassedArgs(), ic.getUserFunctions(), 
+                        builtinFunctions, timeProfiler, profiler);
                 
                 // show modules time
                 timeProfiler.stopTotal();

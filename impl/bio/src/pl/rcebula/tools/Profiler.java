@@ -18,7 +18,7 @@ public class Profiler implements IProfiler
     }
 
     @Override
-    public void exit(String name)
+    public void exit()
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

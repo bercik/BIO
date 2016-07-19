@@ -13,5 +13,5 @@ public interface IProfiler
 {
     public void enter(String name);
     
-    public void exit(String name);
+    public void exit();
 }

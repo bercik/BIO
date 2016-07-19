@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 import pl.rcebula.Constants;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.Interpreter;
+import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
 
@@ -144,7 +145,8 @@ public class BasicModule implements IModule
             if (var == null)
             {
                 String message = "There is no global variable " + id;
-                MyError error = new MyError(message, null, null, did.getLine(), did.getChNum(), interpreter);
+                MyError error = new MyError(message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
+                        null, did.getLine(), did.getChNum(), interpreter);
                 return Data.createDataError(error);
             }
             return var;
@@ -164,8 +166,17 @@ public class BasicModule implements IModule
         {
             // parametr var
             Data var = params.get(0);
-            interpreter.getFrameStack().pop();
-            return var;
+            CallFrame cf = interpreter.popFrame();
+            // w przypadku gdy wartość zwracana nie ma zostać zapisana na stosie wartości ramki poprzedniej
+            // zwracamy wartość null
+            if (cf.isReturnToCaller())
+            {
+                return var;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

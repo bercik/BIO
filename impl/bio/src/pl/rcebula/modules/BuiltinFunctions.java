@@ -10,8 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.Interpreter;
+import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.data_types.MyError;
 
 /**
  *
@@ -37,14 +39,20 @@ public class BuiltinFunctions
         }
     }
     
-    public IFunction getFunction(String name)
+    public Data callFunction(String name, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
+            int line, int chNum)
     {
-        return functions.get(name);
-    }
-    
-    public Data callFunction(String name, List<Data> params, CallFrame currentFrame, Interpreter interpreter)
-    {
-        IFunction fun = getFunction(name);
-        return fun.call(params, currentFrame, interpreter);
+        IFunction fun = functions.get(name);
+        if (fun != null)
+        {
+            return fun.call(params, currentFrame, interpreter);
+        }
+        else
+        {
+            String message = "Builtin function " + name + " is not implemented. Please contact interpreter creator";
+            MyError myError = new MyError(message, 
+                    ErrorCodes.BUILTIN_FUNCTION_NOT_IMPLEMENTED.getCode(), null, line, chNum, interpreter);
+            return Data.createDataError(myError);
+        }
     }
 }

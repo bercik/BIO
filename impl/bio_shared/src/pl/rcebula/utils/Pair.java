@@ -24,8 +24,8 @@ package pl.rcebula.utils;
  */
 public class Pair<T1, T2>
 {
-    private final T1 left;
-    private final T2 right;
+    private T1 left;
+    private T2 right;
 
     public Pair(T1 left, T2 right)
     {
@@ -41,5 +41,15 @@ public class Pair<T1, T2>
     public T2 getRight()
     {
         return right;
+    }
+
+    public void setLeft(T1 left)
+    {
+        this.left = left;
+    }
+
+    public void setRight(T2 right)
+    {
+        this.right = right;
     }
 }

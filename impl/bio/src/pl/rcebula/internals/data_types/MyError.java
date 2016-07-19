@@ -5,7 +5,7 @@
  */
 package pl.rcebula.internals.data_types;
 
-import pl.rcebula.internals.Interpreter;
+import pl.rcebula.internals.interpreter.Interpreter;
 
 /**
  *

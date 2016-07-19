@@ -85,4 +85,29 @@ public class CallFrame
     {
         return userFunction;
     }
+
+    public boolean isReturnToCaller()
+    {
+        return returnToCaller;
+    }
+
+    public int getIp()
+    {
+        return ip;
+    }
+
+    public void setIp(int ip)
+    {
+        this.ip = ip;
+    }
+
+    public List<Data> getStackParameters()
+    {
+        return stackParameters;
+    }
+
+    public Stack<Data> getVariableStack()
+    {
+        return variableStack;
+    }
 }

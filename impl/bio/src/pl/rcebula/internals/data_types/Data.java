@@ -52,7 +52,7 @@ public class Data
         return new Data(DataType.BOOL, b);
     }
     
-    public Data createDataNone()
+    public static Data createDataNone()
     {
         return new Data(DataType.NONE, null);
     }

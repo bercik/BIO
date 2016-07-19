@@ -17,7 +17,7 @@ public class NullProfiler implements IProfiler
     }
 
     @Override
-    public void exit(String name)
+    public void exit()
     {
     }
 }

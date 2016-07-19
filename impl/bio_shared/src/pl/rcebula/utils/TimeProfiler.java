@@ -103,8 +103,9 @@ public class TimeProfiler
                 
                 Integer newCount = count + 1;
                 Double newTime = time + duration;
-                // spowoduje zastąpienie starego wpisu nowym
-                times.put(name, new Pair<>(newTime, newCount));
+                // zmieniamy wartości na nowe
+                p.setLeft(newTime);
+                p.setRight(newCount);
             }
             // inaczej dodajemy nowy wpis
             else

@@ -7,7 +7,7 @@ package pl.rcebula.modules;
 
 import java.util.List;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.Interpreter;
+import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 
 /**
