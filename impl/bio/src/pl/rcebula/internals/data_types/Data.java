@@ -15,11 +15,21 @@ public class Data
 {
     private final DataType dataType;
     private final Object value;
+    private int line;
+    private int chNum;
 
     public Data(DataType dataType, Object value)
     {
         this.dataType = dataType;
         this.value = value;
+    }
+    
+    public Data(DataType dataType, Object value, int line, int chNum)
+    {
+        this.dataType = dataType;
+        this.value = value;
+        this.line = line;
+        this.chNum = chNum;
     }
     
     public static Data createDataInt(Integer i)
@@ -57,19 +67,24 @@ public class Data
         return new Data(DataType.DICT, dict);
     }
     
-    public Data createDataTuple(Tuple tuple)
+    public static Data createDataTuple(Tuple tuple)
     {
         return new Data(DataType.TUPLE, tuple);
     }
     
-    public Data createDataError(Error error)
+    public static Data createDataError(MyError error)
     {
         return new Data(DataType.ERROR, error);
     }
     
-    public Data createDataId(String id)
+    public static Data createDataId(String id)
     {
         return new Data(DataType.ID, id);
+    }
+    
+    public static Data createDataVar(String var)
+    {
+        return new Data(DataType.VAR, var);
     }
     
     public DataType getDataType()
@@ -80,5 +95,21 @@ public class Data
     public Object getValue()
     {
         return value;
+    }
+
+    public void setLineAndChNum(int line, int chNum)
+    {
+        this.line = line;
+        this.chNum = chNum;
+    }
+
+    public int getLine()
+    {
+        return line;
+    }
+
+    public int getChNum()
+    {
+        return chNum;
     }
 }

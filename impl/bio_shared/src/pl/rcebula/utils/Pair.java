@@ -19,6 +19,8 @@ package pl.rcebula.utils;
 /**
  *
  * @author robert
+ * @param <T1>
+ * @param <T2>
  */
 public class Pair<T1, T2>
 {

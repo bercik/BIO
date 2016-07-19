@@ -18,7 +18,7 @@ package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.Collections;
 import java.util.List;
-import pl.rcebula.analysis.lexer.Pair;
+import pl.rcebula.utils.Pair;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;

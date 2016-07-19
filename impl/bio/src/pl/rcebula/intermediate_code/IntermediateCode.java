@@ -195,4 +195,9 @@ public class IntermediateCode
         
         return result;
     }
+
+    public Map<String, UserFunction> getUserFunctions()
+    {
+        return userFunctions;
+    }
 }

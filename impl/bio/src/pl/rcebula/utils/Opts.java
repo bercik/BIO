@@ -25,10 +25,10 @@ import java.util.logging.Logger;
 public class Opts
 {
     private final String[] args;
-    private boolean verbose = false;
     private boolean disassemble = false;
     private boolean times = false;
     private boolean run = true;
+    private boolean profiler = false;
     private String inputFilePath;
 
     public Opts(String[] args)
@@ -48,11 +48,12 @@ public class Opts
         if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
         {
             String message = "usage: java -jar bio.jar input_file [options]\n";
-            message += "using any options causes code to not run\n";
+            message += "using any options causes code to not run except -p and -r\n";
             message += "options:\n";
             message += "  -d disassemble, print compiled code in readable form\n";
             message += "  -h --help, show this text\n";
-            message += "  -v verbose, print all informations about processing code\n";
+            message += "  -p profiler, turns on profiler which measures time spent in each function\n";
+            message += "  -r run, runs code instead of any option\n";
             message += "  -t times, print times spent on each module\n";
             throw new OptsError(message);
         }
@@ -65,12 +66,7 @@ public class Opts
         {
             String opt = args[i];
             
-            if (opt.equals("-v"))
-            {
-                verbose = true;
-                run = false;
-            }
-            else if (opt.equals("-d"))
+            if (opt.equals("-d"))
             {
                 disassemble = true;
                 run = false;
@@ -79,6 +75,15 @@ public class Opts
             {
                 times = true;
                 run = false;
+            }
+            else if (opt.equals("-p"))
+            {
+                profiler = true;
+                run = true;
+            }
+            else if (opt.equals("-r"))
+            {
+                run = true;
             }
             else
             {
@@ -98,9 +103,9 @@ public class Opts
         return disassemble;
     }
 
-    public boolean isVerbose()
+    public boolean isProfiler()
     {
-        return verbose;
+        return profiler;
     }
 
     public boolean isRun()

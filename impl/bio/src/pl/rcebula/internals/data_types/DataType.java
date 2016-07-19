@@ -15,13 +15,14 @@ public enum DataType
     ARRAY(false, true),
     BOOL(true, true),
     DICT(false, true),
+    ERROR(false, false),
     FLOAT(true, true),
     ID(false, false),
     INT(true, true),
     NONE(false, false),
     STRING(false, false),
     TUPLE(false, false),
-    ERROR(false, false);
+    VAR(false, false);
     
     private final boolean passByValue;
     private final boolean mutable;

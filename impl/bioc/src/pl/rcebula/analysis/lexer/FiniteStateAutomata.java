@@ -1,5 +1,6 @@
 package pl.rcebula.analysis.lexer;
 
+import pl.rcebula.utils.Pair;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

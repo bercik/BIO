@@ -12,6 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import pl.rcebula.intermediate_code.IntermediateCode;
+import pl.rcebula.internals.Interpreter;
+import pl.rcebula.modules.BuiltinFunctions;
+import pl.rcebula.tools.IProfiler;
+import pl.rcebula.tools.NullProfiler;
+import pl.rcebula.tools.Profiler;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
 import pl.rcebula.utils.TimeProfiler;
@@ -34,7 +39,7 @@ public class App
             initLogger();
 
             // time profiler
-            TimeProfiler timeProfiler = new TimeProfiler();
+            TimeProfiler timeProfiler = new TimeProfiler(true, true);
             timeProfiler.startTotal();
             
             // Opts
@@ -47,24 +52,55 @@ public class App
             IntermediateCode ic = new IntermediateCode(opts.getInputFilePath());
             timeProfiler.stop();
             
-            if (opts.isDisassemble() || opts.isVerbose())
+            if (opts.isDisassemble())
             {
                 System.out.println("DISASSEMBLE CODE");
                 System.out.println("-------------------------");
                 System.out.println(ic.toStringWithLineNumbers());
             }
             
-            timeProfiler.stopTotal();
-            if (opts.isTimes() || opts.isVerbose())
-            {
-                System.out.println("TIMES");
-                System.out.println("-------------------------");
-                System.out.println(timeProfiler.toString());
-            }
-            
             if (opts.isRun())
             {
+                IProfiler profiler = new NullProfiler();
+                if (opts.isProfiler())
+                {
+                    profiler = new Profiler();
+                }
+                
+                // builtin functions
+                timeProfiler.start("BuiltinFunctions");
+                BuiltinFunctions builtinFunctions = new BuiltinFunctions();
+                timeProfiler.stop();
                 // run interpreter
+                Interpreter interpreter = new Interpreter(ic.getUserFunctions(), builtinFunctions, timeProfiler, profiler);
+                
+                // show modules time
+                timeProfiler.stopTotal();
+                if (opts.isTimes())
+                {
+                    System.out.println("TIMES");
+                    System.out.println("-------------------------");
+                    System.out.println(timeProfiler.toString());
+                }
+                
+                // show profiler statistics
+                if (opts.isProfiler())
+                {
+                    System.out.println("PROFILER");
+                    System.out.println("-------------------------");
+                    System.out.println(profiler.toString());
+                }
+            }
+            else
+            {
+                // show modules time
+                timeProfiler.stopTotal();
+                if (opts.isTimes())
+                {
+                    System.out.println("TIMES");
+                    System.out.println("-------------------------");
+                    System.out.println(timeProfiler.toString());
+                }
             }
         }
         catch (OptsError ex)

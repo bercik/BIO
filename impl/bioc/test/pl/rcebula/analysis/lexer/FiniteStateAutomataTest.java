@@ -18,7 +18,7 @@ package pl.rcebula.analysis.lexer;
 
 import pl.rcebula.analysis.lexer.FiniteStateAutomata;
 import pl.rcebula.analysis.lexer.LexerError;
-import pl.rcebula.analysis.lexer.Pair;
+import pl.rcebula.utils.Pair;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.lexer.Lexer;
 import pl.rcebula.analysis.lexer.Token;

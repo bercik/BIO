@@ -17,44 +17,102 @@
 package pl.rcebula.utils;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Pozwala na mierzenie rzeczywistego czasu jaki upłynął między wywołaniem metod start i stop
+ * można wielokrotnie wywoływać metody start i stop dla tej samej metody, czasy zostaną dodane
  * 
  * @author robert
  */
 public class TimeProfiler
 {
-    private final List<Pair<String, Double>> times = new ArrayList<>();
+    private final boolean works;
+    private final boolean averages;
+    
+    private final Map<String, Pair<Double, Integer>> times = new HashMap<>();
     private double totalTime;
     
+    private boolean started = false;
     private long startTime;
     private long startTotalTime;
     private String name;
+
+    public TimeProfiler()
+    {
+        this.works = true;
+        this.averages = false;
+    }
+
+    public TimeProfiler(boolean works, boolean averages)
+    {
+        this.works = works;
+        this.averages = averages;
+    }
     
     public void startTotal()
     {
-        startTotalTime = System.nanoTime();
+        if (works)
+        {
+            startTotalTime = System.nanoTime();
+        }
     }
     
     public void stopTotal()
     {
-        totalTime = durationInMs(startTotalTime, System.nanoTime());
+        if (works)
+        {
+            totalTime = durationInMs(startTotalTime, System.nanoTime());
+        }
     }
     
     public void start(String name)
     {
-        this.name = name;
-        this.startTime = System.nanoTime();
+        if (works)
+        {
+            if (started)
+            {
+                throw new RuntimeException("You didn't stop after last start method call");
+            }
+
+            this.name = name;
+            this.startTime = System.nanoTime();
+            this.started = true;
+        }
     }
     
     public void stop()
     {
-        double duration = durationInMs(startTime, System.nanoTime());
-        
-        times.add(new Pair<String, Double>(name, duration));
+        if (works)
+        {
+            if (!started)
+            {
+                throw new RuntimeException("You didn't start before you call stop method");
+            }
+
+            double duration = durationInMs(startTime, System.nanoTime());
+
+            // jeżeli zawiera już taką nazwę to dodajemy wynik
+            if (times.containsKey(name))
+            {
+                Pair<Double, Integer> p = times.get(name);
+                
+                Double time = p.getLeft();
+                Integer count = p.getRight();
+                
+                Integer newCount = count + 1;
+                Double newTime = time + duration;
+                // spowoduje zastąpienie starego wpisu nowym
+                times.put(name, new Pair<>(newTime, newCount));
+            }
+            // inaczej dodajemy nowy wpis
+            else
+            {
+                times.put(name, new Pair<>(duration, 1));
+            }
+            this.started = false;
+        }
     }
     
     private double durationInMs(long start, long end)
@@ -66,19 +124,35 @@ public class TimeProfiler
     @Override
     public String toString()
     {
-        String str = "";
-        str += "total time: " + totalTime + " ms\n";
-        
-        for (Pair<String, Double> t : times)
+        if (works)
         {
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-            double time = t.getRight();
-            double percentTime = (time * 100.0 / totalTime);
-            
-            str += t.getLeft() + ": " + t.getRight().toString() + " ms (" + df.format(percentTime) + "%)\n";
+            String str = "";
+            str += "total time: " + totalTime + " ms\n";
+
+            for (Map.Entry<String, Pair<Double, Integer>> e : times.entrySet())
+            {
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                Pair<Double, Integer> p = e.getValue();
+                double time = p.getLeft();
+                int count = p.getRight();
+                String name = e.getKey();
+                double percentTime = (time * 100.0 / totalTime);
+
+                str += name + ": " + time + " ms (" + df.format(percentTime) + "%)";
+                if (averages)
+                {
+                    double avgTime = (time / (double)count);
+                    str += " { avg: " + avgTime + " ms }";
+                }
+                str += "\n";
+            }
+
+            return str;
         }
-        
-        return str;
+        else
+        {
+            return "TimeProfiler didn't work (you need to change this behavior when calling constructor)";
+        }
     }
 }

@@ -22,6 +22,10 @@ public class CallFrame
 {
     // czy mamy skopiować wartość z funkcji RETURN do poprzedniej ramki
     private final boolean returnToCaller;
+    // linia w kodzie źródłowym gdzie nastąpiło wywołanie
+    private final int line;
+    // znak w kodzie źródłowym gdzie nastąpiło wywołanie
+    private final int chNum;
     // instruction pointer, wskaźnik na linijkę w kodzie
     private int ip;
     // referencja do kodu funkcji i innych informacji (np. obserwatorów)
@@ -33,15 +37,18 @@ public class CallFrame
     // parametry ściągnięte ze stosu metodą POP
     private final List<Data> stackParameters = new ArrayList<>();
 
-    public CallFrame(List<Data> passedParameters, UserFunction userFunction)
+    public CallFrame(List<Data> passedParameters, UserFunction userFunction, int line, int chNum)
     {
-        this(passedParameters, userFunction, true);
+        this(passedParameters, userFunction, line, chNum, true);
     }
     
-    public CallFrame(List<Data> passedParameters, UserFunction userFunction, boolean returnToCaller)
+    public CallFrame(List<Data> passedParameters, UserFunction userFunction, int line, int chNum, 
+            boolean returnToCaller)
     {
         this.returnToCaller = returnToCaller;
         this.userFunction = userFunction;
+        this.line = line;
+        this.chNum = chNum;
         // wskaźnik instrukcji jest ustawiany na zero
         this.ip = 0;
         
@@ -57,5 +64,25 @@ public class CallFrame
             Data data = it.next();
             localVariables.put(param, data);
         }
+    }
+
+    public Map<String, Data> getLocalVariables()
+    {
+        return localVariables;
+    }
+
+    public int getLine()
+    {
+        return line;
+    }
+
+    public int getChNum()
+    {
+        return chNum;
+    }
+
+    public UserFunction getUserFunction()
+    {
+        return userFunction;
     }
 }
