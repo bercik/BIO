@@ -1,0 +1,22 @@
+!name ASSIGN_LOCAL
+!desc Creates or updates local variables with identifier <i>id</i> and values <i>val</i>
+!param id (id) variable identifier
+!param val (all) variable value
+!repeat id (id) variable identifier
+!repeat val (all) variable value
+!return (all) last given value
+
+!name ASSIGN_GLOBAL
+!desc Creates or updates global variables with identifier <i>id</i> and values <i>val</i>
+!param id (id) variable identifier
+!param val (all) variable value
+!repeat id (id) variable identifier
+!repeat val (all) variable value
+!return (all) last given value
+
+!name GET_GLOBAL
+!desc Returnes global variable with identifier <i>id</i>
+!param id (id) global variable identifier
+!return (all) global variable value
+!error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier  
+
