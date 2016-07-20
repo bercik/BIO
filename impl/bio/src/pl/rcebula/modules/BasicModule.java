@@ -149,7 +149,7 @@ public class BasicModule implements IModule
                         null, did.getLine(), did.getChNum(), interpreter);
                 return Data.createDataError(error);
             }
-            return var;
+            return new Data(var);
         }
     }
     

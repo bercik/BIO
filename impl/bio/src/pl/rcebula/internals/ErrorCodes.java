@@ -15,7 +15,9 @@ public enum ErrorCodes
 {
     // upewnij się, że dla każdego errora jest przypisany inny kod
     NO_GLOBAL_VARIABLE(1),
-    BUILTIN_FUNCTION_NOT_IMPLEMENTED(2);
+    NO_LOCAL_VARIABLE(2),
+    BAD_PARAMETER_TYPE(3),
+    BUILTIN_FUNCTION_NOT_IMPLEMENTED(4);
     
     private final Data code;
             

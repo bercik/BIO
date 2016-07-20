@@ -18,6 +18,12 @@ public class Data
     private int line;
     private int chNum;
 
+    public Data(Data other)
+    {
+        this.dataType = other.dataType;
+        this.value = other.value;
+    }
+    
     public Data(DataType dataType, Object value)
     {
         this.dataType = dataType;

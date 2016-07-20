@@ -72,6 +72,12 @@ public class UserFunction
         return observers;
     }
     
+    @Override
+    public String toString()
+    {
+        return toStringWithLineNumbers();
+    }
+    
     public String toStringWithLineNumbers()
     {
         String result = "";

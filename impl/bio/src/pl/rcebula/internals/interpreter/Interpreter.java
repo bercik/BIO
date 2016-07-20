@@ -13,7 +13,6 @@ import java.util.Stack;
 import java.util.logging.Logger;
 import pl.rcebula.Constants;
 import pl.rcebula.intermediate_code.UserFunction;
-import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
@@ -58,7 +57,7 @@ public class Interpreter
         // tworzymy ramkę z funkcją main (onSTART)
         CallFrame mainFrame = createMainFrame(args);
         // wrzucamy na stos ramek
-        frameStack.push(mainFrame);
+        pushFrameToStack(mainFrame);
 
         // zaczynamy wykonywanie kodu
         run();
@@ -73,7 +72,7 @@ public class Interpreter
     void run()
     {
         // działa dopóki na stosie ramek są jakieś ramki
-        while (true)
+        while (currentFrame != null)
         {
             timeProfiler.start("Read Line");
             // wczytujemy linię kodu
@@ -103,6 +102,31 @@ public class Interpreter
                 case PUSH:
                     timeProfiler.start("PUSH");
                     new PerformPush(this, line);
+                    timeProfiler.stop();
+                    break;
+                case POP:
+                    timeProfiler.start("POP");
+                    new PerformPop(this, line);
+                    timeProfiler.stop();
+                    break;
+                case POPC:
+                    timeProfiler.start("POPC");
+                    new PerformPopc(this, line);
+                    timeProfiler.stop();
+                    break;
+                case JMP:
+                    timeProfiler.start("JMP");
+                    new PerformJmp(this, line);
+                    timeProfiler.stop();
+                    break;
+                case JMP_IF_FALSE:
+                    timeProfiler.start("JMP_IF_FALSE");
+                    new PerformJmpIfFalse(this, line);
+                    timeProfiler.stop();
+                    break;
+                case CLEAR_STACK:
+                    timeProfiler.start("CLEAR_STACK");
+                    new PerformClearStack(this, line);
                     timeProfiler.stop();
                     break;
             }

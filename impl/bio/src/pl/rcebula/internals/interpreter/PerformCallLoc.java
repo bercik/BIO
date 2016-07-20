@@ -5,6 +5,7 @@
  */
 package pl.rcebula.internals.interpreter;
 
+import java.util.List;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.data_types.Data;
@@ -22,9 +23,21 @@ public class PerformCallLoc
         int lineNum = callLine.getLine();
         int chNum = callLine.getChNum();
         
+        perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), lineNum, chNum);
+    }
+    
+    public PerformCallLoc(Interpreter interpreter, String funName, List<Data> parameters, int lineNum, 
+            int chNum)
+    {
+        perform(interpreter, funName, parameters, lineNum, chNum);
+    }
+    
+    private void perform(Interpreter interpreter, String funName, List<Data> parameters, int lineNum, 
+            int chNum)
+    {
         // wywołujemy funkcję
         Data data = interpreter.builtinFunctions.callFunction(funName, 
-                interpreter.currentFrame.getStackParameters(), interpreter.currentFrame, interpreter, 
+                parameters, interpreter.currentFrame, interpreter, 
                 lineNum, chNum);
         
         // jeżeli data jest różne od null
@@ -32,8 +45,16 @@ public class PerformCallLoc
         {
             // ustawiamy nowe line i chNum
             data.setLineAndChNum(lineNum, chNum);
+            // jeżeli to nie była ostatnia ramka to
             // zapisujemy na stosie wartości aktualnej ramki
-            interpreter.currentFrame.getVariableStack().push(data);
+            if (interpreter.currentFrame != null)
+            {
+                interpreter.currentFrame.getVariableStack().push(data);
+            }
+            else
+            {
+                // inaczej wartość zwrócona jest wartością zwróconą z funkcji onSTART
+            }
         }
     }
 }

@@ -42,4 +42,10 @@ public enum DataType
     {
         return mutable;
     }
+
+    @Override
+    public String toString()
+    {
+        return name().toLowerCase().replaceAll("_", " ");
+    }
 }
