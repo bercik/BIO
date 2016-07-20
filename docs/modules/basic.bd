@@ -14,9 +14,23 @@
 !repeat val (all) variable value
 !return (all) last given value
 
+!name IS_LOCAL
+!desc Checks whether variable with identifier <i>id</i> exists and is local
+!param id (id) variable identifier
+!return (bool) true if variable exists, otherwise false
+
+!name IS_GLOBAL
+!desc Checks whether variable with identifier <i>id</i> exists and is global
+!param id (id) variable identifier
+!return (bool) true if variable exists, otherwise false
+
 !name GET_GLOBAL
 !desc Returnes global variable with identifier <i>id</i>
 !param id (id) global variable identifier
 !return (all) global variable value
-!error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier  
+!error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier
+
+!name RETURN
+!desc Returnes value <i>val</i> from function
+!param val (all) value to be returned
 

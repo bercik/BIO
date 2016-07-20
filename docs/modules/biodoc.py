@@ -96,6 +96,7 @@ if __name__ == "__main__":
         if m != None:
             if repeatedFrom == None:
                 repeatedFrom = len(params)
+                repeatedTo = len(params)
             else:
                 repeatedTo = len(params)
             param = Param(m.group(1), m.group(2), m.group(3))
@@ -129,7 +130,7 @@ if __name__ == "__main__":
     html += "<hr/>\n"
     # create html
     for f in functions:
-        html += "<p><b>" + f.name + "</b>"
+        html += "<p class=\"fun_header\"><b>" + f.name + "</b>"
         if f.alias != "":
             html += "/<i>" + f.alias + "</i>"
 
@@ -157,11 +158,12 @@ if __name__ == "__main__":
                     "</u>) - " + p.desc + "</p>\n"
             html += "</div>\n"
 
-        html += "<p><b>Return value:</b></p>\n"
-        html += "<div class=\"returned\">\n"
-        html += "<p>(<u>" + f.returned.types + \
-            "</u>) - " + f.returned.desc + "</p>\n"
-        html += "</div>\n"
+        if f.returned != None:
+            html += "<p><b>Return value:</b></p>\n"
+            html += "<div class=\"returned\">\n"
+            html += "<p>(<u>" + f.returned.types + \
+                "</u>) - " + f.returned.desc + "</p>\n"
+            html += "</div>\n"
 
         if len(f.errors) > 0:
             html += "<p><b>Errors:</b></p>\n"
@@ -171,7 +173,7 @@ if __name__ == "__main__":
                     e.desc + "</p>\n"
             html += "</div>\n"
 
-        html += "<hr/>"
+        html += "<hr/>\n\n"
 
     indx = fname.rfind("/")
     dir = "."

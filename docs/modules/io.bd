@@ -1,0 +1,12 @@
+!name PRINT
+!desc Prints values <i>val</i> on standard output (typically screen) separated by space
+!param val (all) value to print
+!repeat val (all) value to print
+!return (string) printed string
+
+!name PRINTLN
+!desc Prints values <i>val</i> on standard output (typically screen) separated by newlines
+!param val (all) value to print
+!repeat val (all) value to print
+!return (string) printed string
+
