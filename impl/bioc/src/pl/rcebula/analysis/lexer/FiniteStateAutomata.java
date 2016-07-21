@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.preprocessor.MyFiles.File;
 import pl.rcebula.utils.StringUtils;
 
 /**
@@ -31,21 +34,21 @@ public class FiniteStateAutomata
     // dany stan jest specjalny (np. komentarz))
     private final Map<Integer, TokenType> stateTokenTypeMap
             = new HashMap<Integer, TokenType>()
-            {
-                {
-                    put(2, TokenType.INT);
-                    put(3, null); // id, bool, keyword, none
-                    put(4, TokenType.ID);
-                    put(7, TokenType.STRING);
-                    put(9, null); // komentarz
-                    put(10, TokenType.INT);
-                    put(12, TokenType.FLOAT);
-                    put(13, TokenType.COMMA);
-                    put(14, TokenType.OPEN_BRACKET);
-                    put(15, TokenType.CLOSE_BRACKET);
-                    put(20, TokenType.END);
-                }
-            };
+    {
+        {
+            put(2, TokenType.INT);
+            put(3, null); // id, bool, keyword, none
+            put(4, TokenType.ID);
+            put(7, TokenType.STRING);
+            put(9, null); // komentarz
+            put(10, TokenType.INT);
+            put(12, TokenType.FLOAT);
+            put(13, TokenType.COMMA);
+            put(14, TokenType.OPEN_BRACKET);
+            put(15, TokenType.CLOSE_BRACKET);
+            put(20, TokenType.END);
+        }
+    };
     // stan komentarza
     private final Integer commentState = 9;
 
@@ -64,8 +67,14 @@ public class FiniteStateAutomata
     private Integer currentTokenChNum;
     private Integer currentTokenLine;
 
-    public FiniteStateAutomata()
+    private MyFiles.File currentErrorFile;
+    private int lineFromBeginningOfFile;
+    private final MyFiles files;
+
+    public FiniteStateAutomata(MyFiles files)
     {
+        this.files = files;
+
         fillTransitionsTable();
         fullReset();
     }
@@ -82,7 +91,28 @@ public class FiniteStateAutomata
     public final void fullReset()
     {
         line = chNum = 1;
+        getCurrentErrorFile();
+
         reset();
+    }
+
+    private void getCurrentErrorFile()
+    {
+        // -1 bo w files linie numerowane od zera
+        currentErrorFile = files.getFromLine(line - 1);
+        lineFromBeginningOfFile = line - currentErrorFile.getStartOfInterval(line - 1);
+    }
+    
+    private ErrorInfo generateErrorInfo()
+    {
+        return new ErrorInfo(lineFromBeginningOfFile, chNum, currentErrorFile);
+    }
+    
+    private ErrorInfo generateErrorInfoWithCurrentToken()
+    {
+        File f = files.getFromLine(currentTokenLine - 1);
+        int line = currentTokenLine - f.getStartOfInterval(currentTokenLine - 1);
+        return new ErrorInfo(line, currentTokenChNum, f);
     }
 
     // podanie kolejnego znaku, zwraca parę token lub null i wartość bool
@@ -91,8 +121,9 @@ public class FiniteStateAutomata
     {
         if (ch == '\n')
         {
-            ++line;
             chNum = 1;
+            ++line;
+            getCurrentErrorFile();
         }
         else
         {
@@ -137,13 +168,13 @@ public class FiniteStateAutomata
                         case OPEN_BRACKET:
                         case COMMA:
                         case END:
-                            token = new Token(tokenType, null, currentTokenLine, currentTokenChNum);
+                            token = new Token(tokenType, null, generateErrorInfoWithCurrentToken());
                             break;
                         case STRING:
                             // usuwamy początkowy i końcowy cudzysłów i zamieniamy znaki specjalne
-                            token = new Token(tokenType, 
+                            token = new Token(tokenType,
                                     parseString(tokenValue, currentTokenLine, currentTokenChNum),
-                                    currentTokenLine, currentTokenChNum);
+                                    generateErrorInfoWithCurrentToken());
                             break;
                         default:
                             throw new RuntimeException(
@@ -158,93 +189,90 @@ public class FiniteStateAutomata
                 token = null;
             }
         }
-        else
+        else // jeżeli stan jest stanem pozwalającym na wystąpienie separatora i wystąpił separator
+        if (Arrays.asList(allowSeparatorStates).contains(state)
+                && Arrays.asList(Lexer.separators).contains(ch))
         {
-            // jeżeli stan jest stanem pozwalającym na wystąpienie separatora i wystąpił separator
-            if (Arrays.asList(allowSeparatorStates).contains(state)
-                    && Arrays.asList(Lexer.separators).contains(ch))
+            // jeżeli stan nie jest stanem początkowym
+            if (!Objects.equals(state, startState))
             {
-                // jeżeli stan nie jest stanem początkowym
-                if (!Objects.equals(state, startState))
+                // zwracamy ostatni znak (separator), usuwamy go z tokenValue
+                retCh = true;
+                if (ch == '\n')
                 {
-                    // zwracamy ostatni znak (separator), usuwamy go z tokenValue
-                    retCh = true;
-                    if (ch == '\n')
-                    {
-                        --line;
-                    }
-                    else
-                    {
-                        --chNum;
-                    }
-                    tokenValue = tokenValue.substring(0, tokenValue.length() - 1);
-
-                    TokenType tokenType = stateTokenTypeMap.get(state);
-
-                    // jeżeli null oznacza to, że jesteśmy w stanie id, keyword, none, true lub false
-                    if (tokenType == null)
-                    {
-                        token = recognizeStateID(state, tokenValue, currentTokenLine, currentTokenChNum);
-                    }
-                    else
-                    {
-                        switch (tokenType)
-                        {
-                            case INT:
-                                try
-                                {
-                                    int i = Integer.parseInt(tokenValue);
-                                    token = new Token(tokenType, i, currentTokenLine, currentTokenChNum);
-                                }
-                                catch (NumberFormatException ex)
-                                {
-                                    throw new LexerError(line, chNum, ex.getMessage());
-                                }
-                                break;
-                            case FLOAT:
-                                try
-                                {
-                                    float f = Float.parseFloat(tokenValue);
-                                    token = new Token(tokenType, f, currentTokenLine, currentTokenChNum);
-                                }
-                                catch (NumberFormatException ex)
-                                {
-                                    throw new LexerError(line, chNum, ex.getMessage());
-                                }
-                                break;
-                            case ID:
-                                token = new Token(tokenType, tokenValue, currentTokenLine, currentTokenChNum);
-                                break;
-                            default:
-                                throw new RuntimeException(
-                                        "Unknown allow separator token type " + tokenType);
-                        }
-                    }
+                    --line;
                 }
                 else
                 {
-                    retCh = false;
-                    token = null;
+                    --chNum;
                 }
+                tokenValue = tokenValue.substring(0, tokenValue.length() - 1);
 
-                reset();
+                TokenType tokenType = stateTokenTypeMap.get(state);
+
+                // jeżeli null oznacza to, że jesteśmy w stanie id, keyword, none, true lub false
+                if (tokenType == null)
+                {
+                    token = recognizeStateID(state, tokenValue, currentTokenLine, currentTokenChNum);
+                }
+                else
+                {
+                    switch (tokenType)
+                    {
+                        case INT:
+                            try
+                            {
+                                int i = Integer.parseInt(tokenValue);
+                                token = new Token(tokenType, i, generateErrorInfoWithCurrentToken());
+                            }
+                            catch (NumberFormatException ex)
+                            {
+                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                            }
+                            break;
+                        case FLOAT:
+                            try
+                            {
+                                float f = Float.parseFloat(tokenValue);
+                                token = new Token(tokenType, f, generateErrorInfoWithCurrentToken());
+                            }
+                            catch (NumberFormatException ex)
+                            {
+                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                            }
+                            break;
+                        case ID:
+                            token = new Token(tokenType, tokenValue, generateErrorInfoWithCurrentToken());
+                            break;
+                        default:
+                            throw new RuntimeException(
+                                    "Unknown allow separator token type " + tokenType);
+                    }
+                }
             }
             else
             {
-                // sprawdzamy czy stan pozwala na wystąpienie jakiegokolwiek znaku (w tym nie znaku)
-                newState = transitionsTable[state][getEveryCharCol()];
-                if (newState != -1)
-                {
-                    state = newState;
-                    retCh = false;
-                    token = null;
-                }
-                else
-                {
-                    throw new LexerError(line, chNum,
-                            "Unexpected character " + ch + " in token \""
-                            + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
-                }
+                retCh = false;
+                token = null;
+            }
+
+            reset();
+        }
+        else
+        {
+            // sprawdzamy czy stan pozwala na wystąpienie jakiegokolwiek znaku (w tym nie znaku)
+            newState = transitionsTable[state][getEveryCharCol()];
+            if (newState != -1)
+            {
+                state = newState;
+                retCh = false;
+                token = null;
+            }
+            else
+            {
+                throw new LexerError(generateErrorInfo(),
+                        "Unexpected character " + ch + " in token \""
+                        + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
             }
         }
 
@@ -258,7 +286,6 @@ public class FiniteStateAutomata
         str = str.substring(1, str.length() - 1);
 
         String newStr = "";
-        
 
         // przechodzimy po całym napisie i szukamy znaków specjalnych
         boolean specChar = false;
@@ -270,30 +297,27 @@ public class FiniteStateAutomata
             {
                 if (!StringUtils.specialCharacters.containsKey(ch))
                 {
-                    throw new LexerError(line, chNum, 
-                            "Illegal special character \\" + ch + 
-                                    " in string \"" + str + "\"");
+                    throw new LexerError(generateErrorInfo(),
+                            "Illegal special character \\" + ch
+                            + " in string \"" + str + "\"");
                 }
-                
+
                 newStr += StringUtils.specialCharacters.get(ch);
                 specChar = false;
             }
+            else if (ch.equals('\\'))
+            {
+                specChar = true;
+            }
             else
             {
-                if (ch.equals('\\'))
-                {
-                    specChar = true;
-                }
-                else
-                {
-                    newStr += ch;
-                }
+                newStr += ch;
             }
         }
 
         if (specChar)
         {
-            throw new LexerError(line, chNum,
+            throw new LexerError(generateErrorInfo(),
                     "Not completed special character in string \""
                     + str + "\"");
         }
@@ -306,23 +330,23 @@ public class FiniteStateAutomata
     {
         if (Arrays.asList(Lexer.keywords).contains(token))
         {
-            return new Token(TokenType.KEYWORD, token, line, chNum);
+            return new Token(TokenType.KEYWORD, token, generateErrorInfo());
         }
         if (Arrays.asList(Lexer.trues).contains(token))
         {
-            return new Token(TokenType.BOOL, true, line, chNum);
+            return new Token(TokenType.BOOL, true, generateErrorInfo());
         }
         if (Arrays.asList(Lexer.falses).contains(token))
         {
-            return new Token(TokenType.BOOL, false, line, chNum);
+            return new Token(TokenType.BOOL, false, generateErrorInfo());
         }
         if (Arrays.asList(Lexer.nones).contains(token))
         {
-            return new Token(TokenType.NONE, null, line, chNum);
+            return new Token(TokenType.NONE, null, generateErrorInfo());
         }
 
         // jeżeli nic z powyższych to traktujemy jako ID
-        return new Token(TokenType.ID, token, line, chNum);
+        return new Token(TokenType.ID, token, generateErrorInfo());
     }
 
     // wypełnia tablicę przejść

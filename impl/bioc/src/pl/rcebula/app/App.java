@@ -61,7 +61,7 @@ public class App
 
             // preprocessor
             timeProfiler.start("Preprocessor");
-            Preprocessor preprocessor = new Preprocessor(opts.getInputFilePath());
+            Preprocessor preprocessor = new Preprocessor(opts.getInputFilePath(), opts.isDebugInfo());
             timeProfiler.stop();
             if (opts.isVerbose())
             {
@@ -73,7 +73,7 @@ public class App
             
             // lexer
             timeProfiler.start("Lexer");
-            Lexer lexer = new Lexer(preprocessor.getInput());
+            Lexer lexer = new Lexer(preprocessor.getInput(), preprocessor.getFiles());
             timeProfiler.stop();
             List<Token<?>> tokens = lexer.getTokens();
 

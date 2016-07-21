@@ -151,6 +151,11 @@ public class BuiltinFunction
     // sprawdza czy ilość parametrów zgadza się z funkcją
     public boolean isGoodNumberOfParams(int numberOfParams)
     {
+        if (numberOfParams < minParams)
+        {
+            return false;
+        }
+        
         if (additionalParams > 0)
         {
             return ((numberOfParams - minParams) % (additionalParams) == 0);

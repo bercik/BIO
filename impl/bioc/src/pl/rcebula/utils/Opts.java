@@ -29,6 +29,7 @@ public class Opts
     private boolean statistics = false;
     private boolean disassemble = false;
     private boolean times = false;
+    private boolean debugInfo = false;
     private String inputFilePath;
     private boolean outputFile = false;
     private String outputFilePath;
@@ -52,6 +53,7 @@ public class Opts
             String message = "usage: java -jar bioc.jar input_file [options]\n";
             message += "options:\n";
             message += "  -d disassemble, print compiled code in readable form\n";
+            message += "  -g debug info, add full files name to compiled file\n";
             message += "  -h --help, show this text\n";
             message += "  -o <file> place the output into <file>, if won't given compiled code won't be saved\n";
             message += "  -s statistics, print optimization statistics\n";
@@ -97,12 +99,21 @@ public class Opts
             {
                 times = true;
             }
+            else if (opt.equals("-g"))
+            {
+                debugInfo = true;
+            }
             else
             {
                 String message = "Unrecognized option " + opt;
                 throw new OptsError(message);
             }
         }
+    }
+
+    public boolean isDebugInfo()
+    {
+        return debugInfo;
     }
 
     public boolean isTimes()

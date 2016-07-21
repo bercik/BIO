@@ -3,6 +3,7 @@ import pl.rcebula.utils.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -41,12 +42,16 @@ public class Lexer
     };
 
     private final List<Token<?>> tokens;
+    private final MyFiles files;
 
-    public Lexer(String input)
+    public Lexer(String input, MyFiles files)
             throws LexerError
     {
         Logger logger = Logger.getGlobal();
         logger.info("Lexer");
+        
+        this.files = files;
+        
         tokens = addEOFAndAnalyse(input);
     }
 
@@ -68,7 +73,7 @@ public class Lexer
             throws LexerError
     {
         List<Token<?>> tokens = new ArrayList<>();
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
         boolean endWithEndToken = false;
 
         for (int i = 0; i < input.length(); ++i)

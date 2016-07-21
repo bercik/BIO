@@ -16,6 +16,8 @@
  */
 package pl.rcebula.analysis.lexer;
 
+import pl.rcebula.analysis.ErrorInfo;
+
 /**
  *
  * @author robert
@@ -27,8 +29,8 @@ public class LexerError extends Exception
         super(message);
     }
     
-    public LexerError(int line, int chNum, String message)
+    public LexerError(ErrorInfo ei, String message)
     {
-        super("[line: " + line + ", character: " + chNum + "]: " + message);
+        super(ei.toString() + ": " + message);
     }
 }

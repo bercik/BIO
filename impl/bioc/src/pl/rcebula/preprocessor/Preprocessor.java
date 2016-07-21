@@ -28,9 +28,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pl.rcebula.preprocessor.MyFiles.File;
 
 /**
  *
@@ -46,25 +48,132 @@ public class Preprocessor
     private final List<Path> includedPaths = new ArrayList<>();
     private Path currentPath;
 
-    public Preprocessor(String path)
+    private final boolean debugInfo;
+    private final MyFiles files = new MyFiles();
+
+    public Preprocessor(String path, boolean debugInfo)
             throws IOException, PreprocessorError
     {
         Logger logger = Logger.getGlobal();
         logger.info("Preprocessor");
-        
+
+        this.debugInfo = debugInfo;
+
+        // wczytujemy plik główny
         Path p = Paths.get(path);
         List<String> lines = readExternalFile(p, "UTF-8", -1);
+        // tworzymy obiekt pliku i wstawiamy linijkę <fsnum
+        File file = files.addFile(getFileName(p));
+        lines.add(0, generateFileStartLine(file.getNum()));
 
-        input = linesToString(analyse(lines));
+        // analizujemy linijki
+        lines = analyse(lines);
+
+        // dodajemy linię <fe
+        lines.add(generateFileEndLine());
+        // analizujemy pod kątem <fs i <fe
+        analyseLinesForFiles(lines);
+
+        // zamieniamy linię na jeden ciąg
+        input = linesToString(lines);
     }
 
-    public Preprocessor(List<String> lines)
-            throws PreprocessorError, IOException
-    {
-        Logger logger = Logger.getGlobal();
-        logger.info("Preprocessor");
+    private void analyseLinesForFiles(List<String> lines)
+    {  
+        Stack<Integer> stack = new Stack<>();
+        int intervalStart = -1;
+        int intervalEnd = -1;
+        File currentFile = null;
+        for (int i = 0; i < lines.size(); )
+        {
+            String line = lines.get(i);
+            if (line.startsWith("<fs"))
+            {
+                // jeżeli lastFile to dodajemy nowy przedział
+                if (currentFile != null)
+                {
+                    intervalEnd = i;
+                    currentFile.addInterval(new File.Interval(intervalStart, intervalEnd));
+                    intervalStart = i;
+                }
+                
+                // pobieramy wartość num
+                int num = Integer.parseInt(line.substring(3, line.length()));
+                // pobieramy plik pod tym numerem
+                currentFile = files.getFromNum(num);
+                // ustawiamy fromList na aktualną zawartość stosu
+                for (int k = 0; k < stack.size(); ++k)
+                {
+                    File f = files.getFromNum(stack.get(k));
+                    currentFile.addFrom(f);
+                }
+                // wrzucamy na stos
+                stack.push(num);
+                // ustawiamy przedział
+                intervalStart = i;
+                // usuwamy linię
+                lines.remove(i);
+            }
+            else if (line.startsWith("<fe"))
+            {
+                // usuwamy linię
+                lines.remove(i);
+                // ściągamy ze stosu
+                stack.pop();
+                // dodajemy interwał
+                intervalEnd = i;
+                currentFile.addInterval(new File.Interval(intervalStart, intervalEnd));
+                intervalStart = i;
+                // jeżeli nie ma nic więcej na stosie, kończymy
+                if (stack.size() == 0)
+                {
+                    break;
+                }
+                // ustawiamy current file
+                int currentNum = stack.peek();
+                currentFile = files.getFromNum(currentNum);
+            }
+            else
+            {
+                ++i;
+            }
+        }
         
-        input = linesToString(analyse(lines));
+        files.normalizeIntervals();
+        
+        // TODELETE
+        /*for (int i = 0; i < lines.size(); ++i)
+        {
+            String line = lines.get(i);
+            
+            File f = files.getFromLine(i);
+            
+            System.out.print("[" + i + "]" + line + "#");
+            System.out.println(f.getName() + "   " + f.getStartOfInterval(i));
+        }*/
+    }
+
+    private String generateFileStartLine(int fnum)
+    {
+        return "<fs" + fnum;
+    }
+
+    private String generateFileEndLine()
+    {
+        return "<fe";
+    }
+
+    private String getFileName(Path p)
+    {
+        p = p.normalize();
+        if (debugInfo)
+        {
+            return p.toAbsolutePath().toString();
+        }
+        else
+        {
+            return p.getFileName().toString();
+        }
     }
 
     private List<String> analyse(List<String> lines)
@@ -80,7 +189,7 @@ public class Preprocessor
             {
                 // ścieżka do aktualnego pliku (używana przy wypisywaniu błędów)
                 String file = currentPath.toAbsolutePath().normalize().toString();
-                
+
                 // obcinamy początkowe i końcowe białe znaki
                 line = line.trim();
                 // sprawdzamy czy linia pasuje do wzorca
@@ -115,14 +224,28 @@ public class Preprocessor
                     Path tmpPath = currentPath;
                     // wczytujemy linijki z pliku i przetwarzamy rekurencyjnie
                     List<String> tmpLines = readExternalFile(finalPath, "UTF-8", it);
+                    // jeżeli plik nie był do tej pory wczytany
+                    if (tmpLines.size() > 0)
+                    {
+                        // tworzymy obiekt pliku i wstawiamy linijkę <fsnum
+                        File ff = files.addFile(getFileName(finalPath));
+                        tmpLines.add(0, generateFileStartLine(ff.getNum()));
+                    }
+                    // analizujemy rekurencyjnie linie
                     tmpLines = analyse(tmpLines);
-                    
+                    // jeżeli plik nie był do tej pory wczytany
+                    if (tmpLines.size() > 0)
+                    {
+                        // na koniec dodajemy linię <fe
+                        tmpLines.add(generateFileEndLine());
+                    }
+
                     // dodajemy linijki do wynikowych
                     for (String tmpLine : tmpLines)
                     {
                         resultLines.add(tmpLine);
                     }
-                    
+
                     // odtwarzamy currentPath
                     currentPath = tmpPath;
                 }
@@ -137,13 +260,18 @@ public class Preprocessor
             {
                 resultLines.add(line);
             }
-            
+
             ++it;
         }
 
         return resultLines;
     }
 
+    public MyFiles getFiles()
+    {
+        return files;
+    }
+    
     public String getInput()
     {
         return input;
@@ -179,7 +307,7 @@ public class Preprocessor
                 throw new PreprocessorError(message);
             }
         }
-        
+
         if (!checkIfSameFile(includedPaths, p))
         {
             currentPath = p;
@@ -188,10 +316,10 @@ public class Preprocessor
             InputStream is = new FileInputStream(filePath);
             return readInputStreamAsLines(is, encoding);
         }
-        
+
         return new ArrayList<>();
     }
-    
+
     private boolean checkIfSameFile(List<Path> paths, Path p)
             throws IOException
     {
@@ -202,7 +330,7 @@ public class Preprocessor
                 return true;
             }
         }
-        
+
         return false;
     }
 

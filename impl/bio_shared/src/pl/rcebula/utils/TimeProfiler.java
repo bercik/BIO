@@ -145,14 +145,17 @@ public class TimeProfiler
                 double percentTime = (time * 100.0 / totalTime);
                 
                 String col1 = name + ": " + df8.format(time) + " ms (" + df2.format(percentTime) + "%)";
-                String col2 = "";
                 if (averages)
                 {
                     double avgTime = (time / (double)count);
-                    col2 = " { avg: " + df8.format(avgTime) + " ms (" + count + ") }";
+                    String col2 = " { avg: " + df8.format(avgTime) + " ms (" + count + ") }";
+                    
+                    str += String.format("%-50.50s  %-40.40s%n", col1, col2);
                 }
-                
-                str += String.format("%-50.50s  %-40.40s%n", col1, col2);
+                else
+                {
+                    str += col1 + "\n";
+                }
             }
 
             return str;

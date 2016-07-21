@@ -17,6 +17,7 @@
 package pl.rcebula.analysis.lexer;
 
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
 
 /**
  *
@@ -27,10 +28,9 @@ public class Token<T>
 {
     private final TokenType tokenType;
     private final T value;
-    private final int line;
-    private final int chNum;
+    private final ErrorInfo errorInfo;
 
-    public Token(TokenType tokenType, T value, int line, int chNum)
+    public Token(TokenType tokenType, T value, ErrorInfo errorInfo)
     {
         if (tokenType.getValueType() != null && 
                 !tokenType.getValueType().equals(value.getClass()))
@@ -41,8 +41,7 @@ public class Token<T>
         
         this.tokenType = tokenType;
         this.value = value;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
 
     public Token(TokenType tokenType, int i, int i0)
@@ -60,30 +59,23 @@ public class Token<T>
         return value;
     }
 
-    public int getLine()
-    {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
-    }
-
     @Override
     public int hashCode()
     {
         int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.tokenType);
-        hash = 83 * hash + Objects.hashCode(this.value);
-        hash = 83 * hash + this.line;
-        hash = 83 * hash + this.chNum;
+        hash = 29 * hash + Objects.hashCode(this.tokenType);
+        hash = 29 * hash + Objects.hashCode(this.value);
+        hash = 29 * hash + Objects.hashCode(this.errorInfo);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj)
     {
+        if (this == obj)
+        {
+            return true;
+        }
         if (obj == null)
         {
             return false;
@@ -101,14 +93,10 @@ public class Token<T>
         {
             return false;
         }
-        if (this.line != other.line)
-        {
-            return false;
-        }
-        if (this.chNum != other.chNum)
+        if (!Objects.equals(this.errorInfo, other.errorInfo))
         {
             return false;
         }
         return true;
-    }    
+    }
 }
