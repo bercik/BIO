@@ -62,6 +62,7 @@ public class Opts
         // opcje
         int i = 0;
         boolean readInputFile = false;
+        boolean runOption = false;
         while (i < args.length)
         {
             String opt = args[i];
@@ -71,21 +72,29 @@ public class Opts
                 if (opt.equals("-d"))
                 {
                     disassemble = true;
-                    run = false;
+                    if (!runOption)
+                    {
+                        run = false;
+                    }
                 }
                 else if (opt.equals("-t"))
                 {
                     times = true;
-                    run = false;
+                    if (!runOption)
+                    {
+                        run = false;
+                    }
                 }
                 else if (opt.equals("-p"))
                 {
                     profiler = true;
                     run = true;
+                    runOption = true;
                 }
                 else if (opt.equals("-r"))
                 {
                     run = true;
+                    runOption = true;
                 }
                 else
                 {

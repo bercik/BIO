@@ -61,4 +61,15 @@ public class MyError
     {
         return callStack;
     }
+
+    @Override
+    public String toString()
+    {
+        String str = "";
+        
+        str += "[line: " + line + ", ch: " + chNum + "]: ";
+        str += message;
+        
+        return str;
+    }
 }

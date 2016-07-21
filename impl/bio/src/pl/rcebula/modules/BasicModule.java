@@ -19,28 +19,18 @@ import pl.rcebula.internals.data_types.MyError;
  *
  * @author robert
  */
-public class BasicModule implements IModule
+public class BasicModule extends Module
 {
-    @Override
-    public Map<String, IFunction> getFunctions()
+    public BasicModule()
     {
-        Map<String, IFunction> functions = new HashMap<>();
-        
-        putFunction(functions, new AssignLocalFunction());
-        putFunction(functions, new AssignGlobalFunction());
-        putFunction(functions, new IsLocalFunction());
-        putFunction(functions, new IsGlobalFunction());
-        putFunction(functions, new GetGlobalFunction());
-        putFunction(functions, new ReturnFunction());
-        
-        return functions;
+        putFunction(new AssignLocalFunction());
+        putFunction(new AssignGlobalFunction());
+        putFunction(new IsLocalFunction());
+        putFunction(new IsGlobalFunction());
+        putFunction(new GetGlobalFunction());
+        putFunction(new ReturnFunction());
     }
-    
-    private void putFunction(Map<String, IFunction> map, IFunction fun)
-    {
-        map.put(fun.getName(), fun);
-    }
-    
+
     private class AssignLocalFunction implements IFunction
     {
         @Override
@@ -53,19 +43,19 @@ public class BasicModule implements IModule
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
             Data var = null;
-            // parametry (id, var)+
+            // parametry <id, var>+
             for (int i = 0; i < params.size(); i += 2)
             {
                 String id = (String)params.get(i).getValue();
                 var = params.get(i + 1);
-                
+
                 currentFrame.getLocalVariables().put(id, var);
             }
-            
+
             return var;
         }
     }
-    
+
     private class AssignGlobalFunction implements IFunction
     {
         @Override
@@ -78,19 +68,19 @@ public class BasicModule implements IModule
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
             Data var = null;
-            // parametry (id, var)+
+            // parametry <id, var>+
             for (int i = 0; i < params.size(); i += 2)
             {
                 String id = (String)params.get(i).getValue();
                 var = params.get(i + 1);
-                
+
                 interpreter.getGlobalVariables().put(id, var);
             }
-            
+
             return var;
         }
     }
-    
+
     private class IsLocalFunction implements IFunction
     {
         @Override
@@ -108,7 +98,7 @@ public class BasicModule implements IModule
             return Data.createDataBool(isLocal);
         }
     }
-    
+
     private class IsGlobalFunction implements IFunction
     {
         @Override
@@ -126,7 +116,7 @@ public class BasicModule implements IModule
             return Data.createDataBool(isGlobal);
         }
     }
-    
+
     private class GetGlobalFunction implements IFunction
     {
         @Override
@@ -152,7 +142,7 @@ public class BasicModule implements IModule
             return new Data(var);
         }
     }
-    
+
     private class ReturnFunction implements IFunction
     {
         @Override

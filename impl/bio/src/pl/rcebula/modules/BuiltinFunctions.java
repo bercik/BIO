@@ -27,6 +27,7 @@ public class BuiltinFunctions
     public BuiltinFunctions()
     {
         modules.add(new BasicModule());
+        modules.add(new IoModule());
         
         getFunctionsFromModules();
     }

@@ -23,7 +23,7 @@ if __name__ == "__main__":
         if file != "index.html":
             if file.endswith(".html"):
                 # read file and add to whole html
-                with open(file) as f:
+                with open(dir + "/" + file) as f:
                     file = basename(file)
                     file = file[:file.rfind(".")]
                     docs += "<a name=\"" + file + "\"></a>"

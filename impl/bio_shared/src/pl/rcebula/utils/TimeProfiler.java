@@ -132,21 +132,27 @@ public class TimeProfiler
 
             for (Map.Entry<String, Pair<Double, Integer>> e : times.entrySet())
             {
-                DecimalFormat df = new DecimalFormat();
-                df.setMaximumFractionDigits(2);
+                DecimalFormat df2 = new DecimalFormat();
+                df2.setMaximumFractionDigits(2);
+                
+                DecimalFormat df8 = new DecimalFormat();
+                df8.setMaximumFractionDigits(8);
+                
                 Pair<Double, Integer> p = e.getValue();
                 double time = p.getLeft();
                 int count = p.getRight();
                 String name = e.getKey();
                 double percentTime = (time * 100.0 / totalTime);
-
-                str += name + ": " + time + " ms (" + df.format(percentTime) + "%)";
+                
+                String col1 = name + ": " + df8.format(time) + " ms (" + df2.format(percentTime) + "%)";
+                String col2 = "";
                 if (averages)
                 {
                     double avgTime = (time / (double)count);
-                    str += " { avg: " + avgTime + " ms }";
+                    col2 = " { avg: " + df8.format(avgTime) + " ms (" + count + ") }";
                 }
-                str += "\n";
+                
+                str += String.format("%-50.50s  %-40.40s%n", col1, col2);
             }
 
             return str;

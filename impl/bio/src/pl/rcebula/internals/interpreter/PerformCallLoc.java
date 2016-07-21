@@ -35,10 +35,13 @@ public class PerformCallLoc
     private void perform(Interpreter interpreter, String funName, List<Data> parameters, int lineNum, 
             int chNum)
     {
+        // profiler
+        interpreter.profiler.enter(funName);
         // wywołujemy funkcję
         Data data = interpreter.builtinFunctions.callFunction(funName, 
                 parameters, interpreter.currentFrame, interpreter, 
                 lineNum, chNum);
+        interpreter.profiler.exit();
         
         // jeżeli data jest różne od null
         if (data != null)
