@@ -143,17 +143,6 @@ public class Preprocessor
         }
         
         files.normalizeIntervals();
-        
-        // TODELETE
-        /*for (int i = 0; i < lines.size(); ++i)
-        {
-            String line = lines.get(i);
-            
-            File f = files.getFromLine(i);
-            
-            System.out.print("[" + i + "]" + line + "#");
-            System.out.println(f.getName() + "   " + f.getStartOfInterval(i));
-        }*/
     }
 
     private String generateFileStartLine(int fnum)

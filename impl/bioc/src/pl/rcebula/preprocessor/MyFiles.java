@@ -85,6 +85,11 @@ public class MyFiles
             f.normalizeIntervals();
         }
     }
+
+    public List<File> getFiles()
+    {
+        return files;
+    }
     
     @Override
     public String toString()

@@ -39,38 +39,28 @@ public class Opts
     {
         Logger logger = Logger.getGlobal();
         logger.info("Opts");
-        
+
         this.args = args;
-        
+
         analyse();
     }
-    
+
     private void analyse()
             throws OptsError
     {
         if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
         {
-            String message = "usage: java -jar bioc.jar input_file [options]\n";
-            message += "options:\n";
-            message += "  -d disassemble, print compiled code in readable form\n";
-            message += "  -g debug info, add full files name to compiled file\n";
-            message += "  -h --help, show this text\n";
-            message += "  -o <file> place the output into <file>, if won't given compiled code will be saved in "
-                    + "default file (" + defaultOutputFile +")\n";
-            message += "  -s statistics, print optimization statistics\n";
-            message += "  -t times, print times spent in each module\n";
-            message += "  -v verbose, print all informations about compiling process\n";
-            throw new OptsError(message);
+            throw new OptsError(constructHelp());
         }
-        
+
         // pierwszy argument to ścieżka do pliku wejściowego
         inputFilePath = args[0];
-        
+
         // opcje
         for (int i = 1; i < args.length; ++i)
         {
             String opt = args[i];
-            
+
             if (opt.equals("-v"))
             {
                 verbose = true;
@@ -105,16 +95,33 @@ public class Opts
             }
             else
             {
-                String message = "Unrecognized option " + opt;
+                String message = "Unrecognized option " + opt + "\n";
+                message += constructHelp();
                 throw new OptsError(message);
             }
         }
-        
+
         // jeżeli nie podano pliku wyjściowego to przyjmujemy domyślny
-        if (outputFilePath == "")
+        if (outputFilePath == null)
         {
             outputFilePath = defaultOutputFile;
         }
+    }
+
+    private String constructHelp()
+    {
+        String help = "usage: java -jar bioc.jar input_file [options]\n";
+        help += "options:\n";
+        help += "  -d disassemble, print compiled code in readable form\n";
+        help += "  -g debug info, add full files name to compiled file\n";
+        help += "  -h --help, show this text\n";
+        help += "  -o <file> place the output into <file>, if won't given compiled code will be saved in "
+                + "default file (" + defaultOutputFile + ")\n";
+        help += "  -s statistics, print optimization statistics\n";
+        help += "  -t times, print times spent in each module\n";
+        help += "  -v verbose, print all informations about compiling process\n";
+        
+        return help;
     }
 
     public boolean isDebugInfo()
@@ -126,7 +133,7 @@ public class Opts
     {
         return times;
     }
-    
+
     public boolean isDisassemble()
     {
         return disassemble;

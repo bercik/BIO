@@ -18,6 +18,7 @@ import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
 import pl.rcebula.analysis.semantic.SemanticChecker;
 import pl.rcebula.analysis.semantic.SemanticError;
+import pl.rcebula.code_generation.final_steps.AddInformationsAboutFiles;
 import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
@@ -143,7 +144,10 @@ public class App
             timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
             
-            // TODO add informations about files to intermediate code
+            // add informations about files to intermediate code
+            timeProfiler.start("AddInformationsAboutFiles");
+            new AddInformationsAboutFiles(ic, preprocessor.getFiles());
+            timeProfiler.stop();
 
             if (opts.isVerbose())
             {
