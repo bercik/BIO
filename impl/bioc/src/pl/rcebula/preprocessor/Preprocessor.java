@@ -32,6 +32,7 @@ import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pl.rcebula.analysis.lexer.Lexer;
 import pl.rcebula.preprocessor.MyFiles.File;
 
 /**
@@ -68,6 +69,8 @@ public class Preprocessor
 
         // analizujemy linijki
         lines = analyse(lines);
+        // dodajemy znacznik endOfFile
+        lines.add(Lexer.eofMarker);
 
         // dodajemy linię <fe
         lines.add(generateFileEndLine());

@@ -22,6 +22,7 @@ import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
+import pl.rcebula.preprocessor.MyFiles.File;
 import pl.rcebula.preprocessor.Preprocessor;
 import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
@@ -138,7 +139,7 @@ public class App
 
             // optimizations
             timeProfiler.start("CodeOptimizer");
-            CodeOptimizer co = new CodeOptimizer(ic, statistic, preprocessor.getFiles());
+            new CodeOptimizer(ic, statistic, preprocessor.getFiles());
             timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
             

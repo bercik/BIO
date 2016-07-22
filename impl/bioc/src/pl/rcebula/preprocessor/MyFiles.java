@@ -86,6 +86,19 @@ public class MyFiles
         }
     }
     
+    @Override
+    public String toString()
+    {
+        String str = "";
+        
+        for (File f : files)
+        {
+            str += f.toString() + "\n";
+        }
+        
+        return str;
+    }
+    
     public static class File
     {
         private final int num;
@@ -169,6 +182,21 @@ public class MyFiles
         public String getName()
         {
             return name;
+        }
+        
+        @Override
+        public String toString()
+        {
+            String str = "";
+            str += name + "(" + num + ")\n";
+            str += "Intervals: ";
+            
+            for (Interval i : intervals)
+            {
+                str += "  <" + i.start + ", " + i.end + ")\n";
+            }
+            
+            return str;
         }
         
         public static class Interval

@@ -41,6 +41,8 @@ public class Lexer
         "false", "False", "FALSE"
     };
 
+    public static final String eofMarker = "<EOF>";
+    
     private final List<Token<?>> tokens;
     private final MyFiles files;
 
@@ -52,16 +54,7 @@ public class Lexer
         
         this.files = files;
         
-        tokens = addEOFAndAnalyse(input);
-    }
-
-    private final List<Token<?>> addEOFAndAnalyse(String input)
-            throws LexerError
-    {
-        // dodajemy na końcu znacznik <EOF>
-        input += "\n<EOF>";
-
-        return analyse(input);
+        tokens = analyse(input);
     }
 
     public List<Token<?>> getTokens()
