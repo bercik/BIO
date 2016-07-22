@@ -167,12 +167,9 @@ public class App
                 System.out.println(ic.toStringWithLinesNumber());
             }
             
-            if (opts.isOutputFile())
-            {
-                timeProfiler.start("WriteToBinaryFile");
-                ic.writeToBinaryFile(opts.getOutputFilePath());
-                timeProfiler.stop();
-            }
+            timeProfiler.start("WriteToBinaryFile");
+            ic.writeToBinaryFile(opts.getOutputFilePath());
+            timeProfiler.stop();
             
             timeProfiler.stopTotal();
             if (opts.isTimes())

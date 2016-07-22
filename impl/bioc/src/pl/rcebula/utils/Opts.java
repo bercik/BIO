@@ -31,8 +31,8 @@ public class Opts
     private boolean times = false;
     private boolean debugInfo = false;
     private String inputFilePath;
-    private boolean outputFile = false;
     private String outputFilePath;
+    private static final String defaultOutputFile = "a.bioc";
 
     public Opts(String[] args)
             throws OptsError
@@ -55,7 +55,8 @@ public class Opts
             message += "  -d disassemble, print compiled code in readable form\n";
             message += "  -g debug info, add full files name to compiled file\n";
             message += "  -h --help, show this text\n";
-            message += "  -o <file> place the output into <file>, if won't given compiled code won't be saved\n";
+            message += "  -o <file> place the output into <file>, if won't given compiled code will be saved in "
+                    + "default file (" + defaultOutputFile +")\n";
             message += "  -s statistics, print optimization statistics\n";
             message += "  -t times, print times spent in each module\n";
             message += "  -v verbose, print all informations about compiling process\n";
@@ -80,7 +81,6 @@ public class Opts
             }
             else if (opt.equals("-o"))
             {
-                outputFile = true;
                 if (++i < args.length)
                 {
                     outputFilePath = args[i];
@@ -109,6 +109,12 @@ public class Opts
                 throw new OptsError(message);
             }
         }
+        
+        // jeżeli nie podano pliku wyjściowego to przyjmujemy domyślny
+        if (outputFilePath == "")
+        {
+            outputFilePath = defaultOutputFile;
+        }
     }
 
     public boolean isDebugInfo()
@@ -126,11 +132,6 @@ public class Opts
         return disassemble;
     }
 
-    public boolean isOutputFile()
-    {
-        return outputFile;
-    }
-    
     public boolean isVerbose()
     {
         return verbose;
