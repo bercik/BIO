@@ -24,6 +24,7 @@ import java.util.Comparator;
  */
 public class TokenComparator implements Comparator<Token>
 {
+    // porównuje dwa tokeny na podstawie typu i wartości
     @Override
     public int compare(Token o1, Token o2)
     {

@@ -16,14 +16,14 @@
  */
 package pl.rcebula.analysis.lexer;
 
-import pl.rcebula.analysis.lexer.TokenType;
-import pl.rcebula.analysis.lexer.Token;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -55,7 +55,7 @@ public class TokenTest
     @Before
     public void setUp()
     {
-        token = new Token<>(tokenType, goodValue, line, ch);
+        token = new Token<>(tokenType, goodValue, new ErrorInfo(line, ch, new MyFiles.File(1, "test")));
     }
     
     @After
@@ -95,7 +95,7 @@ public class TokenTest
     {
         System.out.println("getLine");
         int expResult = line;
-        int result = token.getLine();
+        int result = token.getErrorInfo().getLineNum();
         assertEquals(expResult, result);
     }
 
@@ -107,7 +107,7 @@ public class TokenTest
     {
         System.out.println("getCh");
         int expResult = ch;
-        int result = token.getChNum();
+        int result = token.getErrorInfo().getChNum();
         assertEquals(expResult, result);
     }
     
@@ -118,7 +118,7 @@ public class TokenTest
         boolean catched = false;
         try
         {
-            token = new Token<>(TokenType.INT, badValue, ch, line);
+            token = new Token<>(TokenType.INT, badValue, new ErrorInfo(ch, line, new MyFiles.File(1, "test")));
         }
         catch (Exception ex)
         {
@@ -133,7 +133,8 @@ public class TokenTest
     public void testTokenWithNullValueType()
     {
         System.out.println("testTokenWithNullValueType()");
-        token = new Token<>(TokenType.CLOSE_BRACKET, "unnecessary info", 0, 0);
+        token = new Token<>(TokenType.CLOSE_BRACKET, "unnecessary info", 
+                new ErrorInfo(0, 0, new MyFiles.File(0, "test")));
     }
     
     @Test
@@ -143,7 +144,7 @@ public class TokenTest
         boolean catched = false;
         try
         {
-            token = new Token<Integer>(TokenType.BOOL, 1, 0, 0);
+            token = new Token<Integer>(TokenType.BOOL, 1, new ErrorInfo(0, 0, new MyFiles.File(1, "test")));
         }
         catch (Exception ex)
         {

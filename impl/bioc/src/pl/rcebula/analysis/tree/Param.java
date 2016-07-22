@@ -17,6 +17,7 @@
 package pl.rcebula.analysis.tree;
 
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
 
 /**
  *
@@ -25,14 +26,12 @@ import java.util.Objects;
 public class Param
 {
     private final String name;
-    private final Integer line;
-    private final Integer chNum;
+    private final ErrorInfo errorInfo;
 
-    public Param(String name, Integer line, Integer chNum)
+    public Param(String name, ErrorInfo errorInfo)
     {
         this.name = name;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
 
     public String getName()
@@ -40,14 +39,9 @@ public class Param
         return name;
     }
 
-    public Integer getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public Integer getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 
     @Override
@@ -55,8 +49,7 @@ public class Param
     {
         int hash = 5;
         hash = 73 * hash + Objects.hashCode(this.name);
-        hash = 73 * hash + Objects.hashCode(this.line);
-        hash = 73 * hash + Objects.hashCode(this.chNum);
+        hash = 73 * hash + Objects.hashCode(this.errorInfo);
         return hash;
     }
 
@@ -80,11 +73,7 @@ public class Param
         {
             return false;
         }
-        if (!Objects.equals(this.line, other.line))
-        {
-            return false;
-        }
-        if (!Objects.equals(this.chNum, other.chNum))
+        if (!Objects.equals(this.errorInfo, other.errorInfo))
         {
             return false;
         }

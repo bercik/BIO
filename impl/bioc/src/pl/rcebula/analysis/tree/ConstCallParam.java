@@ -16,6 +16,7 @@
  */
 package pl.rcebula.analysis.tree;
 
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.code.ValueType;
 import pl.rcebula.analysis.lexer.Token;
 
@@ -28,9 +29,9 @@ public class ConstCallParam extends CallParam
     private final ValueType valueType;
     private final Object value;
 
-    public ConstCallParam(Token<?> token, Integer line, Integer chNum)
+    public ConstCallParam(Token<?> token, ErrorInfo errorInfo)
     {
-        super(line, chNum);
+        super(errorInfo);
 
         switch (token.getTokenType())
         {

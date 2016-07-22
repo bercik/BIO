@@ -29,6 +29,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.preprocessor.MyFiles.File;
 
 /**
  *
@@ -36,6 +39,8 @@ import static org.junit.Assert.*;
  */
 public class LexerTest
 {
+    private static final MyFiles files = new MyFiles();
+    private static File file;
     
     public LexerTest()
     {
@@ -44,6 +49,8 @@ public class LexerTest
     @BeforeClass
     public static void setUpClass()
     {
+        file = files.addFile("test");
+        file.addInterval(new File.Interval(0, Integer.MAX_VALUE));
     }
     
     @AfterClass
@@ -61,6 +68,11 @@ public class LexerTest
     {
     }
     
+    private ErrorInfo generateErrorInfo(int lineNum, int chNum)
+    {
+        return new ErrorInfo(lineNum, chNum, file);
+    }
+    
     @Test
     public void testHelloWorld()
             throws Exception
@@ -73,19 +85,19 @@ public class LexerTest
         
         List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
         {{
-                    add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
-                    add(new Token<>(TokenType.ID, "onSTART", 1, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
-                    add(new Token<>(TokenType.ID, "PRINT", 2, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
-                    add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
-                    add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
-                    add(new Token<>(TokenType.END, null, 4, 1));
+                    add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(1, 1)));
+                    add(new Token<>(TokenType.ID, "onSTART", generateErrorInfo(1, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(1, 12)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(1, 13)));
+                    add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(2, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(2, 10)));
+                    add(new Token<>(TokenType.STRING, "Hello World!\n", generateErrorInfo(2, 11)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(2, 27)));
+                    add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(3, 1)));
+                    add(new Token<>(TokenType.END, null, generateErrorInfo(4, 1)));
         }};
         
-        Lexer lexer = new Lexer(input);
+        Lexer lexer = new Lexer(input, files);
         List<Token<?>> tokens = lexer.getTokens();
         assertThat(tokens, is(expectedTokens));
     }
@@ -122,60 +134,60 @@ public class LexerTest
         List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
         {{
                     // def SOME_EVENT(input)
-                    add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
-                    add(new Token<>(TokenType.ID, "SOME_EVENT", 1, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 15));
-                    add(new Token<>(TokenType.ID, "input", 1, 16));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 21));
+                    add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(1, 1)));
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", generateErrorInfo(1, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(1, 15)));
+                    add(new Token<>(TokenType.ID, "input", generateErrorInfo(1, 16)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(1, 21)));
                     
                     // end
-                    add(new Token<>(TokenType.KEYWORD, "end", 2, 1));
+                    add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(2, 1)));
                     
                     // def FOO(param)
-                    add(new Token<>(TokenType.KEYWORD, "def", 3, 1));
-                    add(new Token<>(TokenType.ID, "FOO", 3, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 3, 8));
-                    add(new Token<>(TokenType.ID, "param", 3, 9));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 3, 14));
+                    add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(3, 1)));
+                    add(new Token<>(TokenType.ID, "FOO", generateErrorInfo(3, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(3, 8)));
+                    add(new Token<>(TokenType.ID, "param", generateErrorInfo(3, 9)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(3, 14)));
                     
                     //     PRINT(param)
-                    add(new Token<>(TokenType.ID, "PRINT", 4, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 4, 10));
-                    add(new Token<>(TokenType.ID, "param", 4, 11));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 4, 16));
+                    add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(4, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(4, 10)));
+                    add(new Token<>(TokenType.ID, "param", generateErrorInfo(4, 11)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(4, 16)));
                     
                     // end
-                    add(new Token<>(TokenType.KEYWORD, "end", 5, 1));
+                    add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(5, 1)));
                     
                     // def onSTART()
-                    add(new Token<>(TokenType.KEYWORD, "def", 6, 1));
-                    add(new Token<>(TokenType.ID, "onSTART", 6, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 6, 12));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 6, 13));
+                    add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(6, 1)));
+                    add(new Token<>(TokenType.ID, "onSTART", generateErrorInfo(6, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(6, 12)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(6, 13)));
                     
                     //     ATTACH_TO_EVENT(SOME_EVENT, FOO)
-                    add(new Token<>(TokenType.ID, "ATTACH_TO_EVENT", 7, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 7, 20));
-                    add(new Token<>(TokenType.ID, "SOME_EVENT", 7, 21));
-                    add(new Token<>(TokenType.COMMA, null, 7, 31));
-                    add(new Token<>(TokenType.ID, "FOO", 7, 33));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 7, 36));
+                    add(new Token<>(TokenType.ID, "ATTACH_TO_EVENT", generateErrorInfo(7, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(7, 20)));
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", generateErrorInfo(7, 21)));
+                    add(new Token<>(TokenType.COMMA, null, generateErrorInfo(7, 31)));
+                    add(new Token<>(TokenType.ID, "FOO", generateErrorInfo(7, 33)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(7, 36)));
                     
                     //     SOME_EVENT(\"test\")
-                    add(new Token<>(TokenType.ID, "SOME_EVENT", 8, 5));
-                    add(new Token<>(TokenType.OPEN_BRACKET, null, 8, 15));
-                    add(new Token<>(TokenType.STRING, "test", 8, 16));
-                    add(new Token<>(TokenType.CLOSE_BRACKET, null, 8, 22));
+                    add(new Token<>(TokenType.ID, "SOME_EVENT", generateErrorInfo(8, 5)));
+                    add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(8, 15)));
+                    add(new Token<>(TokenType.STRING, "test", generateErrorInfo(8, 16)));
+                    add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(8, 22)));
                     
                     // end
-                    add(new Token<>(TokenType.KEYWORD, "end", 9, 1));
+                    add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(9, 1)));
                     
                     // EOF
-                    add(new Token<>(TokenType.END, null, 10, 1));
+                    add(new Token<>(TokenType.END, null, generateErrorInfo(10, 1)));
                     
         }};
         
-        Lexer lexer = new Lexer(input);
+        Lexer lexer = new Lexer(input, files);
         List<Token<?>> tokens = lexer.getTokens();
         assertThat(tokens, is(expectedTokens));
     }
@@ -191,7 +203,7 @@ public class LexerTest
         boolean catched = false;
         try
         {
-            Lexer lexer = new Lexer(input);
+            Lexer lexer = new Lexer(input, files);
         }
         catch (LexerError ex)
         {

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import pl.rcebula.Constants;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.Call;
@@ -29,6 +30,7 @@ import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
 import pl.rcebula.code_generation.intermediate.SpecialFunctionsName;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -38,10 +40,11 @@ public class SemanticChecker
 {
     private final ProgramTree programTree;
     private final List<BuiltinFunction> builtinFunctions;
+    private final MyFiles files;
 
     private int insideForLoopCounter = 0;
 
-    public SemanticChecker(ProgramTree programTree, List<BuiltinFunction> builtinFunctions)
+    public SemanticChecker(ProgramTree programTree, List<BuiltinFunction> builtinFunctions, MyFiles files)
             throws SemanticError
     {
         Logger logger = Logger.getGlobal();
@@ -49,6 +52,7 @@ public class SemanticChecker
         
         this.programTree = programTree;
         this.builtinFunctions = builtinFunctions;
+        this.files = files;
 
         checkUserFunctions();
         checkUserFunctionsCalls();
@@ -73,8 +77,7 @@ public class SemanticChecker
                 if (uf.getName().equals(auf.getName()))
                 {
                     String message1 = "Function " + uf.getName() + " is already declared at: ";
-                    throw new SemanticError(uf.getLine(), uf.getChNum(), message1, auf.getLine(), auf.getChNum(),
-                            "");
+                    throw new SemanticError(uf.getErrorInfo(), message1, auf.getErrorInfo(), "");
                 }
             }
             // wśród funkcji wbudowanych
@@ -85,7 +88,7 @@ public class SemanticChecker
                 if (uf.getName().equals(bf.getName()))
                 {
                     String message = "Function " + uf.getName() + " is already declared as builtin function";
-                    throw new SemanticError(uf.getLine(), uf.getChNum(), message);
+                    throw new SemanticError(uf.getErrorInfo(), message);
                 }
             }
 
@@ -103,7 +106,7 @@ public class SemanticChecker
                     {
                         String message = "In function " + uf.getName() + " parameter " + p1.getName()
                                 + " occurs more than one time";
-                        throw new SemanticError(uf.getLine(), uf.getChNum(), message);
+                        throw new SemanticError(uf.getErrorInfo(), message);
                     }
                 }
             }
@@ -125,7 +128,7 @@ public class SemanticChecker
 
                     message += " parameters, instead it takes " + uf.getParams().size();
 
-                    throw new SemanticError(uf.getLine(), uf.getChNum(), message);
+                    throw new SemanticError(uf.getErrorInfo(), message);
                 }
             }
 
@@ -144,8 +147,10 @@ public class SemanticChecker
 
             if (!lastCallReturn)
             {
-                Call returnCall = new Call(Constants.returnFunctionName, null, -1, -1);
-                returnCall.addCallParam(new ConstCallParam(new Token<>(TokenType.NONE, null, -1, -1), -1, -1));
+                ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+                Call returnCall = new Call(Constants.returnFunctionName, null, mockErrorInfo);
+                returnCall.addCallParam(new ConstCallParam(new Token<>(TokenType.NONE, null, mockErrorInfo), 
+                        mockErrorInfo));
                 uf.addCall(returnCall);
             }
         }
@@ -201,7 +206,7 @@ public class SemanticChecker
                 {
                     String message = "Function " + call.getName() + " takes " + uf.getParams().size()
                             + " parameters, got " + callParams.size();
-                    throw new SemanticError(call.getLine(), call.getChNum(), message);
+                    throw new SemanticError(call.getErrorInfo(), message);
                 }
 
                 break;
@@ -231,13 +236,13 @@ public class SemanticChecker
 
                             String message = "Function " + call.getName() + " takes " + goodParamsStr
                                     + " parameters, got " + callParams.size();
-                            throw new SemanticError(call.getLine(), call.getChNum(), message);
+                            throw new SemanticError(call.getErrorInfo(), message);
                         }
                         else
                         {
                             String message = "Function " + call.getName() + " takes " + bf.getParams().size()
                                     + " parameters, got " + callParams.size();
-                            throw new SemanticError(call.getLine(), call.getChNum(), message);
+                            throw new SemanticError(call.getErrorInfo(), message);
                         }
                     }
                     // sprawdź typy
@@ -323,7 +328,7 @@ public class SemanticChecker
                         {
                             String message = "Function " + call.getName() + " must occurs inside "
                                     + SpecialFunctionsName.forLoopFunctionName + " loop";
-                            throw new SemanticError(call.getLine(), call.getChNum(), message);
+                            throw new SemanticError(call.getErrorInfo(), message);
                         }
                     }
 
@@ -335,7 +340,7 @@ public class SemanticChecker
         if (!functionExists)
         {
             String message = "Function " + call.getName() + " doesn't exist";
-            throw new SemanticError(call.getLine(), call.getChNum(), message);
+            throw new SemanticError(call.getErrorInfo(), message);
         }
 
         // wywołaj rekurencyjnie metodę dla następnych call
@@ -361,8 +366,8 @@ public class SemanticChecker
         {
             String message = "In function " + call.getName() + " expected " + (k + 1)
                     + " parameter to be " + pt1.toString() + ", got " + pt2.toString();
-            throw new SemanticError(call.getCallParams().get(k).getLine(), call.getCallParams().get(k).getChNum(),
-                    message);
+            CallParam cp = call.getCallParams().get(k);
+            throw new SemanticError(cp.getErrorInfo(), message);
         }
     }
 }

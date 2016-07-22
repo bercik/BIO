@@ -58,7 +58,7 @@ public class ProgramTreeCreator
                     // wyciągamy informacje
                     name = (String)token.getValue();
                     // tworzymy funkcję użytkownika
-                    uf = new UserFunction(name, token.getLine(), token.getChNum());
+                    uf = new UserFunction(name, token.getErrorInfo());
                     // dodajemy do programTree
                     programTree.addUserFunction(uf);
                     // koniec
@@ -79,7 +79,7 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)token.getValue();
                     // dodajemy do parametrów funkcji użytkownika
-                    Param param = new Param(name, token.getLine(), token.getChNum());
+                    Param param = new Param(name, token.getErrorInfo());
                     uf.addParam(param);
                     // koniec
                     break;
@@ -106,7 +106,7 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)token.getValue();
                     // dodajemy do funkcji użytkownika
-                    c = new Call(name, null, token.getLine(), token.getChNum());
+                    c = new Call(name, null, token.getErrorInfo());
                     uf.addCall(c);
                     // koniec
                     break;
@@ -142,7 +142,7 @@ public class ProgramTreeCreator
                     // przesuwamy o 1
                     ct += 1;
                     // tworzymy nowy parametr o stałej wartości i dodajemy
-                    ConstCallParam ccp = new ConstCallParam(token, token.getLine(), token.getChNum());
+                    ConstCallParam ccp = new ConstCallParam(token, token.getErrorInfo());
                     c.addCallParam(ccp);
                     // koniec
                     break;
@@ -153,7 +153,7 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)tokenStep18.getValue();
                     // tworzymy nowe wywołanie funkcyjne i dodajemy
-                    Call tmpC = new Call(name, c, tokenStep18.getLine(), tokenStep18.getChNum());
+                    Call tmpC = new Call(name, c, tokenStep18.getErrorInfo());
                     c.addCallParam(tmpC);
                     c = tmpC;
                     // koniec
@@ -163,7 +163,7 @@ public class ProgramTreeCreator
                     // nie przesuwamy, wyciągamy nazwę
                     name = (String)tokenStep18.getValue();
                     // tworzymy parametr i dodajemy
-                    IdCallParam icp = new IdCallParam(name, tokenStep18.getLine(), tokenStep18.getChNum());
+                    IdCallParam icp = new IdCallParam(name, tokenStep18.getErrorInfo());
                     c.addCallParam(icp);
                     // koniec
                     break;

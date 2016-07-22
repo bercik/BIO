@@ -19,6 +19,7 @@ package pl.rcebula.code_generation.optimization;
 import java.util.logging.Logger;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -29,7 +30,7 @@ public class CodeOptimizer
 {
     private final IntermediateCode ic;
     
-    public CodeOptimizer(IntermediateCode ic, OptimizationStatistics statistics)
+    public CodeOptimizer(IntermediateCode ic, OptimizationStatistics statistics, MyFiles files)
             throws CodeOptimizationError
     {
         Logger logger = Logger.getGlobal();
@@ -39,7 +40,7 @@ public class CodeOptimizer
         this.ic = ic;
         
         new RemovePushPopcSequences(ic, statistics);
-        new RemovePushBoolJmpSequences(ic, statistics);
+        new RemovePushBoolJmpSequences(ic, statistics, files);
         new RemoveRedundantJumps(ic, statistics);
         new FlowGraphAnalyse(ic, statistics);
         new RemoveJmpsToNextLine(ic, statistics);

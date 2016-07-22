@@ -16,14 +16,16 @@
  */
 package pl.rcebula.analysis.parser;
 
+import pl.rcebula.analysis.ErrorInfo;
+
 /**
  *
  * @author robert
  */
 public class ParserError extends Exception
 {
-    public ParserError(int line, int chNum, String message)
+    public ParserError(ErrorInfo ei, String message)
     {
-        super("[line: " + line + ", character: " + chNum + "]: " + message);
+        super(ei.toString() + ": " + message);
     }
 }

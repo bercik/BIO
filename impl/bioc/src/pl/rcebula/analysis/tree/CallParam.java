@@ -17,6 +17,7 @@
 package pl.rcebula.analysis.tree;
 
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
 
 /**
  *
@@ -24,31 +25,23 @@ import java.util.Objects;
  */
 public abstract class CallParam
 {
-    private final Integer line;
-    private final Integer chNum;
+    private final ErrorInfo errorInfo;
 
-    public CallParam(Integer line, Integer chNum)
+    public CallParam(ErrorInfo errorInfo)
     {
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
 
-    public Integer getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public Integer getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 
     @Override
     public int hashCode()
     {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.line);
-        hash = 37 * hash + Objects.hashCode(this.chNum);
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.errorInfo);
         return hash;
     }
 
@@ -68,11 +61,7 @@ public abstract class CallParam
             return false;
         }
         final CallParam other = (CallParam)obj;
-        if (!Objects.equals(this.line, other.line))
-        {
-            return false;
-        }
-        if (!Objects.equals(this.chNum, other.chNum))
+        if (!Objects.equals(this.errorInfo, other.errorInfo))
         {
             return false;
         }

@@ -35,6 +35,7 @@ import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -51,8 +52,10 @@ public class CodeGenerator
     private final SpecialFunctionsGenerator sfg;
 
     private boolean firstFunction = true;
+    
+    private final MyFiles files;
 
-    public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions)
+    public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions, MyFiles files)
     {
         Logger logger = Logger.getGlobal();
         logger.info("CodeGenerator");
@@ -61,6 +64,7 @@ public class CodeGenerator
         ic = new IntermediateCode();
         this.pt = pt;
         this.builtinFunctions = builtinFunctions;
+        this.files = files;
 
         this.sfg = new SpecialFunctionsGenerator(this);
 
@@ -76,7 +80,7 @@ public class CodeGenerator
     private void eval(UserFunction uf)
     {
         // deklaracja funkcji
-        // nazwa, linia występowania, linia w kodzie źródłowym, znak w kodzie źródłowym
+        // nazwa, linia występowania, linia w kodzie źródłowym, znak w kodzie źródłowym, numer pliku źródłowego
         List<IField> fields = new ArrayList<>();
         // nazwa funkcji
         fields.add(new StringField(uf.getName()));
@@ -84,9 +88,11 @@ public class CodeGenerator
         Label functionOccurenceLabel = new Label();
         fields.add(new LabelField(functionOccurenceLabel));
         // linia w kodzie źródłowym
-        fields.add(new IntStringField(uf.getLine()));
+        fields.add(new IntStringField(uf.getErrorInfo().getLineNum()));
         // znak w kodzie źródłowym
-        fields.add(new IntStringField(uf.getChNum()));
+        fields.add(new IntStringField(uf.getErrorInfo().getChNum()));
+        // plik w kodzie źródłowym
+        fields.add(new IntStringField(uf.getErrorInfo().getFile().getNum()));
         // stwórz linię
         Line line = new Line(fields);
         // dodaj do kodu na początku
@@ -198,13 +204,13 @@ public class CodeGenerator
                         CallParam cp = call.getCallParams().get(1);
                         Call call2 = (Call)call.getCallParams().get(2);
                         Call call3 = (Call)call.getCallParams().get(3);
-                        sfg.generateFor(call1, cp, call2, call3, call.getLine(), call.getChNum());
+                        sfg.generateFor(call1, cp, call2, call3, call.getErrorInfo());
                         break;
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);
                         call1 = (Call)call.getCallParams().get(1);
                         call2 = (Call)call.getCallParams().get(2);
-                        sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getLine(), call.getChNum());
+                        sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getErrorInfo());
                         break;
                     case SpecialFunctionsName.callFunctionName:
                         call1 = (Call)call.getCallParams().get(0);
@@ -219,10 +225,10 @@ public class CodeGenerator
                         sfg.generateDN();
                         break;
                     case SpecialFunctionsName.breakFunctionName:
-                        sfg.generateBreak(forEnd, call.getLine(), call.getChNum());
+                        sfg.generateBreak(forEnd, call.getErrorInfo());
                         break;
                     case SpecialFunctionsName.continueFunctionName:
-                        sfg.generateContinue(forStart, call.getLine(), call.getChNum());
+                        sfg.generateContinue(forStart, call.getErrorInfo());
                         break;
                     default:
                         String message = "There is no special function generator for " + bf.getName() + " function";
@@ -278,7 +284,7 @@ public class CodeGenerator
                     ic.appendLine(line);
                 }
 
-                line = ifg.generateCallLoc(call.getName(), call.getLine(), call.getChNum());
+                line = ifg.generateCallLoc(call.getName(), call.getErrorInfo());
                 ic.appendLine(line);
             } // koniec funkcja regularna
         }
@@ -306,7 +312,7 @@ public class CodeGenerator
                     ic.appendLine(line);
                 }
 
-                line = ifg.generateCall(call.getName(), call.getLine(), call.getChNum());
+                line = ifg.generateCall(call.getName(), call.getErrorInfo());
                 ic.appendLine(line);
             }
             else
@@ -340,6 +346,11 @@ public class CodeGenerator
         ic.appendLine(line);
     }
 
+    public MyFiles getFiles()
+    {
+        return files;
+    }
+    
     public IntermediateCode getIc()
     {
         return ic;

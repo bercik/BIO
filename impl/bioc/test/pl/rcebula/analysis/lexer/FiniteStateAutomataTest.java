@@ -28,6 +28,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.preprocessor.MyFiles.File;
 
 /**
  *
@@ -35,6 +37,7 @@ import static org.junit.Assert.*;
  */
 public class FiniteStateAutomataTest
 {
+    private static final MyFiles files = new MyFiles();
 
     public FiniteStateAutomataTest()
     {
@@ -43,6 +46,8 @@ public class FiniteStateAutomataTest
     @BeforeClass
     public static void setUpClass()
     {
+        File file = files.addFile("test");
+        file.addInterval(new File.Interval(0, Integer.MAX_VALUE));
     }
 
     @AfterClass
@@ -63,14 +68,14 @@ public class FiniteStateAutomataTest
     @Test
     public void testCreation()
     {
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
     }
 
     @Test
     public void testPutIllegalChar() throws Exception
     {
         System.out.println("putIllegalChar");
-        FiniteStateAutomata instance = new FiniteStateAutomata();
+        FiniteStateAutomata instance = new FiniteStateAutomata(files);
 
         boolean catched = false;
 
@@ -126,7 +131,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testKeywords()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testStringArray(fsa, Lexer.keywords, TokenType.KEYWORD, null);
     }
@@ -136,7 +141,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testTrues()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testStringArray(fsa, Lexer.trues, TokenType.BOOL, true);
     }
@@ -146,7 +151,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testFalses()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testStringArray(fsa, Lexer.falses, TokenType.BOOL, false);
     }
@@ -156,7 +161,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testNones()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testStringArray(fsa, Lexer.nones, TokenType.NONE, null, true);
     }
@@ -166,7 +171,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testIds()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         String[] ids = new String[]
         {
@@ -180,7 +185,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testBracketsComma()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testToken(fsa, "identifier(", TokenType.OPEN_BRACKET, null, 11, 1, false);
 
@@ -194,7 +199,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testEnd()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testToken(fsa, "_NUM1_\n<EOF>", TokenType.END, null, 1, 2, false);
     }
@@ -204,7 +209,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testInt()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testToken(fsa, "100)", TokenType.INT, 100, 1, 1, true);
 
@@ -233,7 +238,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testFloat()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testToken(fsa, "100.54)", TokenType.FLOAT, 100.54f, 1, 1, true);
 
@@ -251,7 +256,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testString()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         String text = "Żółć jest gorzka\n \n i źle smakuje";
         testToken(fsa, "ADD(x, \"" + text + "\"", TokenType.STRING, text, 8, 1, false);
@@ -265,7 +270,7 @@ public class FiniteStateAutomataTest
     {
         System.out.println("testComment()");
 
-        FiniteStateAutomata fsa = new FiniteStateAutomata();
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
         testComment(fsa, "_NUM1(l1, l2) % jakiś komentarz żśą \n");
     }
@@ -313,8 +318,8 @@ public class FiniteStateAutomataTest
                 Token token = pair.getLeft();
                 assertEquals(expectedTokenType, token.getTokenType());
                 assertEquals(expectedValue, token.getValue());
-                assertEquals(expectedChNum, token.getChNum());
-                assertEquals(expectedLine, token.getLine());
+                assertEquals(expectedChNum, token.getErrorInfo().getChNum());
+                assertEquals(expectedLine, token.getErrorInfo().getLineNum());
             }
             // sprawdzamy czy ostatni znak nie został zwrócony
             else if (pair.getRight() == true)

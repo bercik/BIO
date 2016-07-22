@@ -49,6 +49,11 @@ public class Token<T>
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public ErrorInfo getErrorInfo()
+    {
+        return errorInfo;
+    }
+    
     public TokenType getTokenType()
     {
         return tokenType;

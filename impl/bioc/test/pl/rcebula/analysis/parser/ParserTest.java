@@ -30,6 +30,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -61,6 +63,11 @@ public class ParserTest
     public void tearDown()
     {
     }
+    
+    private ErrorInfo generateErrorInfo(int lineNum, int chNum)
+    {
+        return new ErrorInfo(lineNum, chNum, new MyFiles.File(0, "test"));
+    }
 
     /**
      * Test of getSteps method, of class Parser.
@@ -74,15 +81,15 @@ public class ParserTest
         List<Token<?>> inputTokens = new ArrayList<Token<?>>()
         {
             {
-                add(new Token<>(TokenType.ID, "onSTART", 1, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
-                add(new Token<>(TokenType.ID, "PRINT", 2, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
-                add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
-                add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
-                add(new Token<>(TokenType.END, null, 4, 1));
+                add(new Token<>(TokenType.ID, "onSTART", generateErrorInfo(1, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(1, 12)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(1, 13)));
+                add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(2, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(2, 10)));
+                add(new Token<>(TokenType.STRING, "Hello World!\n", generateErrorInfo(2, 11)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(2, 27)));
+                add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(3, 1)));
+                add(new Token<>(TokenType.END, null, generateErrorInfo(4, 1)));
             }
         };
 
@@ -108,16 +115,16 @@ public class ParserTest
         List<Token<?>> inputTokens = new ArrayList<Token<?>>()
         {
             {
-                add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
-                add(new Token<>(TokenType.ID, "onSTART", 1, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
-                add(new Token<>(TokenType.ID, "PRINT", 2, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
-                add(new Token<>(TokenType.STRING, "Hello World!\n", 2, 11));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 2, 27));
-                add(new Token<>(TokenType.KEYWORD, "end", 3, 1));
-                add(new Token<>(TokenType.END, null, 4, 1));
+                add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(1, 1)));
+                add(new Token<>(TokenType.ID, "onSTART", generateErrorInfo(1, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(1, 12)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(1, 13)));
+                add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(2, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(2, 10)));
+                add(new Token<>(TokenType.STRING, "Hello World!\n", generateErrorInfo(2, 11)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(2, 27)));
+                add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(3, 1)));
+                add(new Token<>(TokenType.END, null, generateErrorInfo(4, 1)));
             }
         };
 
@@ -145,33 +152,33 @@ public class ParserTest
         List<Token<?>> inputTokens = new ArrayList<Token<?>>()
         {
             {
-                add(new Token<>(TokenType.KEYWORD, "def", 1, 1));
-                add(new Token<>(TokenType.ID, "onSTART", 1, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 1, 12));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 1, 13));
+                add(new Token<>(TokenType.KEYWORD, "def", generateErrorInfo(1, 1)));
+                add(new Token<>(TokenType.ID, "onSTART", generateErrorInfo(1, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(1, 12)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(1, 13)));
 
-                add(new Token<>(TokenType.ID, "CALL2", 2, 5));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 2, 10));
+                add(new Token<>(TokenType.ID, "CALL2", generateErrorInfo(2, 5)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(2, 10)));
 
-                add(new Token<>(TokenType.ID, "PRINT", 3, 9));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 3, 14));
-                add(new Token<>(TokenType.ID, "ADD", 3, 15));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 3, 18));
-                add(new Token<>(TokenType.INT, 2, 3, 19));
-                add(new Token<>(TokenType.COMMA, null, 3, 20));
-                add(new Token<>(TokenType.INT, 4, 3, 21));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 3, 22));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 3, 23));
-                add(new Token<>(TokenType.COMMA, null, 3, 24));
+                add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(3, 9)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(3, 14)));
+                add(new Token<>(TokenType.ID, "ADD", generateErrorInfo(3, 15)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(3, 18)));
+                add(new Token<>(TokenType.INT, 2, generateErrorInfo(3, 19)));
+                add(new Token<>(TokenType.COMMA, null, generateErrorInfo(3, 20)));
+                add(new Token<>(TokenType.INT, 4, generateErrorInfo(3, 21)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(3, 22)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(3, 23)));
+                add(new Token<>(TokenType.COMMA, null, generateErrorInfo(3, 24)));
 
-                add(new Token<>(TokenType.ID, "PRINT", 4, 9));
-                add(new Token<>(TokenType.OPEN_BRACKET, null, 4, 14));
-                add(new Token<>(TokenType.STRING, "\nwynik", 4, 15));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 4, 22));
-                add(new Token<>(TokenType.CLOSE_BRACKET, null, 4, 23));
+                add(new Token<>(TokenType.ID, "PRINT", generateErrorInfo(4, 9)));
+                add(new Token<>(TokenType.OPEN_BRACKET, null, generateErrorInfo(4, 14)));
+                add(new Token<>(TokenType.STRING, "\nwynik", generateErrorInfo(4, 15)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(4, 22)));
+                add(new Token<>(TokenType.CLOSE_BRACKET, null, generateErrorInfo(4, 23)));
 
-                add(new Token<>(TokenType.KEYWORD, "end", 5, 5));
-                add(new Token<>(TokenType.END, null, 6, 1));
+                add(new Token<>(TokenType.KEYWORD, "end", generateErrorInfo(5, 5)));
+                add(new Token<>(TokenType.END, null, generateErrorInfo(6, 1)));
             }
         };
 

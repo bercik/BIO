@@ -117,12 +117,12 @@ public class App
 
             // semantic checker
             timeProfiler.start("SemanticChecker");
-            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions);
+            SemanticChecker sc = new SemanticChecker(pt, builtinFunctions, preprocessor.getFiles());
             timeProfiler.stop();
 
             // intermediate code generator
             timeProfiler.start("CodeGenerator");
-            CodeGenerator cg = new CodeGenerator(pt, builtinFunctions);
+            CodeGenerator cg = new CodeGenerator(pt, builtinFunctions, preprocessor.getFiles());
             timeProfiler.stop();
             IntermediateCode ic = cg.getIc();
             statistic.setLinesBeforeOptimization(ic.numberOfLines());
@@ -138,9 +138,11 @@ public class App
 
             // optimizations
             timeProfiler.start("CodeOptimizer");
-            CodeOptimizer co = new CodeOptimizer(ic, statistic);
+            CodeOptimizer co = new CodeOptimizer(ic, statistic, preprocessor.getFiles());
             timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
+            
+            // TODO add informations about files to intermediate code
 
             if (opts.isVerbose())
             {

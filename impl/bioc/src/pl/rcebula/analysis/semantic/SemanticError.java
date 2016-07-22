@@ -16,6 +16,8 @@
  */
 package pl.rcebula.analysis.semantic;
 
+import pl.rcebula.analysis.ErrorInfo;
+
 /**
  *
  * @author robert
@@ -27,15 +29,15 @@ public class SemanticError extends Exception
         super(message);
     }
     
-    public SemanticError(int line, int chNum, String message)
+    public SemanticError(ErrorInfo ei, String message)
     {
-        super("[line: " + line + ", character: " + chNum + "]: " + message);
+        super(ei.toString() + ": " + message);
     }
     
-    public SemanticError(int line1, int chNum1, String message1, 
-            int line2, int chNum2, String message2)
+    public SemanticError(ErrorInfo ei1, String message1, 
+            ErrorInfo ei2, String message2)
     {
-        super("[line: " + line1 + ", character: " + chNum1 + "]: " + message1 + 
-                "[line: " + line2 + ", character: " + chNum2 + "]: " + message2);
+        super(ei1.toString() + ": " + message1 + 
+                ei2.toString() + ": " + message2);
     }
 }

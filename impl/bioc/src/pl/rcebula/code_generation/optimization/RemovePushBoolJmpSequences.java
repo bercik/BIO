@@ -17,6 +17,7 @@
 package pl.rcebula.code_generation.optimization;
 
 import java.util.logging.Logger;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code.ValueType;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
@@ -25,6 +26,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -35,8 +37,9 @@ public class RemovePushBoolJmpSequences
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
+    private final MyFiles files;
 
-    public RemovePushBoolJmpSequences(IntermediateCode ic, OptimizationStatistics statistics)
+    public RemovePushBoolJmpSequences(IntermediateCode ic, OptimizationStatistics statistics, MyFiles files)
     {
         Logger logger = Logger.getGlobal();
         logger.info("RemovePushBoolJmpSequences");
@@ -44,6 +47,7 @@ public class RemovePushBoolJmpSequences
         
         this.ic = ic;
         this.statistics = statistics;
+        this.files = files;
         
         analyseAndRemove();
     }
@@ -89,8 +93,12 @@ public class RemovePushBoolJmpSequences
                                         Label label = ((LabelField)line.getField(1)).getLabel();
                                         Integer jmpLine = Integer.parseInt(((StringField)line.getField(2)).getStr());
                                         Integer jmpChNum = Integer.parseInt(((StringField)line.getField(3)).getStr());
+                                        Integer jmpFnum = Integer.parseInt(((StringField)line.getField(4)).getStr());
                                         
-                                        line = ifg.generateJmp(label, jmpLine, jmpChNum);
+                                        ErrorInfo jmpErrorInfo = new ErrorInfo(jmpLine, jmpChNum, 
+                                                files.getFromNum(jmpFnum));
+                                        
+                                        line = ifg.generateJmp(label, jmpErrorInfo);
                                         ic.insertLine(line, c+1);
                                         statistics.removePushBoolSequenceRemoved();
                                     }

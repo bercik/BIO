@@ -27,6 +27,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Strin
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.util.ArrayList;
 import java.util.List;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.analysis.tree.IdCallParam;
@@ -37,28 +38,30 @@ import pl.rcebula.analysis.tree.IdCallParam;
  */
 public class InterpreterFunctionsGenerator
 {
-    public Line generateCall(String functionName, Integer line, Integer chNum)
+    public Line generateCall(String functionName, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
-        // call, function_name, line, chNum
+        // call, function_name, line, chNum, fnum
         fields.add(new InterpreterFunctionStringField(InterpreterFunction.CALL));
         fields.add(new StringField(functionName));
-        fields.add(new IntStringField(line));
-        fields.add(new IntStringField(chNum));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
 
         return new Line(fields);
     }
 
-    public Line generateCallLoc(String functionName, Integer line, Integer chNum)
+    public Line generateCallLoc(String functionName, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
-        // call_loc, function_name, line, chNum
+        // call_loc, function_name, line, chNum, fnum
         fields.add(new InterpreterFunctionStringField(InterpreterFunction.CALL_LOC));
         fields.add(new StringField(functionName));
-        fields.add(new IntStringField(line));
-        fields.add(new IntStringField(chNum));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
 
         return new Line(fields);
     }
@@ -67,25 +70,26 @@ public class InterpreterFunctionsGenerator
     {
         ConstCallParamStringField ccpsf = new ConstCallParamStringField(ccp);
 
-        return generatePush(ccpsf, ccp.getLine(), ccp.getChNum());
+        return generatePush(ccpsf, ccp.getErrorInfo());
     }
 
     public Line generatePush(IdCallParam icp, boolean isVar)
     {
         IdCallParamStringField icpsf = new IdCallParamStringField(icp, isVar);
 
-        return generatePush(icpsf, icp.getLine(), icp.getChNum());
+        return generatePush(icpsf, icp.getErrorInfo());
     }
 
-    private Line generatePush(StringField strField, Integer line, Integer chNum)
+    private Line generatePush(StringField strField, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
-        // push, str, line, chNum
+        // push, str, line, chNum, fnum
         fields.add(new InterpreterFunctionStringField(InterpreterFunction.PUSH));
         fields.add(strField);
-        fields.add(new IntStringField(line));
-        fields.add(new IntStringField(chNum));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
 
         return new Line(fields);
     }
@@ -112,28 +116,30 @@ public class InterpreterFunctionsGenerator
         return new Line(fields);
     }
 
-    public Line generateJmp(Label label, Integer line, Integer chNum)
+    public Line generateJmp(Label label, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
-        // jmp, label, line, chNum
+        // jmp, label, line, chNum, fnum
         fields.add(new InterpreterFunctionStringField(InterpreterFunction.JMP));
         fields.add(new LabelField(label));
-        fields.add(new IntStringField(line));
-        fields.add(new IntStringField(chNum));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
 
         return new Line(fields);
     }
 
-    public Line generateJmpIfFalse(Label label, Integer line, Integer chNum)
+    public Line generateJmpIfFalse(Label label, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
-        // jmp_if_false, label, line, chNum
+        // jmp_if_false, label, line, chNum. fnum
         fields.add(new InterpreterFunctionStringField(InterpreterFunction.JMP_IF_FALSE));
         fields.add(new LabelField(label));
-        fields.add(new IntStringField(line));
-        fields.add(new IntStringField(chNum));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
 
         return new Line(fields);
     }

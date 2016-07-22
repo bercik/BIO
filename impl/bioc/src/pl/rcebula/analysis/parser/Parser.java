@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.preprocessor.MyFiles;
 
 /**
  *
@@ -53,14 +55,16 @@ public class Parser
         }
     };
 
+    // zaślepka
+    private final ErrorInfo mockErrorInfo = new ErrorInfo(0, 0, new MyFiles.File(0, ""));
     // niektóre z częściej używanych tokenów
     private final Token defKeywordToken = getKeywordToken(Lexer.defKeyword);
     private final Token endKeywordToken = getKeywordToken(Lexer.endKeyword);
-    private final Token idToken = new Token(TokenType.ID, "", 0, 0);
-    private final Token openBracketToken = new Token(TokenType.OPEN_BRACKET, null, 0, 0);
-    private final Token closeBracketToken = new Token(TokenType.CLOSE_BRACKET, null, 0, 0);
-    private final Token commaToken = new Token(TokenType.COMMA, null, 0, 0);
-    private final Token endToken = new Token(TokenType.END, null, 0, 0);
+    private final Token idToken = new Token(TokenType.ID, "", mockErrorInfo);
+    private final Token openBracketToken = new Token(TokenType.OPEN_BRACKET, null, mockErrorInfo);
+    private final Token closeBracketToken = new Token(TokenType.CLOSE_BRACKET, null, mockErrorInfo);
+    private final Token commaToken = new Token(TokenType.COMMA, null, mockErrorInfo);
+    private final Token endToken = new Token(TokenType.END, null, mockErrorInfo);
 
     public Parser(List<Token<?>> tokens)
             throws ParserError
@@ -347,7 +351,7 @@ public class Parser
 
         message += " got " + getTokenString(currentToken);
 
-        throw new ParserError(currentToken.getLine(), currentToken.getChNum(), message);
+        throw new ParserError(currentToken.getErrorInfo(), message);
     }
 
     private boolean isConstValue(Token<?> token)
@@ -362,7 +366,7 @@ public class Parser
 
     private Token getKeywordToken(String keyword)
     {
-        return new Token(TokenType.KEYWORD, keyword, 0, 0);
+        return new Token(TokenType.KEYWORD, keyword, mockErrorInfo);
     }
 
     private void readConstValueAndMove()
@@ -374,7 +378,7 @@ public class Parser
         }
         else
         {
-            throw new ParserError(currentToken.getLine(), currentToken.getChNum(),
+            throw new ParserError(currentToken.getErrorInfo(),
                     "Expected constant value got " + getTokenString(currentToken));
         }
     }
@@ -390,7 +394,7 @@ public class Parser
             }
             else
             {
-                throw new ParserError(currentToken.getLine(), currentToken.getChNum(),
+                throw new ParserError(currentToken.getErrorInfo(),
                         "Expected " + getTokenString(tokenToRead) + " got " + getTokenString(currentToken));
             }
         }
@@ -400,7 +404,7 @@ public class Parser
         }
         else
         {
-            throw new ParserError(currentToken.getLine(), currentToken.getChNum(),
+            throw new ParserError(currentToken.getErrorInfo(),
                     "Expected " + getTokenString(tokenToRead) + " got " + getTokenString(currentToken));
         }
     }

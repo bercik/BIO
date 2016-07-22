@@ -213,7 +213,7 @@ public class FiniteStateAutomata
                 // jeżeli null oznacza to, że jesteśmy w stanie id, keyword, none, true lub false
                 if (tokenType == null)
                 {
-                    token = recognizeStateID(state, tokenValue, currentTokenLine, currentTokenChNum);
+                    token = recognizeStateID(state, tokenValue, generateErrorInfoWithCurrentToken());
                 }
                 else
                 {
@@ -325,28 +325,27 @@ public class FiniteStateAutomata
         return newStr;
     }
 
-    private Token recognizeStateID(Integer state, String token,
-            Integer line, Integer chNum)
+    private Token recognizeStateID(Integer state, String token, ErrorInfo ei)
     {
         if (Arrays.asList(Lexer.keywords).contains(token))
         {
-            return new Token(TokenType.KEYWORD, token, generateErrorInfo());
+            return new Token(TokenType.KEYWORD, token, ei);
         }
         if (Arrays.asList(Lexer.trues).contains(token))
         {
-            return new Token(TokenType.BOOL, true, generateErrorInfo());
+            return new Token(TokenType.BOOL, true, ei);
         }
         if (Arrays.asList(Lexer.falses).contains(token))
         {
-            return new Token(TokenType.BOOL, false, generateErrorInfo());
+            return new Token(TokenType.BOOL, false, ei);
         }
         if (Arrays.asList(Lexer.nones).contains(token))
         {
-            return new Token(TokenType.NONE, null, generateErrorInfo());
+            return new Token(TokenType.NONE, null, ei);
         }
 
         // jeżeli nic z powyższych to traktujemy jako ID
-        return new Token(TokenType.ID, token, generateErrorInfo());
+        return new Token(TokenType.ID, token, ei);
     }
 
     // wypełnia tablicę przejść

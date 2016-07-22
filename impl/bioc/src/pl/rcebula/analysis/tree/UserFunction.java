@@ -19,6 +19,7 @@ package pl.rcebula.analysis.tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
 
 /**
  *
@@ -30,14 +31,12 @@ public class UserFunction
     private final List<Param> params = new ArrayList<>();
     
     private final String name;
-    private final Integer line;
-    private final Integer chNum;
+    private final ErrorInfo errorInfo;
 
-    public UserFunction(String name, Integer line, Integer chNum)
+    public UserFunction(String name, ErrorInfo errorInfo)
     {
         this.name = name;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
     
     public void addCall(Call c)
@@ -65,14 +64,9 @@ public class UserFunction
         return name;
     }
 
-    public Integer getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public Integer getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 
     @Override
@@ -82,8 +76,7 @@ public class UserFunction
         hash = 97 * hash + Objects.hashCode(this.calls);
         hash = 97 * hash + Objects.hashCode(this.params);
         hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.line);
-        hash = 97 * hash + Objects.hashCode(this.chNum);
+        hash = 97 * hash + Objects.hashCode(this.errorInfo);
         return hash;
     }
 
@@ -115,11 +108,7 @@ public class UserFunction
         {
             return false;
         }
-        if (!Objects.equals(this.line, other.line))
-        {
-            return false;
-        }
-        if (!Objects.equals(this.chNum, other.chNum))
+        if (!Objects.equals(this.errorInfo, other.errorInfo))
         {
             return false;
         }

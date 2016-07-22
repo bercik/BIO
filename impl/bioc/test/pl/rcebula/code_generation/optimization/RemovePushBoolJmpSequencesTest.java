@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.ConstCallParam;
@@ -29,6 +30,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Inter
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -39,25 +41,28 @@ public class RemovePushBoolJmpSequencesTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
     
+    private final MyFiles files = new MyFiles();
+    private final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, files.addFile("test"));
+
     public RemovePushBoolJmpSequencesTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
     }
-    
+
     @AfterClass
     public static void tearDownClass()
     {
     }
-    
+
     @Before
     public void setUp()
     {
     }
-    
+
     @After
     public void tearDown()
     {
@@ -67,9 +72,9 @@ public class RemovePushBoolJmpSequencesTest
     public void test()
     {
         System.out.println("RemovePushBoolPopJmpIfFalseSequencesTest.test()");
-        
+
         IntermediateCode ic = new IntermediateCode();
-        
+
         /*
         [1] call, foo
         [2] push, bool:false
@@ -81,47 +86,48 @@ public class RemovePushBoolJmpSequencesTest
         [8] jmp_if_false, 6
         [9] call, foo
         [10] 
-        */
-        
+         */
         Label l1 = new Label();
         Label l6 = new Label();
-        
+
         Line line = generateCall();
         line.addLabel(l1);
         ic.appendLine(line);
-        
+
         ic.appendLine(generatePushBool(false));
         ic.appendLine(generatePop1());
         ic.appendLine(generateJmpIfFalse(l1));
         ic.appendLine(generateClearStack());
-        
+
         line = generatePushBool(true);
         line.addLabel(l6);
         ic.appendLine(line);
-        
+
         ic.appendLine(generatePop1());
         ic.appendLine(generateJmpIfFalse(l6));
         ic.appendLine(generateCall());
         ic.appendLine(new Line());
+
         
-        RemovePushBoolJmpSequences rpbpjifs = new RemovePushBoolJmpSequences(ic, new OptimizationStatistics());
-        
-        String expected = "call,foo,-1,-1\n" 
-                + "jmp,0,-1,-1\n"
+        RemovePushBoolJmpSequences rpbpjifs = 
+                new RemovePushBoolJmpSequences(ic, new OptimizationStatistics(), files);
+
+        String expected = "call,foo,-1,-1,1\n"
+                + "jmp,0,-1,-1,1\n"
                 + "clear_stack\n"
-                + "call,foo,-1,-1\n\n";
-        
+                + "call,foo,-1,-1,1\n\n";
+
         assertEquals(expected, ic.toString());
     }
-    
+
     private Line generateJmp(Label l)
     {
-        return ifg.generateJmp(l, -1, -1);
+        return ifg.generateJmp(l, mockErrorInfo);
     }
 
     private Line generateJmpIfFalse(Label l)
     {
-        return ifg.generateJmpIfFalse(l, -1, -1);
+        return ifg.generateJmpIfFalse(l, mockErrorInfo);
     }
 
     private Line generateClearStack()
@@ -131,12 +137,13 @@ public class RemovePushBoolJmpSequencesTest
 
     private Line generateCall()
     {
-        return ifg.generateCall("foo", -1, -1);
+        return ifg.generateCall("foo", mockErrorInfo);
     }
-    
+
     private Line generatePushBool(boolean val)
     {
-        return ifg.generatePush(new ConstCallParam(new Token(TokenType.BOOL, val, -1, -1), -1, -1));
+        return ifg.generatePush(new ConstCallParam(new Token(TokenType.BOOL, val, mockErrorInfo),
+                mockErrorInfo));
     }
 
     private Line generatePop1()

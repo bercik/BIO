@@ -22,10 +22,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -35,6 +37,7 @@ import pl.rcebula.utils.OptimizationStatistics;
 public class RemoveRedundantJumpsTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
+    private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(1, "test"));
 
     public RemoveRedundantJumpsTest()
     {
@@ -103,12 +106,12 @@ public class RemoveRedundantJumpsTest
 
         RemoveRedundantJumps rrj = new RemoveRedundantJumps(ic, new OptimizationStatistics());
 
-        String expected = "call,foo,-1,-1\n"
-                + "jmp,5,-1,-1\n"
-                + "jmp,5,-1,-1\n"
-                + "jmp,6,-1,-1\n"
-                + "jmp,5,-1,-1\n"
-                + "jmp_if_false,6,-1,-1\n"
+        String expected = "call,foo,-1,-1,1\n"
+                + "jmp,5,-1,-1,1\n"
+                + "jmp,5,-1,-1,1\n"
+                + "jmp,6,-1,-1,1\n"
+                + "jmp,5,-1,-1,1\n"
+                + "jmp_if_false,6,-1,-1,1\n"
                 + "clear_stack\n";
 
         assertEquals(expected, ic.toString());
@@ -142,12 +145,12 @@ public class RemoveRedundantJumpsTest
 
     private Line generateJmp(Label l)
     {
-        return ifg.generateJmp(l, -1, -1);
+        return ifg.generateJmp(l, mockErrorInfo);
     }
 
     private Line generateJmpIfFalse(Label l)
     {
-        return ifg.generateJmpIfFalse(l, -1, -1);
+        return ifg.generateJmpIfFalse(l, mockErrorInfo);
     }
 
     private Line generateClearStack()
@@ -157,6 +160,6 @@ public class RemoveRedundantJumpsTest
 
     private Line generateCall()
     {
-        return ifg.generateCall("foo", -1, -1);
+        return ifg.generateCall("foo", mockErrorInfo);
     }
 }

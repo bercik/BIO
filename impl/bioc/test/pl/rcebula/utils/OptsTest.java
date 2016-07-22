@@ -62,7 +62,7 @@ public class OptsTest
         
         String input = "input";
         String output = "output";
-        String[] args = { input, "-s", output };
+        String[] args = { input, "-s", "-o", output };
         
         Opts opts = new Opts(args);
         assertTrue(opts.isStatistics());

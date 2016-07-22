@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.ConstCallParam;
@@ -29,6 +30,7 @@ import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -37,8 +39,8 @@ import pl.rcebula.utils.OptimizationStatistics;
  */
 public class RemoveJmpsToNextLineTest
 {
-
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
+    private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(1, "test"));
 
     public RemoveJmpsToNextLineTest()
     {
@@ -100,10 +102,10 @@ public class RemoveJmpsToNextLineTest
         
         assertEquals(statistics.getJumpsToNextLineRemoved(), 3);
         
-        String expected = "push,bool:true,-1,-1\n"
-                + "push,bool:false,-1,-1\n"
+        String expected = "push,bool:true,-1,-1,1\n"
+                + "push,bool:false,-1,-1,1\n"
                 + "popc,1\n"
-                + "push,bool:true,-1,-1\n"
+                + "push,bool:true,-1,-1,1\n"
                 + "\n";
         
         assertEquals(expected, ic.toString());
@@ -111,17 +113,18 @@ public class RemoveJmpsToNextLineTest
 
     private Line generateJmp(Label l)
     {
-        return ifg.generateJmp(l, -1, -1);
+        return ifg.generateJmp(l, mockErrorInfo);
     }
 
     private Line generateJmpIfFalse(Label l)
     {
-        return ifg.generateJmpIfFalse(l, -1, -1);
+        return ifg.generateJmpIfFalse(l, mockErrorInfo);
     }
     
     private Line generatePushBool(boolean val)
     {
-        return ifg.generatePush(new ConstCallParam(new Token(TokenType.BOOL, val, -1, -1), -1, -1));
+        return ifg.generatePush(new ConstCallParam(new Token(TokenType.BOOL, val, mockErrorInfo), 
+                mockErrorInfo));
     }
 
     private Line generatePop1()

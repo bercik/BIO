@@ -19,6 +19,7 @@ package pl.rcebula.analysis.tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import pl.rcebula.analysis.ErrorInfo;
 
 /**
  *
@@ -32,9 +33,9 @@ public class Call extends CallParam
     // używane przy generowaniu funkcji wbudowanych o zmiennej ilości parametrów
     private int repeatCycles = 0;
 
-    public Call(String name, Call parentCall, Integer line, Integer chNum)
+    public Call(String name, Call parentCall, ErrorInfo errorInfo)
     {
-        super(line, chNum);
+        super(errorInfo);
         this.name = name;
         this.parentCall = parentCall;
     }

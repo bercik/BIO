@@ -22,12 +22,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
+import pl.rcebula.preprocessor.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**
@@ -37,6 +39,7 @@ import pl.rcebula.utils.OptimizationStatistics;
 public class RemovePushSequencesTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
+    private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(1, "test"));
 
     public RemovePushSequencesTest()
     {
@@ -88,14 +91,14 @@ public class RemovePushSequencesTest
 
         new RemovePushPopcSequences(ic, new OptimizationStatistics());
 
-        String expected = "call,foo,-1,-1\n"
+        String expected = "call,foo,-1,-1,1\n"
                 + "popc,1\n"
-                + "push,none:,-1,-1\n"
-                + "call,foo,-1,-1\n"
+                + "push,none:,-1,-1,1\n"
+                + "call,foo,-1,-1,1\n"
                 + "clear_stack\n"
                 + "clear_stack\n"
                 + "\n"
-                + "push,none:,-1,-1\n"
+                + "push,none:,-1,-1,1\n"
                 + "popc,2\n";
         
         assertEquals(expected, ic.toString());
@@ -103,12 +106,13 @@ public class RemovePushSequencesTest
 
     private Line generateCallLine()
     {
-        return ifg.generateCall("foo", -1, -1);
+        return ifg.generateCall("foo", mockErrorInfo);
     }
 
     private Line generatePushNoneLine()
     {
-        return ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, -1, -1), -1, -1));
+        return ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo), 
+                mockErrorInfo));
     }
 
     private Line generatePopcLine(int pops)

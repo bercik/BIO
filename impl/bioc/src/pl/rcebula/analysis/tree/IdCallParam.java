@@ -16,6 +16,8 @@
  */
 package pl.rcebula.analysis.tree;
 
+import pl.rcebula.analysis.ErrorInfo;
+
 /**
  *
  * @author robert
@@ -24,9 +26,9 @@ public class IdCallParam extends CallParam
 {
     private final String name;
 
-    public IdCallParam(String name, Integer line, Integer chNum)
+    public IdCallParam(String name, ErrorInfo errorInfo)
     {
-        super(line, chNum);
+        super(errorInfo);
         this.name = name;
     }
 
