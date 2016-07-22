@@ -121,6 +121,11 @@ public class App
         String path = App.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String decodedPath = URLDecoder.decode(path, "UTF-8");
         decodedPath = decodedPath.substring(0, decodedPath.lastIndexOf("/"));
+        
+        // na windowsie musimy usunąć pierwszy znak którym jest /
+        decodedPath = System.getProperty("os.name").contains("indow")
+                ? decodedPath.substring(1) : decodedPath;
+        
         FileHandler fh = new FileHandler(decodedPath + "/log.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();

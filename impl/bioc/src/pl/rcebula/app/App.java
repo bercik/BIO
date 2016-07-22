@@ -23,7 +23,6 @@ import pl.rcebula.code_generation.intermediate.CodeGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.code_generation.optimization.CodeOptimizer;
-import pl.rcebula.preprocessor.MyFiles.File;
 import pl.rcebula.preprocessor.Preprocessor;
 import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
@@ -48,11 +47,11 @@ public class App
         {
             // init logger
             initLogger();
-            
+
             // time profiler
             TimeProfiler timeProfiler = new TimeProfiler();
             timeProfiler.startTotal();
-            
+
             // statistics tool
             OptimizationStatistics statistic = new OptimizationStatistics();
 
@@ -72,7 +71,7 @@ public class App
                 System.out.println("-------------------------");
                 System.out.println(preprocessor.getInput());
             }
-            
+
             // lexer
             timeProfiler.start("Lexer");
             Lexer lexer = new Lexer(preprocessor.getInput(), preprocessor.getFiles());
@@ -100,7 +99,7 @@ public class App
 
             // builtin functions parser
             timeProfiler.start("BuiltinFunctionsParser");
-            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(true, 
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(true,
                     "/pl/rcebula/res/arrays.xml",
                     "/pl/rcebula/res/basic.xml",
                     "/pl/rcebula/res/compare.xml",
@@ -143,7 +142,7 @@ public class App
             new CodeOptimizer(ic, statistic, preprocessor.getFiles());
             timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
-            
+
             // add informations about files to intermediate code
             timeProfiler.start("AddInformationsAboutFiles");
             new AddInformationsAboutFiles(ic, preprocessor.getFiles());
@@ -164,18 +163,18 @@ public class App
                 System.out.println("-------------------------");
                 System.out.println(statistic);
             }
-            
+
             if (opts.isDisassemble() && !opts.isVerbose())
             {
                 System.out.println("DISASSEMBLE CODE");
                 System.out.println("-------------------------");
                 System.out.println(ic.toStringWithLinesNumber());
             }
-            
+
             timeProfiler.start("WriteToBinaryFile");
             ic.writeToBinaryFile(opts.getOutputFilePath());
             timeProfiler.stop();
-            
+
             timeProfiler.stopTotal();
             if (opts.isTimes())
             {
@@ -213,22 +212,27 @@ public class App
             System.err.println("IOException: " + ex.getMessage());
         }
     }
-    
+
     private static void initLogger() throws IOException
     {
         Logger logger = Logger.getGlobal();
-        
+
         String path = App.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String decodedPath = URLDecoder.decode(path, "UTF-8");
         decodedPath = decodedPath.substring(0, decodedPath.lastIndexOf("/"));
+
+        // na windowsie musimy usunąć pierwszy znak którym jest /
+        decodedPath = System.getProperty("os.name").contains("indow")
+                ? decodedPath.substring(1) : decodedPath;
+
         FileHandler fh = new FileHandler(decodedPath + "/log.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();
         fh.setFormatter(sf);
-        
+
         logger.setUseParentHandlers(false);
         logger.setLevel(Level.FINE);
-        
+
         logger.info("Init logger");
     }
 }
