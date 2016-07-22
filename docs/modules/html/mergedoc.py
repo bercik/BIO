@@ -12,15 +12,18 @@ if __name__ == "__main__":
     html += "<title>BIO DOC</title>\n"
     html += "</head>\n"
     html += "<body>\n"
-    html += "<h1>BIO Documentation</h1>\n"
+    html += "<h1 id=\"title\">BIO Documentation</h1>\n"
+
+
     html += "<a name=\"index\"></a>\n"
     html += "<h3>Table of contents</h3>\n"
     html += "<ul>\n"
+    html += "<li><a href=\"#_header\">data types</a>"
 
     docs = ""
 
     for file in os.listdir(dir):
-        if file != "index.html":
+        if file != "index.html" and file != "_header.html":
             if file.endswith(".html"):
                 # read file and add to whole html
                 with open(dir + "/" + file) as f:
@@ -33,6 +36,11 @@ if __name__ == "__main__":
                     docs += "<a href=\"#index\">table of contents</a>"
 
     html += "</ul>\n"
+
+    html += "<a name=\"_header\"></a>"
+    with open(dir + "/_header.html") as f:
+        html += f.read()
+
     html += docs
 
     html += "</body>\n"
