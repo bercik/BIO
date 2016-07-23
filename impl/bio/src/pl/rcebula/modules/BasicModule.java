@@ -5,9 +5,7 @@
  */
 package pl.rcebula.modules;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import pl.rcebula.Constants;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.ErrorCodes;
@@ -136,7 +134,7 @@ public class BasicModule extends Module
             {
                 String message = "There is no global variable " + id;
                 MyError error = new MyError(message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
-                        null, did.getLine(), did.getChNum(), interpreter);
+                        null, did.getErrorInfo(), interpreter);
                 return Data.createDataError(error);
             }
             return new Data(var);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -41,7 +42,7 @@ public class BuiltinFunctions
     }
     
     public Data callFunction(String name, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
-            int line, int chNum)
+            ErrorInfo ei)
     {
         IFunction fun = functions.get(name);
         if (fun != null)
@@ -52,7 +53,7 @@ public class BuiltinFunctions
         {
             String message = "Builtin function " + name + " is not implemented. Please contact interpreter creator";
             MyError myError = new MyError(message, 
-                    ErrorCodes.BUILTIN_FUNCTION_NOT_IMPLEMENTED.getCode(), null, line, chNum, interpreter);
+                    ErrorCodes.BUILTIN_FUNCTION_NOT_IMPLEMENTED.getCode(), null, ei, interpreter);
             return Data.createDataError(myError);
         }
     }

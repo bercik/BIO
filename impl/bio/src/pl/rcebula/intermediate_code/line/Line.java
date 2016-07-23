@@ -6,6 +6,7 @@
 package pl.rcebula.intermediate_code.line;
 
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -14,14 +15,12 @@ import pl.rcebula.code.InterpreterFunction;
 public abstract class Line
 {
     protected final InterpreterFunction interpreterFunction;
-    protected final int line;
-    protected final int chNum;
+    protected final ErrorInfo errorInfo;
 
-    public Line(InterpreterFunction interpreterFunction, int line, int chNum)
+    public Line(InterpreterFunction interpreterFunction, ErrorInfo errorInfo)
     {
         this.interpreterFunction = interpreterFunction;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
 
     public InterpreterFunction getInterpreterFunction()
@@ -29,13 +28,8 @@ public abstract class Line
         return interpreterFunction;
     }
 
-    public int getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 }

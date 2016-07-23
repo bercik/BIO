@@ -6,6 +6,7 @@
 package pl.rcebula.intermediate_code.line;
 
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -13,9 +14,9 @@ import pl.rcebula.code.InterpreterFunction;
  */
 public class ClearStackLine extends Line
 {
-    public ClearStackLine(InterpreterFunction interpreterFunction, int line, int chNum)
+    public ClearStackLine(InterpreterFunction interpreterFunction, ErrorInfo errorInfo)
     {
-        super(interpreterFunction, line, chNum);
+        super(interpreterFunction, errorInfo);
     }
 
     @Override

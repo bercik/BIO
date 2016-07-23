@@ -6,6 +6,7 @@
 package pl.rcebula.internals.interpreter;
 
 import java.util.List;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.data_types.Data;
@@ -20,34 +21,30 @@ public class PerformCallLoc
     {
         CallLine callLine = (CallLine)line;
         String funName = callLine.getFunName();
-        int lineNum = callLine.getLine();
-        int chNum = callLine.getChNum();
+        ErrorInfo ei = callLine.getErrorInfo();
         
-        perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), lineNum, chNum);
+        perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), ei);
     }
     
-    public PerformCallLoc(Interpreter interpreter, String funName, List<Data> parameters, int lineNum, 
-            int chNum)
+    public PerformCallLoc(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
-        perform(interpreter, funName, parameters, lineNum, chNum);
+        perform(interpreter, funName, parameters, ei);
     }
     
-    private void perform(Interpreter interpreter, String funName, List<Data> parameters, int lineNum, 
-            int chNum)
+    private void perform(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
         // profiler
         interpreter.profiler.enter(funName);
         // wywołujemy funkcję
         Data data = interpreter.builtinFunctions.callFunction(funName, 
-                parameters, interpreter.currentFrame, interpreter, 
-                lineNum, chNum);
+                parameters, interpreter.currentFrame, interpreter, ei);
         interpreter.profiler.exit();
         
         // jeżeli data jest różne od null
         if (data != null)
         {
-            // ustawiamy nowe line i chNum
-            data.setLineAndChNum(lineNum, chNum);
+            // ustawiamy error info
+            data.setErrorInfo(ei);
             // jeżeli to nie była ostatnia ramka to
             // zapisujemy na stosie wartości aktualnej ramki
             if (interpreter.currentFrame != null)

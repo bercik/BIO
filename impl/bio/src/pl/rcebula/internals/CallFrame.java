@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.internals.data_types.Data;
 
@@ -22,10 +23,8 @@ public class CallFrame
 {
     // czy mamy skopiować wartość z funkcji RETURN do poprzedniej ramki
     private final boolean returnToCaller;
-    // linia w kodzie źródłowym gdzie nastąpiło wywołanie
-    private final int line;
-    // znak w kodzie źródłowym gdzie nastąpiło wywołanie
-    private final int chNum;
+    // informacja o miejscu występowania w kodzie źródłowym
+    private final ErrorInfo errorInfo;
     // instruction pointer, wskaźnik na linijkę w kodzie
     private int ip;
     // referencja do kodu funkcji i innych informacji (np. obserwatorów)
@@ -37,18 +36,17 @@ public class CallFrame
     // parametry ściągnięte ze stosu metodą POP
     private final List<Data> stackParameters = new ArrayList<>();
 
-    public CallFrame(List<Data> passedParameters, UserFunction userFunction, int line, int chNum)
+    public CallFrame(List<Data> passedParameters, UserFunction userFunction, ErrorInfo errorInfo)
     {
-        this(passedParameters, userFunction, line, chNum, true);
+        this(passedParameters, userFunction, errorInfo, true);
     }
     
-    public CallFrame(List<Data> passedParameters, UserFunction userFunction, int line, int chNum, 
+    public CallFrame(List<Data> passedParameters, UserFunction userFunction, ErrorInfo errorInfo, 
             boolean returnToCaller)
     {
         this.returnToCaller = returnToCaller;
         this.userFunction = userFunction;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
         // wskaźnik instrukcji jest ustawiany na zero
         this.ip = 0;
         
@@ -71,14 +69,9 @@ public class CallFrame
         return localVariables;
     }
 
-    public int getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 
     public UserFunction getUserFunction()

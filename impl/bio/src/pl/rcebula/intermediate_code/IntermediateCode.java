@@ -6,6 +6,7 @@
 package pl.rcebula.intermediate_code;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,14 +14,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code.ParamType;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.ClearStackLine;
 import pl.rcebula.intermediate_code.line.JmpLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.intermediate_code.line.PushLine;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 
 /**
  *
@@ -29,6 +34,7 @@ import pl.rcebula.intermediate_code.line.PushLine;
 public class IntermediateCode
 {
     private final Map<String, UserFunction> userFunctions = new HashMap<>();
+    private final MyFiles files = new MyFiles(false);
     private final Logger logger = Logger.getGlobal();
 
     public IntermediateCode(String path)
@@ -38,7 +44,20 @@ public class IntermediateCode
         logger.fine("path: " + path);
         
         DataInputStream dis = new DataInputStream(new FileInputStream(path));
-        read(dis);
+        
+        try
+        {
+            read(dis);
+        }
+        catch (EOFException ex)
+        {
+            throw new IOException("Bad input file format", ex);
+        }
+    }
+    
+    private ErrorInfo createErrorInfo(int line, int chNum, int fnum, MyFiles files)
+    {
+        return new ErrorInfo(line, chNum, files.getFromNum(fnum));
     }
 
     private void read(DataInputStream dis)
@@ -46,6 +65,30 @@ public class IntermediateCode
     {
         int currentLnr = 0;
 
+        // przeczytaj informacje o plikach
+        int fnum = dis.readInt();
+        while (fnum != 0)
+        {
+            String fname = dis.readUTF();
+            File file = files.addFile(fname, fnum);
+            int from = dis.readInt();
+            while (from != 0)
+            {
+                file.addFrom(from);
+                from = dis.readInt();
+            }
+            
+            fnum = dis.readInt();
+            ++currentLnr;
+        }
+        ++currentLnr;
+        
+        // wydobądź pliki skąd
+        for (File f : files.getFiles())
+        {
+            f.resolveIntFromList(files);
+        }
+        
         // przeczytaj informacje o funkcjach użytkownikach
         String funName = dis.readUTF();
         while (!funName.equals(""))
@@ -53,8 +96,12 @@ public class IntermediateCode
             int lnr = dis.readInt();
             int line = dis.readInt();
             int chNum = dis.readInt();
+            fnum = dis.readInt();
             
-            UserFunction uf = new UserFunction(funName, line, chNum);
+            File file = files.getFromNum(fnum);
+            ErrorInfo ei = new ErrorInfo(line, chNum, file);
+            
+            UserFunction uf = new UserFunction(funName, ei);
             userFunctions.put(funName, uf);
 
             funName = dis.readUTF();
@@ -94,6 +141,7 @@ public class IntermediateCode
                 
                 int lineNum = -1;
                 int chNum = -1;
+                fnum = MyFiles.numGeneratedByCompiler;
                 Line line = null;
                 
                 switch (interpreterFunction)
@@ -103,7 +151,8 @@ public class IntermediateCode
                         funName = dis.readUTF();
                         lineNum = dis.readInt();
                         chNum = dis.readInt();
-                        line = new CallLine(interpreterFunction, funName, lineNum, chNum);
+                        fnum = dis.readInt();
+                        line = new CallLine(interpreterFunction, funName, createErrorInfo(lineNum, chNum, fnum, files));
                         break;
                     case PUSH:
                         byte paramOpcode = dis.readByte();
@@ -115,48 +164,55 @@ public class IntermediateCode
                                 value = dis.readUTF();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case VAR:
                                 value = dis.readUTF();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case INT:
                                 value = dis.readInt();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case FLOAT:
                                 value = dis.readFloat();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case STRING:
                                 value = dis.readUTF();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case BOOL:
                                 value = dis.readBoolean();
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             case NONE:
                                 lineNum = dis.readInt();
                                 chNum = dis.readInt();
+                                fnum = dis.readInt();
                                 break;
                             default:
                                 throw new RuntimeException("Don't know what to do with " + paramType.toString());
                         }
                         
                         Param param = new Param(paramType, value);
-                        line = new PushLine(interpreterFunction, param, lineNum, chNum);
+                        line = new PushLine(interpreterFunction, param, createErrorInfo(lineNum, chNum, fnum, files));
                         
                         break;
                     case POP:
                     case POPC:
                         int amount = dis.readInt();
-                        line = new PopLine(interpreterFunction, amount, lineNum, chNum);
+                        line = new PopLine(interpreterFunction, amount, createErrorInfo(lineNum, chNum, fnum, files));
                         break;
                     case JMP:
                     case JMP_IF_FALSE:
@@ -165,10 +221,11 @@ public class IntermediateCode
                         dest -= startLnr;
                         lineNum = dis.readInt();
                         chNum = dis.readInt();
-                        line = new JmpLine(interpreterFunction, dest, lineNum, chNum);
+                        fnum = dis.readInt();
+                        line = new JmpLine(interpreterFunction, dest, createErrorInfo(lineNum, chNum, fnum, files));
                         break;
                     case CLEAR_STACK:
-                        line = new ClearStackLine(interpreterFunction, lineNum, chNum);
+                        line = new ClearStackLine(interpreterFunction, createErrorInfo(lineNum, chNum, fnum, files));
                         break;
                     default:
                         throw new RuntimeException("Don't know what to do with " + interpreterFunction.toString());
@@ -188,6 +245,25 @@ public class IntermediateCode
     public String toStringWithLineNumbers()
     {
         String result = "";
+        
+        result += "<Error informations files>\n";
+        for (File f : files.getFiles())
+        {
+            result += f.getNum() + Constants.fieldsSeparator + f.getName() + 
+                    Constants.fieldsSeparator;
+            
+            for (File from : f.getFromList())
+            {
+                result += from.getNum() + Constants.fieldsSeparator;
+            }
+            
+            result = result.substring(0, result.length() - Constants.fieldsSeparator.length());
+            result += "\n";
+        }
+        
+        result += "\n";
+        result += "<functions>\n";
+        
         for (UserFunction uf : userFunctions.values())
         {
             result += uf.toStringWithLineNumbers() + "\n";
@@ -199,5 +275,10 @@ public class IntermediateCode
     public Map<String, UserFunction> getUserFunctions()
     {
         return userFunctions;
+    }
+
+    public MyFiles getFiles()
+    {
+        return files;
     }
 }

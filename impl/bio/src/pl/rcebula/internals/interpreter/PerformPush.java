@@ -6,6 +6,7 @@
 package pl.rcebula.internals.interpreter;
 
 import pl.rcebula.code.ParamType;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.Param;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PushLine;
@@ -21,8 +22,7 @@ public class PerformPush
     {
         PushLine pushLine = (PushLine)line;
         Param param = pushLine.getParam();
-        int lineNum = pushLine.getLine();
-        int chNum = pushLine.getChNum();
+        ErrorInfo ei = pushLine.getErrorInfo();
         
         ParamType pt = param.getParamType();
         Data data;
@@ -53,7 +53,7 @@ public class PerformPush
                 throw new RuntimeException("Unknown type " + pt.toString());
         }
         
-        data.setLineAndChNum(lineNum, chNum);
+        data.setErrorInfo(ei);
         interpreter.currentFrame.getVariableStack().push(data);
     }
 }

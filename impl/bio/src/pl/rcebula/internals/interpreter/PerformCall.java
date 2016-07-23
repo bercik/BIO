@@ -5,6 +5,7 @@
  */
 package pl.rcebula.internals.interpreter;
 
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;
@@ -20,12 +21,11 @@ public class PerformCall
     {
         CallLine callLine = (CallLine)line;
         String funName = callLine.getFunName();
-        int lineNum = callLine.getLine();
-        int chNum = callLine.getChNum();
+        ErrorInfo ei = callLine.getErrorInfo();
         UserFunction uf = interpreter.userFunctions.get(funName);
 
         // tworzymy ramkę i odkładamy na stos
-        CallFrame cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, lineNum, chNum);
+        CallFrame cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, ei);
         interpreter.pushFrameToStack(cf);
 
         // tworzymy ramki dla każdego obserwatora w losowej kolejności, z zaznaczeniem, że nie interesuje nas
@@ -33,7 +33,7 @@ public class PerformCall
         for (String observer : uf.getObservers())
         {
             uf = interpreter.userFunctions.get(observer);
-            cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, lineNum, chNum, false);
+            cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, ei, false);
             interpreter.pushFrameToStack(cf);
         }
     }

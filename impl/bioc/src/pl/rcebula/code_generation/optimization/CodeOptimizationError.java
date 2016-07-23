@@ -16,7 +16,7 @@
  */
 package pl.rcebula.code_generation.optimization;
 
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *

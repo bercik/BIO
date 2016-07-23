@@ -5,6 +5,7 @@
  */
 package pl.rcebula.internals.data_types;
 
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.interpreter.Interpreter;
 
 /**
@@ -16,18 +17,16 @@ public class MyError
     private final String message;
     private final Data object;
     private final MyError cause;
-    private final int line;
-    private final int chNum;
+    private final ErrorInfo errorInfo;
     
     private final CallStack callStack;
 
-    public MyError(String message, Data object, MyError cause, int line, int chNum, Interpreter interpreter)
+    public MyError(String message, Data object, MyError cause, ErrorInfo errorInfo, Interpreter interpreter)
     {
         this.message = message;
         this.object = object;
         this.cause = cause;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
         
         this.callStack = new CallStack(interpreter.getFrameStack());
     }
@@ -47,14 +46,9 @@ public class MyError
         return cause;
     }
 
-    public int getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 
     public CallStack getCallStack()
@@ -67,7 +61,7 @@ public class MyError
     {
         String str = "";
         
-        str += "[line: " + line + ", ch: " + chNum + "]: ";
+        str += errorInfo.toString() + ": ";
         str += message;
         
         return str;

@@ -35,7 +35,7 @@ import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *

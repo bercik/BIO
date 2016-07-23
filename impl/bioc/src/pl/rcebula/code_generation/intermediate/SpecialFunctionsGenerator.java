@@ -17,7 +17,7 @@
 package pl.rcebula.code_generation.intermediate;
 
 import java.util.List;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
@@ -26,7 +26,7 @@ import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.Call;
 import pl.rcebula.analysis.tree.CallParam;
 import pl.rcebula.analysis.tree.ConstCallParam;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *

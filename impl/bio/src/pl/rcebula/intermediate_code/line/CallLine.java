@@ -7,6 +7,7 @@ package pl.rcebula.intermediate_code.line;
 
 import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -16,9 +17,9 @@ public class CallLine extends Line
 {
     private final String funName;
 
-    public CallLine(InterpreterFunction interpreterFunction, String funName, int line, int chNum)
+    public CallLine(InterpreterFunction interpreterFunction, String funName, ErrorInfo errorInfo)
     {
-        super(interpreterFunction, line, chNum);
+        super(interpreterFunction, errorInfo);
         this.funName = funName;
     }
 
@@ -31,6 +32,7 @@ public class CallLine extends Line
     public String toString()
     {
         return interpreterFunction.toString() + Constants.fieldsSeparator + funName + Constants.fieldsSeparator 
-                + line + Constants.fieldsSeparator + chNum;
+                + errorInfo.getLineNum() + Constants.fieldsSeparator + errorInfo.getChNum() + 
+                Constants.fieldsSeparator + errorInfo.getFile().getNum();
     }
 }

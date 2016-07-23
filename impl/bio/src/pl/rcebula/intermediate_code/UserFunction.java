@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import pl.rcebula.Constants;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.Line;
 
 /**
@@ -19,17 +20,15 @@ public class UserFunction
 {
     private final String name;
     private final List<String> params = new ArrayList<>();
-    private final int line;
-    private final int chNum;
+    private final ErrorInfo errorInfo;
     private final List<Line> lines = new ArrayList<Line>();
     
     private final HashSet<String> observers = new HashSet<>();
 
-    public UserFunction(String name, int line, int chNum)
+    public UserFunction(String name, ErrorInfo errorInfo)
     {
         this.name = name;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
     
     public void addParams(List<String> params)
@@ -42,6 +41,11 @@ public class UserFunction
         lines.add(line);
     }
 
+    public ErrorInfo getErrorInfo()
+    {
+        return errorInfo;
+    }
+    
     public List<String> getParams()
     {
         return params;
@@ -50,16 +54,6 @@ public class UserFunction
     public String getName()
     {
         return name;
-    }
-
-    public int getLine()
-    {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
     }
 
     public List<Line> getLines()

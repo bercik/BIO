@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
@@ -37,7 +37,7 @@ import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *

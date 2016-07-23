@@ -23,7 +23,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import pl.rcebula.Constants;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.ConstCallParam;
@@ -32,7 +32,7 @@ import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.utils.OptimizationStatistics;
 
 /**

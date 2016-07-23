@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
-import pl.rcebula.analysis.ErrorInfo;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *

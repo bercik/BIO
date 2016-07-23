@@ -8,6 +8,7 @@ package pl.rcebula.internals.data_types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 
 /**
@@ -27,31 +28,24 @@ public class CallStack
         for (int i = size - 1; i >= 0; --i)
         {
             CallFrame cf = frameStack.get(i);
-            callStack.add(new CallStackEntry(cf.getLine(), cf.getChNum(), cf.getUserFunction().getName()));
+            callStack.add(new CallStackEntry(cf.getErrorInfo(), cf.getUserFunction().getName()));
         }
     }
     
     public class CallStackEntry
     {
-        private final int line;
-        private final int chNum;
+        private final ErrorInfo errorInfo;
         private final String funName;
 
-        public CallStackEntry(int line, int chNum, String funName)
+        public CallStackEntry(ErrorInfo errorInfo, String funName)
         {
-            this.line = line;
-            this.chNum = chNum;
+            this.errorInfo = errorInfo;
             this.funName = funName;
         }
 
-        public int getLine()
+        public ErrorInfo getErrorInfo()
         {
-            return line;
-        }
-
-        public int getChNum()
-        {
-            return chNum;
+            return errorInfo;
         }
 
         public String getFunName()

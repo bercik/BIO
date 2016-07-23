@@ -8,6 +8,7 @@ package pl.rcebula.internals.interpreter;
 import java.util.Arrays;
 import java.util.List;
 import pl.rcebula.Constants;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.JmpLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.data_types.Data;
@@ -23,13 +24,12 @@ public class PerformJmpIfFalse
     public PerformJmpIfFalse(Interpreter interpreter, Line line)
     {
         JmpLine jmpLine = (JmpLine)line;
-        int lineNum = jmpLine.getLine();
-        int chNum = jmpLine.getChNum();
+        ErrorInfo ei = jmpLine.getErrorInfo();
         
         // pobieramy parametr z stack parameters
         Data cond = interpreter.currentFrame.getStackParameters().get(0);
         // sprawdzamy czy jest typu bool
-        TypeChecker tc = new TypeChecker(cond, "JMP_IF_FALSE", 1, lineNum, chNum, interpreter, 
+        TypeChecker tc = new TypeChecker(cond, "JMP_IF_FALSE", 1, ei, interpreter, 
                 DataType.BOOL);
         if (!tc.isError())
         {
@@ -45,7 +45,7 @@ public class PerformJmpIfFalse
         {
             List<Data> params = Arrays.asList(new Data[] { tc.getError() });
             // jeżeli wystąpił błąd to wychodzimy z aktualnej funkcji przekazując błąd wyżej
-            new PerformCallLoc(interpreter, Constants.returnFunctionName, params, lineNum, chNum);
+            new PerformCallLoc(interpreter, Constants.returnFunctionName, params, ei);
         }
     }
 }

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.analysis;
+package pl.rcebula.error_report;
 
 import java.util.List;
-import pl.rcebula.preprocessor.MyFiles;
-import pl.rcebula.preprocessor.MyFiles.File;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 
 /**
  *

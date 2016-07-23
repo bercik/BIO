@@ -28,8 +28,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import pl.rcebula.preprocessor.MyFiles;
-import pl.rcebula.preprocessor.MyFiles.File;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 
 /**
  *

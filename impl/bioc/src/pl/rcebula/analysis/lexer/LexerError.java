@@ -16,7 +16,7 @@
  */
 package pl.rcebula.analysis.lexer;
 
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *

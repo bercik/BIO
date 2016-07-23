@@ -16,7 +16,7 @@
  */
 package pl.rcebula.analysis.tree;
 
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.code.ValueType;
 import pl.rcebula.analysis.lexer.Token;
 

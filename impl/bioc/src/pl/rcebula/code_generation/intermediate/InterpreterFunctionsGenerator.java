@@ -27,7 +27,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Strin
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import java.util.ArrayList;
 import java.util.List;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.analysis.tree.ConstCallParam;
 import pl.rcebula.analysis.tree.IdCallParam;

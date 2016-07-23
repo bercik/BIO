@@ -7,6 +7,7 @@ package pl.rcebula.intermediate_code.line;
 
 import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -16,9 +17,9 @@ public class JmpLine extends Line
 {
     private final int dest;
 
-    public JmpLine(InterpreterFunction interpreterFunction, int dest, int line, int chNum)
+    public JmpLine(InterpreterFunction interpreterFunction, int dest, ErrorInfo errorInfo)
     {
-        super(interpreterFunction, line, chNum);
+        super(interpreterFunction, errorInfo);
         this.dest = dest;
     }
 
@@ -31,6 +32,7 @@ public class JmpLine extends Line
     public String toString()
     {
         return interpreterFunction.toString() + Constants.fieldsSeparator + dest + Constants.fieldsSeparator 
-                + line + Constants.fieldsSeparator + chNum;
+                + errorInfo.getLineNum() + Constants.fieldsSeparator + errorInfo.getChNum() + 
+                Constants.fieldsSeparator + errorInfo.getFile().getNum();
     }
 }

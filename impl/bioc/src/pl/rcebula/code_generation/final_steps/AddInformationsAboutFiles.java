@@ -23,8 +23,8 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntSt
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.preprocessor.MyFiles;
-import pl.rcebula.preprocessor.MyFiles.File;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 
 /**
  *
@@ -46,7 +46,7 @@ public class AddInformationsAboutFiles
     private void analyse()
     {
         // nowa linia na początku
-        ic.insertLine(Line.generateEmptyByteLine(), 0);
+        ic.insertLine(Line.generateEmptyIntLine(), 0);
         
         for (File f : files.getFiles())
         {

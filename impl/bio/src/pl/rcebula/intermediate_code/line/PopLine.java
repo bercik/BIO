@@ -7,6 +7,7 @@ package pl.rcebula.intermediate_code.line;
 
 import pl.rcebula.Constants;
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -16,9 +17,9 @@ public class PopLine extends Line
 {
     private final int amount;
 
-    public PopLine(InterpreterFunction interpreterFunction, int amount, int line, int chNum)
+    public PopLine(InterpreterFunction interpreterFunction, int amount, ErrorInfo errorInfo)
     {
-        super(interpreterFunction, line, chNum);
+        super(interpreterFunction, errorInfo);
         this.amount = amount;
     }
 

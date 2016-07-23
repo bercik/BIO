@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.logging.Logger;
 import pl.rcebula.Constants;
+import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.CallFrame;
@@ -43,9 +46,11 @@ public class Interpreter
     final Map<String, UserFunction> userFunctions;
     // funkcje wbudowane
     final BuiltinFunctions builtinFunctions;
+    // pliki źródłowe
+    private final MyFiles files;
 
     public Interpreter(String[] args, Map<String, UserFunction> userFunctions, BuiltinFunctions builtinFunctions,
-            TimeProfiler timeProfiler, IProfiler profiler)
+            TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
     {
         logger.info("Interpreter");
 
@@ -53,6 +58,7 @@ public class Interpreter
         this.builtinFunctions = builtinFunctions;
         this.timeProfiler = timeProfiler;
         this.profiler = profiler;
+        this.files = files;
 
         // tworzymy ramkę z funkcją main (onSTART)
         CallFrame mainFrame = createMainFrame(args);
@@ -147,7 +153,8 @@ public class Interpreter
             parameters.add(Data.createDataArray(dataArgs));
         }
 
-        return new CallFrame(parameters, uf, -1, -1);
+        File file = files.getFileGeneratedByCompiler();
+        return new CallFrame(parameters, uf, new ErrorInfo(-1, -1, file));
     }
 
     public Map<String, Data> getGlobalVariables()

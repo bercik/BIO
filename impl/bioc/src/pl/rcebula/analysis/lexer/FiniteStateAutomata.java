@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import pl.rcebula.analysis.ErrorInfo;
-import pl.rcebula.preprocessor.MyFiles;
-import pl.rcebula.preprocessor.MyFiles.File;
+import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.error_report.MyFiles.File;
 import pl.rcebula.utils.StringUtils;
 
 /**

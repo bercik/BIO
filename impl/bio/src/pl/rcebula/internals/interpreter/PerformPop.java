@@ -6,6 +6,7 @@
 package pl.rcebula.internals.interpreter;
 
 import java.util.Arrays;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.internals.ErrorCodes;
@@ -35,22 +36,21 @@ public class PerformPop
             if (data.getDataType().equals(DataType.VAR))
             {
                 String id = (String)data.getValue();
-                int lineNum = data.getLine();
-                int chNum = data.getChNum();
+                ErrorInfo ei = data.getErrorInfo();
                 // pobierz zmienną lokalną
                 data = interpreter.currentFrame.getLocalVariables().get(id);
                 // jeżeli istnieje to utwórz nową zmienną i ustaw jej linię i znak
                 if (data != null)
                 {
                     data = new Data(data);
-                    data.setLineAndChNum(lineNum, chNum);
+                    data.setErrorInfo(ei);
                 }
                 // jeżeli nie istnieje to utwórz zmienną błędu zamiast niej
                 else
                 {
                     String message = "There is no local variable " + id;
                     MyError myError = new MyError(message, ErrorCodes.NO_LOCAL_VARIABLE.getCode(),
-                            null, lineNum, chNum, interpreter);
+                            null, ei, interpreter);
                     data = Data.createDataError(myError);
                 }
             }

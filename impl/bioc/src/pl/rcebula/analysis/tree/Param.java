@@ -17,7 +17,7 @@
 package pl.rcebula.analysis.tree;
 
 import java.util.Objects;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *

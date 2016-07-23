@@ -6,6 +6,7 @@
 package pl.rcebula.internals.data_types;
 
 import java.util.HashMap;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -15,8 +16,7 @@ public class Data
 {
     private final DataType dataType;
     private final Object value;
-    private int line;
-    private int chNum;
+    private ErrorInfo errorInfo;
 
     public Data(Data other)
     {
@@ -30,12 +30,11 @@ public class Data
         this.value = value;
     }
     
-    public Data(DataType dataType, Object value, int line, int chNum)
+    public Data(DataType dataType, Object value, ErrorInfo errorInfo)
     {
         this.dataType = dataType;
         this.value = value;
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
     
     public static Data createDataInt(Integer i)
@@ -103,19 +102,13 @@ public class Data
         return value;
     }
 
-    public void setLineAndChNum(int line, int chNum)
+    public void setErrorInfo(ErrorInfo errorInfo)
     {
-        this.line = line;
-        this.chNum = chNum;
+        this.errorInfo = errorInfo;
     }
 
-    public int getLine()
+    public ErrorInfo getErrorInfo()
     {
-        return line;
-    }
-
-    public int getChNum()
-    {
-        return chNum;
+        return errorInfo;
     }
 }

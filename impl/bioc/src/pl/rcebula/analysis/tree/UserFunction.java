@@ -19,7 +19,7 @@ package pl.rcebula.analysis.tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -114,6 +114,4 @@ public class UserFunction
         }
         return true;
     }
-    
-    
 }

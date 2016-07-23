@@ -70,6 +70,13 @@ public class Line
         Line line = new Line(bsf, true);
         return line;
     }
+    
+    public static Line generateEmptyIntLine()
+    {
+        IntStringField isf = new IntStringField(0, "");
+        Line line = new Line(isf, true);
+        return line;
+    }
 
     public int getLine()
     {

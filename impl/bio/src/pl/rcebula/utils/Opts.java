@@ -37,28 +37,21 @@ public class Opts
     {
         Logger logger = Logger.getGlobal();
         logger.info("Opts");
-        
+
         this.args = args;
-        
+
         analyse();
     }
-    
+
     private void analyse()
             throws OptsError
     {
         if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
         {
-            String message = "usage: java -jar bio.jar [options] input_file [args]\n";
-            message += "using any options causes code to not run except -p and -r\n";
-            message += "options:\n";
-            message += "  -d disassemble, print compiled code in readable form\n";
-            message += "  -h --help, show this text\n";
-            message += "  -p profiler, turns on profiler which measures time spent in each function\n";
-            message += "  -r run, runs code instead of any option\n";
-            message += "  -t times, print times spent on each module\n";
+            String message = constructHelp();
             throw new OptsError(message);
         }
-        
+
         // opcje
         int i = 0;
         boolean readInputFile = false;
@@ -66,7 +59,7 @@ public class Opts
         while (i < args.length)
         {
             String opt = args[i];
-            
+
             if (opt.startsWith("-"))
             {
                 if (opt.equals("-d"))
@@ -98,7 +91,9 @@ public class Opts
                 }
                 else
                 {
-                    String message = "Unrecognized option " + opt;
+                    String message = "Unrecognized option " + opt + "\n";
+                    message += constructHelp();
+                    
                     throw new OptsError(message);
                 }
             }
@@ -109,33 +104,47 @@ public class Opts
                 ++i;
                 int argsCount = args.length - i;
                 passedArgs = new String[argsCount];
-                
+
                 int j = 0;
-                for ( ; i < args.length; ++i)
+                for (; i < args.length; ++i)
                 {
                     passedArgs[j++] = args[i];
                 }
             }
-            
+
             ++i;
         }
-        
+
         if (!readInputFile)
         {
             throw new OptsError("You need to specify input file");
         }
     }
 
+    private String constructHelp()
+    {
+        String message = "usage: java -jar bio.jar [options] input_file [args]\n";
+        message += "using any options causes code to not run except -p and -r\n";
+        message += "options:\n";
+        message += "  -d disassemble, print compiled code in readable form\n";
+        message += "  -h --help, show this text\n";
+        message += "  -p profiler, turns on profiler which measures time spent in each function\n";
+        message += "  -r run, runs code instead of any option\n";
+        message += "  -t times, print times spent on each module\n";
+        
+        return message;
+    }
+
     public String[] getPassedArgs()
     {
         return passedArgs;
     }
-    
+
     public boolean isTimes()
     {
         return times;
     }
-    
+
     public boolean isDisassemble()
     {
         return disassemble;

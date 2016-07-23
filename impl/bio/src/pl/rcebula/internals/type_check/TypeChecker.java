@@ -5,6 +5,7 @@
  */
 package pl.rcebula.internals.type_check;
 
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -20,11 +21,12 @@ public class TypeChecker
     private final Data error;
     private final boolean isError;
     
-    public TypeChecker(Data actual, String funName, int paramNum, int line, int chNum, 
+    public TypeChecker(Data actual, String funName, int paramNum, ErrorInfo ei, 
             Interpreter interpreter, DataType... expected)
     {
         DataType actualDataType = actual.getDataType();
-        isError = equals(actualDataType, expected);
+        isError = !equals(actualDataType, expected);
+        
         if (isError)
         {
             String message = "In function " + funName + " expected " + paramNum + " parameter to be ";
@@ -40,8 +42,8 @@ public class TypeChecker
             {
                 cause = (MyError)actual.getValue();
             }
-            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, line, 
-                    chNum, interpreter);
+            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
+                    interpreter);
             error = Data.createDataError(myError);
         }
         else

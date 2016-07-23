@@ -71,22 +71,37 @@ public class App
                 timeProfiler.start("BuiltinFunctions");
                 BuiltinFunctions builtinFunctions = new BuiltinFunctions();
                 timeProfiler.stop();
-                // run interpreter
+                // jeżeli jakaś opcja wyświetlająca tekst to dodaj linię oddzielającą
+                // wyjście programu
+                if (opts.isDisassemble() || opts.isProfiler() || opts.isTimes())
+                {
+                    System.out.println("OUTPUT");
+                    System.out.println("-------------------------");
+                }
+                // uruchom interpreter
                 Interpreter interpreter = new Interpreter(opts.getPassedArgs(), ic.getUserFunctions(), 
-                        builtinFunctions, timeProfiler, profiler);
+                        builtinFunctions, timeProfiler, profiler, ic.getFiles());
                 
-                // show modules time
+                // pokaż moduł z czasami
                 timeProfiler.stopTotal();
                 if (opts.isTimes())
                 {
+                    if (opts.isRun())
+                    {
+                        System.out.println();
+                    }
                     System.out.println("TIMES");
                     System.out.println("-------------------------");
                     System.out.println(timeProfiler.toString());
                 }
                 
-                // show profiler statistics
+                // pokaż statystyki profilera
                 if (opts.isProfiler())
                 {
+                    if (opts.isRun())
+                    {
+                        System.out.println();
+                    }
                     System.out.println("PROFILER");
                     System.out.println("-------------------------");
                     System.out.println(profiler.toString());
@@ -94,7 +109,7 @@ public class App
             }
             else
             {
-                // show modules time
+                // pokaż moduł z czasami
                 timeProfiler.stopTotal();
                 if (opts.isTimes())
                 {

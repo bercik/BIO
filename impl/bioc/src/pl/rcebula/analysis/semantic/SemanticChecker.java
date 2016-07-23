@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import pl.rcebula.Constants;
-import pl.rcebula.analysis.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.tree.Call;
@@ -30,7 +30,7 @@ import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
 import pl.rcebula.code_generation.intermediate.SpecialFunctionsName;
-import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *
