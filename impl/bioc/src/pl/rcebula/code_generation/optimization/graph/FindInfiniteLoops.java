@@ -18,12 +18,16 @@ package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.Collections;
 import java.util.List;
+import pl.rcebula.analysis.ErrorInfo;
 import pl.rcebula.utils.Pair;
 import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntStringField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
+import pl.rcebula.preprocessor.MyFiles;
+import pl.rcebula.preprocessor.MyFiles.File;
 
 /**
  *
@@ -33,12 +37,14 @@ public class FindInfiniteLoops
 {
     private final IntermediateCode ic;
     private final FlowGraph fg;
+    private final MyFiles files;
 
-    public FindInfiniteLoops(IntermediateCode ic, FlowGraph fg)
+    public FindInfiniteLoops(IntermediateCode ic, FlowGraph fg, MyFiles files)
             throws CodeOptimizationError
     {
         this.ic = ic;
         this.fg = fg;
+        this.files = files;
         
         analyse();
     }
@@ -92,14 +98,11 @@ public class FindInfiniteLoops
             {
                 Line line = ic.getLine(lnr);
                 
-                Pair<Integer, Integer> lineAndChPair = getLineAndCh(line);
-                if (lineAndChPair.getLeft() != -1)
+                ErrorInfo ei = getErrorInfo(line);
+                if (ei != null)
                 {
-                    int errorLine = lineAndChPair.getLeft();
-                    int errorChNum = lineAndChPair.getRight();
-                    
                     String message = "Infinite loop near";
-                    throw new CodeOptimizationError(message, errorLine, errorChNum);
+                    throw new CodeOptimizationError(message, ei);
                 }
             }
             
@@ -108,13 +111,14 @@ public class FindInfiniteLoops
         }
     }
     
-    private Pair<Integer, Integer> getLineAndCh(Line line)
+    private ErrorInfo getErrorInfo(Line line)
     {
         StringField sf = (StringField)line.getField(0);
         String fn = sf.getStr();
         
         Integer l = -1;
         Integer ch = -1;
+        Integer fnum = -1;
         
         if (fn.equals(InterpreterFunction.CALL.toString()) 
                 || fn.equals(InterpreterFunction.CALL_LOC.toString()) 
@@ -127,8 +131,16 @@ public class FindInfiniteLoops
             
             StringField sf3 = (StringField)line.getField(3);
             ch = Integer.parseInt(sf3.getStr());
+            
+            IntStringField isf = (IntStringField)line.getField(4);
+            fnum = isf.getNumber();
+            
+            File file = files.getFromNum(fnum);
+            return new ErrorInfo(l, ch, file);
         }
-        
-        return new Pair<Integer, Integer>(l, ch);
+        else
+        {
+            return null;
+        }
     }
 }

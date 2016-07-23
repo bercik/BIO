@@ -42,7 +42,7 @@ import pl.rcebula.utils.OptimizationStatistics;
 public class FlowGraphAnalyseTest
 {
     private final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
-    private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(1, "test"));
+    private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(-1, "test"));
     
     public FlowGraphAnalyseTest()
     {
@@ -108,7 +108,7 @@ public class FlowGraphAnalyseTest
         ic.appendLine(new Line());
         
         OptimizationStatistics statistics = new OptimizationStatistics();
-        FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
+        FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics, new MyFiles());
         
         assertTrue(statistics.getUnusedCodeBlocksLinesRemoved() == 0);
     }
@@ -177,7 +177,7 @@ public class FlowGraphAnalyseTest
         ic.appendLine(new Line());
         
         OptimizationStatistics statistics = new OptimizationStatistics();
-        FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
+        FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics, new MyFiles());
         
         assertTrue(statistics.getUnusedCodeBlocksLinesRemoved() == 1);
     }
@@ -248,7 +248,7 @@ public class FlowGraphAnalyseTest
         boolean catched = false;
         try
         {
-            FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics);
+            FlowGraphAnalyse fga = new FlowGraphAnalyse(ic, statistics, new MyFiles());
         }
         catch (CodeOptimizationError er)
         {

@@ -81,7 +81,8 @@ public class LexerTest
         
         String input = "def onSTART()\n" +
                                "    PRINT(\"Hello World!\\n\")\n" +
-                               "end";
+                               "end\n" + 
+                               "<EOF>\n";
         
         List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
         {{
@@ -129,7 +130,8 @@ public class LexerTest
                                "def onSTART()\n" + 
                                "    ATTACH_TO_EVENT(SOME_EVENT, FOO)\n" + 
                                "    SOME_EVENT(\"test\") % zostanie wypisane na ekran \"test\"\n" +
-                               "end";
+                               "end\n" + 
+                               "<EOF>\n";
         
         List<Token<?>> expectedTokens = new ArrayList<Token<?>>()
         {{

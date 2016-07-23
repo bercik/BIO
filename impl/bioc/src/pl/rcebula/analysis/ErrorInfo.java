@@ -67,19 +67,22 @@ public class ErrorInfo
             {
                 if (i == from.size() - 1)
                 {
-                    str += "In file " + file.getName() + " included from ";
+                    str += "In file " + file.getName() + "\n  included from ";
                 }
                 else
                 {
-                    str += " included from ";
+                    str += "  included from ";
                 }
                 
                 File f = from.get(i);
                 str += f.getName();
+                str += "\n";
             }
+            
+            str += "    ";
         }
         
-        return "line: " + lineNum + ", character: " + chNum + "]";
+        return str + "line: " + lineNum + ", character: " + chNum + "]";
     }
     
     @Override

@@ -45,4 +45,9 @@ public class IntStringField extends StringField
     {
         dos.writeInt(number);
     }
+
+    public int getNumber()
+    {
+        return number;
+    }
 }

@@ -176,12 +176,20 @@ public class App
             timeProfiler.stop();
 
             timeProfiler.stopTotal();
-            if (opts.isTimes())
+            if (opts.isTimes() || opts.isVerbose())
             {
                 System.out.println("TIMES");
                 System.out.println("-------------------------");
                 System.out.println(timeProfiler.toString());
             }
+        }
+        catch (OptsError ex)
+        {
+            System.err.println("Options error: " + ex.getMessage());
+        }
+        catch (PreprocessorError ex)
+        {
+            System.err.println("Preprocessor error: " + ex.getMessage());
         }
         catch (LexerError ex)
         {
@@ -198,14 +206,6 @@ public class App
         catch (CodeOptimizationError ex)
         {
             System.err.println("Code optimization error: " + ex.getMessage());
-        }
-        catch (OptsError ex)
-        {
-            System.err.println("Options error: " + ex.getMessage());
-        }
-        catch (PreprocessorError ex)
-        {
-            System.err.println("Preprocessor error: " + ex.getMessage());
         }
         catch (IOException ex)
         {

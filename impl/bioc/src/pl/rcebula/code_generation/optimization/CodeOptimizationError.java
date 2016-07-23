@@ -16,6 +16,8 @@
  */
 package pl.rcebula.code_generation.optimization;
 
+import pl.rcebula.analysis.ErrorInfo;
+
 /**
  *
  * @author robert
@@ -27,8 +29,8 @@ public class CodeOptimizationError extends Exception
         super(message);
     }
     
-    public CodeOptimizationError(String message, int line, int chNum)
+    public CodeOptimizationError(String message, ErrorInfo ei)
     {
-        super("[line: " + line + ", character: " + chNum + "]: " + message);
+        super(ei.toString() + ": " + message);
     }
 }

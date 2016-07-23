@@ -160,7 +160,7 @@ public class Preprocessor
         p = p.normalize();
         if (debugInfo)
         {
-            return p.toAbsolutePath().toString();
+            return p.toAbsolutePath().normalize().toString();
         }
         else
         {

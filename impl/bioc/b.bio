@@ -1,7 +1,0 @@
-
-#INCLUDE("c.bio")
-def onSTART()
-   PRINT("")
-end
-
-#INCLUDE("d.bio")

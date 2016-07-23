@@ -42,7 +42,7 @@ public class CodeOptimizer
         new RemovePushPopcSequences(ic, statistics);
         new RemovePushBoolJmpSequences(ic, statistics, files);
         new RemoveRedundantJumps(ic, statistics);
-        new FlowGraphAnalyse(ic, statistics);
+        new FlowGraphAnalyse(ic, statistics, files);
         new RemoveJmpsToNextLine(ic, statistics);
         
         logger.fine(ic.toStringWithLinesNumber());
