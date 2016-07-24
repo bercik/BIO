@@ -17,6 +17,7 @@
 package pl.rcebula.preprocessor;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -25,12 +26,13 @@ import java.util.Set;
  */
 public class Modules
 {
-    private final Set<String> modulesName = new HashSet<>();
+    private final Set<Module> modules = new HashSet<>();
 
-    private final Set<String> defaultModules = new HashSet<String>()
+    private final Set<Module> defaultModules = new HashSet<Module>()
     {
         {
-            add("basic");
+            add(new Module("basic"));
+            add(new Module("special"));
         }
     };
     
@@ -40,7 +42,7 @@ public class Modules
     public Modules()
     {
         // add default modules
-        modulesName.addAll(defaultModules);
+        modules.addAll(defaultModules);
     }
 
     public String constructModulePath(String moduleName)
@@ -48,14 +50,14 @@ public class Modules
         return modulesPath + "/" + moduleName + moduleExtension;
     }
     
-    public void addModule(String moduleName)
+    public void addModule(Module m)
     {
-        modulesName.add(moduleName);
+        modules.add(m);
     }
 
-    public Set<String> getModulesName()
+    public Set<Module> getModules()
     {
-        return modulesName;
+        return modules;
     }
 
     @Override
@@ -63,9 +65,9 @@ public class Modules
     {
         String str = "";
         
-        for (String m : modulesName)
+        for (Module m : modules)
         {
-            str += m + ", ";
+            str += m.toString() + ", ";
         }
         
         if (str.length() != 0)
@@ -74,5 +76,78 @@ public class Modules
         }
         
         return str;
+    }
+    
+    public static class Module
+    {
+        private final String name;
+        private final String file;
+        private final int line;
+
+        public Module(String name)
+        {
+            this.name = name;
+            this.file = "";
+            this.line = -1;
+        }
+        
+        public Module(String name, String file, int line)
+        {
+            this.name = name;
+            this.file = file;
+            this.line = line;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public String getFile()
+        {
+            return file;
+        }
+
+        public int getLine()
+        {
+            return line;
+        }
+
+        @Override
+        public String toString()
+        {
+            return name;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            int hash = 3;
+            hash = 59 * hash + Objects.hashCode(this.name);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null)
+            {
+                return false;
+            }
+            if (getClass() != obj.getClass())
+            {
+                return false;
+            }
+            final Module other = (Module)obj;
+            if (!Objects.equals(this.name, other.name))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

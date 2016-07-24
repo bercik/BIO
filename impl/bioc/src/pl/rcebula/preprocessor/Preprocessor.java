@@ -178,7 +178,8 @@ public class Preprocessor
     {
         List<String> resultLines = new ArrayList<>();
 
-        int it = 1;
+        // od zera, bo pierwsza linijka to <fs
+        int it = 0;
         for (String line : lines)
         {
             // jeżeli dyrektywa preprocesora
@@ -259,7 +260,7 @@ public class Preprocessor
                     {
                         // pobieramy nazwę importowanego modułu i dodajemy
                         String moduleName = m.group(1);
-                        modules.addModule(moduleName);
+                        modules.addModule(new Modules.Module(moduleName, file, it));
                         // w tym miejscu wstawiamy pustą linijkę
                         resultLines.add("");
                     }

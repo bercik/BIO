@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,6 +31,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import pl.rcebula.preprocessor.Modules;
+import pl.rcebula.preprocessor.Modules.Module;
+import pl.rcebula.preprocessor.PreprocessorError;
 
 /**
  *
@@ -40,14 +43,14 @@ public class BuiltinFunctionsParser
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
 
     public BuiltinFunctionsParser(boolean internal, Modules modules)
-            throws IOException, SAXException, ParserConfigurationException
+            throws IOException, SAXException, ParserConfigurationException, PreprocessorError
     {
-        for (String moduleName : modules.getModulesName())
+        for (Module module : modules.getModules())
         {
+            String path = modules.constructModulePath(module.getName());
+
             InputStream is;
 
-            String path = modules.constructModulePath(moduleName);
-            
             if (internal)
             {
                 is = readInternalFile(path, "UTF-8");
@@ -57,11 +60,37 @@ public class BuiltinFunctionsParser
                 is = readExternalFile(path, "UTF-8");
             }
             
+            if (is == null)
+            {
+                String message = "Module " + module.getName() + " doesn't exist";
+                throw new PreprocessorError(module.getFile(), message, module.getLine());
+            }
+
             readXMLFile(is);
         }
     }
 
-    private void readXMLFile(InputStream is) 
+    public BuiltinFunctionsParser(boolean internal, String... paths)
+            throws IOException, SAXException, ParserConfigurationException
+    {
+        for (String path : paths)
+        {
+            InputStream is;
+
+            if (internal)
+            {
+                is = readInternalFile(path, "UTF-8");
+            }
+            else
+            {
+                is = readExternalFile(path, "UTF-8");
+            }
+
+            readXMLFile(is);
+        }
+    }
+
+    private void readXMLFile(InputStream is)
             throws SAXException, IOException, ParserConfigurationException
     {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -83,7 +112,7 @@ public class BuiltinFunctionsParser
                 // Pobierz wartość wszystkich podelementów
                 String name = elem.getElementsByTagName("name")
                         .item(0).getChildNodes().item(0).getNodeValue().trim();
-                
+
                 // Sprawdź czy ta nazwa się nie powtarza
                 if (contains(builtinFunctions, name))
                 {
@@ -102,7 +131,7 @@ public class BuiltinFunctionsParser
 
                 List<ParamType> params = new ArrayList<>();
                 List<Boolean> repeatPattern = new ArrayList<>();
-                
+
                 Element e = (Element)elem.getElementsByTagName("params").item(0);
                 NodeList nl = e.getElementsByTagName("param");
                 for (int j = 0; j < nl.getLength(); ++j)
@@ -116,16 +145,16 @@ public class BuiltinFunctionsParser
                     }
                     String s = n.getChildNodes().item(0).getNodeValue().trim().toUpperCase();
                     ParamType param = ParamType.valueOf(s);
-                    
+
                     params.add(param);
                     repeatPattern.add(repeat);
                 }
-                
+
                 builtinFunctions.add(new BuiltinFunction(name, special, params, repeatPattern));
             }
         }
     }
-    
+
     private boolean contains(List<BuiltinFunction> bfs, String name)
     {
         for (BuiltinFunction bf : bfs)
@@ -135,10 +164,10 @@ public class BuiltinFunctionsParser
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     public List<BuiltinFunction> getBuiltinFunctions()
     {
         return builtinFunctions;

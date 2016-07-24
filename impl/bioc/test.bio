@@ -1,6 +1,0 @@
-def onSTART()
-   PRINT("something")
-end
-
-#IMPORT("io")
-#IMPORT("io")
