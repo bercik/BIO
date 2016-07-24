@@ -7,6 +7,7 @@ package pl.rcebula.intermediate_code;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
@@ -23,7 +24,7 @@ public class UserFunction
     private final ErrorInfo errorInfo;
     private final List<Line> lines = new ArrayList<Line>();
     
-    private final HashSet<String> observers = new HashSet<>();
+    private final LinkedHashSet<String> observers = new LinkedHashSet<>();
 
     public UserFunction(String name, ErrorInfo errorInfo)
     {
@@ -61,7 +62,7 @@ public class UserFunction
         return lines;
     }
 
-    public HashSet<String> getObservers()
+    public LinkedHashSet<String> getObservers()
     {
         return observers;
     }

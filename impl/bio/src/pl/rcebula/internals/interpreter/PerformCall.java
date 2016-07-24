@@ -28,13 +28,22 @@ public class PerformCall
         CallFrame cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, ei);
         interpreter.pushFrameToStack(cf);
 
-        // tworzymy ramki dla każdego obserwatora w losowej kolejności, z zaznaczeniem, że nie interesuje nas
-        // zwracana przez nie wartość
+        // tworzymy ramki dla każdego obserwatora w takiej kolejności w jakiej były dodawane, 
+        // z zaznaczeniem, że nie interesuje nas zwracana przez nie wartość
+        // Jeżeli funkcja obserwatora miała obserwatorów to także dodajemy
+        pushCallFrameForObservers(uf, interpreter, ei);
+    }
+    
+    private void pushCallFrameForObservers(UserFunction uf, Interpreter interpreter, ErrorInfo ei)
+    {
         for (String observer : uf.getObservers())
         {
             uf = interpreter.userFunctions.get(observer);
-            cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, ei, false);
+            CallFrame cf = new CallFrame(interpreter.currentFrame.getStackParameters(), uf, ei, false);
             interpreter.pushFrameToStack(cf);
+            
+            // dodajemy obserwatorów tej funkcji rekursywnie
+            pushCallFrameForObservers(uf, interpreter, ei);
         }
     }
 }

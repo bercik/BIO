@@ -30,6 +30,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 id
             </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                id
+            </param>
         </params>
     </function>
     
@@ -56,6 +62,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 id
             </param>
             <param>
+                id
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
                 id
             </param>
         </params>

@@ -1,0 +1,3 @@
+def onSTART(args)
+   PRINT(args)
+end

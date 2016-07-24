@@ -2,11 +2,29 @@ def SOME_EVENT(input)
    DN()
 end
 
-def FOO(param)
-   PRINT(param)
+def FOO1(param)
+   PRINT("FOO:", param, "\n")
+end
+
+def FOO2(param)
+   PRINT("FOO2:", param, "\n")
+end
+
+def FOO11(param)
+   PRINT("FOO11:", param, "\n")
+end
+
+def FOO21(param)
+   PRINT("FOO21:", param, "\n")
 end
 
 def onSTART()
-   ATTACH_TO_EVENT(SOME_EVENT, FOO)
-   SOME_EVENT("test") % zostanie wypisane na ekran "test"
+   ATTACH_TO_EVENT(SOME_EVENT, FOO1, SOME_EVENT, FOO2)
+   ATTACH_TO_EVENT(FOO1, FOO11)
+   ATTACH_TO_EVENT(FOO2, FOO21)
+   SOME_EVENT("test")
+   % FOO11: test
+   % FOO1: test
+   % FOO21: test
+   % FOO2: test
 end
