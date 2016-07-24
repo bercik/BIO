@@ -20,7 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -59,7 +58,7 @@ public class BuiltinFunctionsParser
             {
                 is = readExternalFile(path, "UTF-8");
             }
-            
+
             if (is == null)
             {
                 String message = "Module " + module.getName() + " doesn't exist";
@@ -100,7 +99,14 @@ public class BuiltinFunctionsParser
         // Document class.
         Document document = builder.parse(is);
 
-        NodeList nodeList = document.getDocumentElement().getElementsByTagName("function");
+        readFunctions(document, "function", true, true);
+        readFunctions(document, "event", false, false);
+    }
+
+    private void readFunctions(Document document, String tagName, boolean allowRepeat,
+            boolean allowSpecial)
+    {
+        NodeList nodeList = document.getDocumentElement().getElementsByTagName(tagName);
         for (int i = 0; i < nodeList.getLength(); i++)
         {
             Node node = nodeList.item(i);
@@ -121,12 +127,15 @@ public class BuiltinFunctionsParser
                     throw new RuntimeException(msg);
                 }
 
-                NodeList tmpNL = elem.getElementsByTagName("special");
                 boolean special = false;
-                if (tmpNL.getLength() > 0)
+                if (allowSpecial)
                 {
-                    special = Boolean.parseBoolean(tmpNL.item(0)
-                            .getChildNodes().item(0).getNodeValue().trim());
+                    NodeList tmpNL = elem.getElementsByTagName("special");
+                    if (tmpNL.getLength() > 0)
+                    {
+                        special = Boolean.parseBoolean(tmpNL.item(0)
+                                .getChildNodes().item(0).getNodeValue().trim());
+                    }
                 }
 
                 List<ParamType> params = new ArrayList<>();
@@ -141,8 +150,17 @@ public class BuiltinFunctionsParser
                     Node attr = n.getAttributes().getNamedItem("repeat");
                     if (attr != null)
                     {
-                        repeat = Boolean.parseBoolean(attr.getNodeValue());
+                        if (allowRepeat)
+                        {
+                            repeat = Boolean.parseBoolean(attr.getNodeValue());
+                        }
+                        else
+                        {
+                            String message = "In event " + name + " repeat attribute isn't allowed";
+                            throw new RuntimeException(message);
+                        }
                     }
+
                     String s = n.getChildNodes().item(0).getNodeValue().trim().toUpperCase();
                     ParamType param = ParamType.valueOf(s);
 

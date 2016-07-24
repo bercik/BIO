@@ -16,15 +16,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-
 <functions>
-    <!-- funkcje podstawowe -->
-    <!-- przypisywanie zmiennych, zwracanie z funkcji, sprawdzenie czy zmienna jest lokalna czy globalna -->
-    <!-- pobranie globalnej zmiennej -->
+    <!-- funkcje lokalne-->
     <function>
         <name>
             ASSIGN_LOCAL
         </name>
+        <special>
+            false
+        </special>
         <params>
             <param>
                 id
@@ -32,87 +32,72 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 all
             </param>
-            <param repeat="true">
-                id
-            </param>
-            <param repeat="true">
-                all
-            </param>
         </params>
     </function>
     
+    <!-- funkcje specjalne-->
     <function>
         <name>
-            ASSIGN_GLOBAL
+            FOR
         </name>
+        <special>
+            true
+        </special>
         <params>
             <param>
-                id
+                call
             </param>
             <param>
                 all
             </param>
-            <param repeat="true">
-                id
+            <param>
+                call
             </param>
-            <param repeat="true">
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            BREAK
+        </name>
+        <special>
+            true
+        </special>
+        <params>
+        </params>
+    </function>
+    
+    <!-- funkcje inne -->
+    <function>
+        <name>
+            ADD
+        </name>
+        <special>
+            false
+        </special>
+        <params>
+            <param>
                 all
             </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            IS_LOCAL
-        </name>
-        <params>
-            <param>
-                id
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            IS_GLOBAL
-        </name>
-        <params>
-            <param>
-                id
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            GET_GLOBAL
-        </name>
-        <params>
-            <param>
-                id
-            </param>
-        </params>
-    </function>
-    
-    <function>
-        <name>
-            RETURN
-        </name>
-        <params>
             <param>
                 all
             </param>
         </params>
     </function>
     
+    <!-- event z repeat -->
     <event>
         <name>
-            onUNHANDLED_ERROR
+            SOME_EVENT
         </name>
         <params>
             <param>
                 all
+            </param>
+            <param repeat="true">
+                id
             </param>
         </params>
     </event>
+    
 </functions>

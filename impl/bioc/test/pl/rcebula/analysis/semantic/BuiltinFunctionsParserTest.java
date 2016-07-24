@@ -127,4 +127,25 @@ public class BuiltinFunctionsParserTest
 
         assertTrue(catched);
     }
+    
+    @Test
+    public void testEventWithRepeat()
+            throws Exception
+    {
+        System.out.println("testEventWithRepeat");
+
+        boolean catched = false;
+        try
+        {
+            BuiltinFunctionsParser instance
+                    = new BuiltinFunctionsParser(true, "/pl/rcebula/res/builtin_functions_test_event_repeat.xml");
+        }
+        catch (RuntimeException ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+
+        assertTrue(catched);
+    }
 }
