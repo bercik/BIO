@@ -12,7 +12,8 @@ syn keyword basicLanguageKeywords end
 syn match closePar ")" display contained
 syn match openPar "(" display contained
 
-syn match includeStmts "#INCLUDE(" contains=openPar
+syn match includeStmts "#INCLUDE\s*(" contains=openPar
+syn match importStmts "#IMPORT\s*(" contains=openPar
 
 syn match def "def" display contained
 syn match function "def\s\+[_a-zA-Z\u0100-\uFFFF][_0-9a-zA-Z\u0100-\uFFFF]*\s*(" contains=def,openPar
@@ -45,6 +46,7 @@ hi def link basicLanguageKeywords    Keyword
 hi def link def                      Keyword
 hi def link string                   Constant
 hi def link includeStmts             Constant
+hi def link importStmts             Constant
 hi def link function                 Function
 hi def link functionCall             Function
 hi def link stringEscape             Special

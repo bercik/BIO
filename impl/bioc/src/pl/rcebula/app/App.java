@@ -99,20 +99,7 @@ public class App
 
             // builtin functions parser
             timeProfiler.start("BuiltinFunctionsParser");
-            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(true,
-                    "/pl/rcebula/res/arrays.xml",
-                    "/pl/rcebula/res/basic.xml",
-                    "/pl/rcebula/res/compare.xml",
-                    "/pl/rcebula/res/conversion.xml",
-                    "/pl/rcebula/res/errors.xml",
-                    "/pl/rcebula/res/ints.xml",
-                    "/pl/rcebula/res/io.xml",
-                    "/pl/rcebula/res/logic.xml",
-                    "/pl/rcebula/res/math.xml",
-                    "/pl/rcebula/res/observer.xml",
-                    "/pl/rcebula/res/special.xml",
-                    "/pl/rcebula/res/strings.xml",
-                    "/pl/rcebula/res/type_check.xml");
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(true, preprocessor.getModules());
             timeProfiler.stop();
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 

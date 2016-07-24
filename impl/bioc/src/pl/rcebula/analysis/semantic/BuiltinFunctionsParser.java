@@ -29,6 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import pl.rcebula.preprocessor.Modules;
 
 /**
  *
@@ -38,13 +39,15 @@ public class BuiltinFunctionsParser
 {
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
 
-    public BuiltinFunctionsParser(boolean internal, String... paths)
+    public BuiltinFunctionsParser(boolean internal, Modules modules)
             throws IOException, SAXException, ParserConfigurationException
     {
-        for (String path : paths)
+        for (String moduleName : modules.getModulesName())
         {
             InputStream is;
 
+            String path = modules.constructModulePath(moduleName);
+            
             if (internal)
             {
                 is = readInternalFile(path, "UTF-8");

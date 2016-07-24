@@ -42,9 +42,12 @@ import pl.rcebula.error_report.MyFiles.File;
  */
 public class Preprocessor
 {
+    // regex
     public final static String startOfDirective = "#";
-    public final static String includeDirectiveRegex = "^" + startOfDirective + "INCLUDE\\(\\\"(.*)\\\"\\)$";
+    public final static String includeDirectiveRegex = "^" + startOfDirective + "INCLUDE\\s*\\(\\s*\\\"(.*)\\\"\\s*\\)$";
     private final static Pattern includePattern = Pattern.compile(includeDirectiveRegex);
+    public final static String importDirectiveRegex = "^" + startOfDirective + "IMPORT\\s*\\(\\s*\\\"(.*)\\\"\\s*\\)$";
+    private final static Pattern importPattern = Pattern.compile(importDirectiveRegex);
 
     private final String input;
     private final List<Path> includedPaths = new ArrayList<>();
@@ -52,6 +55,7 @@ public class Preprocessor
 
     private final boolean debugInfo;
     private final MyFiles files = new MyFiles();
+    private final Modules modules = new Modules();
 
     public Preprocessor(String path, boolean debugInfo)
             throws IOException, PreprocessorError
@@ -183,12 +187,16 @@ public class Preprocessor
                 // ścieżka do aktualnego pliku (używana przy wypisywaniu błędów)
                 String file = currentPath.toAbsolutePath().normalize().toString();
 
+                // zmienna pomocnicza
+                boolean matched = false;
+                
                 // obcinamy początkowe i końcowe białe znaki
                 line = line.trim();
-                // sprawdzamy czy linia pasuje do wzorca
+                // sprawdzamy czy linia pasuje do wzorca include
                 Matcher m = includePattern.matcher(line);
                 if (m.find())
                 {
+                    matched = true;
                     // pobieramy ścieżkę do pliku
                     String filePath = m.group(1);
                     Path p;
@@ -244,6 +252,21 @@ public class Preprocessor
                 }
                 else
                 {
+                    matched = true;
+                    // sprawdzamy czy linia pasuje do wzorca include
+                    m = importPattern.matcher(line);
+                    if (m.find())
+                    {
+                        // pobieramy nazwę importowanego modułu i dodajemy
+                        String moduleName = m.group(1);
+                        modules.addModule(moduleName);
+                        // w tym miejscu wstawiamy pustą linijkę
+                        resultLines.add("");
+                    }
+                }
+                
+                if (!matched)
+                {
                     String message = "Bad preprocessor directive: " + line;
                     throw new PreprocessorError(file, message, it);
                 }
@@ -260,6 +283,11 @@ public class Preprocessor
         return resultLines;
     }
 
+    public Modules getModules()
+    {
+        return modules;
+    }
+    
     public MyFiles getFiles()
     {
         return files;
