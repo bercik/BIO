@@ -50,6 +50,7 @@ import pl.rcebula.preprocessor.PreprocessorError;
 public class BuiltinFunctionsParser
 {
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
+    private final List<String> modulesName = new ArrayList<>();
 
     public BuiltinFunctionsParser(Modules modules)
             throws IOException, SAXException, ParserConfigurationException, PreprocessorError,
@@ -77,6 +78,8 @@ public class BuiltinFunctionsParser
                 if (path.endsWith(Modules.moduleExtension))
                 {
                     InputStream is = readInternalFile(path);
+                    String moduleName = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+                    modulesName.add(moduleName);
 
                     readXMLFile(is);
                 }
@@ -95,12 +98,15 @@ public class BuiltinFunctionsParser
                     String message = "Module " + module.getName() + " doesn't exist";
                     throw new PreprocessorError(module.getFile(), message, module.getLine());
                 }
+                
+                modulesName.add(module.getName());
 
                 readXMLFile(is);
             }
         }
     }
 
+    // used only in tests
     public BuiltinFunctionsParser(boolean internal, String... paths)
             throws IOException, SAXException, ParserConfigurationException
     {
@@ -121,6 +127,11 @@ public class BuiltinFunctionsParser
         }
     }
 
+    public List<String> getModulesName()
+    {
+        return modulesName;
+    }
+    
     private void readXMLFile(InputStream is)
             throws SAXException, IOException, ParserConfigurationException
     {
