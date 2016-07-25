@@ -5,7 +5,6 @@
  */
 package pl.rcebula.modules;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,20 +22,45 @@ import pl.rcebula.internals.data_types.MyError;
 public class BuiltinFunctions
 {
     private final Map<String, IFunction> functions = new HashMap<>();
-    private final List<IModule> modules = new ArrayList<>();
+    private final Map<String, IModule> modules = new HashMap<>();
 
-    public BuiltinFunctions()
+    public BuiltinFunctions(List<String> modulesName)
     {
-        modules.add(new BasicModule());
-        modules.add(new IoModule());
+        putModule(new BasicModule());
+        putModule(new IoModule());
         
+        createFunctionsInModules(modulesName);
         getFunctionsFromModules();
+    }
+    
+    private void putModule(IModule module)
+    {
+        modules.put(module.getName(), module);
+    }
+    
+    private void createFunctionsInModules(List<String> modulesName)
+    {
+        for (String moduleName : modulesName)
+        {
+            IModule module = modules.get(moduleName);
+            
+            if (module != null)
+            {
+                module.createFunctions();
+            }
+            else
+            {
+                String message = "There is no implementation for module " + moduleName;
+                throw new RuntimeException(message);
+            }
+        }
     }
     
     private void getFunctionsFromModules()
     {
-        for (IModule m : modules)
+        for (Map.Entry<String, IModule> set : modules.entrySet())
         {
+            IModule m = set.getValue();
             functions.putAll(m.getFunctions());
         }
     }

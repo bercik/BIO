@@ -52,12 +52,15 @@ public class BuiltinFunctionsParser
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
     private final List<String> modulesName = new ArrayList<>();
 
+    private static final String allModule = "all";
+    private static final String specialModule = "special";
+
     public BuiltinFunctionsParser(Modules modules)
             throws IOException, SAXException, ParserConfigurationException, PreprocessorError,
             URISyntaxException
     {
         // jeżeli #IMPORT("all") to wczytujemy wszystkie pliki xml z folderu
-        if (modules.getModules().contains(new Module("all")))
+        if (modules.getModules().contains(new Module(allModule)))
         {
             URI uri = getClass().getResource(Modules.modulesPath).toURI();
             Path myPath;
@@ -79,7 +82,11 @@ public class BuiltinFunctionsParser
                 {
                     InputStream is = readInternalFile(path);
                     String moduleName = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-                    modulesName.add(moduleName);
+                    // jeżeli nazwa modułu to special to nie dodajemy
+                    if (!moduleName.equals(specialModule))
+                    {
+                        modulesName.add(moduleName);
+                    }
 
                     readXMLFile(is);
                 }
@@ -98,8 +105,12 @@ public class BuiltinFunctionsParser
                     String message = "Module " + module.getName() + " doesn't exist";
                     throw new PreprocessorError(module.getFile(), message, module.getLine());
                 }
-                
-                modulesName.add(module.getName());
+
+                // jeżeli nazwa modułu to special to nie dodajemy
+                if (!module.getName().equals(specialModule))
+                {
+                    modulesName.add(module.getName());
+                }
 
                 readXMLFile(is);
             }
@@ -131,7 +142,7 @@ public class BuiltinFunctionsParser
     {
         return modulesName;
     }
-    
+
     private void readXMLFile(InputStream is)
             throws SAXException, IOException, ParserConfigurationException
     {

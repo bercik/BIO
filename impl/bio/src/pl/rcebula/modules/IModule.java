@@ -15,4 +15,10 @@ public interface IModule
 {
     // zwraca mapę wszystkich funkcji z danego modułu
     public Map<String, IFunction> getFunctions();
+    
+    // zwraca nazwę modułu (musi być taka sama jak nazwa pliku .xml w kompilatorze w katalogu /pl/rcebula/res
+    public String getName();
+    
+    // tworzy funkcję i dodaje do mapy zwracanej z funkcji getFunctions()
+    public void createFunctions();
 }

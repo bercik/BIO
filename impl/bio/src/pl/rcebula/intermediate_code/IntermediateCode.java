@@ -35,6 +35,7 @@ public class IntermediateCode
 {
     private final Map<String, UserFunction> userFunctions = new HashMap<>();
     private final MyFiles files = new MyFiles(false);
+    private final List<String> modulesName = new ArrayList<>();
     private final Logger logger = Logger.getGlobal();
 
     public IntermediateCode(String path)
@@ -65,6 +66,15 @@ public class IntermediateCode
     {
         int currentLnr = 0;
 
+        // przeczytaj informację o modułach
+        String moduleName = dis.readUTF();
+        while (!moduleName.equals(""))
+        {
+            modulesName.add(moduleName);
+            moduleName = dis.readUTF();
+        }
+        currentLnr += 2;
+        
         // przeczytaj informacje o plikach
         int fnum = dis.readInt();
         while (fnum != 0)
@@ -246,6 +256,14 @@ public class IntermediateCode
     {
         String result = "";
         
+        result += "<Modules>\n";
+        for (String m : modulesName)
+        {
+            result += m + Constants.fieldsSeparator;
+        }
+        result = result.substring(0, result.length() - Constants.fieldsSeparator.length());
+        result += "\n\n";
+        
         result += "<Error informations files>\n";
         for (File f : files.getFiles())
         {
@@ -260,10 +278,9 @@ public class IntermediateCode
             result = result.substring(0, result.length() - Constants.fieldsSeparator.length());
             result += "\n";
         }
-        
         result += "\n";
-        result += "<functions>\n";
         
+        result += "<Functions>\n";
         for (UserFunction uf : userFunctions.values())
         {
             result += uf.toStringWithLineNumbers() + "\n";
@@ -272,6 +289,11 @@ public class IntermediateCode
         return result;
     }
 
+    public List<String> getModulesName()
+    {
+        return modulesName;
+    }
+    
     public Map<String, UserFunction> getUserFunctions()
     {
         return userFunctions;

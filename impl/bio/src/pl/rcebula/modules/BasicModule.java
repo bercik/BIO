@@ -19,7 +19,18 @@ import pl.rcebula.internals.data_types.MyError;
  */
 public class BasicModule extends Module
 {
+    @Override
+    public String getName()
+    {
+        return "basic";
+    }
+    
     public BasicModule()
+    {
+    }
+
+    @Override
+    public void createFunctions()
     {
         putFunction(new AssignLocalFunction());
         putFunction(new AssignGlobalFunction());

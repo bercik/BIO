@@ -8,7 +8,6 @@ package pl.rcebula.modules;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
@@ -21,7 +20,18 @@ import pl.rcebula.internals.interpreter.Interpreter;
  */
 public class IoModule extends Module
 {
+    @Override
+    public String getName()
+    {
+        return "io";
+    }
+    
     public IoModule()
+    {
+    }
+
+    @Override
+    public void createFunctions()
     {
         putFunction(new PrintFunction());
     }

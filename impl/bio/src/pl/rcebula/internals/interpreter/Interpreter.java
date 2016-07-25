@@ -91,6 +91,8 @@ public class Interpreter
             currentFrame.setIp(ip + 1);
             // koniec wczytywania
             timeProfiler.stop();
+            
+            logger.fine(line.toString());
 
             // w zależności od opcode wykonujemy różne akcje
             switch (line.getInterpreterFunction())
@@ -181,7 +183,7 @@ public class Interpreter
     {
         profiler.exit();
         CallFrame cf = frameStack.pop();
-
+        
         if (frameStack.size() > 0)
         {
             setCurrentFrame(frameStack.peek());
