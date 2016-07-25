@@ -148,4 +148,26 @@ public class BuiltinFunctionsParserTest
 
         assertTrue(catched);
     }
+    
+    @Test
+    public void testEventWithDiffrentParamType()
+            throws Exception
+    {
+        System.out.println("testEventWithDiffrentParamType");
+
+        boolean catched = false;
+        try
+        {
+            BuiltinFunctionsParser instance
+                    = new BuiltinFunctionsParser(true, 
+                            "/pl/rcebula/res/builtin_functions_test_event_diffrent_param_type.xml");
+        }
+        catch (RuntimeException ex)
+        {
+            System.err.println(ex.getMessage());
+            catched = true;
+        }
+
+        assertTrue(catched);
+    }
 }

@@ -153,12 +153,12 @@ public class BuiltinFunctionsParser
         // Document class.
         Document document = builder.parse(is);
 
-        readFunctions(document, "function", true, true);
-        readFunctions(document, "event", false, false);
+        readFunctions(document, "function", true, true, true);
+        readFunctions(document, "event", false, false, false);
     }
 
     private void readFunctions(Document document, String tagName, boolean allowRepeat,
-            boolean allowSpecial)
+            boolean allowSpecial, boolean allowDiffrentParamTypes)
     {
         NodeList nodeList = document.getDocumentElement().getElementsByTagName(tagName);
         for (int i = 0; i < nodeList.getLength(); i++)
@@ -217,6 +217,14 @@ public class BuiltinFunctionsParser
 
                     String s = n.getChildNodes().item(0).getNodeValue().trim().toUpperCase();
                     ParamType param = ParamType.valueOf(s);
+                    if (!allowDiffrentParamTypes)
+                    {
+                        if (!param.equals(ParamType.ALL))
+                        {
+                            String message = "In event " + name + " param type " + param + " isn't allowed";
+                            throw new RuntimeException(message);
+                        }
+                    }
 
                     params.add(param);
                     repeatPattern.add(repeat);
