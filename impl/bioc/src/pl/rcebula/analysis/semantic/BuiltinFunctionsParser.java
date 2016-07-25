@@ -19,8 +19,18 @@ package pl.rcebula.analysis.semantic;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,31 +51,53 @@ public class BuiltinFunctionsParser
 {
     private final List<BuiltinFunction> builtinFunctions = new ArrayList<>();
 
-    public BuiltinFunctionsParser(boolean internal, Modules modules)
-            throws IOException, SAXException, ParserConfigurationException, PreprocessorError
+    public BuiltinFunctionsParser(Modules modules)
+            throws IOException, SAXException, ParserConfigurationException, PreprocessorError,
+            URISyntaxException
     {
-        for (Module module : modules.getModules())
+        // jeżeli #IMPORT("all") to wczytujemy wszystkie pliki xml z folderu
+        if (modules.getModules().contains(new Module("all")))
         {
-            String path = modules.constructModulePath(module.getName());
-
-            InputStream is;
-
-            if (internal)
+            URI uri = getClass().getResource(Modules.modulesPath).toURI();
+            Path myPath;
+            if (uri.getScheme().equals("jar"))
             {
-                is = readInternalFile(path, "UTF-8");
+                FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+                myPath = fileSystem.getPath(Modules.modulesPath);
             }
             else
             {
-                is = readExternalFile(path, "UTF-8");
+                myPath = Paths.get(uri);
             }
-
-            if (is == null)
+            Stream<Path> walk = Files.walk(myPath, 1);
+            for (Iterator<Path> it = walk.iterator(); it.hasNext();)
             {
-                String message = "Module " + module.getName() + " doesn't exist";
-                throw new PreprocessorError(module.getFile(), message, module.getLine());
-            }
+                String path = it.next().toString();
 
-            readXMLFile(is);
+                if (path.endsWith(Modules.moduleExtension))
+                {
+                    InputStream is = readInternalFile(path);
+
+                    readXMLFile(is);
+                }
+            }
+        }
+        else
+        {
+            for (Module module : modules.getModules())
+            {
+                String path = modules.constructModulePath(module.getName());
+
+                InputStream is = readInternalFile(path);
+
+                if (is == null)
+                {
+                    String message = "Module " + module.getName() + " doesn't exist";
+                    throw new PreprocessorError(module.getFile(), message, module.getLine());
+                }
+
+                readXMLFile(is);
+            }
         }
     }
 
@@ -78,11 +110,11 @@ public class BuiltinFunctionsParser
 
             if (internal)
             {
-                is = readInternalFile(path, "UTF-8");
+                is = readInternalFile(path);
             }
             else
             {
-                is = readExternalFile(path, "UTF-8");
+                is = readExternalFile(path);
             }
 
             readXMLFile(is);
@@ -191,7 +223,7 @@ public class BuiltinFunctionsParser
         return builtinFunctions;
     }
 
-    private InputStream readExternalFile(String path, String encoding)
+    private InputStream readExternalFile(String path)
             throws IOException
     {
         String dirPath = System.getProperty("user.dir");
@@ -199,7 +231,7 @@ public class BuiltinFunctionsParser
         return is;
     }
 
-    private InputStream readInternalFile(String path, String encoding)
+    private InputStream readInternalFile(String path)
             throws IOException
     {
         InputStream is = getClass().getResourceAsStream(path);

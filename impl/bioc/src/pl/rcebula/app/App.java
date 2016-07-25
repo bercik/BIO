@@ -99,7 +99,7 @@ public class App
 
             // builtin functions parser
             timeProfiler.start("BuiltinFunctionsParser");
-            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(true, preprocessor.getModules());
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(preprocessor.getModules());
             timeProfiler.stop();
             List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 

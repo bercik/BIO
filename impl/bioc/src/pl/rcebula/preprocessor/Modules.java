@@ -36,8 +36,8 @@ public class Modules
         }
     };
     
-    private static final String modulesPath = "/pl/rcebula/res";
-    private static final String moduleExtension = ".xml";
+    public static final String modulesPath = "/pl/rcebula/res";
+    public static final String moduleExtension = ".xml";
 
     public Modules()
     {
