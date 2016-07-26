@@ -1,0 +1,160 @@
+<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><link rel="stylesheet" type="text/css" href="index.css">
+<title>BIO DOC</title>
+</head>
+<body>
+<h1 id="title">BIO Documentation</h1>
+<a name="index"></a>
+<h3>Table of contents</h3>
+<ul class="nav nav-pills nav-stacked">
+<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#io">io</a><li><a href="#observer">observer</a></ul>
+<a name="_header"></a><hr/><div class="data_types">
+   <h1>Data types</h1>
+   <p><b>array</b> - series of elements of any type. Mutable</p>
+   <p><b>bool</b> - has only two posible values: true and false. Immutable</p>
+   <p><b>dict</b> - collections of pairs &ltstring, any&gt. Mutable</p>
+   <p><b>error</b> - contains informations about error that appears. Immutable</p>
+   <p><b>float</b> - single-precision 32-bit IEEE 754 floating point. Immutable</p>
+   <p><b>int</b> - 32-bit signed two's complement integer, which has a minimum value of -2<sup>31</sup> and a maximum value of 2<sup>31</sup>-1. Immutable</p>
+   <p><b>none</b> - represents absent of value. Immutable</p>
+   <p><b>string</b> - represents sequence of characters. Immutable</p>
+   <p><b>tuple</b> - series of elements of any type. Immutable</p>
+</div>
+<a name="basic"></a><h1>basic</h1>
+<hr/>
+<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - variable identifier</p>
+<p><i>val</i> (<u>all</u>) - variable value</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - last given value</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - variable identifier</p>
+<p><i>val</i> (<u>all</u>) - variable value</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - last given value</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>IS_LOCAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is local</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - variable identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>IS_GLOBAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is global</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - variable identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>GET_GLOBAL</b> (<i>id</i>)</p><p>Returnes global variable with identifier <i>id</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - global variable identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - global variable value</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>NO_GLOBAL_VARIABLE</i> - if there is no global variable with <i>id</i> identifier</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>RETURN</b> (<i>val</i>)</p><p>Returnes value <i>val</i> from function</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>all</u>) - value to be returned</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>err</i> (<u>error</u>) - error returned from onSTART function</p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="io"></a><h1>io</h1>
+<hr/>
+<p class="fun_header"><b>PRINT</b> (<i>&ltval&gt</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by space</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>all</u>) - value to print</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string</u>) - printed string</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>PRINTLN</b> (<i>&ltval&gt</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by newlines</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>all</u>) - value to print</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string</u>) - printed string</p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="observer"></a><h1>observer</h1>
+<hr/>
+<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>) - function to be observed</p>
+<p><i>callback</i> (<u>id</u>) - function to be attached</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>none</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>CALLBACK_ALREADY_ATTACHED</i> - if <i>callback</i> is already attached to <i>event</i> </p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>IS_ATTACHED</b> (<i>event, callback</i>)</p><p>Checks whether <i>callback</i> is attached to <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>)</p>
+<p><i>callback</i> (<u>id</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>bool</u>) - true if <i>callback</i> is attached to <i>event</i>, otherwise false</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>) - observed function</p>
+<p><i>callback</i> (<u>id</u>) - function to be detached</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>none</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a></body>
+</html>

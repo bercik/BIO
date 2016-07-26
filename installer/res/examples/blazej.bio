@@ -1,0 +1,28 @@
+def onSTART()
+   IF(czyPierwsza(13), PRINT("Jest"), PRINT("Nie"))
+   IF(czyPierwsza(6), PRINT("Jest"), PRINT("Nie"))
+   UNPACK(x, y, z, getNum(10))
+end 
+
+def czyPierwsza(liczba)
+   FOR
+   (
+      ASSIGN_LOCAL(i,2),
+      LS(i,SUB(liczba,1)),
+      IF( EQ(REST(liczba, i),0), RETURN(FALSE), DN()),
+      INC(i)
+   )
+   RETURN(TRUE)
+end
+
+def getNum(gran)
+   ASSIGN_LOCAL(tab, CREATE_ARRAY(gran))
+   FOR
+   (
+      ASSIGN_LOCAL(i,0),
+      LS(i,gran),
+      IF(czyPierwsza(i), SET(tab, i, i), DN()),
+      INC(i)
+   )
+   RETURN(tab)
+end

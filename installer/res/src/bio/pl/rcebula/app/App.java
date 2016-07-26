@@ -41,24 +41,24 @@ public class App
             // time profiler
             TimeProfiler timeProfiler = new TimeProfiler(true, true);
             timeProfiler.startTotal();
-
+            
             // Opts
             timeProfiler.start("Opts");
             Opts opts = new Opts(args);
             timeProfiler.stop();
-
+            
             // read intermediate code
             timeProfiler.start("ReadIntermediateCode");
             IntermediateCode ic = new IntermediateCode(opts.getInputFilePath());
             timeProfiler.stop();
-
+            
             if (opts.isDisassemble())
             {
                 System.out.println("DISASSEMBLE CODE");
                 System.out.println("-------------------------");
                 System.out.println(ic.toStringWithLineNumbers());
             }
-
+            
             if (opts.isRun())
             {
                 IProfiler profiler = new NullProfiler();
@@ -66,10 +66,10 @@ public class App
                 {
                     profiler = new Profiler();
                 }
-
+                
                 // builtin functions
                 timeProfiler.start("BuiltinFunctions");
-                BuiltinFunctions builtinFunctions = new BuiltinFunctions(ic.getModulesName(), ic.getUserFunctions(),
+                BuiltinFunctions builtinFunctions = new BuiltinFunctions(ic.getModulesName(), ic.getUserFunctions(), 
                         ic.getFiles());
                 timeProfiler.stop();
                 // jeżeli jakaś opcja wyświetlająca tekst to dodaj linię oddzielającą
@@ -80,9 +80,9 @@ public class App
                     System.out.println("-------------------------");
                 }
                 // uruchom interpreter
-                Interpreter interpreter = new Interpreter(opts.getPassedArgs(), ic.getUserFunctions(),
+                Interpreter interpreter = new Interpreter(opts.getPassedArgs(), ic.getUserFunctions(), 
                         builtinFunctions, timeProfiler, profiler, ic.getFiles());
-
+                
                 // pokaż moduł z czasami
                 timeProfiler.stopTotal();
                 if (opts.isTimes())
@@ -95,7 +95,7 @@ public class App
                     System.out.println("-------------------------");
                     System.out.println(timeProfiler.toString());
                 }
-
+                
                 // pokaż statystyki profilera
                 if (opts.isProfiler())
                 {
@@ -137,12 +137,12 @@ public class App
         String path = App.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String decodedPath = URLDecoder.decode(path, "UTF-8");
         decodedPath = decodedPath.substring(0, decodedPath.lastIndexOf("/"));
-
+        
         // na windowsie musimy usunąć pierwszy znak którym jest /
         decodedPath = System.getProperty("os.name").contains("indow")
                 ? decodedPath.substring(1) : decodedPath;
-
-        FileHandler fh = new FileHandler(decodedPath + "/logs/bio_log.txt");
+        
+        FileHandler fh = new FileHandler(decodedPath + "/log.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();
         fh.setFormatter(sf);

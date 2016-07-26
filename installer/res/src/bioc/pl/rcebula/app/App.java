@@ -218,7 +218,7 @@ public class App
         decodedPath = System.getProperty("os.name").contains("indow")
                 ? decodedPath.substring(1) : decodedPath;
 
-        FileHandler fh = new FileHandler(decodedPath + "/logs/bioc_log.txt");
+        FileHandler fh = new FileHandler(decodedPath + "/log.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();
         fh.setFormatter(sf);

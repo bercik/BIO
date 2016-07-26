@@ -1,0 +1,50 @@
+def onSTART()
+   % konstruujemy tablicę dwuwymiarową, która zawiera tabliczkę mnożenia
+   % następnie wypisujemy na ekran
+   ASSIGN_LOCAL(tab, construct_tab(5, 5))
+   print_tab(tab)
+end
+
+def construct_tab(n, m)
+   ASSIGN_LOCAL(tab, CREATE_ARRAY(n))
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, n),
+      SET(tab, i, construct_tab_helper(n, m)),
+      INC(i)
+   )
+   RETURN(tab)
+end
+
+def construct_tab_helper(n, m)
+   ASSIGN_LOCAL(tab, CREATE_ARRAY(m))
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, m),
+      SET(tab, i, MUL(m, n)),
+      INC(i)
+   )
+   RETURN(tab)
+end
+
+def print_tab(tab)
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, SIZE(tab)),
+      CALL
+      (
+         FOR
+         (
+            ASSIGN_LOCAL(j, 0),
+            LS(j, SIZE(GET(tab, i))),
+            PRINT(GET(GET(tab, i), j)),
+            INC(j)
+         ),
+         PRINTLN("")
+      ),
+      INC(i)
+   )
+end

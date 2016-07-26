@@ -1,0 +1,13 @@
+def onSTART()
+   IF
+   (
+      EQ(i, 20), 
+      IF
+      (
+         LS(j, 10), 
+         PRINT("i==20 && j<10"),
+         PRINT("i==20 && j>=10")
+      ),
+      PRINT("i!=20")
+   )
+end

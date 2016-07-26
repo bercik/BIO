@@ -1,0 +1,11 @@
+#INCLUDE("boreq_lib.biom")
+
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 100),
+      display(i),
+      INC(i)
+   )
+end

@@ -1,0 +1,5 @@
+def onSTART()
+   ASSIGN_LOCAL(i, 10) % i = 10
+   ASSIGN_LOCAL(i, ADD(i, 5)) % i = i + 5
+   ASSIGN_LOCAL(a, 10, b, 20)
+end
