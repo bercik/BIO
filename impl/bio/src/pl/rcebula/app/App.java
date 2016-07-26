@@ -69,7 +69,8 @@ public class App
                 
                 // builtin functions
                 timeProfiler.start("BuiltinFunctions");
-                BuiltinFunctions builtinFunctions = new BuiltinFunctions(ic.getModulesName());
+                BuiltinFunctions builtinFunctions = new BuiltinFunctions(ic.getModulesName(), ic.getUserFunctions(), 
+                        ic.getFiles());
                 timeProfiler.stop();
                 // jeżeli jakaś opcja wyświetlająca tekst to dodaj linię oddzielającą
                 // wyjście programu

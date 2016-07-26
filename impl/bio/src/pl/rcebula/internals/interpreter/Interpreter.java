@@ -6,6 +6,7 @@
 package pl.rcebula.internals.interpreter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.modules.BuiltinFunctions;
 import pl.rcebula.tools.IProfiler;
 import pl.rcebula.utils.TimeProfiler;
@@ -48,6 +50,8 @@ public class Interpreter
     final BuiltinFunctions builtinFunctions;
     // pliki źródłowe
     private final MyFiles files;
+    // wartość zwrócona z funckji onSTART
+    private Data valueReturnedFromMainFunction;
 
     public Interpreter(String[] args, Map<String, UserFunction> userFunctions, BuiltinFunctions builtinFunctions,
             TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
@@ -91,7 +95,7 @@ public class Interpreter
             currentFrame.setIp(ip + 1);
             // koniec wczytywania
             timeProfiler.stop();
-            
+
             logger.fine(line.toString());
 
             // w zależności od opcode wykonujemy różne akcje
@@ -139,6 +143,24 @@ public class Interpreter
                     break;
             }
         }
+
+        // jeżeli wartość zwrócona z funckji onSTART jest typu ERROR
+        if (valueReturnedFromMainFunction != null
+                && valueReturnedFromMainFunction.getDataType().equals(DataType.ERROR))
+        {
+            // jeżeli do zdarzenia onUNHANDLED_ERROR jest podpięty jakiś obserwator to wywołujemy
+            UserFunction uf = userFunctions.get(Constants.unhandledErrorFunctionName);
+            if (uf.getObservers().size() > 0)
+            {
+                List<Data> parameters = Arrays.asList(valueReturnedFromMainFunction);
+                callEvent(parameters, uf, valueReturnedFromMainFunction.getErrorInfo());
+            }
+            // inaczej wypisujem error na ekran
+            else
+            {
+                System.out.println(valueReturnedFromMainFunction.getValue().toString());
+            }
+        }
     }
 
     CallFrame createMainFrame(String[] args)
@@ -174,6 +196,11 @@ public class Interpreter
         return builtinFunctions;
     }
 
+    public Map<String, UserFunction> getUserFunctions()
+    {
+        return userFunctions;
+    }
+
     public CallFrame getCurrentFrame()
     {
         return currentFrame;
@@ -183,7 +210,7 @@ public class Interpreter
     {
         profiler.exit();
         CallFrame cf = frameStack.pop();
-        
+
         if (frameStack.size() > 0)
         {
             setCurrentFrame(frameStack.peek());
@@ -196,6 +223,11 @@ public class Interpreter
         return cf;
     }
 
+    public void setValueReturnedFromMainFunction(Data valueReturnedFromMainFunction)
+    {
+        this.valueReturnedFromMainFunction = valueReturnedFromMainFunction;
+    }
+
     public void setCurrentFrame(CallFrame currentFrame)
     {
         if (currentFrame != null)
@@ -203,5 +235,19 @@ public class Interpreter
             profiler.enter(currentFrame.getUserFunction().getName());
         }
         this.currentFrame = currentFrame;
+    }
+
+    public void callEvent(List<Data> parameters, UserFunction uf, ErrorInfo ei)
+    {
+        if (uf.getParams().size() == parameters.size())
+        {
+            new PerformCall(parameters, uf, this, ei);
+        }
+        else
+        {
+            String message = "Event " + uf.getName() + " get " + uf.getParams().size() + " parameters, got "
+                    + parameters.size();
+            throw new RuntimeException(message);
+        }
     }
 }

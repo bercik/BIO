@@ -54,6 +54,7 @@ public class PerformCallLoc
             else
             {
                 // inaczej wartość zwrócona jest wartością zwróconą z funkcji onSTART
+                interpreter.setValueReturnedFromMainFunction(data);
             }
         }
     }

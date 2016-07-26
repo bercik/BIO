@@ -30,7 +30,7 @@ public class BasicModule extends Module
     }
 
     @Override
-    public void createFunctions()
+    public void createFunctionsAndEvents()
     {
         putFunction(new AssignLocalFunction());
         putFunction(new AssignGlobalFunction());
@@ -38,6 +38,8 @@ public class BasicModule extends Module
         putFunction(new IsGlobalFunction());
         putFunction(new GetGlobalFunction());
         putFunction(new ReturnFunction());
+        
+        putEvent(new OnUnhandledErrorEvent());
     }
 
     private class AssignLocalFunction implements IFunction
@@ -176,6 +178,21 @@ public class BasicModule extends Module
             {
                 return null;
             }
+        }
+    }
+    
+    private class OnUnhandledErrorEvent implements IEvent
+    {
+        @Override
+        public String getName()
+        {
+            return Constants.unhandledErrorFunctionName;
+        }
+
+        @Override
+        public int getNumberOfParameters()
+        {
+            return 1;
         }
     }
 }

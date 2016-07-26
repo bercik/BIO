@@ -16,9 +16,12 @@ public interface IModule
     // zwraca mapę wszystkich funkcji z danego modułu
     public Map<String, IFunction> getFunctions();
     
+    // zwraca mapę wszystkich zdarzeń z danego modułu
+    public Map<String, IEvent> getEvents();
+    
     // zwraca nazwę modułu (musi być taka sama jak nazwa pliku .xml w kompilatorze w katalogu /pl/rcebula/res
     public String getName();
     
-    // tworzy funkcję i dodaje do mapy zwracanej z funkcji getFunctions()
-    public void createFunctions();
+    // tworzy funkcję i zdarzenia i dodaje do mapy zwracanej z funkcji getFunctions() i getEvents()
+    public void createFunctionsAndEvents();
 }

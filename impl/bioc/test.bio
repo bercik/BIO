@@ -1,5 +1,5 @@
-#IMPORT("io")
+#INCLUDE("b.bio")
 
 def onSTART()
-   PRINT("test")
+   RETURN(badFoo())
 end

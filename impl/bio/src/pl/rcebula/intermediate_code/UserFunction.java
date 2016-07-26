@@ -6,7 +6,6 @@
 package pl.rcebula.intermediate_code;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import pl.rcebula.Constants;
@@ -22,7 +21,7 @@ public class UserFunction
     private final String name;
     private final List<String> params = new ArrayList<>();
     private final ErrorInfo errorInfo;
-    private final List<Line> lines = new ArrayList<Line>();
+    private final List<Line> lines = new ArrayList<>();
     
     private final LinkedHashSet<String> observers = new LinkedHashSet<>();
 

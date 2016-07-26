@@ -31,7 +31,7 @@ public class IoModule extends Module
     }
 
     @Override
-    public void createFunctions()
+    public void createFunctionsAndEvents()
     {
         putFunction(new PrintFunction());
     }
