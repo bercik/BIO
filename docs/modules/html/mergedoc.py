@@ -8,6 +8,8 @@ if __name__ == "__main__":
 
     html = "<html>\n"
     html += "<head>\n"
+    html += "<link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" rel=\"stylesheet\">"
+    html += "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
     html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"index.css\">\n"
     html += "<title>BIO DOC</title>\n"
     html += "</head>\n"
@@ -17,7 +19,7 @@ if __name__ == "__main__":
 
     html += "<a name=\"index\"></a>\n"
     html += "<h3>Table of contents</h3>\n"
-    html += "<ul>\n"
+    html += "<ul class=\"nav nav-pills nav-stacked\">\n"
     html += "<li><a href=\"#_header\">data types</a>"
 
     docs = ""
@@ -38,6 +40,7 @@ if __name__ == "__main__":
     html += "</ul>\n"
 
     html += "<a name=\"_header\"></a>"
+    html += "<hr/>"
     with open(dir + "/_header.html") as f:
         html += f.read()
 
