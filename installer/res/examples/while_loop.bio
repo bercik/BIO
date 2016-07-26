@@ -1,9 +1,0 @@
-def onSTART()
-   FOR
-   (
-      ASSIGN_LOCAL(i, 0),
-      true,
-      IF(GT(i, 9), BREAK(), CONTINUE()),
-      PRINT(INC(i))
-   )
-end

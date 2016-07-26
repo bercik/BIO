@@ -1,9 +1,0 @@
-def onSTART()
-   FOR
-   (
-      IF(true, BREAK(), DN()),
-      true,
-      DN(),
-      DN()
-   )
-end

@@ -1,9 +1,0 @@
-def onSTART()
-   FOR
-   (
-      DN(),
-      true,
-      DN(),
-      CONTINUE()
-   )
-end

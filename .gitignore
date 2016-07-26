@@ -11,5 +11,5 @@ private/
 *.swp
 *.bioc
 
-./installer/res
-./installer/install.jar
+installer/res
+installer/install.jar
