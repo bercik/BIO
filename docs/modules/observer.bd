@@ -1,0 +1,24 @@
+!name ATTACH_TO_EVENT
+!desc Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i>
+!param event (id) function to be observed
+!param callback (id) function to be attached
+!repeat event (id) function to be observed
+!repeat callback (id) function to be attached
+!return (none) 
+!error (CALLBACK_ALREADY_ATTACHED) if <i>callback</i> is already attached to <i>event</i> 
+
+!name IS_ATTACHED
+!desc Checks whether <i>callback</i> is attached to <i>event</i>
+!param event (id) 
+!param callback (id) 
+!return (bool) true if <i>callback</i> is attached to <i>event</i>, otherwise false
+
+!name DETACH_FROM_EVENT
+!desc Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i>
+!param event (id) observed function
+!param callback (id) function to be detached
+!repeat event (id) observed function
+!repeat callback (id) function to be detached 
+!return (none) 
+!error (CALLBACK_NOT_ATTACHED) if <i>callback</i> is not attached to <i>event</i> 
+

@@ -34,3 +34,7 @@
 !desc Returnes value <i>val</i> from function
 !param val (all) value to be returned
 
+!name onUNHANDLED_ERROR
+!desc Event called when there is error value returned from onSTART function
+!param err (error) error returned from onSTART function
+

@@ -1,0 +1,43 @@
+<h1>observer</h1>
+<hr/>
+<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>) - function to be observed</p>
+<p><i>callback</i> (<u>id</u>) - function to be attached</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>none</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>CALLBACK_ALREADY_ATTACHED</i> - if <i>callback</i> is already attached to <i>event</i> </p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>IS_ATTACHED</b> (<i>event, callback</i>)</p><p>Checks whether <i>callback</i> is attached to <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>)</p>
+<p><i>callback</i> (<u>id</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>bool</u>) - true if <i>callback</i> is attached to <i>event</i>, otherwise false</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>event</i> (<u>id</u>) - observed function</p>
+<p><i>callback</i> (<u>id</u>) - function to be detached</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>none</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
+</div>
+<hr/>
+

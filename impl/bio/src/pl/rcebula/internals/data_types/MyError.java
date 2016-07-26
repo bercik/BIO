@@ -30,6 +30,11 @@ public class MyError
         
         this.callStack = new CallStack(interpreter.getFrameStack());
     }
+    
+    public MyError(String functionName, String message, Data object, MyError cause, ErrorInfo errorInfo, Interpreter interpreter)
+    {
+        this("In function " + functionName + " " + message, object, cause, errorInfo, interpreter);
+    }
 
     public String getMessage()
     {

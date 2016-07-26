@@ -145,8 +145,8 @@ public class BasicModule extends Module
             Data var = interpreter.getGlobalVariables().get(id);
             if (var == null)
             {
-                String message = "There is no global variable " + id;
-                MyError error = new MyError(message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
+                String message = "there is no global variable " + id;
+                MyError error = new MyError(getName(), message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
                         null, did.getErrorInfo(), interpreter);
                 return Data.createDataError(error);
             }

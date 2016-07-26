@@ -16,6 +16,8 @@
  */
 package pl.rcebula.utils;
 
+import java.util.Objects;
+
 /**
  *
  * @author robert
@@ -51,5 +53,41 @@ public class Pair<T1, T2>
     public void setRight(T2 right)
     {
         this.right = right;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 73 * hash + Objects.hashCode(this.left);
+        hash = 73 * hash + Objects.hashCode(this.right);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Pair<?, ?> other = (Pair<?, ?>)obj;
+        if (!Objects.equals(this.left, other.left))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.right, other.right))
+        {
+            return false;
+        }
+        return true;
     }
 }

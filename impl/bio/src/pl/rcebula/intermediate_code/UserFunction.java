@@ -6,8 +6,8 @@
 package pl.rcebula.intermediate_code;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.TreeSet;
 import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.Line;
@@ -23,7 +23,7 @@ public class UserFunction
     private final ErrorInfo errorInfo;
     private final List<Line> lines = new ArrayList<>();
     
-    private final LinkedHashSet<String> observers = new LinkedHashSet<>();
+    private final TreeSet<String> observers = new TreeSet<>();
 
     public UserFunction(String name, ErrorInfo errorInfo)
     {
@@ -61,9 +61,19 @@ public class UserFunction
         return lines;
     }
 
-    public LinkedHashSet<String> getObservers()
+    public TreeSet<String> getObservers()
     {
         return observers;
+    }
+    
+    public void addObserver(String observer)
+    {
+        observers.add(observer);
+    }
+    
+    public void removeObserver(String observer)
+    {
+        observers.remove(observer);
     }
     
     @Override

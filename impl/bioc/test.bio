@@ -1,5 +1,0 @@
-#INCLUDE("b.bio")
-
-def onSTART()
-   RETURN(badFoo())
-end

@@ -3,6 +3,14 @@
 import re
 import sys
 
+def unique(seq): 
+   # order preserving
+   checked = []
+   for e in seq:
+       if e not in checked:
+           checked.append(e)
+   return checked
+
 class Function:
     def __init__(self, name, alias, params, errors,
             returned, desc, repeatedFrom, repeatedTo):
@@ -30,6 +38,12 @@ class Param:
         self.name = name
         self.types = types
         self.desc = desc
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__)
+            and self.name == other.name)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -153,16 +167,21 @@ if __name__ == "__main__":
         if len(f.params) > 0:
             html += "<p><b>Parameters:</b></p>\n"
             html += "<div class=\"params\">\n"
-            for p in f.params:
-                html += "<p><i>" + p.name + "</i> (<u>" + p.types + \
-                    "</u>) - " + p.desc + "</p>\n"
+            # add only unique parameters
+            for p in unique(f.params):
+                html += "<p><i>" + p.name + "</i> (<u>" + p.types + "</u>)" 
+                if p.desc.strip() != "":
+                    html += " - " + p.desc
+                html += "</p>\n"
             html += "</div>\n"
 
         if f.returned != None:
             html += "<p><b>Return value:</b></p>\n"
             html += "<div class=\"returned\">\n"
-            html += "<p>(<u>" + f.returned.types + \
-                "</u>) - " + f.returned.desc + "</p>\n"
+            html += "<p>(<u>" + f.returned.types + "</u>)"
+            if f.returned.desc.strip() != "":
+                html += " - " + f.returned.desc 
+            html += "</p>\n"
             html += "</div>\n"
 
         if len(f.errors) > 0:

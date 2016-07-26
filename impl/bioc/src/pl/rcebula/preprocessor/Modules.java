@@ -37,10 +37,10 @@ public class Modules
 //            add(new Module("conversion"));
 //            add(new Module("errors"));
 //            add(new Module("ints"));
-//            add(new Module("io"));
+            add(new Module("io"));
 //            add(new Module("logic"));
 //            add(new Module("math"));
-//            add(new Module("observer"));
+            add(new Module("observer"));
             add(new Module("special"));
 //            add(new Module("strings"));
 //            add(new Module("type_check"));

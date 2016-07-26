@@ -71,6 +71,8 @@ public class Interpreter
 
         // zaczynamy wykonywanie kodu
         run();
+        // po wykonaniu kodu, uruchamiamy ewentualną obsługę błędu zwróconego z funckji onSTART
+        endOfFirstRun();
     }
 
     void pushFrameToStack(CallFrame cf)
@@ -143,7 +145,10 @@ public class Interpreter
                     break;
             }
         }
+    }
 
+    private void endOfFirstRun()
+    {
         // jeżeli wartość zwrócona z funckji onSTART jest typu ERROR
         if (valueReturnedFromMainFunction != null
                 && valueReturnedFromMainFunction.getDataType().equals(DataType.ERROR))
@@ -161,8 +166,10 @@ public class Interpreter
                 System.out.println(valueReturnedFromMainFunction.getValue().toString());
             }
         }
+        
+        run();
     }
-
+    
     CallFrame createMainFrame(String[] args)
     {
         UserFunction uf = userFunctions.get(Constants.mainFunctionName);

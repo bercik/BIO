@@ -17,7 +17,6 @@ import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.intermediate_code.Param;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.intermediate_code.line.CallLine;
-import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.intermediate_code.line.PushLine;
 import pl.rcebula.internals.CallFrame;
@@ -39,8 +38,11 @@ public class BuiltinFunctions
 
     public BuiltinFunctions(List<String> modulesName, Map<String, UserFunction> userFunctions, MyFiles files)
     {
+        // ADD YOUR MODULE HERE
         putModule(new BasicModule());
         putModule(new IoModule());
+        putModule(new ObserverModule());
+        // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);
         getFunctionsAndEventsFromModules();

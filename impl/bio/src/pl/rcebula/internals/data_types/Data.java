@@ -111,4 +111,12 @@ public class Data
     {
         return errorInfo;
     }
+
+    @Override
+    public String toString()
+    {
+        String str = "";
+        str += dataType.toString() + ": " + value.toString();
+        return str;
+    }
 }
