@@ -5,7 +5,7 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
    <info>
-      <appname>bio</appname>
+      <appname>BIO</appname>
       <appversion>0.1.0</appversion>
       <authors>
          <author name="bercik" email="robert.cebula1@gmail.com" />
@@ -13,6 +13,7 @@
       <url>http://www.rcebula.pl/static/bio</url>
       <javaversion>1.8</javaversion>
       <uninstaller name="uninstall.jar" path="${INSTALL_PATH}/uninstaller" write="yes"/>
+      <run-privileged condition="izpack.linuxinstall"/>
    </info>
 
    <guiprefs height="600" resizable="yes" width="800">
@@ -40,28 +41,6 @@
    </panels>
 
    <packs>
-      <pack name="core" required="yes">
-         <description>Compiler and interpreter .jar files.</description>
-         <fileset dir="./res/bin" targetdir="$INSTALL_PATH/bin">
-            <include name="*.jar" />
-         </fileset>
-         <fileset dir="./res/bin/lib" targetdir="$INSTALL_PATH/bin/lib">
-            <include name="**" />
-         </fileset>
-
-         <file os="unix" src="./scripts/unix.sh" targetdir="$INSTALL_PATH/bin">
-         </file>
-         <executable os="unix" failure="warn" targetfile="$INSTALL_PATH/bin/unix.sh" stage="postinstall" keep="false">
-            <args>
-               <arg value="$INSTALL_PATH" />
-            </args>
-         </executable>
-
-         <singlefile os="unix" src="./scripts/unix_uninstall.sh" target="$INSTALL_PATH/uninstaller/.unix_uninstall.sh">
-         </singlefile>
-         <executable os="unix" failure="warn" targetfile="$INSTALL_PATH/uninstaller/.unix_uninstall.sh" stage="uninstall" keep="false">
-         </executable>
-      </pack>
 
       <pack name="doc" required="no">
          <description>Documentation.</description>
@@ -85,10 +64,44 @@
       </pack>
 
       <pack name="vim_plugin" required="no">
-         <description>Plugin for syntax coloring to vim text editor.</description>
+         <description>Plugin for syntax coloring to vim text editor. It will create .vim directory if one no exists and copy there required content</description>
          <fileset dir="./res/vim_plugin" targetdir="$INSTALL_PATH/vim_plugin">
             <include name="**" />
          </fileset>
+         <file os="unix" src="./scripts/vim.sh" targetdir="$INSTALL_PATH/bin">
+         </file>
+         <executable os="unix" failure="warn" targetfile="$INSTALL_PATH/bin/vim.sh" stage="postinstall" keep="false">
+            <args>
+               <arg value="$INSTALL_PATH" />
+            </args>
+         </executable>
       </pack>
+
+      <pack name="core" required="yes">
+         <description>Compiler and interpreter .jar files.</description>
+         <fileset dir="./res/bin" targetdir="$INSTALL_PATH/bin">
+            <include name="*.jar" />
+         </fileset>
+         <fileset dir="./res/bin/lib" targetdir="$INSTALL_PATH/bin/lib">
+            <include name="**" />
+         </fileset>
+
+         <file os="unix" src="./scripts/unix.sh" targetdir="$INSTALL_PATH/bin">
+         </file>
+         <executable os="unix" failure="warn" targetfile="$INSTALL_PATH/bin/unix.sh" stage="postinstall" keep="false">
+            <args>
+               <arg value="$INSTALL_PATH" />
+            </args>
+         </executable>
+
+         <singlefile os="unix" src="./scripts/unix_uninstall.sh" target="$INSTALL_PATH/uninstaller/.unix_uninstall.sh">
+         </singlefile>
+         <executable os="unix" failure="warn" targetfile="$INSTALL_PATH/uninstaller/.unix_uninstall.sh" stage="uninstall" keep="false">
+            <args>
+               <arg value="$INSTALL_PATH" />
+            </args>
+         </executable>
+      </pack>
+
    </packs>
 </izpack:installation>
