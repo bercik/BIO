@@ -7,6 +7,9 @@ package pl.rcebula.app;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,8 +83,8 @@ public class App
                     System.out.println("-------------------------");
                 }
                 // uruchom interpreter
-                Interpreter interpreter = new Interpreter(opts.getPassedArgs(), ic.getUserFunctions(),
-                        builtinFunctions, timeProfiler, profiler, ic.getFiles());
+                Interpreter interpreter = new Interpreter(opts.getInputFilePath(), opts.getPassedArgs(), 
+                        ic.getUserFunctions(), builtinFunctions, timeProfiler, profiler, ic.getFiles());
 
                 // pokaż moduł z czasami
                 timeProfiler.stopTotal();
@@ -127,6 +130,7 @@ public class App
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -142,7 +146,15 @@ public class App
         decodedPath = System.getProperty("os.name").contains("indow")
                 ? decodedPath.substring(1) : decodedPath;
 
-        FileHandler fh = new FileHandler(decodedPath + "/logs/bio_log.txt");
+        // utwórz katalog /logs jeżeli nie istnieje
+        String logsDir = decodedPath + "/logs";
+        Path logsPath = Paths.get(logsDir);
+        if (!Files.exists(logsPath))
+        {
+            Files.createDirectory(logsPath);
+        }
+        
+        FileHandler fh = new FileHandler(logsDir + "/bio.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();
         fh.setFormatter(sf);

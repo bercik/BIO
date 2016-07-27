@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.rcebula.internals.type_check;
+package pl.rcebula.modules.utils.type_checker;
 
 import pl.rcebula.error_report.ErrorInfo;
-import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;
+import pl.rcebula.modules.utils.ErrorCodes;
 
 /**
  *
@@ -44,7 +45,7 @@ public class TypeChecker
             }
             MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
                     interpreter);
-            error = Data.createDataError(myError);
+            error = Data.createErrorData(myError);
         }
         else
         {

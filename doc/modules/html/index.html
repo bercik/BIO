@@ -8,7 +8,7 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#io">io</a><li><a href="#observer">observer</a></ul>
+<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#math">math</a></ul>
 <a name="_header"></a><hr/><div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
@@ -91,6 +91,18 @@
 </div>
 <hr/>
 
+<a href="#index">table of contents</a><a name="arrays"></a><h1>arrays</h1>
+<hr/>
+<p class="fun_header"><b>CREATE_TUPLE</b> (<i>&ltel&gt</i>)</p><p>Creates tuple of given elements <i>el</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>el</i> (<u>all</u>) - element to be inserted in tuple</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple of given elements</p>
+</div>
+<hr/>
+
 <a href="#index">table of contents</a><a name="io"></a><h1>io</h1>
 <hr/>
 <p class="fun_header"><b>PRINT</b> (<i>&ltval&gt</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by space</p><p><b>Parameters:</b></p>
@@ -155,6 +167,24 @@
 <p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
 </div>
 <hr/>
+
+<a href="#index">table of contents</a><a name="math"></a><h1>math</h1>
+<hr/>
+<p class="fun_header"><b>SUM</b> (<i>col</i>)</p><p>In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>) - collection to be sumed</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float, string</u>) - If you passed collection of strings then return value would be string. If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>ADD</b> (<i></i>)</p><p>In case of numbers return sum. In case of strings return concatenation.</p><hr/>
 
 <a href="#index">table of contents</a></body>
 </html>

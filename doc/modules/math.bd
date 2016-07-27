@@ -1,0 +1,10 @@
+!name SUM
+!desc In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+!param col (array, tuple) collection to be sumed
+!return (int, float, string) If you passed collection of strings then return value would be string. If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+!error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection
+
+!name ADD
+!desc In case of numbers return sum. In case of strings return concatenation.
+!param value (int, float, string)
+

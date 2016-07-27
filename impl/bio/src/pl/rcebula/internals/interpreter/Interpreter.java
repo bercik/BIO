@@ -53,8 +53,8 @@ public class Interpreter
     // wartość zwrócona z funckji onSTART
     private Data valueReturnedFromMainFunction;
 
-    public Interpreter(String[] args, Map<String, UserFunction> userFunctions, BuiltinFunctions builtinFunctions,
-            TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
+    public Interpreter(String pathToScript, String[] args, Map<String, UserFunction> userFunctions,
+            BuiltinFunctions builtinFunctions, TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
     {
         logger.info("Interpreter");
 
@@ -64,8 +64,12 @@ public class Interpreter
         this.profiler = profiler;
         this.files = files;
 
+        // wstawiamy ścieżkę od skryptu jako pierwszy argument
+        String[] tmpArgs = new String[args.length + 1];
+        tmpArgs[0] = pathToScript;
+        System.arraycopy(args, 0, tmpArgs, 1, args.length);
         // tworzymy ramkę z funkcją main (onSTART)
-        CallFrame mainFrame = createMainFrame(args);
+        CallFrame mainFrame = createMainFrame(tmpArgs);
         // wrzucamy na stos ramek
         pushFrameToStack(mainFrame);
 
@@ -166,10 +170,10 @@ public class Interpreter
                 System.out.println(valueReturnedFromMainFunction.getValue().toString());
             }
         }
-        
+
         run();
     }
-    
+
     CallFrame createMainFrame(String[] args)
     {
         UserFunction uf = userFunctions.get(Constants.mainFunctionName);
@@ -179,9 +183,9 @@ public class Interpreter
             Data[] dataArgs = new Data[args.length];
             for (int i = 0; i < args.length; ++i)
             {
-                dataArgs[i] = Data.createDataString(args[i]);
+                dataArgs[i] = Data.createStringData(args[i]);
             }
-            parameters.add(Data.createDataArray(dataArgs));
+            parameters.add(Data.createArrayData(dataArgs));
         }
 
         File file = files.getFileGeneratedByCompiler();

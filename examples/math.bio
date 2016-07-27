@@ -1,0 +1,4 @@
+def onSTART(args)
+   PRINT(SUM(args), "\n")
+   PRINT(ADD(10, 0.5))
+end

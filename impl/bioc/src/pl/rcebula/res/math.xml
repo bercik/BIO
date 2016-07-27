@@ -20,9 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <functions>
     <!-- funkcje matematyczne -->
     <!-- działa na liczbach całkowitych i zmiennoprzecinkowych z wyjątkami -->
-    <!-- dodawanie (także dla stringów), odejmowanie, mnożenie (także dla stringów),
+    <!-- sumowanie elementów tablicy, dodawanie (także dla stringów), odejmowanie, mnożenie (także dla stringów),
            dzielenie, reszta z dzielenia, potęgowanie, pierwiastek kwadratowy, inkrementacja, dekrementacja,
            zmiana znaku liczby -->
+    <function>
+        <name>
+            SUM
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+           
     <function>
         <name>
             ADD

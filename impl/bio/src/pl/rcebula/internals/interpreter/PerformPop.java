@@ -9,7 +9,7 @@ import java.util.Arrays;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PopLine;
-import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
@@ -51,7 +51,7 @@ public class PerformPop
                     String message = "There is no local variable " + id;
                     MyError myError = new MyError(message, ErrorCodes.NO_LOCAL_VARIABLE.getCode(),
                             null, ei, interpreter);
-                    data = Data.createDataError(myError);
+                    data = Data.createErrorData(myError);
                 }
             }
             

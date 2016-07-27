@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.rcebula.internals;
+package pl.rcebula.modules.utils;
 
 import pl.rcebula.internals.data_types.Data;
 
@@ -25,7 +25,7 @@ public enum ErrorCodes
             
     private ErrorCodes(int code)
     {
-        this.code = Data.createDataInt(code);
+        this.code = Data.createIntData(code);
     }
 
     public Data getCode()

@@ -9,6 +9,9 @@ import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.ProgramTreeCreator;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -218,7 +221,15 @@ public class App
         decodedPath = System.getProperty("os.name").contains("indow")
                 ? decodedPath.substring(1) : decodedPath;
 
-        FileHandler fh = new FileHandler(decodedPath + "/logs/bioc_log.txt");
+        // utwórz katalog /logs jeżeli nie istnieje
+        String logsDir = decodedPath + "/logs";
+        Path logsPath = Paths.get(logsDir);
+        if (!Files.exists(logsPath))
+        {
+            Files.createDirectory(logsPath);
+        }
+        
+        FileHandler fh = new FileHandler(logsDir + "/bioc.txt");
         logger.addHandler(fh);
         SimpleFormatter sf = new SimpleFormatter();
         fh.setFormatter(sf);

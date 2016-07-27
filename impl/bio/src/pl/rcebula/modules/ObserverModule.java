@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -89,7 +89,7 @@ public class ObserverModule extends Module
                     MyError err = new MyError(getName(), message, 
                             ErrorCodes.CALLBACK_ALREADY_ATTACHED.getCode(), null, eventData.getErrorInfo(), 
                             interpreter);
-                    return Data.createDataError(err);
+                    return Data.createErrorData(err);
                 }
             }
             
@@ -101,7 +101,7 @@ public class ObserverModule extends Module
                 eventUf.addObserver(callbackName);
             }
             
-            return Data.createDataNone();
+            return Data.createNoneData();
         }
     }
     
@@ -126,7 +126,7 @@ public class ObserverModule extends Module
             UserFunction eventUf = interpreter.getUserFunctions().get(eventName);
             boolean isAttached = eventUf.getObservers().contains(callbackName);
             
-            return Data.createDataBool(isAttached);
+            return Data.createBoolData(isAttached);
         }
     }
     
@@ -182,7 +182,7 @@ public class ObserverModule extends Module
                     MyError err = new MyError(getName(), message, 
                             ErrorCodes.CALLBACK_NOT_ATTACHED.getCode(), null, eventData.getErrorInfo(), 
                             interpreter);
-                    return Data.createDataError(err);
+                    return Data.createErrorData(err);
                 }
             }
             
@@ -194,7 +194,7 @@ public class ObserverModule extends Module
                 eventUf.removeObserver(callbackName);
             }
             
-            return Data.createDataNone();
+            return Data.createNoneData();
         }
     }
 }

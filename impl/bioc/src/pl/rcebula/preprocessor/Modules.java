@@ -31,7 +31,7 @@ public class Modules
     private final Set<Module> defaultModules = new HashSet<Module>()
     {
         {
-//            add(new Module("arrays"));
+            add(new Module("arrays"));
             add(new Module("basic"));
 //            add(new Module("compare"));
 //            add(new Module("conversion"));
@@ -39,7 +39,7 @@ public class Modules
 //            add(new Module("ints"));
             add(new Module("io"));
 //            add(new Module("logic"));
-//            add(new Module("math"));
+            add(new Module("math"));
             add(new Module("observer"));
             add(new Module("special"));
 //            add(new Module("strings"));

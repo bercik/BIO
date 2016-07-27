@@ -1,0 +1,5 @@
+def onSTART(args)
+   ASSIGN_LOCAL(tup, CREATE_TUPLE(true, 0.5))
+   PRINT(tup, "\n")
+   PRINT(SUM(tup), "\n")
+end

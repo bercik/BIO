@@ -8,7 +8,7 @@ package pl.rcebula.modules;
 import java.util.List;
 import pl.rcebula.Constants;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
@@ -106,7 +106,7 @@ public class BasicModule extends Module
             // parametr id
             String id = (String)params.get(0).getValue();
             boolean isLocal = currentFrame.getLocalVariables().containsKey(id);
-            return Data.createDataBool(isLocal);
+            return Data.createBoolData(isLocal);
         }
     }
 
@@ -124,7 +124,7 @@ public class BasicModule extends Module
             // parametr id
             String id = (String)params.get(0).getValue();
             boolean isGlobal = interpreter.getGlobalVariables().containsKey(id);
-            return Data.createDataBool(isGlobal);
+            return Data.createBoolData(isGlobal);
         }
     }
 
@@ -148,7 +148,7 @@ public class BasicModule extends Module
                 String message = "there is no global variable " + id;
                 MyError error = new MyError(getName(), message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
                         null, did.getErrorInfo(), interpreter);
-                return Data.createDataError(error);
+                return Data.createErrorData(error);
             }
             return new Data(var);
         }

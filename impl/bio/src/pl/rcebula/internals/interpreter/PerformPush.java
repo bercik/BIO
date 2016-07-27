@@ -29,25 +29,25 @@ public class PerformPush
         switch (pt)
         {
             case BOOL:
-                data = Data.createDataBool((boolean)param.getValue());
+                data = Data.createBoolData((boolean)param.getValue());
                 break;
             case FLOAT:
-                data = Data.createDataFloat((float)param.getValue());
+                data = Data.createFloatData((float)param.getValue());
                 break;
             case ID:
-                data = Data.createDataId((String)param.getValue());
+                data = Data.createIdData((String)param.getValue());
                 break;
             case INT:
-                data = Data.createDataInt((int)param.getValue());
+                data = Data.createIntData((int)param.getValue());
                 break;
             case NONE:
-                data = Data.createDataNone();
+                data = Data.createNoneData();
                 break;
             case STRING:
-                data = Data.createDataString((String)param.getValue());
+                data = Data.createStringData((String)param.getValue());
                 break;
             case VAR:
-                data = Data.createDataVar((String)param.getValue());
+                data = Data.createVarData((String)param.getValue());
                 break;
             default:
                 throw new RuntimeException("Unknown type " + pt.toString());

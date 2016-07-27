@@ -1,0 +1,5 @@
+!name CREATE_TUPLE
+!desc Creates tuple of given elements <i>el</i>
+!repeat el (all) element to be inserted in tuple
+!return (tuple) tuple of given elements
+

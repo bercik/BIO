@@ -60,7 +60,7 @@ public class IoModule extends Module
             
             System.out.print(toPrint);
             
-            return Data.createDataString(toPrint);
+            return Data.createStringData(toPrint);
         }
         
         // w przyszłości przenieść do metody TO_STR w module conversion

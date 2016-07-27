@@ -20,7 +20,7 @@ import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.intermediate_code.line.PushLine;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.internals.ErrorCodes;
+import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
@@ -42,6 +42,8 @@ public class BuiltinFunctions
         putModule(new BasicModule());
         putModule(new IoModule());
         putModule(new ObserverModule());
+        putModule(new MathModule());
+        putModule(new ArraysModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);
@@ -132,7 +134,7 @@ public class BuiltinFunctions
             String message = "Builtin function " + name + " is not implemented. Please contact interpreter creator";
             MyError myError = new MyError(message,
                     ErrorCodes.BUILTIN_FUNCTION_NOT_IMPLEMENTED.getCode(), null, ei, interpreter);
-            return Data.createDataError(myError);
+            return Data.createErrorData(myError);
         }
     }
 

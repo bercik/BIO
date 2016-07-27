@@ -27,4 +27,9 @@ public class Tuple
     {
         return values[index];
     }
+
+    public Data[] getValues()
+    {
+        return values;
+    }
 }

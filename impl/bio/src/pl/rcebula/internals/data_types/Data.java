@@ -37,57 +37,57 @@ public class Data
         this.errorInfo = errorInfo;
     }
     
-    public static Data createDataInt(Integer i)
+    public static Data createIntData(Integer i)
     {
         return new Data(DataType.INT, i);
     }
     
-    public static Data createDataFloat(Float f)
+    public static Data createFloatData(Float f)
     {
         return new Data(DataType.FLOAT, f);
     }
     
-    public static Data createDataString(String s)
+    public static Data createStringData(String s)
     {
         return new Data(DataType.STRING, s);
     }
     
-    public static Data createDataBool(Boolean b)
+    public static Data createBoolData(Boolean b)
     {
         return new Data(DataType.BOOL, b);
     }
     
-    public static Data createDataNone()
+    public static Data createNoneData()
     {
         return new Data(DataType.NONE, null);
     }
     
-    public static Data createDataArray(Data[] array)
+    public static Data createArrayData(Data[] array)
     {
         return new Data(DataType.ARRAY, array);
     }
     
-    public static Data createDataDict(HashMap<String, Data> dict)
+    public static Data createDictData(HashMap<String, Data> dict)
     {
         return new Data(DataType.DICT, dict);
     }
     
-    public static Data createDataTuple(Tuple tuple)
+    public static Data createTupleData(Tuple tuple)
     {
         return new Data(DataType.TUPLE, tuple);
     }
     
-    public static Data createDataError(MyError error)
+    public static Data createErrorData(MyError error)
     {
         return new Data(DataType.ERROR, error);
     }
     
-    public static Data createDataId(String id)
+    public static Data createIdData(String id)
     {
         return new Data(DataType.ID, id);
     }
     
-    public static Data createDataVar(String var)
+    public static Data createVarData(String var)
     {
         return new Data(DataType.VAR, var);
     }
