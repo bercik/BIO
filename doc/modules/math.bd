@@ -5,6 +5,11 @@
 !error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection
 
 !name ADD
-!desc In case of numbers return sum. In case of strings return concatenation.
-!param value (int, float, string)
+!desc In case of numbers return sum. In case of strings return concatenation. In case of collections return tuple with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.
+!param val (int, float, string, array, tuple) value to be sumed
+!param val (int, float, string, array, tuple) value to be sumed
+!repeat val (int, float, string, array, tuple) value to be sumed
+!return (int, float, string, tuple) If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
 

@@ -31,4 +31,10 @@ public class Collections
             throw new RuntimeException(message);
         }
     }
+
+    public static boolean isCollection(Data data)
+    {
+        return data.getDataType().equals(DataType.ARRAY)
+                || data.getDataType().equals(DataType.TUPLE);
+    }
 }

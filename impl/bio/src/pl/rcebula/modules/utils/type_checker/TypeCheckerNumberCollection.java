@@ -16,7 +16,7 @@ import pl.rcebula.modules.utils.ErrorCodes;
  *
  * @author robert
  */
-public class TypeCheckerNumberCollection
+public class TypeCheckerNumberCollection implements ITypeCheckerNumber
 {
     private final Data error;
     private final boolean isError;
@@ -81,16 +81,19 @@ public class TypeCheckerNumberCollection
         return false;
     }
     
+    @Override
     public boolean isError()
     {
         return isError;
     }
 
+    @Override
     public Data getError()
     {
         return error;
     }
 
+    @Override
     public boolean isFloat()
     {
         return isFloat;

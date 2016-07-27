@@ -1,5 +1,7 @@
 def onSTART(args)
-   ASSIGN_LOCAL(tup, CREATE_TUPLE(true, 0.5))
-   PRINT(tup, "\n")
-   PRINT(SUM(tup), "\n")
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, "a", "a", none))
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(1, "b", "dd", none))
+   ASSIGN_LOCAL(tup3, CREATE_TUPLE(1.5, "c", "d", none))
+
+   PRINT(ADD(tup1, tup2, tup3))
 end

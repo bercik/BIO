@@ -6,7 +6,6 @@
 package pl.rcebula.modules.utils.type_checker;
 
 import pl.rcebula.error_report.ErrorInfo;
-import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
@@ -17,7 +16,7 @@ import pl.rcebula.modules.utils.ErrorCodes;
  *
  * @author robert
  */
-public class TypeChecker
+public class TypeChecker implements ITypeChecker
 {
     private final Data error;
     private final boolean isError;
@@ -71,11 +70,13 @@ public class TypeChecker
         return false;
     }
     
+    @Override
     public boolean isError()
     {
         return isError;
     }
 
+    @Override
     public Data getError()
     {
         return error;
