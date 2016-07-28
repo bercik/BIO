@@ -21,7 +21,9 @@ public enum ErrorCodes
     BUILTIN_FUNCTION_NOT_IMPLEMENTED(5),
     CALLBACK_ALREADY_ATTACHED(6),
     CALLBACK_NOT_ATTACHED(7),
-    INDEX_OUT_OF_BOUNDS(8);
+    INDEX_OUT_OF_BOUNDS(8),
+    DIVISION_BY_ZERO(9),
+    SIZE_LESS_THAN_ZERO(10);
     
     private final Data code;
             

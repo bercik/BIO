@@ -1,0 +1,21 @@
+def onSTART()
+   ASSIGN_LOCAL(i, 10)
+   ASSIGN_LOCAL(j, i)
+   PRINT(i, j, "\n")
+   ASSIGN_LOCAL(i, 20)
+   PRINT(i, j, "\n")
+
+   ASSIGN_GLOBAL(x, "global x")
+   ASSIGN_LOCAL(x, "local onSTART x")
+   foo()
+   PRINT(GET_LOCAL(x), GET_GLOBAL(x), "\n")
+
+   PRINT(GET_GLOBAL(z), "\n")
+end
+
+def foo()
+   ASSIGN_LOCAL(x, "local x")
+   PRINT(GET_LOCAL(x), GET_GLOBAL(x), "\n")
+   PRINT(x, GET_GLOBAL(x), "\n")
+   ASSIGN_GLOBAL(x, "foo global x")
+end

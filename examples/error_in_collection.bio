@@ -1,6 +1,0 @@
-def onSTART()
-   ASSIGN_LOCAL(tup, CREATE_TUPLE(1, 2, 3, 4))
-   ASSIGN_LOCAL(tup, ADD(tup, tup))
-   ASSIGN_LOCAL(x, GET(tup, 4))
-   PRINT(SUM(x), "\n")
-end

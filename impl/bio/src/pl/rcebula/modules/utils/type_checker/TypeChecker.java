@@ -5,6 +5,7 @@
  */
 package pl.rcebula.modules.utils.type_checker;
 
+import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -18,10 +19,28 @@ import pl.rcebula.modules.utils.ErrorCodes;
  */
 public class TypeChecker implements ITypeChecker
 {
-    private final Data error;
-    private final boolean isError;
+    private Data error;
+    private boolean isError;
     
     public TypeChecker(Data actual, String funName, int paramNum, ErrorInfo ei, 
+            Interpreter interpreter, DataType... expected)
+    {
+        check(actual, funName, paramNum, ei, interpreter, expected);
+    }
+    
+    public TypeChecker(List<Data> actual, String funName, Interpreter interpreter, DataType... expected)
+    {
+        for (int i = 0; i < actual.size(); ++i)
+        {
+            if (!check(actual.get(i), funName, i, actual.get(i).getErrorInfo(), interpreter, expected))
+            {
+                break;
+            }
+        }
+    }
+    
+    // zwraca false jeżeli błąd, true jeżeli nie ma błędu
+    private boolean check(Data actual, String funName, int paramNum, ErrorInfo ei, 
             Interpreter interpreter, DataType... expected)
     {
         DataType actualDataType = actual.getDataType();
@@ -29,7 +48,7 @@ public class TypeChecker implements ITypeChecker
         
         if (isError)
         {
-            String message = "In function " + funName + " expected " + paramNum + " parameter to be ";
+            String message = "expected " + paramNum + " parameter to be ";
             for (DataType dt : expected)
             {
                 message += dt.toString() + ", ";
@@ -42,13 +61,17 @@ public class TypeChecker implements ITypeChecker
             {
                 cause = (MyError)actual.getValue();
             }
-            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
-                    interpreter);
+            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), 
+                    cause, ei, interpreter);
             error = Data.createErrorData(myError);
+            
+            return false;
         }
         else
         {
             error = null;
+            
+            return true;
         }
     }
     

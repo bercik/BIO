@@ -1,4 +1,66 @@
-def onSTART(args)
-   PRINT(SUM(args), "\n")
-   PRINT(ADD(10, 0.5))
+def onSTART()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+
+   PRINT("SUM\n")
+   PRINT(SUM(tup1), "\n") % 17
+   PRINT("ADD\n")
+   PRINT(ADD(tup1, tup1), "\n") % ( 16, 8, 6, 4 )
+   PRINT(ADD(-1, 1, 10), "\n") % 10
+
+   PRINT("DIFF\n")
+   PRINT(DIFF(tup1), "\n") % -1
+   PRINT("SUB\n")
+   PRINT(SUB(tup1, tup1), "\n") % ( 0, 0, 0, 0 )
+   PRINT(SUB(-1, 1, 10), "\n") % -12
+
+   PRINT("PRODUCT\n")
+   PRINT(PRODUCT(tup1), "\n") % 192
+   PRINT("MUL\n")
+   PRINT(MUL(tup1, tup1), "\n") % ( 64, 16, 9, 4 )
+   PRINT(MUL(-1, 1, 10), "\n") % -10
+
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(15, 5, 3, 0))
+   PRINT("QUOTIENT\n")
+   PRINT(QUOTIENT(tup1), "\n") % 0
+   PRINT(QUOTIENT(tup2), "\n") % error division by zero
+   PRINT("DIV\n")
+   PRINT(DIV(tup1, tup1), "\n") % ( 1, 1, 1, 1 )
+   PRINT(DIV(30, 3, -2), "\n") % -5
+   PRINT(DIV(20, 0), "\n") % error division by zero
+   PRINT(DIV(tup1, tup2), "\n") % error division by zero
+
+   PRINT("SQRT\n")
+   PRINT(SQRT(25), "\n") % 5
+   PRINT(SQRT(30), "\n") % 5.47
+   PRINT(SQRT(-4), "\n") % NaN
+
+   PRINT("POW\n")
+   PRINT(POW(2, 3), "\n") % 8
+   PRINT(POW(-2, 3), "\n") % -8
+   PRINT(POW(4, 0.5), "\n") % 2
+
+   PRINT("MOD\n")
+   PRINT(MOD(6, 3), "\n") % 0
+   PRINT(MOD(7, 3), "\n") % 1
+   PRINT(MOD(7.5, 2), "\n") % 1.5
+
+   PRINT("INC\n")
+   ASSIGN_LOCAL(i, 0)
+   ASSIGN_LOCAL(j, INC(i), k, INC(i))
+   PRINT(i, j, k, "\n") % 2 1 2 
+   INC(i)
+   PRINT(i, j, k, "\n") % 3 1 2
+
+   PRINT("DEC\n")
+   ASSIGN_LOCAL(i, 2)
+   ASSIGN_LOCAL(j, DEC(i), k, DEC(i))
+   PRINT(i, j, k, "\n") % 0 1 0 
+   DEC(i)
+   PRINT(i, j, k, "\n") % -1 1 0
+
+   PRINT("NEGATE\n")
+   PRINT(NEGATE(20), "\n") % -20
+   PRINT(NEGATE(-20), "\n") % 20
+   PRINT(NEGATE(1.5), "\n") % -1.5 
+   PRINT(NEGATE(-1.5), "\n") % 1.5 
 end

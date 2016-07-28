@@ -47,7 +47,7 @@ public class TypeCheckerNumber implements ITypeCheckerNumber
             isError = true;
             isFloat = false;
             
-            String message = "In function " + funName + " expected " + paramNum + " parameter to be " + 
+            String message = "expected " + paramNum + " parameter to be " + 
                     DataType.INT.toString() + " or " + DataType.FLOAT.toString();
             message += " got " + actualDataType.toString();
             
@@ -56,7 +56,7 @@ public class TypeCheckerNumber implements ITypeCheckerNumber
             {
                 cause = (MyError)actual.getValue();
             }
-            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
+            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
                     interpreter);
             error = Data.createErrorData(myError);
         }

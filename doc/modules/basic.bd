@@ -1,5 +1,5 @@
 !name ASSIGN_LOCAL
-!desc Creates or updates local variables with identifier <i>id</i> and values <i>val</i>
+!desc Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.
 !param id (id) variable identifier
 !param val (all) variable value
 !repeat id (id) variable identifier
@@ -7,7 +7,7 @@
 !return (all) last given value
 
 !name ASSIGN_GLOBAL
-!desc Creates or updates global variables with identifier <i>id</i> and values <i>val</i>
+!desc Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
 !param id (id) variable identifier
 !param val (all) variable value
 !repeat id (id) variable identifier
@@ -18,6 +18,12 @@
 !desc Checks whether variable with identifier <i>id</i> exists and is local
 !param id (id) variable identifier
 !return (bool) true if variable exists, otherwise false
+
+!name GET_LOCAL
+!desc Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable
+!param id (id) local variable identifier
+!return (all) local variable value
+!error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
 
 !name IS_GLOBAL
 !desc Checks whether variable with identifier <i>id</i> exists and is global

@@ -9,7 +9,7 @@ nbactions.xml
 private/
 
 *.swp
-*.bioc
+*.cbio
 
 installer/res
 installer/install.jar

@@ -5,7 +5,6 @@
  */
 package pl.rcebula.modules;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
@@ -17,6 +16,7 @@ import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.type_checker.ITypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
@@ -40,6 +40,18 @@ public class MathModule extends Module
     {
         putFunction(new SumFunction());
         putFunction(new AddFunction());
+        putFunction(new DiffFunction());
+        putFunction(new SubFunction());
+        putFunction(new ProductFunction());
+        putFunction(new MulFunction());
+        putFunction(new QuotientFunction());
+        putFunction(new DivFunction());
+        putFunction(new SqrtFunction());
+        putFunction(new PowFunction());
+        putFunction(new ModFunction());
+        putFunction(new IncFunction());
+        putFunction(new DecFunction());
+        putFunction(new NegateFunction());
     }
 
     private class SumFunction implements IFunction
@@ -206,7 +218,7 @@ public class MathModule extends Module
         }
     }
 
-    private class CreateDatas
+    private static class CreateDatas
     {
         private Data error;
         private boolean isError;
@@ -241,12 +253,12 @@ public class MathModule extends Module
                 if (col.length != firstCol.length)
                 {
                     // błąd
-                    String message = "In function " + funName + " collection passed as " + i + " parameter "
+                    String message = "collection passed as " + i + " parameter "
                             + "differs in size with previous";
 
                     MyError cause = null;
-                    MyError myError = new MyError(message, ErrorCodes.COLLECTIONS_DIFFRENT_SIZES.getCode(),
-                            cause, ei, interpreter);
+                    MyError myError = new MyError(funName, message, 
+                            ErrorCodes.COLLECTIONS_DIFFRENT_SIZES.getCode(), cause, ei, interpreter);
                     error = Data.createErrorData(myError);
                     isError = true;
                     datas = null;
@@ -415,4 +427,703 @@ public class MathModule extends Module
             }
         }
     }
+
+    private enum Operation
+    {
+        DIFF,
+        PRODUCT,
+        QUOTIENT;
+    }
+
+    private static class PerformOperationOnCollection
+    {
+
+        public Data perform(String funName, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
+                boolean addFunction, int elementNum, Operation operation)
+        {
+            // parametr: <all>
+            // sprawdzamy czy kolekcja (array lub tuple)
+            Data col = params.get(0);
+            ErrorInfo ei = col.getErrorInfo();
+            ITypeChecker tc;
+            if (!addFunction)
+            {
+                tc = new TypeChecker(
+                        col, funName, 0, ei, interpreter, DataType.ARRAY, DataType.TUPLE);
+
+            }
+            else
+            {
+                tc = new TypeCheckerCollection(
+                        col, funName, 0, elementNum, ei, interpreter, DataType.ARRAY, DataType.TUPLE);
+            }
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // pobierz tablicę z kolekcji
+            Data[] array = Collections.getDatas(col);
+            // sprawdź czy rozmiar większy od zera, jeżeli nie zwróć none
+            if (array.length == 0)
+            {
+                return Data.createNoneData();
+            }
+
+            // pobierz pierwszy element i sprawdź czy jego typ jest int lub float
+            Data firstElement = array[0];
+            TypeCheckerCollection tcc;
+            if (!addFunction)
+            {
+                tcc = new TypeCheckerCollection(firstElement, funName, 0, 0, ei, interpreter,
+                        DataType.INT, DataType.FLOAT);
+            }
+            else
+            {
+                tcc = new TypeCheckerCollection(firstElement, funName, 0, elementNum, ei, interpreter,
+                        DataType.INT, DataType.FLOAT);
+            }
+
+            if (tcc.isError())
+            {
+                return tcc.getError();
+            }
+
+            // operacja na liczbach
+            boolean isFloat = false;
+            int iresult = 0;
+            float fresult = 0.0f;
+
+            for (int i = 0; i < array.length; ++i)
+            {
+                // pobierz element
+                Data d = array[i];
+                // sprawdź czy typu liczbowego
+                TypeCheckerNumberCollection tcnc;
+                if (!addFunction)
+                {
+                    tcnc = new TypeCheckerNumberCollection(d, funName, 0, i, ei,
+                            interpreter);
+                }
+                else
+                {
+                    tcnc = new TypeCheckerNumberCollection(d, funName, i,
+                            elementNum, ei, interpreter);
+                }
+                if (tcnc.isError())
+                {
+                    return tcnc.getError();
+                }
+                // jeżeli dotychczas było int to sprawdzamy czy się nie zmieniło
+                if (!isFloat)
+                {
+                    isFloat = tcnc.isFloat();
+                    if (isFloat)
+                    {
+                        // konwertujemy dotychczasową sumę z int na float
+                        fresult = iresult;
+                    }
+                }
+                // jeżeli pierwszy obieg to przypisujemy do wyniku liczbę
+                if (i == 0)
+                {
+                    if (isFloat)
+                    {
+                        fresult = (float)d.getValue();
+                    }
+                    else
+                    {
+                        iresult = (int)d.getValue();
+                    }
+                }
+                else // wykonujemy operację na liczbie
+                {
+                    if (!isFloat)
+                    {
+                        int val = (int)d.getValue();
+                        switch (operation)
+                        {
+                            case DIFF:
+                                iresult -= val;
+                                break;
+                            case PRODUCT:
+                                iresult *= val;
+                                break;
+                            case QUOTIENT:
+                                // sprawdzamy czy nie dzielimy przez zero
+                                if (val == 0)
+                                {
+                                    String message = "Division by zero";
+                                    MyError error = new MyError(funName, message, 
+                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei, interpreter);
+                                    return Data.createErrorData(error);
+                                }
+                                iresult /= val;
+                                break;
+                            default:
+                                throw new RuntimeException("Unknown " + operation.toString() + " operation");
+                        }
+                    }
+                    else
+                    {
+                        float val;
+                        if (d.getDataType().equals(DataType.INT))
+                        {
+                            val = ((Integer)d.getValue()).floatValue();
+                        }
+                        else
+                        {
+                            val = (float)d.getValue();
+                        }
+                        switch (operation)
+                        {
+                            case DIFF:
+                                fresult -= val;
+                                break;
+                            case PRODUCT:
+                                fresult *= val;
+                                break;
+                            case QUOTIENT:
+                                if (val == 0)
+                                {
+                                    String message = "Division by zero";
+                                    MyError error = new MyError(funName, message, 
+                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei, interpreter);
+                                    return Data.createErrorData(error);
+                                }
+                                fresult /= val;
+                                break;
+                            default:
+                                throw new RuntimeException("Unknown " + operation.toString() + " operation");
+                        }
+                    }
+                }
+            }
+
+            // zwracamy float lub int
+            if (isFloat)
+            {
+                return Data.createFloatData(fresult);
+            }
+            else
+            {
+                return Data.createIntData(iresult);
+            }
+        }
+    }
+
+    private static class PerformOperation
+    {
+        public Data perform(String funName, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
+                Operation operation)
+        {
+            // parametry: <all, all, all*>
+            Data firstElement = params.get(0);
+            ErrorInfo ei = firstElement.getErrorInfo();
+            // sprawdzamy czy typ to array, tuple, int lub float
+            TypeChecker tc = new TypeChecker(firstElement, funName, 0, firstElement.getErrorInfo(),
+                    interpreter, DataType.ARRAY, DataType.FLOAT, DataType.INT, DataType.TUPLE);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // jeśli pierwszy element to int lub float operacja, inaczej dodawanie kolekcji
+            if (firstElement.getDataType().equals(DataType.INT)
+                    || firstElement.getDataType().equals(DataType.FLOAT))
+            {
+                boolean isFloat = false;
+                int iresult = 0;
+                float fresult = 0.0f;
+
+                for (int i = 0; i < params.size(); ++i)
+                {
+                    // pobierz element
+                    Data d = params.get(i);
+                    // sprawdź czy typu liczbowego
+                    TypeCheckerNumber tcn = new TypeCheckerNumber(d, funName, i, d.getErrorInfo(), interpreter);
+                    if (tcn.isError())
+                    {
+                        return tcn.getError();
+                    }
+                    // jeżeli dotychczas było int to sprawdzamy czy się nie zmieniło
+                    if (!isFloat)
+                    {
+                        isFloat = tcn.isFloat();
+                        if (isFloat)
+                        {
+                            // konwertujemy dotychczasową sumę z int na float
+                            fresult = iresult;
+                        }
+                    }
+                    // jeżeli pierwsza liczba to przypisujemy ją do wyniku
+                    if (i == 0)
+                    {
+                        if (isFloat)
+                        {
+                            fresult = (float)d.getValue();
+                        }
+                        else
+                        {
+                            iresult = (int)d.getValue();
+                        }
+                    }
+                    else // wykonujemy operację
+                    if (!isFloat)
+                    {
+                        int val = (int)d.getValue();
+                        switch (operation)
+                        {
+                            case DIFF:
+                                iresult -= val;
+                                break;
+                            case PRODUCT:
+                                iresult *= val;
+                                break;
+                            case QUOTIENT:
+                                if (val == 0)
+                                {
+                                    String message = "Division by zero";
+                                    MyError error = new MyError(funName, message, 
+                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, d.getErrorInfo(), interpreter);
+                                    return Data.createErrorData(error);
+                                }
+                                iresult /= val;
+                                break;
+                            default:
+                                throw new RuntimeException("Unknown operation " + operation.toString());
+                        }
+                    }
+                    else
+                    {
+                        float val;
+                        if (d.getDataType().equals(DataType.INT))
+                        {
+                            val = ((Integer)d.getValue()).floatValue();
+                        }
+                        else
+                        {
+                            val = (float)d.getValue();
+                        }
+                        switch (operation)
+                        {
+                            case DIFF:
+                                fresult -= val;
+                                break;
+                            case PRODUCT:
+                                fresult *= val;
+                                break;
+                            case QUOTIENT:
+                                if (val == 0)
+                                {
+                                    String message = "Division by zero";
+                                    MyError error = new MyError(funName, message, 
+                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, d.getErrorInfo(), interpreter);
+                                    return Data.createErrorData(error);
+                                }
+                                fresult /= val;
+                                break;
+                            default:
+                                throw new RuntimeException("Unknown operation " + operation.toString());
+                        }
+                    }
+                }
+
+                // zwracamy float lub int
+                if (isFloat)
+                {
+                    return Data.createFloatData(fresult);
+                }
+                else
+                {
+                    return Data.createIntData(iresult);
+                }
+            }
+            // inaczej tworzymy tablicę 2D i sumujemy każdą
+            else
+            {
+                CreateDatas cd = new CreateDatas(funName, params, interpreter, 0, 0.0f, "");
+
+                if (cd.IsError())
+                {
+                    return cd.getError();
+                }
+
+                PerformOperationOnCollection pooc = new PerformOperationOnCollection();
+                Data[][] datas = cd.getDatas();
+                Data[] tupleData = new Data[datas.length];
+                // przechodzimy po każdej tablicy i sumujemy jej elementy przy użyciu funkcji SUM
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    Data[] d = datas[i];
+                    Data arr = Data.createArrayData(d);
+                    arr.setErrorInfo(params.get(0).getErrorInfo());
+
+                    Data result = pooc.perform(funName, Arrays.asList(arr), currentFrame, interpreter, true, i,
+                            operation);
+                    if (result.getDataType().equals(DataType.ERROR))
+                    {
+                        return result;
+                    }
+
+                    tupleData[i] = result;
+                }
+
+                return Data.createTupleData(new Tuple(tupleData));
+            }
+        }
+    }
+
+    private class DiffFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DIFF";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperationOnCollection().perform(getName(), params, currentFrame, interpreter,
+                    false, -1, Operation.DIFF);
+        }
+    }
+
+    private class SubFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SUB";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperation().perform(getName(), params, currentFrame, interpreter,
+                    MathModule.Operation.DIFF);
+        }
+    }
+
+    private class ProductFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "PRODUCT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperationOnCollection().perform(getName(), params, currentFrame, interpreter,
+                    false, -1, Operation.PRODUCT);
+        }
+    }
+
+    private class MulFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "MUL";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperation().perform(getName(), params, currentFrame, interpreter,
+                    MathModule.Operation.PRODUCT);
+        }
+    }
+    
+    private class QuotientFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "QUOTIENT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperationOnCollection().perform(getName(), params, currentFrame, interpreter,
+                    false, -1, Operation.QUOTIENT);
+        }
+    }
+
+    private class DivFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DIV";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new PerformOperation().perform(getName(), params, currentFrame, interpreter,
+                    MathModule.Operation.QUOTIENT);
+        }
+    }
+    
+    private class SqrtFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SQRT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data d = params.get(0);
+            
+            // sprawdzamy czy typu int lub float
+            TypeChecker tc = new TypeChecker(d, getName(), 0, d.getErrorInfo(), interpreter, 
+                    DataType.INT, DataType.FLOAT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            float val = Numbers.getFloat(d);
+            val = (float)Math.sqrt(val);
+            
+            return Data.createFloatData(val);
+        }
+    }
+    
+    private class PowFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "POW";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // sprawdź czy przekazano liczby
+            TypeChecker tc = new TypeChecker(params, getName(), interpreter, DataType.INT, DataType.FLOAT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // parametry: <all, all>
+            Data par1 = params.get(0);
+            Data par2 = params.get(1);
+            
+            float base = Numbers.getFloat(par1);
+            float exponent = Numbers.getFloat(par2);
+            
+            float res = (float)Math.pow(base, exponent);
+            return Data.createFloatData(res);
+        }
+    }
+    
+    private class ModFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "MOD";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data par1 = params.get(0);
+            Data par2 = params.get(1);
+            
+            // sprawdź czy parametr pierwszy jest liczbą i czy float
+            TypeCheckerNumber tcn = new TypeCheckerNumber(par1, getName(), 0, par1.getErrorInfo(),
+                    interpreter);
+            if (tcn.isError())
+            {
+                return tcn.getError();
+            }
+            boolean isFloat = tcn.isFloat();
+            
+            // sprawdź czy drugi parametr jest liczbą i czy float
+            tcn = new TypeCheckerNumber(par2, getName(), 1, par2.getErrorInfo(), interpreter);
+            if (tcn.isError())
+            {
+                return tcn.getError();
+            }
+            
+            if (!isFloat)
+            {
+                isFloat = tcn.isFloat();
+            }
+            
+            // jeżeli jedna z liczb była typu float to konwertujemy obie na float
+            if (isFloat)
+            {
+                float val1 = Numbers.getFloat(par1);
+                float val2 = Numbers.getFloat(par2);
+                
+                float mod = val1 % val2;
+                return Data.createFloatData(mod);
+            }
+            // inaczej inty
+            {
+                int val1 = Numbers.getInt(par1);
+                int val2 = Numbers.getInt(par2);
+                
+                int mod = val1 % val2;
+                return Data.createIntData(mod);
+            }
+        }
+    }
+    
+    private class IncFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <id>
+            Data idData = params.get(0);
+            Data data = interpreter.getBuiltinFunctions().callFunction("GET_LOCAL", params, currentFrame, 
+                    interpreter, idData.getErrorInfo());
+            
+            // jeżeli error to zwróć
+            if (data.getDataType().equals(DataType.ERROR))
+            {
+                return data;
+            }
+            
+            // sprawdź czy liczba
+            TypeCheckerNumber tcn = new TypeCheckerNumber(data, getName(), 0, data.getErrorInfo(), 
+                    interpreter);
+            if (tcn.isError())
+            {
+                return tcn.getError();
+            }
+            
+            if (tcn.isFloat())
+            {
+                float val = (float)data.getValue();
+                ++val;
+                Data newData = Data.createFloatData(val);
+                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData), 
+                        currentFrame, interpreter, idData.getErrorInfo());
+                return newData;
+            }
+            else
+            {
+                int val = Numbers.getInt(data);
+                ++val;
+                Data newData = Data.createIntData(val);
+                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData), 
+                        currentFrame, interpreter, idData.getErrorInfo());
+                return newData;
+            }
+        }
+    }
+    
+    private class DecFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DEC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <id>
+            Data idData = params.get(0);
+            Data data = interpreter.getBuiltinFunctions().callFunction("GET_LOCAL", params, currentFrame, 
+                    interpreter, idData.getErrorInfo());
+            
+            // jeżeli error to zwróć
+            if (data.getDataType().equals(DataType.ERROR))
+            {
+                return data;
+            }
+            
+            // sprawdź czy liczba
+            TypeCheckerNumber tcn = new TypeCheckerNumber(data, getName(), 0, data.getErrorInfo(), 
+                    interpreter);
+            if (tcn.isError())
+            {
+                return tcn.getError();
+            }
+            
+            if (tcn.isFloat())
+            {
+                float val = (float)data.getValue();
+                --val;
+                Data newData = Data.createFloatData(val);
+                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData), 
+                        currentFrame, interpreter, idData.getErrorInfo());
+                return newData;
+            }
+            else
+            {
+                int val = Numbers.getInt(data);
+                --val;
+                Data newData = Data.createIntData(val);
+                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData), 
+                        currentFrame, interpreter, idData.getErrorInfo());
+                return newData;
+            }
+        }
+    }
+    
+    private class NegateFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "NEGATE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data data = params.get(0);
+            
+            // sprawdzamy czy liczba
+            TypeCheckerNumber tcn = new TypeCheckerNumber(data, getName(), 0, data.getErrorInfo(), 
+                    interpreter);
+            
+            if (tcn.isError())
+            {
+                return tcn.getError();
+            }
+            
+            // negujemy i zwracamy
+            if (tcn.isFloat())
+            {
+                float val = (float)data.getValue();
+                val = -val;
+                return Data.createFloatData(val);
+            }
+            else
+            {
+                int val = (int)data.getValue();
+                val = -val;
+                return Data.createIntData(val);
+            }
+        }
+    }
 }
+

@@ -10,6 +10,22 @@
 </div>
 <hr/>
 
+<p class="fun_header"><b>CREATE_TUPLE_OF_ELEMENTS</b> (<i>size, el</i>)</p><p>Creates tuple of size <i>size</i> filled with elements <i>el</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>size</i> (<u>int</u>) - size of tuple</p>
+<p><i>el</i> (<u>all</u>) - element that will be filled in tuple</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple with given elements</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>size</i> isn't int</p>
+<p><i>SIZE_LESS_THAN_ZERO</i> - if <i>size</i> is int but less than zero</p>
+</div>
+<hr/>
+
 <p class="fun_header"><b>GET</b> (<i>col, index</i>)</p><p>Gets element at given index from array or tuple</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>col</i> (<u>array, tuple</u>) - collection from which we want to get element</p>

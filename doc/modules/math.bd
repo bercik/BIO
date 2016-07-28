@@ -1,15 +1,100 @@
 !name SUM
 !desc In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
-!param col (array, tuple) collection to be sumed
+!param col (array, tuple) collection to be summed
 !return (int, float, string) If you passed collection of strings then return value would be string. If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
 !error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection
 
 !name ADD
 !desc In case of numbers return sum. In case of strings return concatenation. In case of collections return tuple with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.
-!param val (int, float, string, array, tuple) value to be sumed
-!param val (int, float, string, array, tuple) value to be sumed
-!repeat val (int, float, string, array, tuple) value to be sumed
+!param val (int, float, string, array, tuple) value to be summed
+!param val (int, float, string, array, tuple) value to be summed
+!repeat val (int, float, string, array, tuple) value to be summed
 !return (int, float, string, tuple) If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
+
+!name DIFF
+!desc In case of numbers returns diffrence of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+!param col (array, tuple) collection to be diffrenced
+!return (int, float) If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+!error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+
+!name SUB
+!desc In case of numbers return diffrence. In case of collections return tuple with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.
+!param val (int, float, array, tuple) value to be diffrenced
+!param val (int, float, array, tuple) value to be diffrenced 
+!repeat val (int, float, array, tuple) value to be diffrenced 
+!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in DIFF function)
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
+
+!name PRODUCT
+!desc In case of numbers returns product of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+!param col (array, tuple) collection to be producted
+!return (int, float) If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+!error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+
+!name MUL
+!desc In case of numbers return product. In case of collections return tuple with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.
+!param val (int, float, array, tuple) value to be multiplied
+!param val (int, float, array, tuple) value to be multiplied
+!repeat val (int, float, array, tuple) value to be multiplied
+!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in PRODUCT function)
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
+
+!name QUOTIENT
+!desc In case of numbers returns quotient of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned. <b>Caution: </b> if you want real division instead of integer division make sure that at least first element in passed collection is float
+!param col (array, tuple) collection to be quotiented
+!return (int, float) If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+!error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+!error (DIVISION_BY_ZERO) division by zero
+
+!name DIV
+!desc In case of numbers return quotient. In case of collections return tuple with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float
+!param val (int, float, array, tuple) value to be divided
+!param val (int, float, array, tuple) value to be divided
+!repeat val (int, float, array, tuple) value to be divided
+!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in QUOTIENT function)
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
+!error (DIVISION_BY_ZERO) division by zero
+
+!name SQRT
+!desc Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float
+!param val (int, float) value to be square rooted. 
+!return (float) square root of passed value
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int or float
+
+!name POW
+!desc Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float
+!param a (int, float) base
+!param b (int, float) exponent
+!return (float) power of given values
+
+!name MOD
+!desc Returns remainder of division number <i>a</i> by number<i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function
+!param a (int ,float) 
+!param b (int, float) 
+!return (int, float) if one number is float then returns float, otherwise int
+
+!name INC
+!desc Increments local number with given id
+!param id (id) local number identifier
+!return (int, float) return incremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float
+!error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
+
+!name DEC
+!desc Decrements local number with given id
+!param id (id) local number identifier
+!return (int, float) return decremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float
+!error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
+
+!name NEGATE
+!desc Negates given float or int
+!param val (int, float) number to be negated
+!return (int, float) negate number of the same type that you passed
+!error (BAD_PARAMETER_TYPE) if <i>val</i> is not int or float
 

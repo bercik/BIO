@@ -29,7 +29,7 @@ public class TypeCheckerCollection implements ITypeChecker
         
         if (isError)
         {
-            String message = "In function " + funName + " in passed parameter " + paramNum + " collection, "
+            String message = "in passed parameter " + paramNum + " collection, "
                     + "expected " + argNum + " element to be ";
             for (DataType dt : expected)
             {
@@ -43,8 +43,8 @@ public class TypeCheckerCollection implements ITypeChecker
             {
                 cause = (MyError)actual.getValue();
             }
-            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
-                    interpreter);
+            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), 
+                    cause, ei, interpreter);
             error = Data.createErrorData(myError);
         }
         else

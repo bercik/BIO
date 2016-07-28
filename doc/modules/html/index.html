@@ -23,7 +23,7 @@
 </div>
 <a name="basic"></a><h1>basic</h1>
 <hr/>
-<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i></p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>id</i> (<u>id</u>) - variable identifier</p>
 <p><i>val</i> (<u>all</u>) - variable value</p>
@@ -34,7 +34,7 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i></p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>id</i> (<u>id</u>) - variable identifier</p>
 <p><i>val</i> (<u>all</u>) - variable value</p>
@@ -52,6 +52,20 @@
 <p><b>Return value:</b></p>
 <div class="returned">
 <p>(<u>bool</u>) - true if variable exists, otherwise false</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>GET_LOCAL</b> (<i>id</i>)</p><p>Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - local variable identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - local variable value</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
 </div>
 <hr/>
 
@@ -100,6 +114,22 @@
 <p><b>Return value:</b></p>
 <div class="returned">
 <p>(<u>tuple</u>) - tuple of given elements</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>CREATE_TUPLE_OF_ELEMENTS</b> (<i>size, el</i>)</p><p>Creates tuple of size <i>size</i> filled with elements <i>el</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>size</i> (<u>int</u>) - size of tuple</p>
+<p><i>el</i> (<u>all</u>) - element that will be filled in tuple</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple with given elements</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>size</i> isn't int</p>
+<p><i>SIZE_LESS_THAN_ZERO</i> - if <i>size</i> is int but less than zero</p>
 </div>
 <hr/>
 
@@ -204,7 +234,7 @@
 <hr/>
 <p class="fun_header"><b>SUM</b> (<i>col</i>)</p><p>In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be sumed</p>
+<p><i>col</i> (<u>array, tuple</u>) - collection to be summed</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
@@ -218,7 +248,7 @@
 
 <p class="fun_header"><b>ADD</b> (<i>val, val, &ltval&gt</i>)</p><p>In case of numbers return sum. In case of strings return concatenation. In case of collections return tuple with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.</p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>val</i> (<u>int, float, string, array, tuple</u>) - value to be sumed</p>
+<p><i>val</i> (<u>int, float, string, array, tuple</u>) - value to be summed</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
@@ -228,6 +258,175 @@
 <div class="errors">
 <p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)</p>
 <p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>DIFF</b> (<i>col</i>)</p><p>In case of numbers returns diffrence of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>) - collection to be diffrenced</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>SUB</b> (<i>val, val, &ltval&gt</i>)</p><p>In case of numbers return diffrence. In case of collections return tuple with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be diffrenced</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in DIFF function)</p>
+<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>PRODUCT</b> (<i>col</i>)</p><p>In case of numbers returns product of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>) - collection to be producted</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>MUL</b> (<i>val, val, &ltval&gt</i>)</p><p>In case of numbers return product. In case of collections return tuple with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be multiplied</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in PRODUCT function)</p>
+<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>QUOTIENT</b> (<i>col</i>)</p><p>In case of numbers returns quotient of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned. <b>Caution: </b> if you want real division instead of integer division make sure that at least first element in passed collection is float</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>) - collection to be quotiented</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
+<p><i>DIVISION_BY_ZERO</i> - division by zero</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>DIV</b> (<i>val, val, &ltval&gt</i>)</p><p>In case of numbers return quotient. In case of collections return tuple with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be divided</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in QUOTIENT function)</p>
+<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
+<p><i>DIVISION_BY_ZERO</i> - division by zero</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>SQRT</b> (<i>val</i>)</p><p>Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float</u>) - value to be square rooted. </p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>float</u>) - square root of passed value</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int or float</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>POW</b> (<i>a, b</i>)</p><p>Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>a</i> (<u>int, float</u>) - base</p>
+<p><i>b</i> (<u>int, float</u>) - exponent</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>float</u>) - power of given values</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>MOD</b> (<i>a, b</i>)</p><p>Returns remainder of division number <i>a</i> by number<i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>a</i> (<u>int ,float</u>)</p>
+<p><i>b</i> (<u>int, float</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - if one number is float then returns float, otherwise int</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>INC</b> (<i>id</i>)</p><p>Increments local number with given id</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - local number identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - return incremented value. If variable was of type int then it will return int, otherwise float</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if variable under <i>id</i> identifier is not int or float</p>
+<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>DEC</b> (<i>id</i>)</p><p>Decrements local number with given id</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>id</i> (<u>id</u>) - local number identifier</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - return decremented value. If variable was of type int then it will return int, otherwise float</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if variable under <i>id</i> identifier is not int or float</p>
+<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>NEGATE</b> (<i>val</i>)</p><p>Negates given float or int</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float</u>) - number to be negated</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, float</u>) - negate number of the same type that you passed</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> is not int or float</p>
 </div>
 <hr/>
 

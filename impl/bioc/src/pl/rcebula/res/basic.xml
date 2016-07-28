@@ -74,6 +74,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            GET_LOCAL
+        </name>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             IS_GLOBAL
         </name>
         <params>

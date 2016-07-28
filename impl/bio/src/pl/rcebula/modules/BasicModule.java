@@ -7,6 +7,7 @@ package pl.rcebula.modules;
 
 import java.util.List;
 import pl.rcebula.Constants;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.modules.utils.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -38,6 +39,7 @@ public class BasicModule extends Module
         putFunction(new IsGlobalFunction());
         putFunction(new GetGlobalFunction());
         putFunction(new ReturnFunction());
+        putFunction(new GetLocalFunction());
         
         putEvent(new OnUnhandledErrorEvent());
     }
@@ -125,6 +127,42 @@ public class BasicModule extends Module
             String id = (String)params.get(0).getValue();
             boolean isGlobal = interpreter.getGlobalVariables().containsKey(id);
             return Data.createBoolData(isGlobal);
+        }
+    }
+    
+    private class GetLocalFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "GET_LOCAL";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // param: <id>
+            Data data = params.get(0);
+            String id = (String)data.getValue();
+            ErrorInfo ei = data.getErrorInfo();
+            // pobierz zmienną lokalną
+            data = interpreter.getCurrentFrame().getLocalVariables().get(id);
+            // jeżeli istnieje to utwórz nową zmienną i ustaw jej linię i znak
+            if (data != null)
+            {
+//                data = new Data(data);
+                data.setErrorInfo(ei);
+            }
+            // jeżeli nie istnieje to utwórz zmienną błędu zamiast niej
+            else
+            {
+                String message = "There is no local variable " + id;
+                MyError myError = new MyError(message, ErrorCodes.NO_LOCAL_VARIABLE.getCode(),
+                        null, ei, interpreter);
+                data = Data.createErrorData(myError);
+            }
+            
+            return data;
         }
     }
 

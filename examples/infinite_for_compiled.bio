@@ -1,0 +1,13 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      foo(),
+      PRINT(i, "\n"),
+      INC(i)
+   )
+end
+
+def foo()
+   RETURN(true)
+end

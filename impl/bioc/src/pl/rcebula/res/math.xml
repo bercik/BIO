@@ -53,6 +53,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            DIFF
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             SUB
         </name>
         <params>
@@ -70,6 +81,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            PRODUCT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             MUL
         </name>
         <params>
@@ -80,6 +102,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 all
             </param>
             <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            QUOTIENT
+        </name>
+        <params>
+            <param>
                 all
             </param>
         </params>
@@ -129,7 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            REST
+            MOD
         </name>
         <params>
             <param>
@@ -165,7 +198,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            CHANGE_SIGN
+            NEGATE
         </name>
         <params>
             <param>

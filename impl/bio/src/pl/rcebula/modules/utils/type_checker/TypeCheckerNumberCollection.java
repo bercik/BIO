@@ -47,7 +47,7 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
             isError = true;
             isFloat = false;
             
-            String message = "In function " + funName + " in passed parameter " + paramNum + " collection, "
+            String message = "in passed parameter " + paramNum + " collection, "
                     + "expected " + argNum + " element to be " + DataType.INT.toString() + " or " + 
                     DataType.FLOAT.toString();
             message += " got " + actualDataType.toString();
@@ -57,7 +57,7 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
             {
                 cause = (MyError)actual.getValue();
             }
-            MyError myError = new MyError(message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
+            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), cause, ei, 
                     interpreter);
             error = Data.createErrorData(myError);
         }
