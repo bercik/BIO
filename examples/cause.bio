@@ -1,0 +1,15 @@
+def onSTART()
+   ASSIGN_LOCAL(x, foo())
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, x))
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(-20, 20))
+   PRINT(GET_ERROR_FULL_INFO(SUM(tup1)), "\n")
+   PRINT(GET_ERROR_FULL_INFO(ADD(tup1, tup2)), "\n")
+end
+
+def foo2()
+   RETURN(GET_GLOBAL(x))
+end
+
+def foo()
+   RETURN(foo2())
+end

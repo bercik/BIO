@@ -32,7 +32,7 @@ public class Opts
     private boolean debugInfo = false;
     private String inputFilePath;
     private String outputFilePath;
-    private static final String defaultOutputFile = "a.bioc";
+    private static final String defaultOutputFile = "a.cbio";
 
     public Opts(String[] args)
             throws OptsError

@@ -69,6 +69,33 @@ public class MyError
         str += errorInfo.toString() + ": ";
         str += message;
         
+        MyError causeError = cause;
+        while (causeError != null)
+        {
+            str += "\ncaused by " + causeError.toString();
+            causeError = causeError.getCause();
+        }
+        
+        return str;
+    }
+    
+    public String getFullInfo()
+    {
+        String str = "";
+        
+        str += toString() + "\n";
+        str += "Stack trace:\n";
+        
+        MyError callStackError = this;
+        MyError causeError = cause;
+        while (causeError != null)
+        {
+            callStackError = causeError;
+            causeError = causeError.getCause();
+        }
+        
+        str += callStackError.getCallStack().toString();
+        
         return str;
     }
 }

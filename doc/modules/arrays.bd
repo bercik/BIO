@@ -3,3 +3,11 @@
 !repeat el (all) element to be inserted in tuple
 !return (tuple) tuple of given elements
 
+!name GET
+!desc Gets element at given index from array or tuple
+!param col (array, tuple) collection from which we want to get element
+!param index (int) which element do we want to get
+!return (all) returns element from <i>col</i> at given <i>index</i>
+!error (BAD_PARAMETER_TYPE) if passed argument is not array or tuple
+!error (INDEX_OUT_OF_BOUNDS) if given index is greater or equal collection size
+

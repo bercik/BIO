@@ -18,7 +18,6 @@ import pl.rcebula.internals.CallFrame;
 public class CallStack
 {
     // pierwszy element jest elementem najpóźniej wywoływanym
-    
     private final List<CallStackEntry> callStack = new ArrayList<>();
     
     public CallStack(Stack<CallFrame> frameStack)
@@ -30,6 +29,19 @@ public class CallStack
             CallFrame cf = frameStack.get(i);
             callStack.add(new CallStackEntry(cf.getErrorInfo(), cf.getUserFunction().getName()));
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+        String str = "";
+        
+        for (CallStackEntry entry : callStack)
+        {
+            str += entry.getErrorInfo().toString() + ": " + entry.getFunName() + "\n";
+        }
+        
+        return str;
     }
     
     public class CallStackEntry

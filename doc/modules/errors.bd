@@ -1,0 +1,6 @@
+!name GET_ERROR_FULL_INFO
+!desc Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace
+!param err (error) error to get full information from
+!return (string) containing full information about given error
+!error (BAD_PARAMETER_TYPE) if passed value isn't error
+

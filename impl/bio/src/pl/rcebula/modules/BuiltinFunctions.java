@@ -44,6 +44,7 @@ public class BuiltinFunctions
         putModule(new ObserverModule());
         putModule(new MathModule());
         putModule(new ArraysModule());
+        putModule(new ErrorsModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

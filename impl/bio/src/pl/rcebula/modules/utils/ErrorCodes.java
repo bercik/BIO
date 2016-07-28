@@ -20,7 +20,8 @@ public enum ErrorCodes
     COLLECTIONS_DIFFRENT_SIZES(4),
     BUILTIN_FUNCTION_NOT_IMPLEMENTED(5),
     CALLBACK_ALREADY_ATTACHED(6),
-    CALLBACK_NOT_ATTACHED(7);
+    CALLBACK_NOT_ATTACHED(7),
+    INDEX_OUT_OF_BOUNDS(8);
     
     private final Data code;
             

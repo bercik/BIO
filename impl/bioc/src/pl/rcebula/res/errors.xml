@@ -72,6 +72,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            GET_ERROR_FULL_INFO
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             GET_ERROR_LINE
         </name>
         <params>
