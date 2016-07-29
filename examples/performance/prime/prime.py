@@ -1,4 +1,5 @@
 import math
+import sys
 
 def isPrime(num):
     found = True
@@ -11,7 +12,9 @@ def isPrime(num):
         print(num)
 
 MAX_I = 100
+if len(sys.argv) > 1:
+    MAX_I = int(sys.argv[1])
+
 for i in range(2, MAX_I):
     isPrime(i)
-
 

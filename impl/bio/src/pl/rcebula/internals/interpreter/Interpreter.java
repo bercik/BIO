@@ -83,6 +83,7 @@ public class Interpreter
     {
         frameStack.push(cf);
         setCurrentFrame(cf);
+        profiler.enter(cf.getUserFunction().getName());
     }
 
     void run()
@@ -102,7 +103,7 @@ public class Interpreter
             // koniec wczytywania
             timeProfiler.stop();
 
-            logger.fine(line.toString());
+            //logger.fine(line.toString());
 
             // w zależności od opcode wykonujemy różne akcje
             switch (line.getInterpreterFunction())
@@ -241,10 +242,6 @@ public class Interpreter
 
     public void setCurrentFrame(CallFrame currentFrame)
     {
-        if (currentFrame != null)
-        {
-            profiler.enter(currentFrame.getUserFunction().getName());
-        }
         this.currentFrame = currentFrame;
     }
 

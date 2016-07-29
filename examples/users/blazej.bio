@@ -9,7 +9,7 @@ def czyPierwsza(liczba)
    (
       ASSIGN_LOCAL(i,2),
       LS(i,SUB(liczba,1)),
-      IF( EQ(REST(liczba, i),0), RETURN(FALSE), DN()),
+      IF( EQ(MOD(liczba, i),0), RETURN(FALSE), DN()),
       INC(i)
    )
    RETURN(TRUE)

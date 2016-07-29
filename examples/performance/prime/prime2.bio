@@ -1,5 +1,5 @@
 def onSTART()
-   ASSIGN_LOCAL(MAX_I, 100)
+   ASSIGN_LOCAL(MAX_I, 10000)
    FOR
    (
       ASSIGN_LOCAL(i, 2), 

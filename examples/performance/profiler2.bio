@@ -1,0 +1,7 @@
+def onSTART()
+   PRINT("test")
+   GE(0, 1)
+   LS(0, 1)
+   GT(0, 1)
+   GE(0, 1)
+end

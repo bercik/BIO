@@ -235,7 +235,7 @@ public class App
         fh.setFormatter(sf);
 
         logger.setUseParentHandlers(false);
-        logger.setLevel(Level.FINE);
+        logger.setLevel(Level.OFF);
 
         logger.info("Init logger");
     }

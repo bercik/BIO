@@ -41,14 +41,13 @@ public class App
             // init logger
             initLogger();
 
-            // time profiler
-            TimeProfiler timeProfiler = new TimeProfiler(true, true);
-            timeProfiler.startTotal();
-
             // Opts
-            timeProfiler.start("Opts");
             Opts opts = new Opts(args);
-            timeProfiler.stop();
+            
+            // time profiler
+            // włączamy jedynie gdy przekazano odpowiednią opcję
+            TimeProfiler timeProfiler = new TimeProfiler(opts.isTimes(), opts.isTimes());
+            timeProfiler.startTotal();
 
             // read intermediate code
             timeProfiler.start("ReadIntermediateCode");
@@ -160,7 +159,7 @@ public class App
         fh.setFormatter(sf);
 
         logger.setUseParentHandlers(false);
-        logger.setLevel(Level.FINE);
+        logger.setLevel(Level.OFF);
 
         logger.info("Init logger");
     }

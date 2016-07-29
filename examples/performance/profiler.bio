@@ -1,0 +1,29 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 100),
+      foo(),
+      INC(i)
+   )
+end
+
+def foo()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LE(i, 50),
+      foo2(),
+      ASSIGN_LOCAL(i, ADD(i, 1))
+   )
+end
+
+def foo2()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 10),
+      GE(i, 0),
+      PRINT(POW(i, 2), "\n"),
+      DEC(i)
+   )
+end
