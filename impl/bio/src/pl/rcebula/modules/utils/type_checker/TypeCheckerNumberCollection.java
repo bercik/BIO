@@ -10,7 +10,7 @@ import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 
 /**
  *
@@ -22,7 +22,7 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
     private final boolean isError;
     private final boolean isFloat;
     
-    public TypeCheckerNumberCollection(Data actual, String funName, int paramNum, int argNum, 
+    public TypeCheckerNumberCollection(Data actual, String funName, int paramNum, int elementNum, 
             ErrorInfo ei, Interpreter interpreter)
     {
         DataType actualDataType = actual.getDataType();
@@ -48,7 +48,7 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
             isFloat = false;
             
             String message = "in passed parameter " + paramNum + " collection, "
-                    + "expected " + argNum + " element to be " + DataType.INT.toString() + " or " + 
+                    + "expected " + elementNum + " element to be " + DataType.INT.toString() + " or " + 
                     DataType.FLOAT.toString();
             message += " got " + actualDataType.toString();
             

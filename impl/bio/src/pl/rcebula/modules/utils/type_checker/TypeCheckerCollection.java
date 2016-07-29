@@ -10,7 +10,7 @@ import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 
 /**
  *

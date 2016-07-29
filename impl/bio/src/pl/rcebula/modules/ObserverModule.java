@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;

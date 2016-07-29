@@ -117,4 +117,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </param>
         </params>
     </function>
+    
+    <function>
+        <name>
+            IS_NUMBER
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_COLLECTION
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ARE_SAME_TYPE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
 </functions>

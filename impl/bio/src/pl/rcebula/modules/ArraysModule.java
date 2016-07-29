@@ -14,7 +14,7 @@ import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 

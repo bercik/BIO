@@ -1,0 +1,53 @@
+!name LS
+!desc Compare if number <i>a</i> is less then number <i>b</i> or if numbers at certain index in collection <i>a</i> are less then numbers at the same index in collection <i>b</i>
+!param a (int, float, tuple, array) 
+!param b (int, float, tuple, array) 
+!return (bool, tuple) if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections
+!error (BAD_PARAMETER_TYPE) if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+!error (COLLECTIONS_DIFFRENT_SIZES) if you pass collections and their sizes are diffrent
+
+!name LE
+!desc Compare if number <i>a</i> is less or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are less or equals numbers at the same index in collection <i>b</i>
+!param a (int, float, tuple, array) 
+!param b (int, float, tuple, array) 
+!return (bool, tuple) if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections
+!error (BAD_PARAMETER_TYPE) if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+!error (COLLECTIONS_DIFFRENT_SIZES) if you pass collections and their sizes are diffrent
+
+!name GT
+!desc Compare if number <i>a</i> is greater then number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater then numbers at the same index in collection <i>b</i>
+!param a (int, float, tuple, array) 
+!param b (int, float, tuple, array) 
+!return (bool, tuple) if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections
+!error (BAD_PARAMETER_TYPE) if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+!error (COLLECTIONS_DIFFRENT_SIZES) if you pass collections and their sizes are diffrent
+
+!name GE
+!desc Compare if number <i>a</i> is greater or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater or equals numbers at the same index in collection <i>b</i>
+!param a (int, float, tuple, array) 
+!param b (int, float, tuple, array) 
+!return (bool, tuple) if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections
+!error (BAD_PARAMETER_TYPE) if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+!error (COLLECTIONS_DIFFRENT_SIZES) if you pass collections and their sizes are diffrent
+
+!name EQ
+!desc Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Errors object fields are equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals
+!param a (all) 
+!param b (all) 
+!return (bool) true if passed values are equals, otherwise false
+
+!name NEQ
+!desc Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details 
+!param a (all) 
+!param b (all) 
+!return (bool) true if passed values aren't equals, otherwise false
+
+!name IS_IN_RANGE
+!desc Checks if number <i>num</i> is in range of &lt<i>min</i>, <i>max</i>&gt
+!param num (int, float) 
+!param min (int, float) 
+!param max (int, float) 
+!return (bool) true if <i>num</i> is in range, otherwise false
+!error (BAD_PARAMETER_TYPE) if any of parameter are not number
+!error (MIN_GREATER_THAN_MAX) if <i>min</i> is greater than <i>max</i>
+

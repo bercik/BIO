@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <functions>
 <!-- operacje porównania (relacji) -->
-<!-- zwracają wartość logiczną -->
+<!-- zwracają wartość logiczną lub tuplę wartości logicznych -->
     <function>
         <name>
             LS
@@ -95,6 +95,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             NEQ
         </name>
         <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_IN_RANGE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
             <param>
                 all
             </param>

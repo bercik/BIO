@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.rcebula.modules.utils;
+package pl.rcebula.modules.utils.error_codes;
 
 import pl.rcebula.internals.data_types.Data;
 
@@ -23,7 +23,8 @@ public enum ErrorCodes
     CALLBACK_NOT_ATTACHED(7),
     INDEX_OUT_OF_BOUNDS(8),
     DIVISION_BY_ZERO(9),
-    SIZE_LESS_THAN_ZERO(10);
+    SIZE_LESS_THAN_ZERO(10),
+    MIN_GREATER_THAN_MAX(11);
     
     private final Data code;
             

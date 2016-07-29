@@ -20,7 +20,7 @@ import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.intermediate_code.line.PushLine;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
@@ -45,6 +45,7 @@ public class BuiltinFunctions
         putModule(new MathModule());
         putModule(new ArraysModule());
         putModule(new ErrorsModule());
+        putModule(new CompareModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

@@ -9,7 +9,7 @@ import java.util.List;
 import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;

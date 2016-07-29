@@ -15,8 +15,9 @@ import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
-import pl.rcebula.modules.utils.ErrorCodes;
+import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.modules.utils.Numbers;
+import pl.rcebula.modules.utils.error_codes.ConstructError;
 import pl.rcebula.modules.utils.type_checker.ITypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
@@ -253,13 +254,7 @@ public class MathModule extends Module
                 if (col.length != firstCol.length)
                 {
                     // błąd
-                    String message = "collection passed as " + i + " parameter "
-                            + "differs in size with previous";
-
-                    MyError cause = null;
-                    MyError myError = new MyError(funName, message, 
-                            ErrorCodes.COLLECTIONS_DIFFRENT_SIZES.getCode(), cause, ei, interpreter);
-                    error = Data.createErrorData(myError);
+                    error = ConstructError.COLLECTIONS_DIFFRENT_SIZES(funName, ei, interpreter, i);
                     isError = true;
                     datas = null;
                     return;
@@ -553,10 +548,7 @@ public class MathModule extends Module
                                 // sprawdzamy czy nie dzielimy przez zero
                                 if (val == 0)
                                 {
-                                    String message = "Division by zero";
-                                    MyError error = new MyError(funName, message, 
-                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei, interpreter);
-                                    return Data.createErrorData(error);
+                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 iresult /= val;
                                 break;
@@ -586,10 +578,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    String message = "Division by zero";
-                                    MyError error = new MyError(funName, message, 
-                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei, interpreter);
-                                    return Data.createErrorData(error);
+                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 fresult /= val;
                                 break;
@@ -683,10 +672,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    String message = "Division by zero";
-                                    MyError error = new MyError(funName, message, 
-                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, d.getErrorInfo(), interpreter);
-                                    return Data.createErrorData(error);
+                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 iresult /= val;
                                 break;
@@ -716,10 +702,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    String message = "Division by zero";
-                                    MyError error = new MyError(funName, message, 
-                                            ErrorCodes.DIVISION_BY_ZERO.getCode(), null, d.getErrorInfo(), interpreter);
-                                    return Data.createErrorData(error);
+                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 fresult /= val;
                                 break;
