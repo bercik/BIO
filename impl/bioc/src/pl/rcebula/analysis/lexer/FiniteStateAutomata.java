@@ -53,7 +53,7 @@ public class FiniteStateAutomata
     private final Integer commentState = 9;
 
     // liczba stanów
-    private final Integer states = 21;
+    private final Integer states = 22;
     // liczba symboli (maksymalna wartość zwracana przez getCharCol() plus dwa)
     private final Integer symbols = 20;
     // tablica przejść, zawiera informację o następnym stanie dla danej 
@@ -380,6 +380,7 @@ public class FiniteStateAutomata
 
         // stan 1
         transitionsTable[1][getCharCol('1')] = 2; // dowolna cyfra poza zerem
+        transitionsTable[1][getCharCol('0')] = 21; // cyfra zero
 
         // stan 2
         transitionsTable[2][getCharCol('0')] = 2; // cyfra zero
@@ -438,6 +439,9 @@ public class FiniteStateAutomata
 
         // stan 19
         transitionsTable[19][getCharCol('>')] = 20; // znak większości
+        
+        // stan 21
+        transitionsTable[21][getCharCol('.')] = 11; // kropka
     }
 
     // funkcja która mapuje znak na kolumnę w tablicy przejść

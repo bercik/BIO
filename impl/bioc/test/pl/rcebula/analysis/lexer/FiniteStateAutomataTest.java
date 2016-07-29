@@ -16,12 +16,7 @@
  */
 package pl.rcebula.analysis.lexer;
 
-import pl.rcebula.analysis.lexer.FiniteStateAutomata;
-import pl.rcebula.analysis.lexer.LexerError;
 import pl.rcebula.utils.Pair;
-import pl.rcebula.analysis.lexer.TokenType;
-import pl.rcebula.analysis.lexer.Lexer;
-import pl.rcebula.analysis.lexer.Token;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -245,6 +240,8 @@ public class FiniteStateAutomataTest
         testToken(fsa, "+100.023 ", TokenType.FLOAT, 100.023f, 1, 1, true);
 
         testToken(fsa, "-2561.555 ", TokenType.FLOAT, -2561.555f, 1, 1, true);
+        
+        testToken(fsa, "-0.436 ", TokenType.FLOAT, -0.436f, 1, 1, true);
 
         testToken(fsa, "0.5 ", TokenType.FLOAT, 0.5f, 1, 1, true);
 

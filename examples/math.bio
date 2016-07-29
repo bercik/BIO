@@ -62,5 +62,5 @@ def onSTART()
    PRINT(NEGATE(20), "\n") % -20
    PRINT(NEGATE(-20), "\n") % 20
    PRINT(NEGATE(1.5), "\n") % -1.5 
-   PRINT(NEGATE(-1.5), "\n") % 1.5 
+   PRINT(NEGATE(-0.5), "\n") % 1.5 
 end
