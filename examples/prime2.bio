@@ -1,10 +1,35 @@
-def isPrime(num)
-   ASSIGN_LOCAL(numbers, RANGE(2, SQRT(num)))
-   ASSIGN_LOCAL(size, SUB(SQRT(num), 1))
-   ASSIGN_LOCAL(numbers_div, DIV(CREATE_TUPLE_OF_ELEMENTS(size, num), numbers))
-   PRINT(numbers_div)
-end
-
 def onSTART()
-   isPrime(9)
+   ASSIGN_LOCAL(MAX_I, 100)
+   FOR
+   (
+      ASSIGN_LOCAL(i, 2), 
+      LS(i, MAX_I), 
+      CALL
+      (
+         ASSIGN_LOCAL(found, true),
+         FOR
+         (
+            ASSIGN_LOCAL(j, 2), 
+            LE(j, SQRT(i)), 
+            IF
+            (
+               EQ(MOD(i, j), 0), 
+               CALL
+               (
+                  ASSIGN_LOCAL(found, false), 
+                  BREAK()
+               ),
+               DN()
+            ),
+            INC(j)
+         ),
+         IF
+         (
+            EQ(found, true), 
+            PRINT(i, "\n"),
+            DN()
+         )
+      ),
+      INC(i)
+   )
 end
