@@ -1,0 +1,10 @@
+def isPrime(num)
+   ASSIGN_LOCAL(numbers, RANGE(2, SQRT(num)))
+   ASSIGN_LOCAL(size, SUB(SQRT(num), 1))
+   ASSIGN_LOCAL(numbers_div, DIV(CREATE_TUPLE_OF_ELEMENTS(size, num), numbers))
+   PRINT(numbers_div)
+end
+
+def onSTART()
+   isPrime(9)
+end

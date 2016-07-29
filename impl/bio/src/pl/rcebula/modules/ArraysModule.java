@@ -16,6 +16,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.modules.utils.Numbers;
+import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 
 /**
@@ -36,6 +37,7 @@ public class ArraysModule extends Module
         putFunction(new CreateTupleFunction());
         putFunction(new GetFunction());
         putFunction(new CreateTupleOfElementsFunction());
+        putFunction(new RangeFunction());
     }
     
     private class CreateTupleFunction implements IFunction
@@ -136,6 +138,56 @@ public class ArraysModule extends Module
             }
             // zwróc element o indeksie index z kolekcji datas
             return datas[index];
+        }
+    }
+    
+    private class RangeFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "RANGE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data d1 = params.get(0);
+            Data d2 = params.get(1);
+            
+            // sprawdź czy parametry są typu int
+            TypeChecker tc = new TypeChecker(d1, getName(), 0, d1.getErrorInfo(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            tc = new TypeChecker(d2, getName(), 1, d2.getErrorInfo(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            int min = Numbers.getInt(d1);
+            int max = Numbers.getInt(d2);
+            
+            // sprawdź czy min nie jest większe od max
+            if (min > max)
+            {
+                return ErrorConstruct.MIN_GREATER_THAN_MAX(getName(), d1.getErrorInfo(), interpreter);
+            }
+            
+            // stwórz tablicę o odpowiednim rozmiarze
+            Data[] datas = new Data[max - min + 1];
+            // wypełnij liczbami naturalnymi
+            for (int i = 0; i < datas.length; ++i)
+            {
+                datas[i] = Data.createIntData(min + i);
+            }
+            
+            // zwróc tuplę
+            return Data.createTupleData(new Tuple(datas));
         }
     }
 }

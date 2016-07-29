@@ -14,7 +14,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.Datas;
 import pl.rcebula.modules.utils.Numbers;
-import pl.rcebula.modules.utils.error_codes.ConstructError;
+import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerNumber;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerNumberCollection;
@@ -118,7 +118,7 @@ public class CompareModule extends Module
                 // sprawdzamy czy mają taki sam rozmiar
                 if (data1.length != data2.length)
                 {
-                    return ConstructError.COLLECTIONS_DIFFRENT_SIZES(compOp.getName(), par2.getErrorInfo(), 
+                    return ErrorConstruct.COLLECTIONS_DIFFRENT_SIZES(compOp.getName(), par2.getErrorInfo(), 
                             interpreter, 1);
                 }
                 
@@ -403,7 +403,7 @@ public class CompareModule extends Module
                 // sprawdź czy min > max
                 if (min > max)
                 {
-                    return ConstructError.MIN_GREATER_THAN_MAX(getName(), d2.getErrorInfo(), interpreter);
+                    return ErrorConstruct.MIN_GREATER_THAN_MAX(getName(), d2.getErrorInfo(), interpreter);
                 }
                 
                 // sprawdź czy num jest w zakresie <min, max>
@@ -426,7 +426,7 @@ public class CompareModule extends Module
                 // sprawdź czy min > max
                 if (min > max)
                 {
-                    return ConstructError.MIN_GREATER_THAN_MAX(getName(), d2.getErrorInfo(), interpreter);
+                    return ErrorConstruct.MIN_GREATER_THAN_MAX(getName(), d2.getErrorInfo(), interpreter);
                 }
                 
                 // sprawdź czy num jest w zakresie <min, max>

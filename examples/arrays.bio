@@ -4,5 +4,8 @@ def onSTART()
    % negujemy wszystkie liczby
    ASSIGN_LOCAL(tup, MUL(tup, CREATE_TUPLE_OF_ELEMENTS(5, -1)))
    % wypisujemy
-   PRINT(tup, "\n")
+   PRINT(tup, "\n") % (-1, -5.3, 1.4, 15, -23.5)
+   PRINT(RANGE(1, 10), "\n") % ( 1, 2, ..., 10 )
+   PRINT(RANGE(1.0, 10), "\n") % error
+   PRINT(RANGE(10, 1), "\n") % error
 end

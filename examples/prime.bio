@@ -1,12 +1,12 @@
-def FIND_PRIME(i)
+def IS_PRIME(num)
    ASSIGN_LOCAL(found, true)
    FOR
    (
-      ASSIGN_LOCAL(j, 2), 
-      LS(j, i), 
+      ASSIGN_LOCAL(i, 2), 
+      LE(i, SQRT(num)), 
       IF
       (
-         EQ(REST(i, j), 0), 
+         EQ(MOD(num, i), 0), 
          CALL
          (
             ASSIGN_LOCAL(found, false), 
@@ -14,10 +14,15 @@ def FIND_PRIME(i)
          ),
          DN()
       ),
-      INC(j)
+      INC(i)
    )
-   PRINT(ADD(TO_STR(i), " is "))
-   IF(EQ(found, true), PRINT("prime"), PRINT("not prime"))
+
+   IF
+   (
+      EQ(found, true), 
+      PRINT(num, "\n"),
+      DN()
+   )
 end
 
 def onSTART()
@@ -26,7 +31,10 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 2), 
       LS(i, MAX_I), 
-      FIND_PRIME(i),
+      CALL
+      (
+         IS_PRIME(i)
+      ),
       INC(i)
    )
 end

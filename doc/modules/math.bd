@@ -73,7 +73,7 @@
 !return (float) power of given values
 
 !name MOD
-!desc Returns remainder of division number <i>a</i> by number<i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function
+!desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function
 !param a (int ,float) 
 !param b (int, float) 
 !return (int, float) if one number is float then returns float, otherwise int

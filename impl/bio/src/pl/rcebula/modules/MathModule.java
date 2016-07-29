@@ -11,13 +11,11 @@ import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
-import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.modules.utils.Numbers;
-import pl.rcebula.modules.utils.error_codes.ConstructError;
+import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.ITypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
@@ -254,7 +252,7 @@ public class MathModule extends Module
                 if (col.length != firstCol.length)
                 {
                     // błąd
-                    error = ConstructError.COLLECTIONS_DIFFRENT_SIZES(funName, ei, interpreter, i);
+                    error = ErrorConstruct.COLLECTIONS_DIFFRENT_SIZES(funName, ei, interpreter, i);
                     isError = true;
                     datas = null;
                     return;
@@ -548,7 +546,7 @@ public class MathModule extends Module
                                 // sprawdzamy czy nie dzielimy przez zero
                                 if (val == 0)
                                 {
-                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
+                                    return ErrorConstruct.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 iresult /= val;
                                 break;
@@ -578,7 +576,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
+                                    return ErrorConstruct.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 fresult /= val;
                                 break;
@@ -672,7 +670,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
+                                    return ErrorConstruct.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 iresult /= val;
                                 break;
@@ -702,7 +700,7 @@ public class MathModule extends Module
                             case QUOTIENT:
                                 if (val == 0)
                                 {
-                                    return ConstructError.DIVISION_BY_ZERO(funName, ei, interpreter);
+                                    return ErrorConstruct.DIVISION_BY_ZERO(funName, ei, interpreter);
                                 }
                                 fresult /= val;
                                 break;

@@ -14,7 +14,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
  *
  * @author robert
  */
-public class ConstructError
+public class ErrorConstruct
 {
     public static Data COLLECTIONS_DIFFRENT_SIZES(String funName, ErrorInfo ei, Interpreter interpreter,
             int param)
