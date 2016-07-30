@@ -29,7 +29,7 @@ public class PerformJmpIfFalse
         // pobieramy parametr z stack parameters
         Data cond = interpreter.currentFrame.getStackParameters().get(0);
         // sprawdzamy czy jest typu bool
-        TypeChecker tc = new TypeChecker(cond, "JMP_IF_FALSE", 1, ei, interpreter, 
+        TypeChecker tc = new TypeChecker(cond, "JMP_IF_FALSE", 0, ei, interpreter, 
                 DataType.BOOL);
         if (!tc.isError())
         {

@@ -19,27 +19,27 @@ public class PerformCallLoc
 {
     public PerformCallLoc(Interpreter interpreter, Line line)
     {
-        CallLine callLine = (CallLine)line;
+        CallLine callLine = (CallLine) line;
         String funName = callLine.getFunName();
         ErrorInfo ei = callLine.getErrorInfo();
-        
+
         perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), ei);
     }
-    
+
     public PerformCallLoc(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
         perform(interpreter, funName, parameters, ei);
     }
-    
+
     private void perform(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
         // profiler
         interpreter.profiler.enter(funName);
         // wywołujemy funkcję
-        Data data = interpreter.builtinFunctions.callFunction(funName, 
+        Data data = interpreter.builtinFunctions.callFunction(funName,
                 parameters, interpreter.currentFrame, interpreter, ei);
         interpreter.profiler.exit();
-        
+
         // jeżeli data jest różne od null
         if (data != null)
         {

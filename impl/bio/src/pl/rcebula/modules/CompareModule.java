@@ -333,6 +333,16 @@ public class CompareModule extends Module
             Data d1 = params.get(0);
             Data d2 = params.get(1);
             
+            // jeżeli jedna z wartości to error to zwróć błąd
+            TypeChecker tc = new TypeChecker(params, getName(), interpreter, DataType.ARRAY, DataType.BOOL,
+                    DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, DataType.STRING, 
+                    DataType.TUPLE);
+            
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
             boolean eq = Datas.equals(d1, d2);
             return Data.createBoolData(eq);
         }
@@ -352,6 +362,16 @@ public class CompareModule extends Module
             // parametry: <all, all>
             Data d1 = params.get(0);
             Data d2 = params.get(1);
+            
+            // jeżeli jedna z wartości to error to zwróć błąd
+            TypeChecker tc = new TypeChecker(params, getName(), interpreter, DataType.ARRAY, DataType.BOOL,
+                    DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, DataType.STRING, 
+                    DataType.TUPLE);
+            
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
             
             boolean neq = !Datas.equals(d1, d2);
             return Data.createBoolData(neq);

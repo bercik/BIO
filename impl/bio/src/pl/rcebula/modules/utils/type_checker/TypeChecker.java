@@ -21,13 +21,13 @@ public class TypeChecker implements ITypeChecker
 {
     private Data error;
     private boolean isError;
-    
-    public TypeChecker(Data actual, String funName, int paramNum, ErrorInfo ei, 
+
+    public TypeChecker(Data actual, String funName, int paramNum, ErrorInfo ei,
             Interpreter interpreter, DataType... expected)
     {
         check(actual, funName, paramNum, ei, interpreter, expected);
     }
-    
+
     public TypeChecker(List<Data> actual, String funName, Interpreter interpreter, DataType... expected)
     {
         for (int i = 0; i < actual.size(); ++i)
@@ -38,14 +38,14 @@ public class TypeChecker implements ITypeChecker
             }
         }
     }
-    
+
     // zwraca false jeżeli błąd, true jeżeli nie ma błędu
-    private boolean check(Data actual, String funName, int paramNum, ErrorInfo ei, 
+    private boolean check(Data actual, String funName, int paramNum, ErrorInfo ei,
             Interpreter interpreter, DataType... expected)
     {
         DataType actualDataType = actual.getDataType();
         isError = !equals(actualDataType, expected);
-        
+
         if (isError)
         {
             String message = "expected " + paramNum + " parameter to be ";
@@ -55,33 +55,33 @@ public class TypeChecker implements ITypeChecker
             }
             message = message.substring(0, message.length() - 2);
             message += " got " + actualDataType.toString();
-            
+
             MyError cause = null;
             if (actual.getDataType().equals(DataType.ERROR))
             {
-                cause = (MyError)actual.getValue();
+                cause = (MyError) actual.getValue();
             }
-            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(), 
+            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(),
                     cause, ei, interpreter);
             error = Data.createErrorData(myError);
-            
+
             return false;
         }
         else
         {
             error = null;
-            
+
             return true;
         }
     }
-    
+
     private boolean equals(DataType actual, DataType[] expected)
     {
         if (expected.length == 0)
         {
             return true;
         }
-        
+
         for (DataType dt : expected)
         {
             if (dt.equals(actual))
@@ -89,10 +89,10 @@ public class TypeChecker implements ITypeChecker
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     @Override
     public boolean isError()
     {

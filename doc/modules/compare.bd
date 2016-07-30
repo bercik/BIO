@@ -31,9 +31,10 @@
 !error (COLLECTIONS_DIFFRENT_SIZES) if you pass collections and their sizes are diffrent
 
 !name EQ
-!desc Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Errors object fields are equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals
-!param a (all) 
-!param b (all) 
+!desc Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b>
+!param a (all except error) 
+!param b (all except error) 
+!error (BAD_PARAMETER_TYPE) If at least one passed value is error
 !return (bool) true if passed values are equals, otherwise false
 
 !name NEQ

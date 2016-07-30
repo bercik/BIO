@@ -8,7 +8,7 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#errors">errors</a><li><a href="#math">math</a></ul>
+<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#observer">observer</a><li><a href="#errors">errors</a><li><a href="#compare">compare</a><li><a href="#arrays">arrays</a><li><a href="#io">io</a><li><a href="#math">math</a></ul>
 <a name="_header"></a><hr/><div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
@@ -108,63 +108,62 @@
 </div>
 <hr/>
 
-<a href="#index">table of contents</a><a name="arrays"></a><h1>arrays</h1>
+<a href="#index">table of contents</a><a name="observer"></a><h1>observer</h1>
 <hr/>
-<p class="fun_header"><b>CREATE_TUPLE</b> (<i>&ltel&gt</i>)</p><p>Creates tuple of given elements <i>el</i></p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>el</i> (<u>all</u>) - element to be inserted in tuple</p>
+<p><i>event</i> (<u>id</u>) - function to be observed</p>
+<p><i>callback</i> (<u>id</u>) - function to be attached</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>tuple</u>) - tuple of given elements</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CREATE_TUPLE_OF_ELEMENTS</b> (<i>size, el</i>)</p><p>Creates tuple of size <i>size</i> filled with elements <i>el</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>size</i> (<u>int</u>) - size of tuple</p>
-<p><i>el</i> (<u>all</u>) - element that will be filled in tuple</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>tuple</u>) - tuple with given elements</p>
+<p>(<u>none</u>)</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>size</i> isn't int</p>
-<p><i>SIZE_LESS_THAN_ZERO</i> - if <i>size</i> is int but less than zero</p>
+<p><i>CALLBACK_ALREADY_ATTACHED</i> - if <i>callback</i> is already attached to <i>event</i> </p>
 </div>
 <hr/>
 
-<p class="fun_header"><b>GET</b> (<i>col, index</i>)</p><p>Gets element at given index from array or tuple</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>IS_ATTACHED</b> (<i>event, callback</i>)</p><p>Checks whether <i>callback</i> is attached to <i>event</i></p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection from which we want to get element</p>
-<p><i>index</i> (<u>int</u>) - which element do we want to get</p>
+<p><i>event</i> (<u>id</u>)</p>
+<p><i>callback</i> (<u>id</u>)</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>all</u>) - returns element from <i>col</i> at given <i>index</i></p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed argument is not array or tuple</p>
-<p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal collection size</p>
+<p>(<u>bool</u>) - true if <i>callback</i> is attached to <i>event</i>, otherwise false</p>
 </div>
 <hr/>
 
-<p class="fun_header"><b>RANGE</b> (<i>min, max</i>)</p><p>Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>min</i> (<u>int</u>) - lowerbound</p>
-<p><i>max</i> (<u>int</u>) - upperbound</p>
+<p><i>event</i> (<u>id</u>) - observed function</p>
+<p><i>callback</i> (<u>id</u>) - function to be detached</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>tuple</u>) - tuple that contains all natural numbers in given range</p>
+<p>(<u>none</u>)</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>min</i> or <i>max</i> aren't int</p>
-<p><i>MIN_GREATER_THAN_MAX</i> - if min is greater than max</p>
+<p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="errors"></a><h1>errors</h1>
+<hr/>
+<p class="fun_header"><b>GET_ERROR_FULL_INFO</b> (<i>err</i>)</p><p>Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>err</i> (<u>error</u>) - error to get full information from</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string</u>) - containing full information about given error</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if passed value isn't error</p>
 </div>
 <hr/>
 
@@ -234,14 +233,18 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>EQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Errors object fields are equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>EQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b></p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>a</i> (<u>all</u>)</p>
-<p><i>b</i> (<u>all</u>)</p>
+<p><i>a</i> (<u>all except error</u>)</p>
+<p><i>b</i> (<u>all except error</u>)</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
 <p>(<u>bool</u>) - true if passed values are equals, otherwise false</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If at least one passed value is error</p>
 </div>
 <hr/>
 
@@ -273,6 +276,66 @@
 </div>
 <hr/>
 
+<a href="#index">table of contents</a><a name="arrays"></a><h1>arrays</h1>
+<hr/>
+<p class="fun_header"><b>CREATE_TUPLE</b> (<i>&ltel&gt</i>)</p><p>Creates tuple of given elements <i>el</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>el</i> (<u>all</u>) - element to be inserted in tuple</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple of given elements</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>CREATE_TUPLE_OF_ELEMENTS</b> (<i>size, el</i>)</p><p>Creates tuple of size <i>size</i> filled with elements <i>el</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>size</i> (<u>int</u>) - size of tuple</p>
+<p><i>el</i> (<u>all</u>) - element that will be filled in tuple</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple with given elements</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>size</i> isn't int</p>
+<p><i>SIZE_LESS_THAN_ZERO</i> - if <i>size</i> is int but less than zero</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>GET</b> (<i>col, index</i>)</p><p>Gets element at given index from array or tuple</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>) - collection from which we want to get element</p>
+<p><i>index</i> (<u>int</u>) - which element do we want to get</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - returns element from <i>col</i> at given <i>index</i></p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if passed argument is not array or tuple</p>
+<p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal collection size</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>RANGE</b> (<i>min, max</i>)</p><p>Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>min</i> (<u>int</u>) - lowerbound</p>
+<p><i>max</i> (<u>int</u>) - upperbound</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple that contains all natural numbers in given range</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>min</i> or <i>max</i> aren't int</p>
+<p><i>MIN_GREATER_THAN_MAX</i> - if min is greater than max</p>
+</div>
+<hr/>
+
 <a href="#index">table of contents</a><a name="io"></a><h1>io</h1>
 <hr/>
 <p class="fun_header"><b>PRINT</b> (<i>&ltval&gt</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by space</p><p><b>Parameters:</b></p>
@@ -292,65 +355,6 @@
 <p><b>Return value:</b></p>
 <div class="returned">
 <p>(<u>string</u>) - printed string</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="observer"></a><h1>observer</h1>
-<hr/>
-<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>) - function to be observed</p>
-<p><i>callback</i> (<u>id</u>) - function to be attached</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>CALLBACK_ALREADY_ATTACHED</i> - if <i>callback</i> is already attached to <i>event</i> </p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_ATTACHED</b> (<i>event, callback</i>)</p><p>Checks whether <i>callback</i> is attached to <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>)</p>
-<p><i>callback</i> (<u>id</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>callback</i> is attached to <i>event</i>, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>) - observed function</p>
-<p><i>callback</i> (<u>id</u>) - function to be detached</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="errors"></a><h1>errors</h1>
-<hr/>
-<p class="fun_header"><b>GET_ERROR_FULL_INFO</b> (<i>err</i>)</p><p>Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>err</i> (<u>error</u>) - error to get full information from</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>) - containing full information about given error</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed value isn't error</p>
 </div>
 <hr/>
 

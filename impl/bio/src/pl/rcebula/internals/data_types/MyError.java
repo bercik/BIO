@@ -69,11 +69,9 @@ public class MyError
         str += errorInfo.toString() + ": ";
         str += message;
         
-        MyError causeError = cause;
-        while (causeError != null)
+        if (cause != null)
         {
-            str += "\ncaused by " + causeError.toString();
-            causeError = causeError.getCause();
+            str += "\ncaused by " + cause.toString();
         }
         
         return str;
