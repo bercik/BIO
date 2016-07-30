@@ -73,10 +73,12 @@
 !return (float) power of given values
 
 !name MOD
-!desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function
-!param a (int ,float) 
-!param b (int, float) 
-!return (int, float) if one number is float then returns float, otherwise int
+!desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as a tuple of results.
+!param a (int ,float, array, tuple) 
+!param b (int, float, array, tuple) 
+!return (int, float, tuple) if one number is float then returns float, if both are ints then returns int, if you pass tuples then result will be tuple 
+!error (BAD_PARAMETER_TYPE) if <i>a</i> is not int, float, array or tuple or if you mixed numbers and collections or if elements in collections aren't numbers.
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections have got diffrent sizes
 
 !name INC
 !desc Increments local number with given id

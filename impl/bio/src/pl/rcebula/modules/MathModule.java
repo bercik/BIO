@@ -16,6 +16,9 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
+import pl.rcebula.modules.utils.operation.CollectionsOperation;
+import pl.rcebula.modules.utils.operation.IOperation;
+import pl.rcebula.modules.utils.operation.OperationDataType;
 import pl.rcebula.modules.utils.type_checker.ITypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
@@ -910,7 +913,7 @@ public class MathModule extends Module
         }
     }
     
-    private class ModFunction implements IFunction
+    private class ModFunction implements IFunction, IOperation
     {
         @Override
         public String getName()
@@ -919,49 +922,84 @@ public class MathModule extends Module
         }
 
         @Override
+        public Data perform(int... nums)
+        {
+            return Data.createIntData(nums[0] % nums[1]);
+        }
+
+        @Override
+        public Data perform(float... nums)
+        {
+            return Data.createFloatData(nums[0] % nums[1]);
+        }
+
+        @Override
+        public Data perform(boolean... bools)
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Data perform(String... strings)
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+        @Override
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
             // parametry: <all, all>
             Data par1 = params.get(0);
             Data par2 = params.get(1);
             
-            // sprawdź czy parametr pierwszy jest liczbą i czy float
-            TypeCheckerNumber tcn = new TypeCheckerNumber(par1, getName(), 0, par1.getErrorInfo(),
-                    interpreter);
-            if (tcn.isError())
+            // sprawdź czy number lub collection
+            TypeChecker tc = new TypeChecker(par1, getName(), 0, par1.getErrorInfo(), interpreter, 
+                    DataType.ARRAY, DataType.FLOAT, DataType.INT, DataType.TUPLE);
+            if (tc.isError())
             {
-                return tcn.getError();
-            }
-            boolean isFloat = tcn.isFloat();
-            
-            // sprawdź czy drugi parametr jest liczbą i czy float
-            tcn = new TypeCheckerNumber(par2, getName(), 1, par2.getErrorInfo(), interpreter);
-            if (tcn.isError())
-            {
-                return tcn.getError();
+                return tc.getError();
             }
             
-            if (!isFloat)
+            // jeżeli liczba to
+            if (Numbers.isNumber(par1))
             {
-                isFloat = tcn.isFloat();
+                // sprawdź czy parametr pierwszy jest floatem
+                boolean isFloat = par1.getDataType().equals(DataType.FLOAT);
+
+                // sprawdź czy drugi parametr jest liczbą i czy float
+                TypeCheckerNumber tcn = 
+                        new TypeCheckerNumber(par2, getName(), 1, par2.getErrorInfo(), interpreter);
+                if (tcn.isError())
+                {
+                    return tcn.getError();
+                }
+
+                if (!isFloat)
+                {
+                    isFloat = tcn.isFloat();
+                }
+
+                // jeżeli jedna z liczb była typu float to konwertujemy obie na float
+                if (isFloat)
+                {
+                    float val1 = Numbers.getFloat(par1);
+                    float val2 = Numbers.getFloat(par2);
+
+                    return perform(val1, val2);
+                }
+                // inaczej inty
+                {
+                    int val1 = Numbers.getInt(par1);
+                    int val2 = Numbers.getInt(par2);
+
+                    return perform(val1, val2);
+                }
             }
-            
-            // jeżeli jedna z liczb była typu float to konwertujemy obie na float
-            if (isFloat)
+            // inaczej kolekcje
+            else
             {
-                float val1 = Numbers.getFloat(par1);
-                float val2 = Numbers.getFloat(par2);
-                
-                float mod = val1 % val2;
-                return Data.createFloatData(mod);
-            }
-            // inaczej inty
-            {
-                int val1 = Numbers.getInt(par1);
-                int val2 = Numbers.getInt(par2);
-                
-                int mod = val1 % val2;
-                return Data.createIntData(mod);
+                return new CollectionsOperation().perform(
+                        getName(), OperationDataType.NUMBER, this, interpreter, par1, par2);
             }
         }
     }

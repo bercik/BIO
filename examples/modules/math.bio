@@ -43,6 +43,11 @@ def onSTART()
    PRINT(MOD(6, 3), "\n") % 0
    PRINT(MOD(7, 3), "\n") % 1
    PRINT(MOD(7.5, 2), "\n") % 1.5
+   PRINT(MOD(tup1, tup1), "\n") % ( 0, 0, 0, 0 )
+   PRINT(MOD(tup2, tup1), "\n") % ( 7, 1, 0, 2 )
+   PRINT(MOD(tup1, CREATE_TUPLE(1, 2, 3)), "\n") % error
+   PRINT(MOD(tup1, CREATE_TUPLE(1, "a", 3, 5)), "\n") % error
+   PRINT(MOD(tup1, true), "\n") % error
 
    PRINT("INC\n")
    ASSIGN_LOCAL(i, 0)

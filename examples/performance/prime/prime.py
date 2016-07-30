@@ -11,7 +11,7 @@ def isPrime(num):
     if found:
         print(num)
 
-MAX_I = 100
+MAX_I = 10000
 if len(sys.argv) > 1:
     MAX_I = int(sys.argv[1])
 
