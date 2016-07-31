@@ -1,0 +1,12 @@
+def factorial(n)
+   IF
+   (
+      EQ(n, 1),
+      RETURN(n),
+      RETURN(MUL(n, factorial(SUB(n, 1))))
+   )
+end
+
+def onSTART()
+   PRINT(factorial(25.0), "\n")
+end
