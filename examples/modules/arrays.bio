@@ -1,11 +1,41 @@
 def onSTART()
+   PRINT("TUPLE\n")
    % tworzymy tuplę
    ASSIGN_LOCAL(tup, CREATE_TUPLE(1, 5.3, -1.4, -15, 23.5))
    % negujemy wszystkie liczby
    ASSIGN_LOCAL(tup, MUL(tup, CREATE_TUPLE_OF_ELEMENTS(5, -1)))
    % wypisujemy
    PRINT(tup, "\n") % (-1, -5.3, 1.4, 15, -23.5)
+
+   PRINT("RANGE\n")
    PRINT(RANGE(1, 10), "\n") % ( 1, 2, ..., 10 )
    PRINT(RANGE(1.0, 10), "\n") % error
    PRINT(RANGE(10, 1), "\n") % error
+
+   PRINT("ARRAY\n")
+   % tworzymy tablicę
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(2))
+   PRINT(arr, "\n") % [ none, none ]
+   PRINT(CREATE_ARRAY(-2), "\n") % error
+
+   PRINT("DICT\n")
+   ASSIGN_LOCAL(dict, CREATE_DICT("el1", 10, "el2", none, "flaga", true))
+   PRINT(dict, "\n") % { el1: 10, el2: none, flaga: true }
+   PRINT(CREATE_DICT(true, "asd"), "\n") % error
+   
+   PRINT("SET\n")
+   PRINT(SET(tup, 10, "siema"), "\n") % error
+   PRINT(SET(arr, 10, "siema"), "\n") % error
+   PRINT(SET(dict, 10, "siema"), "\n") % error
+   SET(arr, 0, "siema")
+   SET(dict, "el1", arr)
+   PRINT(arr, "\n") % [ "siema", none ]
+   PRINT(dict, "\n") % { el1: [ "siema", none ], el2: none, el3: true }
+
+   PRINT("GET\n")
+   PRINT(GET(tup, 10), "\n") % error
+   PRINT(GET(dict, "el3"), "\n") % error
+   PRINT(GET(arr, "el3"), "\n") % error
+   PRINT(GET(arr, 0), "\n") % siema
+   PRINT(GET(dict, "el1"), "\n") % [ "siema", none ]
 end

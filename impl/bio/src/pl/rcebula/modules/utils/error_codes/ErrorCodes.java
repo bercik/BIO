@@ -24,7 +24,8 @@ public enum ErrorCodes
     INDEX_OUT_OF_BOUNDS(8),
     DIVISION_BY_ZERO(9),
     SIZE_LESS_THAN_ZERO(10),
-    MIN_GREATER_THAN_MAX(11);
+    MIN_GREATER_THAN_MAX(11),
+    KEY_DOESNT_EXIST(12);
     
     private final Data code;
             

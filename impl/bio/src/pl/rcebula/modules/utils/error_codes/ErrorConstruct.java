@@ -20,29 +20,60 @@ public class ErrorConstruct
             int param)
     {
         String message = "collection passed as " + param + " parameter differs in size with previous";
-        
-        MyError myError = new MyError(funName, message, 
+
+        MyError myError = new MyError(funName, message,
                 ErrorCodes.COLLECTIONS_DIFFRENT_SIZES.getCode(), null, ei, interpreter);
-        
+
         return Data.createErrorData(myError);
     }
-    
+
     public static Data DIVISION_BY_ZERO(String funName, ErrorInfo ei, Interpreter interpreter)
     {
         String message = "division by zero";
-        
-        MyError error = new MyError(funName, message, ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei, 
+
+        MyError error = new MyError(funName, message, ErrorCodes.DIVISION_BY_ZERO.getCode(), null, ei,
                 interpreter);
+
+        return Data.createErrorData(error);
+    }
+
+    public static Data MIN_GREATER_THAN_MAX(String funName, ErrorInfo ei, Interpreter interpreter)
+    {
+        String message = "min is greater than max";
+
+        MyError error = new MyError(funName, message, ErrorCodes.MIN_GREATER_THAN_MAX.getCode(), null,
+                ei, interpreter);
+
+        return Data.createErrorData(error);
+    }
+
+    public static Data SIZE_LESS_THAN_ZERO(String funName, ErrorInfo ei, Interpreter interpreter)
+    {
+        String message = "size is less than zero";
+
+        MyError error = new MyError(funName, message, ErrorCodes.SIZE_LESS_THAN_ZERO.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(error);
+    }
+
+    public static Data INDEX_OUT_OF_BOUNDS(String funName, ErrorInfo ei, Interpreter interpreter, 
+            int index)
+    {
+        String message = "Index " + index + " out of collection bounds";
+        
+        MyError error = new MyError(funName, message, ErrorCodes.INDEX_OUT_OF_BOUNDS.getCode(),
+                null, ei, interpreter);
         
         return Data.createErrorData(error);
     }
     
-    public static Data MIN_GREATER_THAN_MAX(String funName, ErrorInfo ei, Interpreter interpreter)
+    public static Data KEY_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter, String key)
     {
-        String message = "min is greater than max";
+        String message = "key " + key + " doesn't exists";
         
-        MyError error = new MyError(funName, message, ErrorCodes.MIN_GREATER_THAN_MAX.getCode(), null, 
-                ei, interpreter);
+        MyError error = new MyError(funName, message, ErrorCodes.KEY_DOESNT_EXIST.getCode(),
+                null, ei, interpreter);
         
         return Data.createErrorData(error);
     }

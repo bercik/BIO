@@ -110,6 +110,36 @@
 
 <a href="#index">table of contents</a><a name="arrays"></a><h1>arrays</h1>
 <hr/>
+<p class="fun_header"><b>CREATE_ARRAY</b> (<i>size</i>)</p><p>Creates array of size <i>size</i> filled with none elements</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>size</i> (<u>int</u>) - size of array</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>array</u>) - array with none elements</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if passed parameter is not int</p>
+<p><i>SIZE_LESS_THAN_ZERO</i> - if passed size is less than zero</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>CREATE_DICT</b> (<i>&ltkey, value&gt</i>)</p><p>Creates dict with string keys and any values. Initialize it with given <i>key</i> and <i>value</i> (can be repeated)</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>key</i> (<u>string</u>)</p>
+<p><i>value</i> (<u>all</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>dict</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>key</i> is not string</p>
+</div>
+<hr/>
+
 <p class="fun_header"><b>CREATE_TUPLE</b> (<i>&ltel&gt</i>)</p><p>Creates tuple of given elements <i>el</i></p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>el</i> (<u>all</u>) - element to be inserted in tuple</p>
@@ -136,19 +166,51 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>GET</b> (<i>col, index</i>)</p><p>Gets element at given index from array or tuple</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>SET</b> (<i>a, b, c</i>)</p><p>Sets element at given index in array or at given key for dict. If there was value for given key in dict it will be replaced</p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection from which we want to get element</p>
-<p><i>index</i> (<u>int</u>) - which element do we want to get</p>
+<p><i>a</i> (<u>array, dict</u>)</p>
+<p><i>b</i> (<u>int, string</u>) - index for array, key for dict</p>
+<p><i>c</i> (<u>all</u>) - value to be set</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>all</u>) - returns element from <i>col</i> at given <i>index</i></p>
+<p>(<u>all</u>) - value given as parameter c</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed argument is not array or tuple</p>
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> is not array or dict or if <i>b</i> is not int if <i>a</i> is array or string if </i>a</i> is dict</p>
+<p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal array size</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>GET</b> (<i>a, b</i>)</p><p>Gets element at given index from array or tuple or at given key from dict</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>a</i> (<u>array, tuple, dict</u>) - container from which we want to get element</p>
+<p><i>b</i> (<u>int, string</u>) - index for collection, key for dict</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - returns element from <i>a</i> at given index or key</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> is not array, tuple or dict or or if <i>b</i> is not int if </i>a</i> is collection or string if <i>a</i> is dict</p>
 <p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal collection size</p>
+<p><i>KEY_DOESNT_EXIST</i> - if given key doesn't exist in dict</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>SIZE</b> (<i>a</i>)</p><p>Returns size of given collection or dict</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>a</i> (<u>array, tuple, dict</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int</u>) - size of given collection or dict</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not array tuple or dict</p>
 </div>
 <hr/>
 

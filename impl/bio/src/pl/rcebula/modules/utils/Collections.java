@@ -37,4 +37,9 @@ public class Collections
         return data.getDataType().equals(DataType.ARRAY)
                 || data.getDataType().equals(DataType.TUPLE);
     }
+    
+    public static boolean isArray(Data data)
+    {
+        return data.getDataType().equals(DataType.ARRAY);
+    }
 }

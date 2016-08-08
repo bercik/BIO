@@ -1,3 +1,17 @@
+!name CREATE_ARRAY
+!desc Creates array of size <i>size</i> filled with none elements
+!param size (int) size of array
+!return (array) array with none elements
+!error (BAD_PARAMETER_TYPE) if passed parameter is not int
+!error (SIZE_LESS_THAN_ZERO) if passed size is less than zero
+
+!name CREATE_DICT
+!desc Creates dict with string keys and any values. Initialize it with given <i>key</i> and <i>value</i> (can be repeated)
+!repeat key (string) 
+!repeat value (all) 
+!return (dict) 
+!error (BAD_PARAMETER_TYPE) if <i>key</i> is not string
+
 !name CREATE_TUPLE
 !desc Creates tuple of given elements <i>el</i>
 !repeat el (all) element to be inserted in tuple
@@ -11,13 +25,29 @@
 !error (BAD_PARAMETER_TYPE) if <i>size</i> isn't int
 !error (SIZE_LESS_THAN_ZERO) if <i>size</i> is int but less than zero
 
+!name SET
+!desc Sets element at given index in array or at given key for dict. If there was value for given key in dict it will be replaced
+!param a (array, dict) 
+!param b (int, string) index for array, key for dict
+!param c (all) value to be set
+!return (all) value given as parameter c
+!error (BAD_PARAMETER_TYPE) if <i>a</i> is not array or dict or if <i>b</i> is not int if <i>a</i> is array or string if </i>a</i> is dict
+!error (INDEX_OUT_OF_BOUNDS) if given index is greater or equal array size
+
 !name GET
-!desc Gets element at given index from array or tuple
-!param col (array, tuple) collection from which we want to get element
-!param index (int) which element do we want to get
-!return (all) returns element from <i>col</i> at given <i>index</i>
-!error (BAD_PARAMETER_TYPE) if passed argument is not array or tuple
+!desc Gets element at given index from array or tuple or at given key from dict
+!param a (array, tuple, dict) container from which we want to get element
+!param b (int, string) index for collection, key for dict
+!return (all) returns element from <i>a</i> at given index or key
+!error (BAD_PARAMETER_TYPE) if <i>a</i> is not array, tuple or dict or or if <i>b</i> is not int if </i>a</i> is collection or string if <i>a</i> is dict
 !error (INDEX_OUT_OF_BOUNDS) if given index is greater or equal collection size
+!error (KEY_DOESNT_EXIST) if given key doesn't exist in dict
+
+!name SIZE
+!desc Returns size of given collection or dict
+!param a (array, tuple, dict) 
+!return (int) size of given collection or dict
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array tuple or dict
 
 !name RANGE
 !desc Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt
