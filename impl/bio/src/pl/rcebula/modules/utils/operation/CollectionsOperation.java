@@ -12,11 +12,9 @@ import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
-import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
-import pl.rcebula.modules.utils.type_checker.TypeCheckerNumber;
 import pl.rcebula.modules.utils.type_checker.TypeCheckerNumberCollection;
 
 /**

@@ -61,16 +61,18 @@
 !error (DIVISION_BY_ZERO) division by zero
 
 !name SQRT
-!desc Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float
-!param val (int, float) value to be square rooted. 
-!return (float) square root of passed value
-!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int or float
+!desc Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as a tuple of results
+!param val (int, float, array, tuple) value to be square rooted. 
+!return (float, tuple) square root of passed value or tuple if you pass collection
+!error (BAD_PARAMETER_TYPE) if <i>val</i> isn't number or collection or if elements in collection are not numbers
 
 !name POW
-!desc Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float
-!param a (int, float) base
-!param b (int, float) exponent
-!return (float) power of given values
+!desc Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as a tuple of results.
+!param a (int, float, array, tuple) base
+!param b (int, float, array, tuple) exponent
+!return (float, tuple) power of given values or tuple if you pass collections
+!error (BAD_PARAMETER_TYPE) if passed parameters are not number or collection, if you mixed numbers and collections or if collections contains other types than numbers
+!error (COLLECTIONS_DIFFRENT_SIZES) if given collections differs in size
 
 !name MOD
 !desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as a tuple of results.

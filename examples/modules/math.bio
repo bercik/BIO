@@ -33,11 +33,13 @@ def onSTART()
    PRINT(SQRT(25), "\n") % 5
    PRINT(SQRT(30), "\n") % 5.47
    PRINT(SQRT(-4), "\n") % NaN
+   PRINT(SQRT(tup1), "\n") % ( 2.8, 2, 1.73, 1.41 )
 
    PRINT("POW\n")
    PRINT(POW(2, 3), "\n") % 8
    PRINT(POW(-2, 3), "\n") % -8
    PRINT(POW(4, 0.5), "\n") % 2
+   PRINT(POW(tup1, tup1), "\n") % ( 16777216, 256, 27, 4 )
 
    PRINT("MOD\n")
    PRINT(MOD(6, 3), "\n") % 0
