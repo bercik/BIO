@@ -20,7 +20,9 @@ def EXTEND_LIST_IF_NEEDED(list)
          % nowy rozmiar jest dwa razy większy niż obecny
          ASSIGN_LOCAL(new_size, MUL(arr_size, 2)),
          % rozszerzamy listę
-         EXTEND_ARRAY(arr, new_size)
+         ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, new_size)),
+         % przypisujemy do dict
+         SET(list, "arr", arr)
       ),
       DN()
    )
@@ -87,4 +89,26 @@ def INDEX_OF_ITEM_LIST(list, item)
       INC(i)
    )
    RETURN(none)
+end
+
+def PRINT_LIST(list)
+   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   PRINT("<")
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, count),
+      CALL
+      (
+         PRINT(GET(arr, i)),
+         IF
+         (
+            NEQ(i, SUB(count, 1)),
+            PRINT(", "),
+            DN()
+         )
+      ),
+      INC(i)
+   )
+   PRINT(">\n")
 end
