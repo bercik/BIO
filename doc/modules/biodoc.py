@@ -154,12 +154,11 @@ if __name__ == "__main__":
             p = f.params[i]
             if i == f.repeatedFrom:
                 html += "&lt"
-            if i == len(f.params) - 1:
-                html += p.name
-            else:
-                html += p.name + ", "
+            html += p.name
             if i == f.repeatedTo:
-                html += "&gt"
+                    html += "&gt*"
+            if i != len(f.params) - 1:
+                html += ", "
 
         html += "</i>)</p>"
         html += "<p>" + f.desc + "</p>"

@@ -116,6 +116,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </params>
     </function>
     
+    <function>
+        <name>
+            EXIT
+        </name>
+        <params>
+        </params>
+    </function>
+    
     <event>
         <name>
             onUNHANDLED_ERROR

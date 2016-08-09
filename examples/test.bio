@@ -1,0 +1,9 @@
+def onSTART()
+   foo()
+end
+
+def foo()
+   PRINT("foo\n")
+   EXIT()
+   PRINT("after exit\n")
+end

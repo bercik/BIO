@@ -145,7 +145,30 @@ public class BuiltinFunctions
         UserFunction uf = interpreter.getUserFunctions().get(name);
         if (uf != null)
         {
-            interpreter.callEvent(parameters, uf, ei);
+            // jeżeli zdarzenie onUNHANDLED_ERROR to specjalne traktowanie
+            if (name.equals(Constants.unhandledErrorFunctionName))
+            {
+                // jeżeli ma obserwatorów to po prostu wywołujemy
+                if (uf.getObservers().size() > 0)
+                {
+                    interpreter.callEvent(parameters, uf, ei);
+                }
+                // inaczej wypisujemy błąd na ekran i przerywamy
+                else
+                {
+                    // wypisujemy błąd na ekran
+                    // TODO change to PRINTLN
+                    interpreter.getBuiltinFunctions().callFunction("PRINT", parameters, interpreter.getCurrentFrame(), 
+                            interpreter, ei);
+                    // zakańczamy program
+                    interpreter.getBuiltinFunctions().callFunction("EXIT", new ArrayList<Data>(), 
+                            interpreter.getCurrentFrame(), interpreter, ei);
+                }
+            }
+            else
+            {
+                interpreter.callEvent(parameters, uf, ei);
+            }
         }
         else
         {

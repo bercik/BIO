@@ -92,7 +92,7 @@ public class IoModule extends Module
                     str += "{ ";
                     for (Map.Entry<String, Data> d : dict.entrySet())
                     {
-                        str += "\"" + d.getKey() + "\": " + toStr(d.getValue()) + ", ";
+                        str += d.getKey() + ": " + toStr(d.getValue()) + ", ";
                     }
                     if (dict.size() > 0)
                     {

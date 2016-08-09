@@ -25,7 +25,8 @@ public enum ErrorCodes
     DIVISION_BY_ZERO(9),
     SIZE_LESS_THAN_ZERO(10),
     MIN_GREATER_THAN_MAX(11),
-    KEY_DOESNT_EXIST(12);
+    KEY_DOESNT_EXIST(12),
+    NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(13);
     
     private final Data code;
             

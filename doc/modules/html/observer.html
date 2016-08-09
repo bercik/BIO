@@ -1,6 +1,6 @@
 <h1>observer</h1>
 <hr/>
-<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt*</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>event</i> (<u>id</u>) - function to be observed</p>
 <p><i>callback</i> (<u>id</u>) - function to be attached</p>
@@ -26,7 +26,7 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt*</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>event</i> (<u>id</u>) - observed function</p>
 <p><i>callback</i> (<u>id</u>) - function to be detached</p>

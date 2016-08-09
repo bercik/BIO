@@ -5,8 +5,12 @@
  */
 package pl.rcebula.internals.interpreter;
 
+import java.util.Arrays;
+import pl.rcebula.Constants;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.intermediate_code.line.PopLine;
+import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.data_types.DataType;
 
 /**
  *
@@ -22,7 +26,14 @@ public class PerformPopc
         // ściągamy ze stosu amount obiektów
         while (amount-- > 0)
         {
-            interpreter.currentFrame.getVariableStack().pop();
+            Data d = interpreter.currentFrame.getVariableStack().pop();
+            // jeżeli typu error to wywołaj zdarzenie onUNHANDLED_ERROR
+            if (d != null && d.getDataType().equals(DataType.ERROR))
+            {
+                interpreter.builtinFunctions.callEvent(Constants.unhandledErrorFunctionName, Arrays.asList(d), 
+                        interpreter, d.getErrorInfo());
+                break;
+            }
         }
     }
 }

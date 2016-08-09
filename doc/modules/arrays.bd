@@ -57,3 +57,32 @@
 !error (BAD_PARAMETER_TYPE) if <i>min</i> or <i>max</i> aren't int
 !error (MIN_GREATER_THAN_MAX) if min is greater than max
 
+!name COPY
+!desc Copy elements from given array or dict to new one. <b>Note:</b> It won't copy arrays and dicts recursively. To do this use DEEP_COPY instead
+!param a (array, dict) array or dict to be copy
+!return (array, dict) new array or dict
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array or dict
+
+!name DEEP_COPY
+!desc Copy elements from given array or dict to new one. <b>Note:</b> It will copy arrays and dicts recursively. If you don't want this behavior use COPY instead
+!param a (array, dict) array or dict to be copy
+!return (array, dict) new array or dict
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array or dict
+
+!name EXTEND_ARRAY
+!desc Extends array to given size or if size is less than actual cut it. Fills elements above size with nones. <b>Note:</b> it will return extended array as new array, not affecting given one
+!param arr (array) array to be extended
+!param size (int) new size
+!return (array) new extended array
+!error (BAD_PARAMETER_TYPE) If <i>arr</i> is not array or <i>size</i> is not int
+!error (SIZE_LESS_THAN_ZERO) If <i>size</i> is less than zero
+
+!name UNPACK
+!desc Unpacks collection to given variables. If size of collection is greater than number of variables it will assign all unassigned values as a tuple to the last variable. If number of variables is greater than size of collection than error would be returned. If error occurs during execution of this function than no variable would be affected by it
+!param id (id) 
+!repeat id (id) 
+!param col (array, tuple) 
+!return (array, tuple) given collection
+!error (BAD_PARAMETER_TYPE) If <i>col</i> is not array or tuple
+!error (NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE) If number of variables is greater than collection size
+

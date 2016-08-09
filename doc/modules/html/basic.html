@@ -1,6 +1,6 @@
 <h1>basic</h1>
 <hr/>
-<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>id</i> (<u>id</u>) - variable identifier</p>
 <p><i>val</i> (<u>all</u>) - variable value</p>
@@ -11,7 +11,7 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>id</i> (<u>id</u>) - variable identifier</p>
 <p><i>val</i> (<u>all</u>) - variable value</p>
@@ -76,9 +76,11 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>EXIT</b> (<i></i>)</p><p>Exits from BIO</p><hr/>
+
+<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unchecked error during program execution (unchecked that is not assigned to variable or passed to function)</p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>err</i> (<u>error</u>) - error returned from onSTART function</p>
+<p><i>err</i> (<u>error</u>) - error returned from onSTART function or unchecked</p>
 </div>
 <hr/>
 

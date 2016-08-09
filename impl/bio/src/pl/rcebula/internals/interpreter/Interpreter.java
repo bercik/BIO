@@ -158,18 +158,10 @@ public class Interpreter
         if (valueReturnedFromMainFunction != null
                 && valueReturnedFromMainFunction.getDataType().equals(DataType.ERROR))
         {
-            // jeżeli do zdarzenia onUNHANDLED_ERROR jest podpięty jakiś obserwator to wywołujemy
-            UserFunction uf = userFunctions.get(Constants.unhandledErrorFunctionName);
-            if (uf.getObservers().size() > 0)
-            {
-                List<Data> parameters = Arrays.asList(valueReturnedFromMainFunction);
-                callEvent(parameters, uf, valueReturnedFromMainFunction.getErrorInfo());
-            }
-            // inaczej wypisujem error na ekran
-            else
-            {
-                System.out.println(valueReturnedFromMainFunction.getValue().toString());
-            }
+            // wywołujemy zdarzenie onUNHANDLED_ERROR
+            List<Data> parameters = Arrays.asList(valueReturnedFromMainFunction);
+            builtinFunctions.callEvent(Constants.unhandledErrorFunctionName, parameters, this, 
+                    valueReturnedFromMainFunction.getErrorInfo());
         }
 
         run();

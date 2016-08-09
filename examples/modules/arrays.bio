@@ -38,4 +38,46 @@ def onSTART()
    PRINT(GET(arr, "el3"), "\n") % error
    PRINT(GET(arr, 0), "\n") % siema
    PRINT(GET(dict, "el1"), "\n") % [ "siema", none ]
+
+   PRINT("SIZE\n")
+   PRINT(SIZE(tup), "\n") % 5
+   PRINT(SIZE(arr), "\n") % 2
+   PRINT(SIZE(dict), "\n") % 3
+
+   PRINT("COPY\n")
+   ASSIGN_LOCAL(arr2, arr)
+   PRINT(arr, arr2, "\n") % [ "siema", none ] [ "siema", none ]
+   SET(arr2, 1, 10)
+   PRINT(arr, arr2, "\n") % [ "siema", 10 ] [ "siema", 10 ]
+   ASSIGN_LOCAL(arr2, COPY(arr))
+   SET(arr2, 1, 20)
+   PRINT(arr, arr2, "\n") % [ "siema", 10 ] [ "siema", 20 ]
+   ASSIGN_LOCAL(dict2, COPY(dict))
+   PRINT(dict, dict2, "\n") % { el1: [ "siema", 10 ], el2: none, el3: true } { el1: [ "siema", 10 ], el2: none, el3: true } 
+   SET(dict2, "el1", -2.5)
+   PRINT(dict, dict2, "\n") % { el1: [ "siema", 10 ], el2: none, el3: true } { el1: -2.5, el2: none, el3: true } 
+
+   PRINT("DEEP_COPY\n")
+   ASSIGN_LOCAL(dict3, DEEP_COPY(dict))
+   PRINT(dict, dict3, "\n") % { el1: [ "siema", 10 ], el2: none, el3: true } { el1: [ "siema", 10 ], el2: none, el3: true } 
+   SET(GET(dict3, "el1"), 1, true)
+   PRINT(dict, dict3, "\n") % { el1: [ "siema", 10 ], el2: none, el3: true } { el1: [ "siema", true ], el2: none, el3: true } 
+
+   PRINT("EXTEND_ARRAY\n")
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(2))
+   SET(arr, 0, 10)
+   SET(arr, 1, 20)
+   PRINT(arr, "\n") % [ 10, 20 ]
+   ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, 4))
+   SET(arr, 2, 30)
+   PRINT(arr, "\n") % [ 10, 20, 30, none ]
+   ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, 1))
+   PRINT(arr, "\n") % [ 10 ]
+
+   PRINT("UNPACK\n")
+   UNPACK(x, y, z, RANGE(1, 10))
+   PRINT(x, y, z, "\n") % 1 2 ( 3, 4, 5, 6, 7, 8, 9, 10 )
+   UNPACK(x, y, z, RANGE(1, 3))
+   PRINT(x, y, z, "\n") % 1 2 3
+   PRINT(UNPACK(x, y, z, k, RANGE(1, 3))) % error
 end

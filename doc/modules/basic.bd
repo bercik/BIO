@@ -40,7 +40,10 @@
 !desc Returnes value <i>val</i> from function
 !param val (all) value to be returned
 
+!name EXIT
+!desc Exits from BIO
+
 !name onUNHANDLED_ERROR
-!desc Event called when there is error value returned from onSTART function
-!param err (error) error returned from onSTART function
+!desc Event called when there is error value returned from onSTART function or unchecked error during program execution (unchecked that is not assigned to variable or passed to function)
+!param err (error) error returned from onSTART function or unchecked
 

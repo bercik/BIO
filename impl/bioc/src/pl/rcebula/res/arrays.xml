@@ -130,6 +130,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             UNPACK
         </name>
         <params>
+            <param>
+                id
+            </param>
             <param repeat="true">
                 id
             </param>

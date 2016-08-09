@@ -77,4 +77,17 @@ public class ErrorConstruct
         
         return Data.createErrorData(error);
     }
+    
+    public static Data NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(String funName, 
+            ErrorInfo ei, Interpreter interpreter, int numberOfVariables, int collectionSize)
+    {
+        String message = "given " + numberOfVariables + " variables is greater than collection size " + 
+                collectionSize;
+        
+        MyError error = new MyError(funName, message, 
+                ErrorCodes.NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE.getCode(), null, 
+                ei, interpreter);
+        
+        return Data.createErrorData(error);
+    }
 }

@@ -1,13 +1,27 @@
 #INCLUDE("./list.biom")
 
 def onSTART()
-   ASSIGN_LOCAL(list, CREATE_LIST(1))
+   ASSIGN_LOCAL(list, CREATE_LIST(1)) % [ none ]
+   PRINT(GET(list, "arr"), "\n") 
+
    APPEND_TO_LIST(list, 1) % [1]
+   PRINT(GET(list, "arr"), "\n")
+
    APPEND_TO_LIST(list, 3) % extend list, new_size = 2 [1, 3]
+   PRINT(GET(list, "arr"), "\n")
+
    APPEND_TO_LIST(list, 4) % extend list, new_size = 4 [1, 3, 4]
+   PRINT(GET(list, "arr"), "\n")
+
    INSERT_INTO_LIST(list, 1, 2) % [1, 2, 3, 4]
+   PRINT(GET(list, "arr"), "\n")
+
    REMOVE_FROM_LIST(list, INDEX_OF_ITEM_LIST(list, 2)) % [1, 3, 4]
+   PRINT(GET(list, "arr"), "\n")
+
    INSERT_INTO_LIST(list, 0, 2) % [2, 1, 3, 4]
+   PRINT(GET(list, "arr"), "\n")
+
    INSERT_INTO_LIST(list, 3, 10) % extend list, new_size = 8 [2, 1, 3, 10, 4]
-   PRINT(GET(list, "arr")) % [2, 1, 3, 10, 4]
+   PRINT(GET(list, "arr"), "\n")
 end

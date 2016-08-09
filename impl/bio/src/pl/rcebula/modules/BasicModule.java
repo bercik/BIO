@@ -40,6 +40,7 @@ public class BasicModule extends Module
         putFunction(new GetGlobalFunction());
         putFunction(new ReturnFunction());
         putFunction(new GetLocalFunction());
+        putFunction(new ExitFunction());
         
         putEvent(new OnUnhandledErrorEvent());
     }
@@ -216,6 +217,26 @@ public class BasicModule extends Module
             {
                 return null;
             }
+        }
+    }
+    
+    private class ExitFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "EXIT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            while (interpreter.getFrameStack().size() > 0)
+            {
+                interpreter.popFrame();
+            }
+            
+            return Data.createNoneData();
         }
     }
     

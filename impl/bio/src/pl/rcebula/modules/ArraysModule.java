@@ -10,14 +10,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
-import pl.rcebula.modules.utils.error_codes.ErrorCodes;
 import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
@@ -45,6 +44,10 @@ public class ArraysModule extends Module
         putFunction(new CreateDictFunction());
         putFunction(new SetFunction());
         putFunction(new SizeFunction());
+        putFunction(new CopyFunction());
+        putFunction(new DeepCopyFunction());
+        putFunction(new ExtendArrayFunction());
+        putFunction(new UnpackFunction());
     }
 
     private class CreateArrayFunction implements IFunction
@@ -353,7 +356,7 @@ public class ArraysModule extends Module
             {
                 return tc.getError();
             }
-            
+
             // jeżeli kolekcja
             if (Collections.isCollection(par))
             {
@@ -366,6 +369,276 @@ public class ArraysModule extends Module
                 HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
                 return Data.createIntData(map.size());
             }
+        }
+    }
+
+    private class CopyFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "COPY";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data par = params.get(0);
+
+            // sprawdź czy typu array lub dict
+            TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter,
+                    DataType.ARRAY, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // jeżeli array
+            if (par.getDataType().equals(DataType.ARRAY))
+            {
+                // pobierz tablicę
+                Data[] datas = (Data[])par.getValue();
+                // stwórz nową
+                Data[] newDatas = new Data[datas.length];
+                // skopiuj elementy
+                System.arraycopy(datas, 0, newDatas, 0, datas.length);
+
+                // zwróc nową tablicę
+                return Data.createArrayData(newDatas);
+            }
+            // inaczej dict
+            else
+            {
+                // pobierz mapę
+                HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
+                // stwórz nową mapę i skopiuj elementy ze starej
+                HashMap<String, Data> newMap = new HashMap<>(map);
+                // zwróc nowy dict
+                return Data.createDictData(newMap);
+            }
+        }
+    }
+
+    private class DeepCopyFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DEEP_COPY";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data par = params.get(0);
+
+            // sprawdź czy typu array lub dict
+            TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter,
+                    DataType.ARRAY, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // jeżeli array
+            if (par.getDataType().equals(DataType.ARRAY))
+            {
+                Data[] datas = (Data[])par.getValue();
+                return Data.createArrayData(deepCopy(datas));
+            }
+            // inaczej dict
+            else
+            {
+                HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
+                return Data.createDictData(deepCopy(map));
+            }
+        }
+
+        private Data[] deepCopy(Data[] arr)
+        {
+            Data[] newArr = new Data[arr.length];
+
+            for (int i = 0; i < arr.length; ++i)
+            {
+                Data d = arr[i];
+                if (d.getDataType().equals(DataType.ARRAY))
+                {
+                    d = Data.createArrayData(deepCopy((Data[])d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.DICT))
+                {
+                    d = Data.createDictData(deepCopy((HashMap<String, Data>)d.getValue()));
+                }
+
+                newArr[i] = d;
+            }
+
+            return newArr;
+        }
+
+        private HashMap<String, Data> deepCopy(HashMap<String, Data> map)
+        {
+            HashMap<String, Data> newMap = new HashMap<>();
+
+            for (Map.Entry<String, Data> entry : map.entrySet())
+            {
+                Data d = entry.getValue();
+
+                if (d.getDataType().equals(DataType.ARRAY))
+                {
+                    d = Data.createArrayData(deepCopy((Data[])d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.DICT))
+                {
+                    d = Data.createDictData(deepCopy((HashMap<String, Data>)d.getValue()));
+                }
+
+                newMap.put(entry.getKey(), d);
+            }
+
+            return newMap;
+        }
+    }
+
+    private class ExtendArrayFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "EXTEND_ARRAY";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data par1 = params.get(0);
+            Data par2 = params.get(1);
+
+            // sprawdź czy par1 to array
+            TypeChecker tc = new TypeChecker(par1, getName(), 0, par1.getErrorInfo(), interpreter,
+                    DataType.ARRAY);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // sprawdź czy par2 to int
+            tc = new TypeChecker(par2, getName(), 1, par2.getErrorInfo(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // pobierz rozmiar
+            int size = (int)par2.getValue();
+            // sprawdź czy większy od zera
+            if (size < 0)
+            {
+                return ErrorConstruct.SIZE_LESS_THAN_ZERO(getName(), par2.getErrorInfo(), interpreter);
+            }
+
+            // pobierz array
+            Data[] datas = (Data[])par1.getValue();
+            // stwórz nową tablicę
+            Data[] newDatas = new Data[size];
+            // skopiuj elementy ze starej do nowej
+            int toCopy = (size <= datas.length) ? size : datas.length;
+            System.arraycopy(datas, 0, newDatas, 0, toCopy);
+
+            // wypełnij pozostałe elementy elementami none
+            for (int i = datas.length; i < size; ++i)
+            {
+                newDatas[i] = Data.createNoneData();
+            }
+
+            // zwróc nową tablicę
+            return Data.createArrayData(newDatas);
+        }
+    }
+
+    private class UnpackFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "UNPACK";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <id+, all>
+            // ostatni parametr to kolekcja
+            Data col = params.get(params.size() - 1);
+            // sprawdź czy kolekcja
+            TypeChecker tc = new TypeChecker(col, getName(), params.size() - 1, col.getErrorInfo(), interpreter,
+                    DataType.ARRAY, DataType.TUPLE);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            List<String> ids = new ArrayList<>();
+            // pobierz wszystkie id
+            for (int i = 0; i < params.size() - 1; ++i)
+            {
+                ids.add((String)params.get(i).getValue());
+            }
+
+            // pobierz tablicę kolekcji
+            Data[] datas = Collections.getDatas(col);
+            // sprawdź czy ilość id nie jest większa niż rozmiar kolekcji
+            if (ids.size() > datas.length)
+            {
+                return ErrorConstruct.NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(
+                        getName(), col.getErrorInfo(), interpreter, ids.size(), datas.length);
+            }
+
+            List<Data> dataParams = new ArrayList<>();
+            // rozpakowujemy kolejno wszystkie wartości (poza ostatnią)
+            for (int i = 0; i < ids.size() - 1; ++i)
+            {
+                Data id = Data.createIdData(ids.get(i));
+                Data d = datas[i];
+
+                dataParams.add(id);
+                dataParams.add(d);
+            }
+
+            Data d;
+            Data id = Data.createIdData(ids.get(ids.size() - 1));
+            
+            int others = datas.length - ids.size() + 1;
+            if (others == 1)
+            {
+                d = datas[datas.length - 1];
+            }
+            else
+            {
+                // tworzymy tuplę pozostałych elementów
+                Data[] tup = new Data[others];
+
+                int it = 0;
+                for (int i =  ids.size() - 1; i < datas.length; ++i)
+                {
+                    tup[it++] = datas[i];
+                }
+                
+                d = Data.createTupleData(new Tuple(tup));
+            }
+
+            dataParams.add(id);
+            dataParams.add(d);
+
+            // wywołujemy funkcję ASSIGN_LOCAL na podanych id
+            interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", dataParams, currentFrame,
+                    interpreter, params.get(0).getErrorInfo());
+
+            // zwracamy przekazaną kolekcję
+            return col;
         }
     }
 
