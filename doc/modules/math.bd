@@ -5,11 +5,11 @@
 !error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection
 
 !name ADD
-!desc In case of numbers return sum. In case of strings return concatenation. In case of collections return tuple with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.
+!desc In case of numbers return sum. In case of strings return concatenation. In case of collections return array with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.
 !param val (int, float, string, array, tuple) value to be summed
 !param val (int, float, string, array, tuple) value to be summed
 !repeat val (int, float, string, array, tuple) value to be summed
-!return (int, float, string, tuple) If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!return (int, float, string, array) If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array 
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
 
@@ -20,11 +20,11 @@
 !error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
 
 !name SUB
-!desc In case of numbers return diffrence. In case of collections return tuple with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.
+!desc In case of numbers return diffrence. In case of collections return array with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.
 !param val (int, float, array, tuple) value to be diffrenced
 !param val (int, float, array, tuple) value to be diffrenced 
 !repeat val (int, float, array, tuple) value to be diffrenced 
-!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!return (int, float, array) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in DIFF function)
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
 
@@ -35,11 +35,11 @@
 !error (BAD_PARAMETER_TYPE) if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
 
 !name MUL
-!desc In case of numbers return product. In case of collections return tuple with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.
+!desc In case of numbers return product. In case of collections return array with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.
 !param val (int, float, array, tuple) value to be multiplied
 !param val (int, float, array, tuple) value to be multiplied
 !repeat val (int, float, array, tuple) value to be multiplied
-!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!return (int, float, array) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in PRODUCT function)
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
 
@@ -51,34 +51,34 @@
 !error (DIVISION_BY_ZERO) division by zero
 
 !name DIV
-!desc In case of numbers return quotient. In case of collections return tuple with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float
+!desc In case of numbers return quotient. In case of collections return array with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float
 !param val (int, float, array, tuple) value to be divided
 !param val (int, float, array, tuple) value to be divided
 !repeat val (int, float, array, tuple) value to be divided
-!return (int, float, tuple) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple
+!return (int, float, array) If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in QUOTIENT function)
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections sizes differs
 !error (DIVISION_BY_ZERO) division by zero
 
 !name SQRT
-!desc Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as a tuple of results
+!desc Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as an array of results
 !param val (int, float, array, tuple) value to be square rooted. 
-!return (float, tuple) square root of passed value or tuple if you pass collection
+!return (float, array) square root of passed value or array if you pass collection
 !error (BAD_PARAMETER_TYPE) if <i>val</i> isn't number or collection or if elements in collection are not numbers
 
 !name POW
-!desc Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as a tuple of results.
+!desc Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as an array of results.
 !param a (int, float, array, tuple) base
 !param b (int, float, array, tuple) exponent
-!return (float, tuple) power of given values or tuple if you pass collections
+!return (float, array) power of given values or array if you pass collections
 !error (BAD_PARAMETER_TYPE) if passed parameters are not number or collection, if you mixed numbers and collections or if collections contains other types than numbers
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections differs in size
 
 !name MOD
-!desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as a tuple of results.
+!desc Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as an array of results.
 !param a (int ,float, array, tuple) 
 !param b (int, float, array, tuple) 
-!return (int, float, tuple) if one number is float then returns float, if both are ints then returns int, if you pass tuples then result will be tuple 
+!return (int, float, array) if one number is float then returns float, if both are ints then returns int, if you pass collections then result will be array
 !error (BAD_PARAMETER_TYPE) if <i>a</i> is not int, float, array or tuple or if you mixed numbers and collections or if elements in collections aren't numbers.
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections have got diffrent sizes
 

@@ -53,7 +53,7 @@
 !desc Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt
 !param min (int) lowerbound
 !param max (int) upperbound
-!return (tuple) tuple that contains all natural numbers in given range
+!return (array) array that contains all natural numbers in given range
 !error (BAD_PARAMETER_TYPE) if <i>min</i> or <i>max</i> aren't int
 !error (MIN_GREATER_THAN_MAX) if min is greater than max
 

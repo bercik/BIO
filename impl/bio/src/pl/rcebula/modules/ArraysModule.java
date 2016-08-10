@@ -1154,8 +1154,8 @@ public class ArraysModule extends Module
                 datas[i] = Data.createIntData(min + i);
             }
 
-            // zwróc tuplę
-            return Data.createTupleData(new Tuple(datas));
+            // zwróc array
+            return Data.createArrayData(datas);
         }
     }
 }

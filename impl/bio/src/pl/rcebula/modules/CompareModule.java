@@ -168,8 +168,8 @@ public class CompareModule extends Module
                     }
                 }
                 
-                // zwracamy tuplę
-                return Data.createTupleData(new Tuple(result));
+                // zwracamy array
+                return Data.createArrayData(result);
             }
         }
     }

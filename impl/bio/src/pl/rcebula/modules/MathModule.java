@@ -437,7 +437,7 @@ public class MathModule extends Module
                     tupleData[i] = sum;
                 }
 
-                return Data.createTupleData(new Tuple(tupleData));
+                return Data.createArrayData(tupleData);
             }
         }
     }
@@ -771,7 +771,7 @@ public class MathModule extends Module
                     tupleData[i] = result;
                 }
 
-                return Data.createTupleData(new Tuple(tupleData));
+                return Data.createArrayData(tupleData);
             }
         }
     }

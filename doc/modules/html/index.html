@@ -223,7 +223,7 @@
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>tuple</u>) - tuple that contains all natural numbers in given range</p>
+<p>(<u>array</u>) - array that contains all natural numbers in given range</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -389,7 +389,7 @@
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>bool, tuple</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections</p>
+<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -405,7 +405,7 @@
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>bool, tuple</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections</p>
+<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -421,7 +421,7 @@
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>bool, tuple</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections</p>
+<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -437,7 +437,7 @@
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>bool, tuple</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be tuple of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections</p>
+<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -586,13 +586,13 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>ADD</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return sum. In case of strings return concatenation. In case of collections return tuple with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>ADD</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return sum. In case of strings return concatenation. In case of collections return array with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>val</i> (<u>int, float, string, array, tuple</u>) - value to be summed</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>int, float, string, tuple</u>) - If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+<p>(<u>int, float, string, array</u>) - If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array </p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -615,13 +615,13 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>SUB</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return diffrence. In case of collections return tuple with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>SUB</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return diffrence. In case of collections return array with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>val</i> (<u>int, float, array, tuple</u>) - value to be diffrenced</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -644,13 +644,13 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>MUL</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return product. In case of collections return tuple with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>MUL</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return product. In case of collections return array with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>val</i> (<u>int, float, array, tuple</u>) - value to be multiplied</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -674,13 +674,13 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>DIV</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return quotient. In case of collections return tuple with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>DIV</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return quotient. In case of collections return array with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>val</i> (<u>int, float, array, tuple</u>) - value to be divided</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>int, float, tuple</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be tuple</p>
+<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -690,13 +690,13 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>SQRT</b> (<i>val</i>)</p><p>Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as a tuple of results</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>SQRT</b> (<i>val</i>)</p><p>Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as an array of results</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>val</i> (<u>int, float, array, tuple</u>) - value to be square rooted. </p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>float, tuple</u>) - square root of passed value or tuple if you pass collection</p>
+<p>(<u>float, array</u>) - square root of passed value or array if you pass collection</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -704,14 +704,14 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>POW</b> (<i>a, b</i>)</p><p>Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as a tuple of results.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>POW</b> (<i>a, b</i>)</p><p>Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as an array of results.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>a</i> (<u>int, float, array, tuple</u>) - base</p>
 <p><i>b</i> (<u>int, float, array, tuple</u>) - exponent</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>float, tuple</u>) - power of given values or tuple if you pass collections</p>
+<p>(<u>float, array</u>) - power of given values or array if you pass collections</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">
@@ -720,14 +720,14 @@
 </div>
 <hr/>
 
-<p class="fun_header"><b>MOD</b> (<i>a, b</i>)</p><p>Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as a tuple of results.</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>MOD</b> (<i>a, b</i>)</p><p>Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as an array of results.</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>a</i> (<u>int ,float, array, tuple</u>)</p>
 <p><i>b</i> (<u>int, float, array, tuple</u>)</p>
 </div>
 <p><b>Return value:</b></p>
 <div class="returned">
-<p>(<u>int, float, tuple</u>) - if one number is float then returns float, if both are ints then returns int, if you pass tuples then result will be tuple </p>
+<p>(<u>int, float, array</u>) - if one number is float then returns float, if both are ints then returns int, if you pass collections then result will be array</p>
 </div>
 <p><b>Errors:</b></p>
 <div class="errors">

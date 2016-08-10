@@ -252,7 +252,7 @@ public class CollectionsOperation
             results[i] = res;
         }
         
-        // zwracamy tuplę z wynikami
-        return Data.createTupleData(new Tuple(results));
+        // zwracamy array z wynikami
+        return Data.createArrayData(results);
     }
 }
