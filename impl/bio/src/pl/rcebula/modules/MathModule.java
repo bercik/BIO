@@ -54,6 +54,24 @@ public class MathModule extends Module
         putFunction(new IncFunction());
         putFunction(new DecFunction());
         putFunction(new NegateFunction());
+        putFunction(new RandFunction());
+    }
+    
+    private class RandFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "RAND";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // bez parametrów
+            float rand = (float)Math.random();
+            return Data.createFloatData(rand);
+        }
     }
 
     private class SumFunction implements IFunction

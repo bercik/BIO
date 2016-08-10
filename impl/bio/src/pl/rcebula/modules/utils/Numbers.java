@@ -41,4 +41,63 @@ public class Numbers
     {
         return (int)number.getValue();
     }
+    
+    public enum NumberType
+    {
+        INT,
+        FLOAT;
+    }
+    
+    public static class Number implements Comparable<Number>
+    {
+        private final NumberType type;
+        private final int i;
+        private final float f;
+
+        public Number(int i)
+        {
+            this.f = i;
+            this.i = i;
+            this.type = NumberType.INT;
+        }
+
+        public Number(float f)
+        {
+            this.i = (int)f;
+            this.f = f;
+            this.type = NumberType.FLOAT;
+        }
+
+        public NumberType getType()
+        {
+            return type;
+        }
+
+        public int getInt()
+        {
+            return i;
+        }
+
+        public float getFloat()
+        {
+            return f;
+        }
+
+        @Override
+        public int compareTo(Number o)
+        {
+            if (this.f == o.f)
+            {
+                return 0;
+            }
+            else if (this.f < o.f)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
 }

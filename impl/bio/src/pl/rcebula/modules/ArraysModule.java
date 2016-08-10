@@ -20,6 +20,8 @@ import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.Numbers;
 import pl.rcebula.modules.utils.error_codes.ErrorConstruct;
 import pl.rcebula.modules.utils.type_checker.TypeChecker;
+import pl.rcebula.modules.utils.type_checker.TypeCheckerCollection;
+import pl.rcebula.modules.utils.type_checker.TypeCheckerNumberCollection;
 
 /**
  *
@@ -48,6 +50,426 @@ public class ArraysModule extends Module
         putFunction(new DeepCopyFunction());
         putFunction(new ExtendArrayFunction());
         putFunction(new UnpackFunction());
+        putFunction(new ContainsFunction());
+        putFunction(new ContainsKeyFunction());
+        putFunction(new ContainsValueFunction());
+        putFunction(new CountElementsFunction());
+        putFunction(new SortAscFunction());
+        putFunction(new SortDescFunction());
+    }
+
+    private class SortAscFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SORT_ASC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data col = params.get(0);
+
+            // sprawdź czy kolekcja
+            TypeChecker tc = new TypeChecker(col, getName(), 0, col.getErrorInfo(), interpreter, DataType.TUPLE,
+                    DataType.ARRAY);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // pobierz tablicę
+            Data[] datas = Collections.getDatas(col);
+            // sprawdź czy rozmiar większy od zera, jeżeli nie to zwróć nową pustą tablicę
+            if (datas.length == 0)
+            {
+                return Data.createArrayData(new Data[0]);
+            }
+
+            // pobierz pierwszy element i sprawdź czy number lub string
+            Data firstEl = datas[0];
+            TypeCheckerCollection tcc = new TypeCheckerCollection(firstEl, getName(), 0, 0, firstEl.getErrorInfo(),
+                    interpreter, DataType.INT, DataType.FLOAT, DataType.STRING);
+            if (tcc.isError())
+            {
+                return tcc.getError();
+            }
+
+            // stwórz nową tablicę
+            Data[] sorted = new Data[datas.length];
+
+            // jeżeli number
+            if (Numbers.isNumber(firstEl))
+            {
+                // tworzymy tablicę number
+                Numbers.Number[] tmp = new Numbers.Number[datas.length];
+
+                // iterujemy po wszystkich elementach i dodajemy do tablicy
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    Data d = datas[i];
+                    // sprawdzamy czy int lub float
+                    TypeCheckerNumberCollection tcnc = new TypeCheckerNumberCollection(d, getName(), 0, i, 
+                            d.getErrorInfo(), interpreter);
+                    if (tcnc.isError())
+                    {
+                        return tcnc.getError();
+                    }
+                    
+                    // jeżeli float
+                    if (tcnc.isFloat())
+                    {
+                        tmp[i] = new Numbers.Number((float)d.getValue());
+                    }
+                    // inaczej int
+                    else
+                    {
+                        tmp[i] = new Numbers.Number((int)d.getValue());
+                    }
+                }
+                
+                // sortujemy
+                Arrays.sort(tmp);
+                
+                // dodajemy do tablicy data
+                for (int i = 0; i < tmp.length; ++i)
+                {
+                    Numbers.Number n = tmp[i];
+                    if (n.getType().equals(Numbers.NumberType.FLOAT))
+                    {
+                        sorted[i] = Data.createFloatData(n.getFloat());
+                    }
+                    else
+                    {
+                        sorted[i] = Data.createIntData(n.getInt());
+                    }
+                }
+            }
+            // inaczej string
+            else
+            {
+                // tworzymy tablicę stringów
+                String[] tmp = new String[datas.length];
+
+                // iterujemy po wszystkich elementach i dodajemy do tablicy
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    Data d = datas[i];
+                    // sprawdzamy czy string
+                    tcc = new TypeCheckerCollection(d, getName(), 0, i, d.getErrorInfo(), interpreter, 
+                            DataType.STRING);
+                    if (tcc.isError())
+                    {
+                        return tcc.getError();
+                    }
+                    
+                    tmp[i] = (String)d.getValue();
+                }
+                
+                // sortujemy
+                Arrays.sort(tmp);
+                
+                // dodajemy do tablicy data
+                for (int i = 0; i < tmp.length; ++i)
+                {
+                    sorted[i] = Data.createStringData(tmp[i]);
+                }
+            }
+            
+            // zwracamy sorted jako tablicę
+            return Data.createArrayData(sorted);
+        }
+    }
+    
+    private class SortDescFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SORT_DESC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data col = params.get(0);
+
+            // sprawdź czy kolekcja
+            TypeChecker tc = new TypeChecker(col, getName(), 0, col.getErrorInfo(), interpreter, DataType.TUPLE,
+                    DataType.ARRAY);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // pobierz tablicę
+            Data[] datas = Collections.getDatas(col);
+            // sprawdź czy rozmiar większy od zera, jeżeli nie to zwróć nową pustą tablicę
+            if (datas.length == 0)
+            {
+                return Data.createArrayData(new Data[0]);
+            }
+
+            // pobierz pierwszy element i sprawdź czy number lub string
+            Data firstEl = datas[0];
+            TypeCheckerCollection tcc = new TypeCheckerCollection(firstEl, getName(), 0, 0, firstEl.getErrorInfo(),
+                    interpreter, DataType.INT, DataType.FLOAT, DataType.STRING);
+            if (tcc.isError())
+            {
+                return tcc.getError();
+            }
+
+            // stwórz nową tablicę
+            Data[] sorted = new Data[datas.length];
+
+            // jeżeli number
+            if (Numbers.isNumber(firstEl))
+            {
+                // tworzymy tablicę number
+                Numbers.Number[] tmp = new Numbers.Number[datas.length];
+
+                // iterujemy po wszystkich elementach i dodajemy do tablicy
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    Data d = datas[i];
+                    // sprawdzamy czy int lub float
+                    TypeCheckerNumberCollection tcnc = new TypeCheckerNumberCollection(d, getName(), 0, i, 
+                            d.getErrorInfo(), interpreter);
+                    if (tcnc.isError())
+                    {
+                        return tcnc.getError();
+                    }
+                    
+                    // jeżeli float
+                    if (tcnc.isFloat())
+                    {
+                        tmp[i] = new Numbers.Number((float)d.getValue());
+                    }
+                    // inaczej int
+                    else
+                    {
+                        tmp[i] = new Numbers.Number((int)d.getValue());
+                    }
+                }
+                
+                // sortujemy
+                Arrays.sort(tmp);
+                
+                // dodajemy do tablicy data
+                for (int i = 0; i < tmp.length; ++i)
+                {
+                    Numbers.Number n = tmp[i];
+                    if (n.getType().equals(Numbers.NumberType.FLOAT))
+                    {
+                        sorted[tmp.length - i - 1] = Data.createFloatData(n.getFloat());
+                    }
+                    else
+                    {
+                        sorted[tmp.length - i - 1] = Data.createIntData(n.getInt());
+                    }
+                }
+            }
+            // inaczej string
+            else
+            {
+                // tworzymy tablicę stringów
+                String[] tmp = new String[datas.length];
+
+                // iterujemy po wszystkich elementach i dodajemy do tablicy
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    Data d = datas[i];
+                    // sprawdzamy czy string
+                    tcc = new TypeCheckerCollection(d, getName(), 0, i, d.getErrorInfo(), interpreter, 
+                            DataType.STRING);
+                    if (tcc.isError())
+                    {
+                        return tcc.getError();
+                    }
+                    
+                    tmp[i] = (String)d.getValue();
+                }
+                
+                // sortujemy
+                Arrays.sort(tmp);
+                
+                // dodajemy do tablicy data
+                for (int i = 0; i < tmp.length; ++i)
+                {
+                    sorted[tmp.length - i - 1] = Data.createStringData(tmp[i]);
+                }
+            }
+            
+            // zwracamy sorted jako tablicę
+            return Data.createArrayData(sorted);
+        }
+    }
+
+    private class CountElementsFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "COUNT_ELEMENTS";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data par1 = params.get(0);
+            Data el = params.get(1);
+
+            // sprawdź czy par1 jest kolekcją lub dict
+            TypeChecker tc = new TypeChecker(par1, getName(), 0, par1.getErrorInfo(), interpreter,
+                    DataType.ARRAY, DataType.DICT, DataType.TUPLE);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // jeżeli kolekcja
+            if (Collections.isCollection(par1))
+            {
+                // pobierz tablicę
+                Data[] datas = Collections.getDatas(par1);
+
+                // iteruj po wszystkich elementach i zliczaj wystąpienia
+                int counter = 0;
+                for (int i = 0; i < datas.length; ++i)
+                {
+                    List<Data> p = Arrays.asList(datas[i], el);
+                    Data resEQ = interpreter.getBuiltinFunctions().callFunction("EQ", p, currentFrame, interpreter,
+                            datas[i].getErrorInfo());
+
+                    // jeżeli zwrócono error to zwróć
+                    if (resEQ.getDataType().equals(DataType.ERROR))
+                    {
+                        return resEQ;
+                    }
+                    // jeżeli true to dodaj
+                    if ((boolean)resEQ.getValue() == true)
+                    {
+                        ++counter;
+                    }
+                }
+
+                // zwróc ilość
+                return Data.createIntData(counter);
+            }
+            // inaczej dict
+            else
+            {
+                // pobierz mapę
+                HashMap<String, Data> map = (HashMap<String, Data>)par1.getValue();
+
+                // iteruj po wszystkich elementach i zliczaj wystąpienia
+                int counter = 0;
+                for (Map.Entry<String, Data> entry : map.entrySet())
+                {
+                    List<Data> p = Arrays.asList(entry.getValue(), el);
+                    Data resEQ = interpreter.getBuiltinFunctions().callFunction("EQ", p, currentFrame, interpreter,
+                            entry.getValue().getErrorInfo());
+
+                    // jeżeli zwrócono error to zwróć
+                    if (resEQ.getDataType().equals(DataType.ERROR))
+                    {
+                        return resEQ;
+                    }
+                    // jeżeli true to dodaj
+                    if ((boolean)resEQ.getValue() == true)
+                    {
+                        ++counter;
+                    }
+                }
+
+                // zwróc ilość
+                return Data.createIntData(counter);
+            }
+        }
+    }
+
+    private class ContainsKeyFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "CONTAINS_KEY";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data dict = params.get(0);
+            Data key = params.get(1);
+
+            // sprawdź czy dict jest dict
+            TypeChecker tc = new TypeChecker(dict, getName(), 0, dict.getErrorInfo(), interpreter, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // sprawdź czy key jest string
+            tc = new TypeChecker(key, getName(), 0, key.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            HashMap<String, Data> map = (HashMap<String, Data>)dict.getValue();
+            String skey = (String)key.getValue();
+
+            return Data.createBoolData(map.containsKey(skey));
+        }
+    }
+
+    private class ContainsValueFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "CONTAINS_VALUE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data dict = params.get(0);
+            Data val = params.get(1);
+
+            // sprawdź czy dict jest dict
+            TypeChecker tc = new TypeChecker(dict, getName(), 0, dict.getErrorInfo(), interpreter, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            HashMap<String, Data> map = (HashMap<String, Data>)dict.getValue();
+
+            // przejdź po wszystkich elementach i porównaj
+            for (Map.Entry<String, Data> entry : map.entrySet())
+            {
+                List<Data> p = Arrays.asList(entry.getValue(), val);
+                Data resEQ = interpreter.getBuiltinFunctions().callFunction("EQ", p, currentFrame, interpreter,
+                        entry.getValue().getErrorInfo());
+
+                // jeżeli zwrócono error lub true to zwróć
+                if (resEQ.getDataType().equals(DataType.ERROR)
+                        || (boolean)resEQ.getValue() == true)
+                {
+                    return resEQ;
+                }
+            }
+
+            // zwróć false
+            return Data.createBoolData(false);
+        }
     }
 
     private class CreateArrayFunction implements IFunction
@@ -610,7 +1032,7 @@ public class ArraysModule extends Module
 
             Data d;
             Data id = Data.createIdData(ids.get(ids.size() - 1));
-            
+
             int others = datas.length - ids.size() + 1;
             if (others == 1)
             {
@@ -622,11 +1044,11 @@ public class ArraysModule extends Module
                 Data[] tup = new Data[others];
 
                 int it = 0;
-                for (int i =  ids.size() - 1; i < datas.length; ++i)
+                for (int i = ids.size() - 1; i < datas.length; ++i)
                 {
                     tup[it++] = datas[i];
                 }
-                
+
                 d = Data.createTupleData(new Tuple(tup));
             }
 
@@ -639,6 +1061,51 @@ public class ArraysModule extends Module
 
             // zwracamy przekazaną kolekcję
             return col;
+        }
+    }
+
+    private class ContainsFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "CONTAINS";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data col = params.get(0);
+            Data el = params.get(1);
+
+            // sprawdź czy par1 jest array, tuple
+            TypeChecker tc = new TypeChecker(col, getName(), 0, col.getErrorInfo(), interpreter,
+                    DataType.ARRAY, DataType.TUPLE);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+
+            // pobierz tablicę
+            Data[] datas = Collections.getDatas(col);
+            // iteruj po wszystkich elementach
+            for (int i = 0; i < datas.length; ++i)
+            {
+                List<Data> p = Arrays.asList(datas[i], el);
+                Data resEQ = interpreter.getBuiltinFunctions().callFunction("EQ", p, currentFrame, interpreter,
+                        datas[i].getErrorInfo());
+
+                // jeżeli zwrócono error lub true to zwróć
+                if (resEQ.getDataType().equals(DataType.ERROR)
+                        || (boolean)resEQ.getValue() == true)
+                {
+                    return resEQ;
+                }
+            }
+
+            // zwróc false
+            return Data.createBoolData(false);
         }
     }
 

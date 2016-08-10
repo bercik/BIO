@@ -79,5 +79,38 @@ def onSTART()
    PRINT(x, y, z, "\n") % 1 2 ( 3, 4, 5, 6, 7, 8, 9, 10 )
    UNPACK(x, y, z, RANGE(1, 3))
    PRINT(x, y, z, "\n") % 1 2 3
-   PRINT(UNPACK(x, y, z, k, RANGE(1, 3))) % error
+   PRINT(UNPACK(x, y, z, k, RANGE(1, 3)), "\n") % error
+
+   PRINT("CONTAINS\n")
+   PRINT(CONTAINS(arr, 10), "\n") % true
+   PRINT(CONTAINS(arr, "siema"), "\n") % false
+   PRINT(CONTAINS(tup, 15), "\n") % true
+
+   PRINT("CONTAINS_KEY\n")
+   PRINT(CONTAINS_KEY(dict, "el1"), "\n") % true
+   PRINT(CONTAINS_KEY(dict, "el4"), "\n") % false
+
+   PRINT("CONTAINS_VALUE\n")
+   PRINT(CONTAINS_VALUE(dict, true), "\n") % true
+   PRINT(CONTAINS_VALUE(dict, "cos"), "\n") % false
+
+   PRINT("COUNT_ELEMENTS\n")
+   ASSIGN_LOCAL(tup, CREATE_TUPLE(10, true, none, 10, -10, "10"))
+   PRINT(COUNT_ELEMENTS(tup, 10), "\n") % 2
+   ASSIGN_LOCAL(dict, CREATE_DICT("el1", 10, "el2", true, "el3", none, "el4", "siema", "el5", 10, "el6", "10"))
+   PRINT(COUNT_ELEMENTS(dict, 10), "\n") % 2
+
+   PRINT("SORT_ASC\n")
+   PRINT(SORT_ASC(CREATE_TUPLE(10, 5, 15, 25, -20, 35)), "\n")
+   PRINT(SORT_ASC(CREATE_TUPLE(1, 0.5, 1.5, 2.5, -2.0, 3.5)), "\n")
+   PRINT(SORT_ASC(CREATE_TUPLE("b", "a", "ab", "ba", "c", "xyz", "adsd")), "\n")
+   PRINT(SORT_ASC(CREATE_TUPLE("b", 1)), "\n")
+   PRINT(SORT_ASC(CREATE_TUPLE(true, 1)), "\n")
+
+   PRINT("SORT_DESC\n")
+   PRINT(SORT_DESC(CREATE_TUPLE(10, 5, 15, 25, -20, 35)), "\n")
+   PRINT(SORT_DESC(CREATE_TUPLE(1, 0.5, 1.5, 2.5, -2.0, 3.5)), "\n")
+   PRINT(SORT_DESC(CREATE_TUPLE("b", "a", "ab", "ba", "c", "xyz", "adsd")), "\n")
+   PRINT(SORT_DESC(CREATE_TUPLE("b", 1)), "\n")
+   PRINT(SORT_DESC(CREATE_TUPLE(true, 1)), "\n")
 end

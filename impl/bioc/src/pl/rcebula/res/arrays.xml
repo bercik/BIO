@@ -158,6 +158,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            CONTAINS_KEY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CONTAINS_VALUE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             COUNT_ELEMENTS
         </name>
         <params>

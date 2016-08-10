@@ -86,3 +86,43 @@
 !error (BAD_PARAMETER_TYPE) If <i>col</i> is not array or tuple
 !error (NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE) If number of variables is greater than collection size
 
+!name CONTAINS
+!desc Checks whether collection <i>col</i> contains element <i>el</i>. Uses EQ function to achive that
+!param col (array, tuple) 
+!param el (all except error) 
+!return (bool) true if collection contains element, otherwise false
+!error (BAD_PARAMETER_TYPE) If one of element in <i>col</i> is error or <i>el</i> is error
+
+!name CONTAINS_KEY
+!desc Checks whether dict <i>dict</i> contains key <i>key</i>
+!param dict (dict) 
+!param key (string) 
+!return (bool) true if dict <i>dict</i> contains key <i>key</i>, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict or <i>key</i> is not string
+
+!name CONTAINS_VALUE
+!desc Checks whether dict <i>dict</i> contains value <i>val</i>. Uses EQ function to achive that
+!param dict (dict) 
+!param val (all except error) 
+!return (bool) true if dict <i>dict</i> contains value <i>val</i>, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict, if one of element in <i>dict</i> is error or <i>val</i> is error
+
+!name COUNT_ELEMENTS
+!desc Count occurences of element <i>el</i> in collection or dict <i>a</i>. Uses EQ function to achive that
+!param a (array, tuple, dict) 
+!param el (all except error) 
+!return (int) number of occurence of element <i>el</i> in collection or dict <i>a</i>
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not collection or dict or one of their element is error or <i>el</i> is error
+
+!name SORT_ASC
+!desc Sorts given collection in ascending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array
+!param col (array, tuple) collection to be sorted
+!return (array) sorted collection as new array
+!error (BAD_PARAMETER_TYPE) if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers
+
+!name SORT_DESC
+!desc Sorts given collection in descending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array
+!param col (array, tuple) collection to be sorted
+!return (array) sorted collection as new array
+!error (BAD_PARAMETER_TYPE) if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers
+
