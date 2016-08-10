@@ -1,0 +1,16 @@
+def onSTART()
+   ASSIGN_LOCAL(arr, createRandomArray(1000000))
+   ASSIGN_LOCAL(arr, SORT_ASC(arr))
+end
+
+def createRandomArray(n)
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(n))
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, n),
+      SET(arr, i, RAND()),
+      INC(i)
+   )
+   RETURN(arr)
+end
