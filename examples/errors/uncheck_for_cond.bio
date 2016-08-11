@@ -1,0 +1,18 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 100),
+      PRINT(i, "\n"),
+      CALL
+      (
+         INC(i),
+         IF
+         (
+            EQ(i, 10),
+            ASSIGN_LOCAL(i, true),
+            DN()
+         )
+      )
+   )
+end

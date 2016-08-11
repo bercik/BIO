@@ -1,0 +1,31 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      CALL
+      (
+         IF
+         (
+            IS_INT(i),
+            DN(),
+            CALL
+            (
+               PRINT("variable i isn't int\n"),
+               BREAK()
+            )
+         ),
+         LS(i, 100)
+      ),
+      PRINT(i, "\n"),
+      CALL
+      (
+         INC(i),
+         IF
+         (
+            EQ(i, 10),
+            ASSIGN_LOCAL(i, true),
+            DN()
+         )
+      )
+   )
+end

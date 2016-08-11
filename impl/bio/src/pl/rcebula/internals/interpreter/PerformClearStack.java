@@ -21,12 +21,18 @@ public class PerformClearStack
     {
         while (interpreter.currentFrame.getVariableStack().size() > 0)
         {
-            Data d = interpreter.currentFrame.getVariableStack().pop();
-            // jeżeli typu error to wywołaj zdarzenie onUNHANDLED_ERROR
-            if (d != null && d.getDataType().equals(DataType.ERROR))
+            if (interpreter.currentFrame != null)
             {
-                interpreter.builtinFunctions.callEvent(Constants.unhandledErrorFunctionName, Arrays.asList(d), 
-                        interpreter, d.getErrorInfo());
+                Data d = interpreter.currentFrame.getVariableStack().pop();
+                // jeżeli typu error to wywołaj zdarzenie onUNHANDLED_ERROR
+                if (d != null && d.getDataType().equals(DataType.ERROR))
+                {
+                    interpreter.builtinFunctions.callEvent(Constants.unhandledErrorFunctionName, Arrays.asList(d), 
+                            interpreter, d.getErrorInfo());
+                }
+            }
+            else
+            {
                 break;
             }
         }

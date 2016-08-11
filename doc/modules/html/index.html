@@ -23,6 +23,9 @@
 
    <h2>Conversions</h2>
    <p> If needed int will be converted to float and arrays to tuples in most cases (read specific function documentation for details) </p>
+
+   <h2>Errors</h2>
+   <p> Errors are values of type error which are returned from function where an error occur. If you don't handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR event will occur (see in basic). It will occur also when there is error returned from onSTART function. There are two cases when error can cause function to return. Both are when you pass not bool to FOR or IF function as condition. Notice that there are few functions that takes error as parameter. Other will return error with cause as this given error parameter. This behavior is to prevent errors from disappearing</p>
 </div>
 <a name="basic"></a><h1>basic</h1>
 <hr/>
@@ -104,9 +107,9 @@
 
 <p class="fun_header"><b>EXIT</b> (<i></i>)</p><p>Exits from BIO</p><hr/>
 
-<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unchecked error during program execution (unchecked that is not assigned to variable or passed to function)</p><p><b>Parameters:</b></p>
+<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited</p><p><b>Parameters:</b></p>
 <div class="params">
-<p><i>err</i> (<u>error</u>) - error returned from onSTART function or unchecked</p>
+<p><i>err</i> (<u>error</u>) - error returned from onSTART function or unhandled </p>
 </div>
 <hr/>
 
