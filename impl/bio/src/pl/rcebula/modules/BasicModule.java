@@ -66,7 +66,7 @@ public class BasicModule extends Module
                 currentFrame.getLocalVariables().put(id, var);
             }
 
-            return var;
+            return Data.createNoneData();
         }
     }
 
@@ -91,7 +91,7 @@ public class BasicModule extends Module
                 interpreter.getGlobalVariables().put(id, var);
             }
 
-            return var;
+            return Data.createNoneData();
         }
     }
 

@@ -1,0 +1,55 @@
+def onSTART()
+   PRINT("IS_ERROR\n")
+   PRINT(IS_ERROR(GET_GLOBAL(x)), "\n") % true
+   PRINT(IS_ERROR(10), "\n") % false
+
+   PRINT("IS_INT\n")
+   PRINT(IS_INT(x), "\n") % error
+   PRINT(IS_INT("abc"), "\n") % false
+   PRINT(IS_INT(10), "\n") % true
+
+   PRINT("IS_FLOAT\n")
+   PRINT(IS_FLOAT(true), "\n") % false
+   PRINT(IS_FLOAT(10.0), "\n") % true
+   PRINT(IS_FLOAT(10), "\n") % false
+
+   PRINT("IS_BOOL\n")
+   PRINT(IS_BOOL("abc"), "\n") % false
+   PRINT(IS_BOOL(true), "\n") % true
+
+   PRINT("IS_NONE\n")
+   PRINT(IS_NONE("abc"), "\n") % false
+   PRINT(IS_NONE(none), "\n") % true
+
+   PRINT("IS_STRING\n")
+   PRINT(IS_STRING("abc"), "\n") % true
+   PRINT(IS_STRING(none), "\n") % false
+
+   PRINT("IS_ARRAY\n")
+   PRINT(IS_ARRAY(CREATE_ARRAY(1)), "\n") % true
+   PRINT(IS_ARRAY(CREATE_TUPLE()), "\n") % false
+
+   PRINT("IS_TUPLE\n")
+   PRINT(IS_TUPLE(CREATE_ARRAY(1)), "\n") % false
+   PRINT(IS_TUPLE(CREATE_TUPLE()), "\n") % true
+
+   PRINT("IS_DICT\n")
+   PRINT(IS_DICT(CREATE_ARRAY(1)), "\n") % false
+   PRINT(IS_DICT(CREATE_DICT()), "\n") % true
+
+   PRINT("IS_NUMBER\n")
+   PRINT(IS_NUMBER(true), "\n") % false
+   PRINT(IS_NUMBER(10.0), "\n") % true
+   PRINT(IS_NUMBER(10), "\n") % true
+
+   PRINT("IS_COLLECTION\n")
+   PRINT(IS_COLLECTION(CREATE_ARRAY(1)), "\n") % true
+   PRINT(IS_COLLECTION(CREATE_TUPLE()), "\n") % true
+   PRINT(IS_COLLECTION(CREATE_DICT()), "\n") % false
+
+   PRINT("ARE_SAME_TYPE\n")
+   PRINT(ARE_SAME_TYPE(10, 20, 30), "\n") % true
+   PRINT(ARE_SAME_TYPE(10, 20.0, 30), "\n") % false
+   PRINT(ARE_SAME_TYPE(10, x, 30), "\n") % error
+   PRINT(ARE_SAME_TYPE(10, 10.0, x), "\n") % error
+end

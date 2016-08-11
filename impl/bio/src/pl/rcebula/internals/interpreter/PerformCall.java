@@ -30,6 +30,9 @@ public class PerformCall
         // z zaznaczeniem, że nie interesuje nas zwracana przez nie wartość
         // Jeżeli funkcja obserwatora miała obserwatorów to także dodajemy
         pushCallFrameForObservers(uf, interpreter, parameters, ei);
+        
+        // czyścimy stos parametrów
+        interpreter.currentFrame.getStackParameters().clear();
     }
     
     public PerformCall(Interpreter interpreter, Line line)
@@ -48,6 +51,9 @@ public class PerformCall
         // z zaznaczeniem, że nie interesuje nas zwracana przez nie wartość
         // Jeżeli funkcja obserwatora miała obserwatorów to także dodajemy
         pushCallFrameForObservers(uf, interpreter, stackParams, ei);
+        
+        // czyścimy stos parametrów
+        interpreter.currentFrame.getStackParameters().clear();
     }
     
     private void pushCallFrameForObservers(UserFunction uf, Interpreter interpreter, 

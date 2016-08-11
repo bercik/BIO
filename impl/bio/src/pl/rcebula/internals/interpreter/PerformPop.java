@@ -23,8 +23,6 @@ public class PerformPop
         PopLine popLine = (PopLine)line;
         int amount = popLine.getAmount();
         
-        // czyścimy stos parametrów
-        interpreter.currentFrame.getStackParameters().clear();
         // tworzymy tymczasową tablicę na parametry
         Data[] tmpDatas = new Data[amount];
         while (amount-- > 0)

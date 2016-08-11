@@ -4,7 +4,7 @@
 !param val (all) variable value
 !repeat id (id) variable identifier
 !repeat val (all) variable value
-!return (all) last given value
+!return (none) 
 
 !name ASSIGN_GLOBAL
 !desc Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
@@ -12,7 +12,7 @@
 !param val (all) variable value
 !repeat id (id) variable identifier
 !repeat val (all) variable value
-!return (all) last given value
+!return (none) 
 
 !name IS_LOCAL
 !desc Checks whether variable with identifier <i>id</i> exists and is local

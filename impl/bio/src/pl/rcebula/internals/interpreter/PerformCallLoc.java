@@ -39,6 +39,12 @@ public class PerformCallLoc
         Data data = interpreter.builtinFunctions.callFunction(funName,
                 parameters, interpreter.currentFrame, interpreter, ei);
         interpreter.profiler.exit();
+        
+        // czyścimy stos parametrów
+        if (interpreter.currentFrame != null)
+        {
+            interpreter.currentFrame.getStackParameters().clear();
+        }
 
         // jeżeli data jest różne od null
         if (data != null)

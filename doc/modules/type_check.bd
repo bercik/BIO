@@ -1,0 +1,73 @@
+!name IS_ERROR
+!desc Checks whether <i>var</i> is of type error
+!param var (all) 
+!return (bool) true if <i>var</i> is error, otherwise false
+
+!name IS_INT
+!desc Checks whether <i>var</i> is of type int
+!param var (all except error) 
+!return (bool) true if <i>var</i> is int, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_FLOAT
+!desc Checks whether <i>var</i> is of type float
+!param var (all except error) 
+!return (bool) true if <i>var</i> is float, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_BOOL
+!desc Checks whether <i>var</i> is of type bool
+!param var (all except error) 
+!return (bool) true if <i>var</i> is bool, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_STRING
+!desc Checks whether <i>var</i> is of type string
+!param var (all except error) 
+!return (bool) true if <i>var</i> is string, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_NONE
+!desc Checks whether <i>var</i> is of type none
+!param var (all except error) 
+!return (bool) true if <i>var</i> is none, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_ARRAY
+!desc Checks whether <i>var</i> is of type array
+!param var (all except error) 
+!return (bool) true if <i>var</i> is array, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_DICT
+!desc Checks whether <i>var</i> is of type dict
+!param var (all except error) 
+!return (bool) true if <i>var</i> is dict, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_TUPLE
+!desc Checks whether <i>var</i> is of type tuple
+!param var (all except error) 
+!return (bool) true if <i>var</i> is tuple, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_NUMBER
+!desc Checks whether <i>var</i> is of type int or float
+!param var (all except error) 
+!return (bool) true if <i>var</i> is int or float, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name IS_COLLECTION
+!desc Checks whether <i>var</i> is of type array or tuple
+!param var (all except error) 
+!return (bool) true if <i>var</i> is array or tuple, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
+!name ARE_SAME_TYPE
+!desc Checks whether all given <i>var</i> are of the same type
+!param var (all except error) 
+!param var (all except error) 
+!repeat var (all except error) 
+!return (bool) true if all given <i>var</i> are of the same type, otherwise false
+!error (BAD_PARAMETER_TYPE) If any <i>var</i> is of type error
+
