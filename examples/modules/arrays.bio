@@ -113,4 +113,12 @@ def onSTART()
    PRINT(SORT_DESC(CREATE_TUPLE("b", "a", "ab", "ba", "c", "xyz", "adsd")), "\n")
    PRINT(SORT_DESC(CREATE_TUPLE("b", 1)), "\n")
    PRINT(SORT_DESC(CREATE_TUPLE(true, 1)), "\n")
+
+   PRINT("GET_KEYS\n")
+   PRINT(GET_KEYS(dict), "\n") % ( "el1", "el2", "el3", "el4", "el5", "el6" )
+
+   PRINT("REMOVE_KEY\n")
+   REMOVE_KEY(dict, "el1")
+   PRINT(GET_KEYS(dict), "\n") % ( "el2", "el3", "el4", "el5", "el6" )
+   PRINT(REMOVE_KEY(dict, "el1"), "\n") % error
 end

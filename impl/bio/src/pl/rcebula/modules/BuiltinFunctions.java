@@ -47,6 +47,7 @@ public class BuiltinFunctions
         putModule(new ErrorsModule());
         putModule(new CompareModule());
         putModule(new TypeCheckModule());
+        putModule(new IntsModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

@@ -107,6 +107,20 @@
 !return (bool) true if dict <i>dict</i> contains value <i>val</i>, otherwise false
 !error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict, if one of element in <i>dict</i> is error or <i>val</i> is error
 
+!name GET_KEYS
+!desc Returns tuple with <i>dict</i> keys
+!param dict (dict) 
+!return (tuple) tuple with <i>dict</i> keys
+!error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict
+
+!name REMOVE_KEY
+!desc Removes <i>key</i> from <i>dict</i>
+!param dict (dict) 
+!param key (string) 
+!return (all) Value at key <i>key</i>
+!error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict or <i>key</i> is not string
+!error (KEY_DOESNT_EXIST) If <i>key</i> doesn't exist in <i>dict</i>
+
 !name COUNT_ELEMENTS
 !desc Count occurences of element <i>el</i> in collection or dict <i>a</i>. Uses EQ function to achive that
 !param a (array, tuple, dict) 

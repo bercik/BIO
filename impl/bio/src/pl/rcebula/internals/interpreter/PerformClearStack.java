@@ -19,10 +19,15 @@ public class PerformClearStack
 {
     public PerformClearStack(Interpreter interpreter, Line line)
     {
-        while (interpreter.currentFrame.getVariableStack().size() > 0)
+        while (true)
         {
             if (interpreter.currentFrame != null)
             {
+                if (interpreter.currentFrame.getVariableStack().size() <= 0)
+                {
+                    break;
+                }
+                
                 Data d = interpreter.currentFrame.getVariableStack().pop();
                 // jeżeli typu error to wywołaj zdarzenie onUNHANDLED_ERROR
                 if (d != null && d.getDataType().equals(DataType.ERROR))

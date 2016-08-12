@@ -8,7 +8,7 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a></ul>
+<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a></ul>
 <a name="_header"></a><hr/><div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
@@ -337,6 +337,36 @@
 <p><b>Errors:</b></p>
 <div class="errors">
 <p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict, if one of element in <i>dict</i> is error or <i>val</i> is error</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>GET_KEYS</b> (<i>dict</i>)</p><p>Returns tuple with <i>dict</i> keys</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>dict</i> (<u>dict</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>) - tuple with <i>dict</i> keys</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>REMOVE_KEY</b> (<i>dict, key</i>)</p><p>Removes <i>key</i> from <i>dict</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>dict</i> (<u>dict</u>)</p>
+<p><i>key</i> (<u>string</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>all</u>) - Value at key <i>key</i></p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict or <i>key</i> is not string</p>
+<p><i>KEY_DOESNT_EXIST</i> - If <i>key</i> doesn't exist in <i>dict</i></p>
 </div>
 <hr/>
 
@@ -952,6 +982,53 @@
 <p class="fun_header"><b>RAND</b> (<i></i>)</p><p>Returns random number from range <0.0, 1.0)</p><p><b>Return value:</b></p>
 <div class="returned">
 <p>(<u>float</u>) - random number from range <0.0, 1.0)</p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="ints"></a><h1>ints</h1>
+<hr/>
+<p class="fun_header"><b>RSHIFT</b> (<i>num, shift</i>)</p><p>Right shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be right shifted by element at same index in second collection bits</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>num</i> (<u>int, array, tuple</u>)</p>
+<p><i>shift</i> (<u>int, array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, array</u>) - if you pass ints right shifted int. If you pass collections array of right shifted ints</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>LSHIFT</b> (<i>num, shift</i>)</p><p>Left shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be left shifted by element at same index in second collection bits</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>num</i> (<u>int, array, tuple</u>)</p>
+<p><i>shift</i> (<u>int, array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, array</u>) - if you pass ints left shifted int. If you pass collections array of left shifted ints</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>XOR</b> (<i>a, b</i>)</p><p>Perform xor (exclusive or) operation on two given ints. If you pass collections then it will xor every element from both collections at given index</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>a</i> (<u>int, array, tuple</u>)</p>
+<p><i>b</i> (<u>int, array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int, array</u>) - if you pass ints xored int. If you pass collections array of xored ints</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> or <i>b</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
 </div>
 <hr/>
 

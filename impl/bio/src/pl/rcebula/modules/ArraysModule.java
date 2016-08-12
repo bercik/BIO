@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -56,8 +57,92 @@ public class ArraysModule extends Module
         putFunction(new CountElementsFunction());
         putFunction(new SortAscFunction());
         putFunction(new SortDescFunction());
+        putFunction(new GetKeysFunction());
+        putFunction(new RemoveKeyFunction());
     }
 
+    private class GetKeysFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "GET_KEYS";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data par = params.get(0);
+            
+            // sprawdź czy typu dict
+            TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz mapę
+            HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
+            // pobierz klucze
+            Set<String> keys = map.keySet();
+            // iteruj dodając do tablicy
+            Data[] datas = new Data[keys.size()];
+            int it = 0;
+            for (String key : keys)
+            {
+                datas[it++] = Data.createStringData(key);
+            }
+            
+            // zwróć tuplę
+            return Data.createTupleData(new Tuple(datas));
+        }
+    }
+    
+    private class RemoveKeyFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "REMOVE_KEY";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data dict = params.get(0);
+            Data key = params.get(1);
+            
+            // sprawdź czy dict typu dict
+            TypeChecker tc = new TypeChecker(dict, getName(), 0, dict.getErrorInfo(), interpreter, DataType.DICT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            // czy key typu string
+            tc = new TypeChecker(key, getName(), 1, key.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz mapę
+            HashMap<String, Data> map = (HashMap<String, Data>)dict.getValue();
+            // pobierz klucz
+            String skey = (String)key.getValue();
+            // sprawdź czy klucz istnieje
+            if (!map.containsKey(skey))
+            {
+                return ErrorConstruct.KEY_DOESNT_EXIST(getName(), key.getErrorInfo(), interpreter, skey);
+            }
+            // usuń klucz
+            Data ret = map.remove(skey);
+            // zwróć wartość pod kluczem
+            return ret;
+        }
+    }
+    
     private class SortAscFunction implements IFunction
     {
         @Override

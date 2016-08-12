@@ -103,7 +103,7 @@ public class Interpreter
             // koniec wczytywania
             timeProfiler.stop();
 
-            //logger.fine(line.toString());
+//            logger.fine(line.toString());
 
             // w zależności od opcode wykonujemy różne akcje
             switch (line.getInterpreterFunction())

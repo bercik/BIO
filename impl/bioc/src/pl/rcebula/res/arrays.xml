@@ -186,6 +186,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            GET_KEYS
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            REMOVE_KEY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             COUNT_ELEMENTS
         </name>
         <params>

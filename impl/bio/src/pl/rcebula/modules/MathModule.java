@@ -11,7 +11,6 @@ import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.modules.utils.Collections;
 import pl.rcebula.modules.utils.Numbers;

@@ -1,0 +1,21 @@
+!name RSHIFT
+!desc Right shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be right shifted by element at same index in second collection bits
+!param num (int, array, tuple) 
+!param shift (int, array, tuple) 
+!return (int, array) if you pass ints right shifted int. If you pass collections array of right shifted ints
+!error (BAD_PARAMETER_TYPE) If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+
+!name LSHIFT
+!desc Left shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be left shifted by element at same index in second collection bits
+!param num (int, array, tuple) 
+!param shift (int, array, tuple) 
+!return (int, array) if you pass ints left shifted int. If you pass collections array of left shifted ints
+!error (BAD_PARAMETER_TYPE) If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+
+!name XOR
+!desc Perform xor (exclusive or) operation on two given ints. If you pass collections then it will xor every element from both collections at given index
+!param a (int, array, tuple) 
+!param b (int, array, tuple) 
+!return (int, array) if you pass ints xored int. If you pass collections array of xored ints
+!error (BAD_PARAMETER_TYPE) If <i>a</i> or <i>b</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+
