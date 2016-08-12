@@ -1,17 +1,26 @@
+def sumEach(col, el, firstRun)
+   IF(firstRun, ASSIGN_STATIC(sum, 0))
+
+   ASSIGN_STATIC(sum, ADD(GET_STATIC(sum), el))
+
+   RETURN(GET_STATIC(sum))
+end
+
 def onSTART()
    ASSIGN_LOCAL(tup, CREATE_TUPLE(1, 5, 3, 7))
-   FOREACH
-   (
-      tup,
-      el,
-      PRINT(el)
-   )
 
+   % foreach version
+   ASSIGN_LOCAL(sum, FOREACH(tup, sumEach))
+   PRINT("sum:", sum, "\n")
+
+   % alternative version
+   ASSIGN_LOCAL(sum, 0)
    FOR
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, SIZE(tup)),
-      PRINT(GET(tup, i)),
+      ASSIGN_LOCAL(sum, ADD(sum, GET(tup, i))),
       INC(i)
    )
+   PRINT("sum:", sum, "\n")
 end

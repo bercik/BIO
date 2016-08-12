@@ -1,0 +1,19 @@
+def foo()
+   GET_LOCAL(x)
+end
+
+def event()
+   PRINT("event")
+   RETURN(GET_LOCAL(x))
+end
+
+def onSTART()
+   ATTACH_TO_EVENT(onUNHANDLED_ERROR, errorHandler)
+
+   ATTACH_TO_EVENT(event, foo)
+   event()
+end
+
+def errorHandler(err)
+   PRINT(GET_ERROR_FULL_INFO(err), "\n")
+end
