@@ -5,7 +5,7 @@ def onSTART()
    % tworzymy wektor
    ASSIGN_LOCAL(vect, create_vect(2, 3))
    % wypisujemy jego długość
-   PRINTLN(dist(vect))
+   PRINT(dist(vect), "\n")
 end
 
 def create_vect(x, y)

@@ -1,0 +1,17 @@
+def onSTART()
+   ASSIGN_LOCAL(tup, CREATE_TUPLE(1, 5, 3, 7))
+   FOREACH
+   (
+      tup,
+      el,
+      PRINT(el)
+   )
+
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, SIZE(tup)),
+      PRINT(GET(tup, i)),
+      INC(i)
+   )
+end
