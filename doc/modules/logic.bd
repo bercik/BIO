@@ -1,0 +1,22 @@
+!name NOT
+!desc Negates given bool or int value. If you pass collection than all elements would be negated
+!param a (int, bool, array, tuple) 
+!return (int, bool, array) If you pass int returns negated int, if you pass bool returns negated bool, if you pass collection returns array with negated values
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not int, bool, array or tuple or if collection contains other elements then int or bool
+
+!name AND
+!desc Performs logical and for bools or bitwise and for ints. If you pass collection than it will perform AND operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation
+!param a (int, bool, array, tuple) 
+!param b (int, bool, array, tuple) 
+!repeat c (int, bool, array, tuple) 
+!return (int, bool, array) If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index 
+!error (BAD_PARAMETER_TYPE) If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index
+
+!name OR
+!desc Performs logical or for bools or bitwise or for ints. If you pass collection than it will perform OR operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation
+!param a (int, bool, array, tuple) 
+!param b (int, bool, array, tuple) 
+!repeat c (int, bool, array, tuple) 
+!return (int, bool, array) If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index 
+!error (BAD_PARAMETER_TYPE) If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index
+

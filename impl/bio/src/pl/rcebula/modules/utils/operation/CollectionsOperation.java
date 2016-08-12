@@ -6,7 +6,10 @@
 package pl.rcebula.modules.utils.operation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -22,11 +25,23 @@ import pl.rcebula.modules.utils.type_checker.TypeCheckerNumberCollection;
  */
 public class CollectionsOperation
 {
+    public Data perform(String funName, OperationDataType dataType, IOperation op, 
+            Interpreter interpreter, Data... collections)
+    {
+        return perform(funName, Arrays.asList(dataType), op, interpreter, collections);
+    }
+    
+    public Data perform(String funName, List<OperationDataType> dataTypes, IOperation op, 
+            Interpreter interpreter, List<Data> collections)
+    {
+        return perform(funName, dataTypes, op, interpreter, collections.toArray(new Data[0]));
+    }
+    
     // zakłada, że collections zawiera przynajmniej jeden element i pierwszy jest kolekcją
     // zwraca tuple z elementami, które są wynikami operacji op na elementach przekazanych kolekcji
-    // dataType określa jakie typy danych są akceptowane (patrz OperationDataType po szczegóły)
-    public Data perform(String funName, OperationDataType dataType, IOperation op, Interpreter interpreter,
-            Data... collections)
+    // dataTypes określa jakie typy danych są akceptowane (patrz OperationDataType po szczegóły)
+    public Data perform(String funName, List<OperationDataType> dataTypes, IOperation op, 
+            Interpreter interpreter, Data... collections)
     {
         List<Data[]> col = new ArrayList<>();
         // najpierw sprawdzamy czy wszystkie parametry to kolekcje i czy ich rozmiar jest taki sam
@@ -60,6 +75,86 @@ public class CollectionsOperation
             // rezultat dla i-tego indeksu
             Data res;
             
+            OperationDataType dataType = null;
+            // pobierz i-ty parametr z pierwszej kolekcji
+            Data firstPar = col.get(0)[i];
+            // sprawdź czy jednego z typów
+            Set<DataType> possibleDataTypes = new HashSet<>();
+            for (OperationDataType dt : dataTypes)
+            {
+                switch (dt)
+                {
+                    case BOOL:
+                        possibleDataTypes.add(DataType.BOOL);
+                        break;
+                    case FLOAT:
+                        possibleDataTypes.add(DataType.FLOAT);
+                        break;
+                    case INT:
+                        possibleDataTypes.add(DataType.INT);
+                        break;
+                    case NUMBER:
+                        possibleDataTypes.add(DataType.FLOAT);
+                        possibleDataTypes.add(DataType.INT);
+                        break;
+                    case STRING:
+                        possibleDataTypes.add(DataType.STRING);
+                        break;
+                    default:
+                        throw new RuntimeException("Unknown operation data type " + dt.toString());
+                }
+            }
+            TypeCheckerCollection tcc = new TypeCheckerCollection(firstPar, funName, 0, i, firstPar.getErrorInfo(), 
+                    interpreter, possibleDataTypes.toArray(new DataType[0]));
+            if (tcc.isError())
+            {
+                return tcc.getError();
+            }
+            
+            forLabel:
+            for (OperationDataType dt : dataTypes)
+            {
+                switch (dt)
+                {
+                    case BOOL:
+                        if (firstPar.getDataType().equals(DataType.BOOL))
+                        {
+                            dataType = OperationDataType.BOOL;
+                            break forLabel;
+                        }
+                        break;
+                    case FLOAT:
+                        if (firstPar.getDataType().equals(DataType.FLOAT))
+                        {
+                            dataType = OperationDataType.FLOAT;
+                            break forLabel;
+                        }
+                        break;
+                    case INT:
+                        if (firstPar.getDataType().equals(DataType.INT))
+                        {
+                            dataType = OperationDataType.INT;
+                            break forLabel;
+                        }
+                        break;
+                    case STRING:
+                        if (firstPar.getDataType().equals(DataType.STRING))
+                        {
+                            dataType = OperationDataType.STRING;
+                            break forLabel;
+                        }
+                        break;
+                    case NUMBER:
+                        if (firstPar.getDataType().equals(DataType.FLOAT) ||
+                                firstPar.getDataType().equals(DataType.INT))
+                        {
+                            dataType = OperationDataType.NUMBER;
+                            break forLabel;
+                        }
+                        break;
+                }
+            }
+            
             // w zależności od typu operacji wykonujemy różne akcje
             switch (dataType)
             {
@@ -74,7 +169,7 @@ public class CollectionsOperation
                         Data d = col.get(k)[i];
                         
                         // sprawdzamy czy jest typu bool
-                        TypeCheckerCollection tcc = new TypeCheckerCollection(d, funName, k, i, 
+                        tcc = new TypeCheckerCollection(d, funName, k, i, 
                                 collections[k].getErrorInfo(), interpreter, DataType.BOOL);
                         if (tcc.isError())
                         {
@@ -100,7 +195,7 @@ public class CollectionsOperation
                         Data d = col.get(k)[i];
                         
                         // sprawdzamy czy jest typu int
-                        TypeCheckerCollection tcc = new TypeCheckerCollection(d, funName, k, i, 
+                        tcc = new TypeCheckerCollection(d, funName, k, i, 
                                 collections[k].getErrorInfo(), interpreter, DataType.INT);
                         if (tcc.isError())
                         {
@@ -126,7 +221,7 @@ public class CollectionsOperation
                         Data d = col.get(k)[i];
                         
                         // sprawdzamy czy jest typu string
-                        TypeCheckerCollection tcc = new TypeCheckerCollection(d, funName, k, i, 
+                        tcc = new TypeCheckerCollection(d, funName, k, i, 
                                 collections[k].getErrorInfo(), interpreter, DataType.STRING);
                         if (tcc.isError())
                         {

@@ -105,6 +105,56 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            ASSERT_TRUE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_FALSE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_EQ
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_NEQ
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             ASSIGN_LOCAL_RETURN_IF_ERROR
         </name>
         <params>
