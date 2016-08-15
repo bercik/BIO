@@ -113,6 +113,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            SLICE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             EXTEND_ARRAY
         </name>
         <params>

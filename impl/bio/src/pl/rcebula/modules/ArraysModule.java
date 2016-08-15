@@ -59,8 +59,83 @@ public class ArraysModule extends Module
         putFunction(new SortDescFunction());
         putFunction(new GetKeysFunction());
         putFunction(new RemoveKeyFunction());
+        putFunction(new SliceFunction());
     }
 
+    private class SliceFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SLICE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all, all>
+            Data col = params.get(0);
+            Data start = params.get(1);
+            Data end = params.get(2);
+            
+            // sprawdź czy col to array lub tuple
+            TypeChecker tc = new TypeChecker(col, getName(), 0, col.getErrorInfo(), interpreter, 
+                    DataType.ARRAY, DataType.TUPLE);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // sprawdź czy start i end to inty
+            tc = new TypeChecker(Arrays.asList(start, end), getName(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartości
+            Data[] datas = Collections.getDatas(col);
+            int istart = (int)start.getValue();
+            int iend = (int)end.getValue();
+            
+            // sprawdź czy start nie jest większe od end
+            if (istart > iend)
+            {
+                return ErrorConstruct.START_GREATER_THAN_END(getName(), start.getErrorInfo(), interpreter);
+            }
+            
+            // sprawdź czy start i end nie wychodzą poza kolekcję
+            if (istart < 0)
+            {
+                return ErrorConstruct.INDEX_OUT_OF_BOUNDS(getName(), start.getErrorInfo(), interpreter, istart);
+            }
+            if (iend > datas.length)
+            {
+                return ErrorConstruct.INDEX_OUT_OF_BOUNDS(getName(), end.getErrorInfo(), interpreter, iend);
+            }
+            
+            // utwórz nową tablicę
+            Data[] newDatas = new Data[iend - istart];
+            int it = 0;
+            // skopiuj do niej elementy
+            for (int i = istart; i < iend; ++i)
+            {
+                newDatas[it++] = datas[i];
+            }
+            
+            // jeżeli podano array zwróć jako array
+            if (col.getDataType().equals(DataType.ARRAY))
+            {
+                return Data.createArrayData(newDatas);
+            }
+            // inaczej jako tuplę
+            else
+            {
+                return Data.createTupleData(new Tuple(newDatas));
+            }
+        }
+    }
+    
     private class GetKeysFunction implements IFunction
     {
         @Override
@@ -943,7 +1018,7 @@ public class ArraysModule extends Module
 
             // sprawdź czy typu array lub dict
             TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter,
-                    DataType.ARRAY, DataType.DICT);
+                    DataType.ARRAY, DataType.DICT, DataType.TUPLE);
             if (tc.isError())
             {
                 return tc.getError();
@@ -955,6 +1030,12 @@ public class ArraysModule extends Module
                 Data[] datas = (Data[])par.getValue();
                 return Data.createArrayData(deepCopy(datas));
             }
+            // inaczej jeżeli tuple
+            else if (par.getDataType().equals(DataType.TUPLE))
+            {
+                Tuple tuple = (Tuple)par.getValue();
+                return Data.createTupleData(deepCopy(tuple));
+            }
             // inaczej dict
             else
             {
@@ -963,6 +1044,12 @@ public class ArraysModule extends Module
             }
         }
 
+        private Tuple deepCopy(Tuple tuple)
+        {
+            Data[] arr = tuple.getValues();
+            return new Tuple(deepCopy(arr));
+        }
+        
         private Data[] deepCopy(Data[] arr)
         {
             Data[] newArr = new Data[arr.length];
@@ -973,6 +1060,10 @@ public class ArraysModule extends Module
                 if (d.getDataType().equals(DataType.ARRAY))
                 {
                     d = Data.createArrayData(deepCopy((Data[])d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.TUPLE))
+                {
+                    d = Data.createTupleData(deepCopy((Tuple)d.getValue()));
                 }
                 else if (d.getDataType().equals(DataType.DICT))
                 {
@@ -996,6 +1087,10 @@ public class ArraysModule extends Module
                 if (d.getDataType().equals(DataType.ARRAY))
                 {
                     d = Data.createArrayData(deepCopy((Data[])d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.TUPLE))
+                {
+                    d = Data.createTupleData(deepCopy((Tuple)d.getValue()));
                 }
                 else if (d.getDataType().equals(DataType.DICT))
                 {

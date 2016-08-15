@@ -47,6 +47,16 @@ public class ErrorConstruct
         return Data.createErrorData(error);
     }
 
+    public static Data START_GREATER_THAN_END(String funName, ErrorInfo ei, Interpreter interpreter)
+    {
+        String message = "start is greater than end";
+
+        MyError error = new MyError(funName, message, ErrorCodes.START_GREATER_THAN_END.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(error);
+    }
+
     public static Data SIZE_LESS_THAN_ZERO(String funName, ErrorInfo ei, Interpreter interpreter)
     {
         String message = "size is less than zero";
@@ -57,37 +67,37 @@ public class ErrorConstruct
         return Data.createErrorData(error);
     }
 
-    public static Data INDEX_OUT_OF_BOUNDS(String funName, ErrorInfo ei, Interpreter interpreter, 
+    public static Data INDEX_OUT_OF_BOUNDS(String funName, ErrorInfo ei, Interpreter interpreter,
             int index)
     {
         String message = "Index " + index + " out of collection bounds";
-        
+
         MyError error = new MyError(funName, message, ErrorCodes.INDEX_OUT_OF_BOUNDS.getCode(),
                 null, ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
+
     public static Data KEY_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter, String key)
     {
         String message = "key " + key + " doesn't exists";
-        
+
         MyError error = new MyError(funName, message, ErrorCodes.KEY_DOESNT_EXIST.getCode(),
                 null, ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
-    public static Data NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(String funName, 
+
+    public static Data NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(String funName,
             ErrorInfo ei, Interpreter interpreter, int numberOfVariables, int collectionSize)
     {
-        String message = "given " + numberOfVariables + " variables is greater than collection size " + 
-                collectionSize;
-        
-        MyError error = new MyError(funName, message, 
-                ErrorCodes.NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE.getCode(), null, 
+        String message = "given " + numberOfVariables + " variables is greater than collection size "
+                + collectionSize;
+
+        MyError error = new MyError(funName, message,
+                ErrorCodes.NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE.getCode(), null,
                 ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
 }
