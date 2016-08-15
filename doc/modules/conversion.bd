@@ -1,0 +1,38 @@
+!name TO_STRING
+!desc Converts given <i>val</i> to string
+!param val (all) 
+!return (string) 
+
+!name TO_INT
+!desc Converts given <i>val</i> to int. In case of bool convert true to 1 and false to 0. In case of float rounds number to the nearest int. In case of string tries to convert it to int
+!param val (bool, float, int, string) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool, float, int or string
+!error (CONVERSION_ERROR) If <i>val</i> is string but cannot be converted to int
+
+!name TO_FLOAT
+!desc Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float
+!param val (bool, float, int, string) 
+!return (float) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool, float, int or string
+!error (CONVERSION_ERROR) If <i>val</i> is string but cannot be converted to float
+
+!name TO_BOOL
+!desc Converts given <i>val</i> to bool. In case of int or float convert zero value (0 or 0.0) to false and any non zero value to true. In case of string converts "true" to true and "false" to false
+!param val (bool, float, int, string) 
+!return (bool) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool, float, int or string
+!error (CONVERSION_ERROR) If <i>val</i> is string but cannot be converted to bool
+
+!name TO_ARRAY
+!desc Converts given <i>col</i> to array. If you pass array it would return it. If you pass tuple it would copy it and return as array
+!param col (array, tuple) 
+!return (array) 
+!error (BAD_PARAMETER_TYPE) If <i>col</i> is not array or tuple
+
+!name TO_TUPLE
+!desc Converts given <i>col</i> to tuple. If you pass tuple it would return it. If you pass array it would copy it and return as tuple 
+!param col (array, tuple) 
+!return (tuple) 
+!error (BAD_PARAMETER_TYPE) If <i>col</i> is not array or tuple
+

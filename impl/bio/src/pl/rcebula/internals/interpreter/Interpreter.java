@@ -21,7 +21,7 @@ import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.modules.BuiltinFunctions;
+import pl.rcebula.module.BuiltinFunctions;
 import pl.rcebula.tools.IProfiler;
 import pl.rcebula.utils.TimeProfiler;
 

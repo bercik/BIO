@@ -34,7 +34,7 @@ public class Modules
             add(new Module("arrays"));
             add(new Module("basic"));
             add(new Module("compare"));
-//            add(new Module("conversion"));
+            add(new Module("conversion"));
             add(new Module("errors"));
 //            add(new Module("floats"));
             add(new Module("ints"));

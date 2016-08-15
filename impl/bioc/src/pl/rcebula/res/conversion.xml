@@ -18,10 +18,65 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <functions>
-<!-- operacje konwersji i sprawdzania typów -->
+<!-- operacje konwersji -->
     <function>
         <name>
-            TO_STR
+            TO_STRING
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            TO_INT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            TO_FLOAT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            TO_BOOL
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            TO_ARRAY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            TO_TUPLE
         </name>
         <params>
             <param>

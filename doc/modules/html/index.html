@@ -8,7 +8,7 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#logic">logic</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a></ul>
+<li><a href="#_header">data types</a><li><a href="#conversion">conversion</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#logic">logic</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a></ul>
 <a name="_header"></a><hr/><div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
@@ -21,13 +21,115 @@
    <p><b>string</b> - represents sequence of characters. Immutable</p>
    <p><b>tuple</b> - series of elements of any type. Immutable</p>
 
-   <h2>Conversions</h2>
-   <p> If needed int will be converted to float and arrays to tuples in most cases (read specific function documentation for details) </p>
-
    <h2>Errors</h2>
    <p> Errors are values of type error which are returned from function where an error occur. If you don't handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR event will occur (see in basic). It will occur also when there is error returned from onSTART function. There are two cases when error can cause function to return. Both are when you pass not bool to FOR or IF function as condition. Notice that there are few functions that takes error as parameter. Other will return error with cause as this given error parameter. This behavior is to prevent errors from disappearing</p>
+
+   <h2>Conversions</h2>
+   <p> If needed int will be converted to float and arrays to tuples in most cases (read specific function documentation for details) </p>
+   <p>Here is conversion table that tells you which type you can convert to which:</p>
+   <table>
+      <thead>
+         <tr><th></th><th>TO_STRING</th><th>TO_INT</th><th>TO_FLOAT</th><th>TO_BOOL</th><th>TO_ARRAY</th><th>TO_TUPLE</th></tr>
+      </thead>
+      <tbody>
+      <tr><td>array</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td></tr>
+      <tr><td>bool</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+      <tr><td>dict</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+      <tr><td>error</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+      <tr><td>float</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+      <tr><td>int</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+      <tr><td>none</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+      <tr><td>string</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+      <tr><td>tuple</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td></tr>
+      </tbody>
+   </table>
 </div>
-<a name="basic"></a><h1>basic</h1>
+<a name="conversion"></a><h1>conversion</h1>
+<hr/>
+<p class="fun_header"><b>TO_STRING</b> (<i>val</i>)</p><p>Converts given <i>val</i> to string</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>all</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string</u>)</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_INT</b> (<i>val</i>)</p><p>Converts given <i>val</i> to int. In case of bool convert true to 1 and false to 0. In case of float rounds number to the nearest int. In case of string tries to convert it to int</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>bool, float, int, string</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
+<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to int</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_FLOAT</b> (<i>val</i>)</p><p>Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>bool, float, int, string</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>float</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
+<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to float</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_BOOL</b> (<i>val</i>)</p><p>Converts given <i>val</i> to bool. In case of int or float convert zero value (0 or 0.0) to false and any non zero value to true. In case of string converts "true" to true and "false" to false</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>bool, float, int, string</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>bool</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
+<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to bool</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_ARRAY</b> (<i>col</i>)</p><p>Converts given <i>col</i> to array. If you pass array it would return it. If you pass tuple it would copy it and return as array</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>array</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_TUPLE</b> (<i>col</i>)</p><p>Converts given <i>col</i> to tuple. If you pass tuple it would return it. If you pass array it would copy it and return as tuple </p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>col</i> (<u>array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>tuple</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple</p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="basic"></a><h1>basic</h1>
 <hr/>
 <p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
 <div class="params">

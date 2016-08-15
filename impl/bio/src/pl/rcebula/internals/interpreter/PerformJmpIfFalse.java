@@ -13,7 +13,7 @@ import pl.rcebula.intermediate_code.line.JmpLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.modules.utils.type_checker.TypeChecker;
+import pl.rcebula.module.utils.type_checker.TypeChecker;
 
 /**
  *
