@@ -8,7 +8,7 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#conversion">conversion</a><li><a href="#basic">basic</a><li><a href="#arrays">arrays</a><li><a href="#logic">logic</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a></ul>
+<li><a href="#_header">data types</a><li><a href="#conversion">conversion</a><li><a href="#basic">basic</a><li><a href="#floats">floats</a><li><a href="#arrays">arrays</a><li><a href="#logic">logic</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a><li><a href="#strings">strings</a></ul>
 <a name="_header"></a><hr/><div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
@@ -212,6 +212,36 @@
 <p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited</p><p><b>Parameters:</b></p>
 <div class="params">
 <p><i>err</i> (<u>error</u>) - error returned from onSTART function or unhandled </p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="floats"></a><h1>floats</h1>
+<hr/>
+<p class="fun_header"><b>CEIL</b> (<i>val</i>)</p><p>Gives the smallest int that is greater than or equal to the passed <i>val</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not int or float</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>FLOOR</b> (<i>val</i>)</p><p>Gives the largest integer that is less than or equals to the passed <i>val</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>val</i> (<u>int, float</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not int or float</p>
 </div>
 <hr/>
 
@@ -712,6 +742,20 @@
 </div>
 <hr/>
 
+<p class="fun_header"><b>INPUT</b> (<i>&ltprompt&gt*</i>)</p><p>If the <i>prompt</i> argument is present, it is written to standard output (typically screen) without a trailing newline. The function then reads a line from standard input (typically console), converts it to a string (stripping a trailing newline), and returns that. If there are repeated <i>prompt</i> arguments than there will be showed one after each other and for each one string from input would be read. The whole would be returned as array.</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>prompt</i> (<u>string</u>) - string to be showed to user</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string, array</u>) - If you pass zero or one prompt argument returns string, otherwise array of strings</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If any <i>prompt</i> argument is not string</p>
+</div>
+<hr/>
+
 <a href="#index">table of contents</a><a name="observer"></a><h1>observer</h1>
 <hr/>
 <p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt*</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
@@ -1197,6 +1241,68 @@
 <p><b>Errors:</b></p>
 <div class="errors">
 <p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> or <i>b</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
+</div>
+<hr/>
+
+<a href="#index">table of contents</a><a name="strings"></a><h1>strings</h1>
+<hr/>
+<p class="fun_header"><b>SUBSTR</b> (<i>str, start, end</i>)</p><p>Returns a new string that is a substring of <i>str</i> in range &lt<i>start</i>, <i>end</i>)</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>str</i> (<u>string</u>)</p>
+<p><i>start</i> (<u>int</u>)</p>
+<p><i>end</i> (<u>int</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string or <i>start</i> or <i>end</i> is not int</p>
+<p><i>START_GREATER_THAN_END</i> - If <i>start</i> is greater than <i>end</i></p>
+<p><i>INDEX_OUT_OF_BOUNDS</i> - If <i>start</i> is less than zero or <i>end</i> is greater or equals <i>str</i> length</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>LENGTH</b> (<i>str</i>)</p><p>Returns length of <i>str</i></p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>str</i> (<u>string</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>int</u>)</p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string </p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_LOWERCASE</b> (<i>str</i>)</p><p>Converts all of the characters in <i>str</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>str</i> (<u>string, array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string, array</u>) - if you pass string returns string, if you pass array or tuple returns array </p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string, array or tuple or collection contains not only strings</p>
+</div>
+<hr/>
+
+<p class="fun_header"><b>TO_UPPERCASE</b> (<i>str</i>)</p><p>Converts all of the characters in <i>str</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array</p><p><b>Parameters:</b></p>
+<div class="params">
+<p><i>str</i> (<u>string, array, tuple</u>)</p>
+</div>
+<p><b>Return value:</b></p>
+<div class="returned">
+<p>(<u>string, array</u>) - if you pass string returns string, if you pass array or tuple returns array </p>
+</div>
+<p><b>Errors:</b></p>
+<div class="errors">
+<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string, array or tuple or collection contains not only strings</p>
 </div>
 <hr/>
 

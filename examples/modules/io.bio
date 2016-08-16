@@ -1,0 +1,18 @@
+def onSTART()
+   PRINTLN("INPUT")
+   ASSIGN_LOCAL(b, TO_FLOAT(INPUT("Podaj liczbę: ")))
+   IF(IS_ERROR(b), printAndExit("Nie podałeś liczby!"), DN())
+   PRINT("Kwadrat:", POW(b, 2), "\n")
+
+   PRINTLN()
+   UNPACK(firstname, surname, age, height, INPUT("Podaj imię: ", "Podaj nazwisko: ", "Podaj wiek: ", "Podaj wzrost: "))
+   IF(IS_ERROR(TO_INT(age)), printAndExit("Wiek musi być liczbą!"), DN())
+   IF(IS_ERROR(TO_INT(height)), printAndExit("Wzrost musi być liczbą!"), DN())
+   PRINTLN(ADD("Masz na imię ", firstname), ADD("Na nazwisko ", surname), 
+      ADD("Twój wiek to ", age, " lat"), ADD("A wzrost ", height, " cm"))
+end
+
+def printAndExit(toPrint)
+   PRINTLN(toPrint)
+   EXIT()
+end

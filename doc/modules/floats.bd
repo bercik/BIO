@@ -1,0 +1,12 @@
+!name CEIL
+!desc Gives the smallest int that is greater than or equal to the passed <i>val</i>
+!param val (int, float) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not int or float
+
+!name FLOOR
+!desc Gives the largest integer that is less than or equals to the passed <i>val</i>
+!param val (int, float) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not int or float
+

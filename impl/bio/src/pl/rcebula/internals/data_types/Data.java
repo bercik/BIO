@@ -24,13 +24,13 @@ public class Data
         this.value = other.value;
     }
     
-    public Data(DataType dataType, Object value)
+    private Data(DataType dataType, Object value)
     {
         this.dataType = dataType;
         this.value = value;
     }
     
-    public Data(DataType dataType, Object value, ErrorInfo errorInfo)
+    private Data(DataType dataType, Object value, ErrorInfo errorInfo)
     {
         this.dataType = dataType;
         this.value = value;

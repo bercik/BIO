@@ -9,7 +9,6 @@ import java.util.List;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
@@ -336,9 +335,9 @@ public class CompareModule extends Module
             Data d2 = params.get(1);
             
             // jeżeli jedna z wartości to error to zwróć błąd
-            TypeChecker tc = new TypeChecker(params, getName(), interpreter, DataType.ARRAY, DataType.BOOL,
-                    DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, DataType.STRING, 
-                    DataType.TUPLE);
+            TypeChecker tc = new TypeChecker(params, getName(), 0, interpreter, DataType.ARRAY, 
+                    DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, 
+                    DataType.STRING, DataType.TUPLE);
             
             if (tc.isError())
             {
@@ -366,9 +365,9 @@ public class CompareModule extends Module
             Data d2 = params.get(1);
             
             // jeżeli jedna z wartości to error to zwróć błąd
-            TypeChecker tc = new TypeChecker(params, getName(), interpreter, DataType.ARRAY, DataType.BOOL,
-                    DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, DataType.STRING, 
-                    DataType.TUPLE);
+            TypeChecker tc = new TypeChecker(params, getName(), 0, interpreter, DataType.ARRAY, 
+                    DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, 
+                    DataType.STRING, DataType.TUPLE);
             
             if (tc.isError())
             {

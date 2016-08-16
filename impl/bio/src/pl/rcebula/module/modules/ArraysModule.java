@@ -89,7 +89,7 @@ public class ArraysModule extends Module
             }
             
             // sprawdź czy start i end to inty
-            tc = new TypeChecker(Arrays.asList(start, end), getName(), interpreter, DataType.INT);
+            tc = new TypeChecker(Arrays.asList(start, end), getName(), 1, interpreter, DataType.INT);
             if (tc.isError())
             {
                 return tc.getError();

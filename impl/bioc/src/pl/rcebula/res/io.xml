@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             INPUT
         </name>
         <params>
-            <param>
+            <param repeat="true">
                 all
             </param>
         </params>

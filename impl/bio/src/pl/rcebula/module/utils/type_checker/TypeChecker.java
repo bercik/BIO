@@ -28,11 +28,12 @@ public class TypeChecker implements ITypeChecker
         check(actual, funName, paramNum, ei, interpreter, expected);
     }
 
-    public TypeChecker(List<Data> actual, String funName, Interpreter interpreter, DataType... expected)
+    public TypeChecker(List<Data> actual, String funName, int paramNum, Interpreter interpreter, 
+            DataType... expected)
     {
         for (int i = 0; i < actual.size(); ++i)
         {
-            if (!check(actual.get(i), funName, i, actual.get(i).getErrorInfo(), interpreter, expected))
+            if (!check(actual.get(i), funName, paramNum + i, actual.get(i).getErrorInfo(), interpreter, expected))
             {
                 break;
             }

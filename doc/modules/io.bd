@@ -8,3 +8,9 @@
 !repeat val (all) value to print
 !return (string) printed string
 
+!name INPUT
+!desc If the <i>prompt</i> argument is present, it is written to standard output (typically screen) without a trailing newline. The function then reads a line from standard input (typically console), converts it to a string (stripping a trailing newline), and returns that. If there are repeated <i>prompt</i> arguments than there will be showed one after each other and for each one string from input would be read. The whole would be returned as array.
+!repeat prompt (string) string to be showed to user
+!return (string, array) If you pass zero or one prompt argument returns string, otherwise array of strings
+!error (BAD_PARAMETER_TYPE) If any <i>prompt</i> argument is not string
+

@@ -7,11 +7,14 @@ package pl.rcebula.module.modules;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
+import pl.rcebula.module.utils.type_checker.TypeChecker;
 
 /**
  *
@@ -34,6 +37,61 @@ public class IoModule extends Module
     {
         putFunction(new PrintFunction());
         putFunction(new PrintlnFunction());
+        putFunction(new InputFunction());
+    }
+    
+    private class InputFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INPUT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>*
+            // sprawdź czy zawiera jakieś parametry, jeżeli nie to dodaj jeden pusty string
+            if (params.size() == 0)
+            {
+                params.add(Data.createStringData(""));
+            }
+            
+            // stwórz tablicę na input
+            Data[] input = new Data[params.size()];
+            // stwórz obiekt skanera
+            Scanner scanner = new Scanner(System.in);
+            
+            int it = 0;
+            for (Data d : params)
+            {
+                // sprawdź czy typu string
+                TypeChecker tc = new TypeChecker(d, getName(), it, d.getErrorInfo(), interpreter, DataType.STRING);
+                if (tc.isError())
+                {
+                    return tc.getError();
+                }
+            
+                // wyświetl na ekran
+                System.out.print((String)d.getValue());
+                // pobierz stringa
+                input[it] = Data.createStringData(scanner.nextLine());
+                
+                ++it;
+            }
+            
+            // jeżeli tylko jeden string w input to zwróć jeden element
+            if (input.length == 1)
+            {
+                return input[0];
+            }
+            // inaczej zwróć tablicę
+            else
+            {
+                return Data.createArrayData(input);
+            }
+        }
     }
     
     private class PrintFunction implements IFunction

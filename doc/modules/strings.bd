@@ -1,0 +1,28 @@
+!name SUBSTR
+!desc Returns a new string that is a substring of <i>str</i> in range &lt<i>start</i>, <i>end</i>)
+!param str (string) 
+!param start (int) 
+!param end (int) 
+!return (string) 
+!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string or <i>start</i> or <i>end</i> is not int
+!error (START_GREATER_THAN_END) If <i>start</i> is greater than <i>end</i>
+!error (INDEX_OUT_OF_BOUNDS) If <i>start</i> is less than zero or <i>end</i> is greater or equals <i>str</i> length
+
+!name LENGTH
+!desc Returns length of <i>str</i>
+!param str (string) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string 
+
+!name TO_LOWERCASE
+!desc Converts all of the characters in <i>str</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array
+!param str (string, array, tuple) 
+!return (string, array) if you pass string returns string, if you pass array or tuple returns array 
+!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string, array or tuple or collection contains not only strings
+
+!name TO_UPPERCASE
+!desc Converts all of the characters in <i>str</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array
+!param str (string, array, tuple) 
+!return (string, array) if you pass string returns string, if you pass array or tuple returns array 
+!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string, array or tuple or collection contains not only strings
+
