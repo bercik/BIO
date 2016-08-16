@@ -8,8 +8,52 @@
 <a name="index"></a>
 <h3>Table of contents</h3>
 <ul class="nav nav-pills nav-stacked">
-<li><a href="#_header">data types</a><li><a href="#conversion">conversion</a><li><a href="#basic">basic</a><li><a href="#floats">floats</a><li><a href="#arrays">arrays</a><li><a href="#logic">logic</a><li><a href="#compare">compare</a><li><a href="#io">io</a><li><a href="#observer">observer</a><li><a href="#type_check">type_check</a><li><a href="#errors">errors</a><li><a href="#math">math</a><li><a href="#ints">ints</a><li><a href="#strings">strings</a></ul>
-<a name="_header"></a><hr/><div class="data_types">
+      <li>
+      <a href="#_header">Data types</a>
+   <li>
+      <li>
+      <a href="#arrays">arrays</a>
+   <li>
+      <li>
+      <a href="#basic">basic</a>
+   <li>
+      <li>
+      <a href="#compare">compare</a>
+   <li>
+      <li>
+      <a href="#conversion">conversion</a>
+   <li>
+      <li>
+      <a href="#errors">errors</a>
+   <li>
+      <li>
+      <a href="#floats">floats</a>
+   <li>
+      <li>
+      <a href="#ints">ints</a>
+   <li>
+      <li>
+      <a href="#io">io</a>
+   <li>
+      <li>
+      <a href="#logic">logic</a>
+   <li>
+      <li>
+      <a href="#math">math</a>
+   <li>
+      <li>
+      <a href="#observer">observer</a>
+   <li>
+      <li>
+      <a href="#strings">strings</a>
+   <li>
+      <li>
+      <a href="#type_check">type_check</a>
+   <li>
+   </ul>
+
+<a name="_header"></a>
+<div class="data_types">
    <h1>Data types</h1>
    <p><b>array</b> - series of elements of any type. Mutable</p>
    <p><b>bool</b> - has only two posible values: true and false. Immutable</p>
@@ -44,1267 +88,3480 @@
       </tbody>
    </table>
 </div>
-<a name="conversion"></a><h1>conversion</h1>
-<hr/>
-<p class="fun_header"><b>TO_STRING</b> (<i>val</i>)</p><p>Converts given <i>val</i> to string</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>)</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_INT</b> (<i>val</i>)</p><p>Converts given <i>val</i> to int. In case of bool convert true to 1 and false to 0. In case of float rounds number to the nearest int. In case of string tries to convert it to int</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>bool, float, int, string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
-<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to int</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_FLOAT</b> (<i>val</i>)</p><p>Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>bool, float, int, string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>float</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
-<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to float</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_BOOL</b> (<i>val</i>)</p><p>Converts given <i>val</i> to bool. In case of int or float convert zero value (0 or 0.0) to false and any non zero value to true. In case of string converts "true" to true and "false" to false</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>bool, float, int, string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not bool, float, int or string</p>
-<p><i>CONVERSION_ERROR</i> - If <i>val</i> is string but cannot be converted to bool</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_ARRAY</b> (<i>col</i>)</p><p>Converts given <i>col</i> to array. If you pass array it would return it. If you pass tuple it would copy it and return as array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_TUPLE</b> (<i>col</i>)</p><p>Converts given <i>col</i> to tuple. If you pass tuple it would return it. If you pass array it would copy it and return as tuple </p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>tuple</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="basic"></a><h1>basic</h1>
-<hr/>
-<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-<p><i>val</i> (<u>all</u>) - variable value</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-<p><i>val</i> (<u>all</u>) - variable value</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_LOCAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is local</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET_LOCAL</b> (<i>id</i>)</p><p>Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - local variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - local variable value</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_GLOBAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is global</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET_GLOBAL</b> (<i>id</i>)</p><p>Returnes global variable with identifier <i>id</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - global variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - global variable value</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>NO_GLOBAL_VARIABLE</i> - if there is no global variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>RETURN</b> (<i>val</i>)</p><p>Returnes value <i>val</i> from function</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>all</u>) - value to be returned</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>EXIT</b> (<i></i>)</p><p>Exits from BIO</p><hr/>
-
-<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>err</i> (<u>error</u>) - error returned from onSTART function or unhandled </p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="floats"></a><h1>floats</h1>
-<hr/>
-<p class="fun_header"><b>CEIL</b> (<i>val</i>)</p><p>Gives the smallest int that is greater than or equal to the passed <i>val</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not int or float</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>FLOOR</b> (<i>val</i>)</p><p>Gives the largest integer that is less than or equals to the passed <i>val</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>val</i> is not int or float</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="arrays"></a><h1>arrays</h1>
-<hr/>
-<p class="fun_header"><b>CREATE_ARRAY</b> (<i>size</i>)</p><p>Creates array of size <i>size</i> filled with none elements</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>size</i> (<u>int</u>) - size of array</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>) - array with none elements</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed parameter is not int</p>
-<p><i>SIZE_LESS_THAN_ZERO</i> - if passed size is less than zero</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CREATE_DICT</b> (<i>&ltkey, value&gt*</i>)</p><p>Creates dict with string keys and any values. Initialize it with given <i>key</i> and <i>value</i> (can be repeated)</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>key</i> (<u>string</u>)</p>
-<p><i>value</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>dict</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>key</i> is not string</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CREATE_TUPLE</b> (<i>&ltel&gt*</i>)</p><p>Creates tuple of given elements <i>el</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>el</i> (<u>all</u>) - element to be inserted in tuple</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>tuple</u>) - tuple of given elements</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CREATE_TUPLE_OF_ELEMENTS</b> (<i>size, el</i>)</p><p>Creates tuple of size <i>size</i> filled with elements <i>el</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>size</i> (<u>int</u>) - size of tuple</p>
-<p><i>el</i> (<u>all</u>) - element that will be filled in tuple</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>tuple</u>) - tuple with given elements</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>size</i> isn't int</p>
-<p><i>SIZE_LESS_THAN_ZERO</i> - if <i>size</i> is int but less than zero</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SET</b> (<i>a, b, c</i>)</p><p>Sets element at given index in array or at given key for dict. If there was value for given key in dict it will be replaced</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, dict</u>)</p>
-<p><i>b</i> (<u>int, string</u>) - index for array, key for dict</p>
-<p><i>c</i> (<u>all</u>) - value to be set</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - value given as parameter c</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> is not array or dict or if <i>b</i> is not int if <i>a</i> is array or string if </i>a</i> is dict</p>
-<p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal array size</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET</b> (<i>a, b</i>)</p><p>Gets element at given index from array or tuple or at given key from dict</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, tuple, dict</u>) - container from which we want to get element</p>
-<p><i>b</i> (<u>int, string</u>) - index for collection, key for dict</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - returns element from <i>a</i> at given index or key</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> is not array, tuple or dict or or if <i>b</i> is not int if </i>a</i> is collection or string if <i>a</i> is dict</p>
-<p><i>INDEX_OUT_OF_BOUNDS</i> - if given index is greater or equal collection size</p>
-<p><i>KEY_DOESNT_EXIST</i> - if given key doesn't exist in dict</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SIZE</b> (<i>a</i>)</p><p>Returns size of given collection or dict</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, tuple, dict</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>) - size of given collection or dict</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not array tuple or dict</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>RANGE</b> (<i>min, max</i>)</p><p>Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>min</i> (<u>int</u>) - lowerbound</p>
-<p><i>max</i> (<u>int</u>) - upperbound</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>) - array that contains all natural numbers in given range</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>min</i> or <i>max</i> aren't int</p>
-<p><i>MIN_GREATER_THAN_MAX</i> - if min is greater than max</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>COPY</b> (<i>a</i>)</p><p>Copy elements from given array or dict to new one. <b>Note:</b> It won't copy arrays and dicts recursively. To do this use DEEP_COPY instead</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, dict</u>) - array or dict to be copy</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array, dict</u>) - new array or dict</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not array or dict</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DEEP_COPY</b> (<i>a</i>)</p><p>Copy elements from given array, tuple or dict to new one. <b>Note:</b> It will copy arrays, tuples and dicts recursively. If you don't want this behavior use COPY instead</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, tuple, dict</u>) - array, tuple or dict to be copy</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array, tuple, dict</u>) - new array, tuple or dict</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not array, tuple or dict</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SLICE</b> (<i>col, start, end</i>)</p><p>Returns new array or tuple with copied objects from given <i>col</i> range &lt<i>start</i>, <i>end</i>)</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be sliced </p>
-<p><i>start</i> (<u>int</u>) - start index of slice</p>
-<p><i>end</i> (<u>int</u>) - end index of slice </p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array, tuple</u>) - Returns new array if you pass array or new tuple if you pass tuple</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple or if <i>start</i> or <i>end</i> are not int</p>
-<p><i>START_GREATER_THAN_END</i> - If <i>start</i> is greater than <i>end</i></p>
-<p><i>INDEX_OUT_OF_BOUNDS</i> - If <i>start</i> or <i>end</i> are out of <i>col</i> bounds</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>EXTEND_ARRAY</b> (<i>arr, size</i>)</p><p>Extends array to given size or if size is less than actual cut it. Fills elements above size with nones. <b>Note:</b> it will return extended array as new array, not affecting given one</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>arr</i> (<u>array</u>) - array to be extended</p>
-<p><i>size</i> (<u>int</u>) - new size</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>) - new extended array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>arr</i> is not array or <i>size</i> is not int</p>
-<p><i>SIZE_LESS_THAN_ZERO</i> - If <i>size</i> is less than zero</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>UNPACK</b> (<i>id, &ltid&gt*, col</i>)</p><p>Unpacks collection to given variables. If size of collection is greater than number of variables it will assign all unassigned values as a tuple to the last variable. If number of variables is greater than size of collection than error would be returned. If error occurs during execution of this function than no variable would be affected by it</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>)</p>
-<p><i>col</i> (<u>array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array, tuple</u>) - given collection</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>col</i> is not array or tuple</p>
-<p><i>NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE</i> - If number of variables is greater than collection size</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CONTAINS</b> (<i>col, el</i>)</p><p>Checks whether collection <i>col</i> contains element <i>el</i>. Uses EQ function to achive that</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>)</p>
-<p><i>el</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if collection contains element, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If one of element in <i>col</i> is error or <i>el</i> is error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CONTAINS_KEY</b> (<i>dict, key</i>)</p><p>Checks whether dict <i>dict</i> contains key <i>key</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>dict</i> (<u>dict</u>)</p>
-<p><i>key</i> (<u>string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if dict <i>dict</i> contains key <i>key</i>, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict or <i>key</i> is not string</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>CONTAINS_VALUE</b> (<i>dict, val</i>)</p><p>Checks whether dict <i>dict</i> contains value <i>val</i>. Uses EQ function to achive that</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>dict</i> (<u>dict</u>)</p>
-<p><i>val</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if dict <i>dict</i> contains value <i>val</i>, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict, if one of element in <i>dict</i> is error or <i>val</i> is error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET_KEYS</b> (<i>dict</i>)</p><p>Returns tuple with <i>dict</i> keys</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>dict</i> (<u>dict</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>tuple</u>) - tuple with <i>dict</i> keys</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>REMOVE_KEY</b> (<i>dict, key</i>)</p><p>Removes <i>key</i> from <i>dict</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>dict</i> (<u>dict</u>)</p>
-<p><i>key</i> (<u>string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - Value at key <i>key</i></p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>dict</i> is not dict or <i>key</i> is not string</p>
-<p><i>KEY_DOESNT_EXIST</i> - If <i>key</i> doesn't exist in <i>dict</i></p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>COUNT_ELEMENTS</b> (<i>a, el</i>)</p><p>Count occurences of element <i>el</i> in collection or dict <i>a</i>. Uses EQ function to achive that</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>array, tuple, dict</u>)</p>
-<p><i>el</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>) - number of occurence of element <i>el</i> in collection or dict <i>a</i></p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not collection or dict or one of their element is error or <i>el</i> is error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SORT_ASC</b> (<i>col</i>)</p><p>Sorts given collection in ascending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be sorted</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>) - sorted collection as new array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SORT_DESC</b> (<i>col</i>)</p><p>Sorts given collection in descending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be sorted</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>array</u>) - sorted collection as new array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="logic"></a><h1>logic</h1>
-<hr/>
-<p class="fun_header"><b>NOT</b> (<i>a</i>)</p><p>Negates given bool or int value. If you pass collection than all elements would be negated</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, bool, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, bool, array</u>) - If you pass int returns negated int, if you pass bool returns negated bool, if you pass collection returns array with negated values</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not int, bool, array or tuple or if collection contains other elements then int or bool</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>AND</b> (<i>a, b, &ltc&gt*</i>)</p><p>Performs logical and for bools or bitwise and for ints. If you pass collection than it will perform AND operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, bool, array, tuple</u>)</p>
-<p><i>b</i> (<u>int, bool, array, tuple</u>)</p>
-<p><i>c</i> (<u>int, bool, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, bool, array</u>) - If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index </p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>OR</b> (<i>a, b, &ltc&gt*</i>)</p><p>Performs logical or for bools or bitwise or for ints. If you pass collection than it will perform OR operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, bool, array, tuple</u>)</p>
-<p><i>b</i> (<u>int, bool, array, tuple</u>)</p>
-<p><i>c</i> (<u>int, bool, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, bool, array</u>) - If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index </p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="compare"></a><h1>compare</h1>
-<hr/>
-<p class="fun_header"><b>LS</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is less then number <i>b</i> or if numbers at certain index in collection <i>a</i> are less then numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>LE</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is less or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are less or equals numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GT</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is greater then number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater then numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GE</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is greater or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater or equals numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
 
-<p class="fun_header"><b>EQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>all except error</u>)</p>
-<p><i>b</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if passed values are equals, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If at least one passed value is error</p>
-</div>
 <hr/>
-
-<p class="fun_header"><b>NEQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details </p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>all</u>)</p>
-<p><i>b</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if passed values aren't equals, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_IN_RANGE</b> (<i>num, min, max</i>)</p><p>Checks if number <i>num</i> is in range of &lt<i>min</i>, <i>max</i>&gt</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>num</i> (<u>int, float</u>)</p>
-<p><i>min</i> (<u>int, float</u>)</p>
-<p><i>max</i> (<u>int, float</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>num</i> is in range, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if any of parameter are not number</p>
-<p><i>MIN_GREATER_THAN_MAX</i> - if <i>min</i> is greater than <i>max</i></p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="io"></a><h1>io</h1>
-<hr/>
-<p class="fun_header"><b>PRINT</b> (<i>&ltval&gt*</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by space</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>all</u>) - value to print</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>) - printed string</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>PRINTLN</b> (<i>&ltval&gt*</i>)</p><p>Prints values <i>val</i> on standard output (typically screen) separated by newlines</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>all</u>) - value to print</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>) - printed string</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>INPUT</b> (<i>&ltprompt&gt*</i>)</p><p>If the <i>prompt</i> argument is present, it is written to standard output (typically screen) without a trailing newline. The function then reads a line from standard input (typically console), converts it to a string (stripping a trailing newline), and returns that. If there are repeated <i>prompt</i> arguments than there will be showed one after each other and for each one string from input would be read. The whole would be returned as array.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>prompt</i> (<u>string</u>) - string to be showed to user</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string, array</u>) - If you pass zero or one prompt argument returns string, otherwise array of strings</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If any <i>prompt</i> argument is not string</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="observer"></a><h1>observer</h1>
-<hr/>
-<p class="fun_header"><b>ATTACH_TO_EVENT</b> (<i>event, callback, &ltevent, callback&gt*</i>)</p><p>Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>) - function to be observed</p>
-<p><i>callback</i> (<u>id</u>) - function to be attached</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>CALLBACK_ALREADY_ATTACHED</i> - if <i>callback</i> is already attached to <i>event</i> </p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_ATTACHED</b> (<i>event, callback</i>)</p><p>Checks whether <i>callback</i> is attached to <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>)</p>
-<p><i>callback</i> (<u>id</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>callback</i> is attached to <i>event</i>, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DETACH_FROM_EVENT</b> (<i>event, callback, &ltevent, callback&gt*</i>)</p><p>Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>event</i> (<u>id</u>) - observed function</p>
-<p><i>callback</i> (<u>id</u>) - function to be detached</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>CALLBACK_NOT_ATTACHED</i> - if <i>callback</i> is not attached to <i>event</i> </p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="type_check"></a><h1>type_check</h1>
-<hr/>
-<p class="fun_header"><b>IS_ERROR</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type error</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is error, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_INT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type int</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is int, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_FLOAT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is float, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_BOOL</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type bool</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is bool, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_STRING</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type string</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is string, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_NONE</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type none</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is none, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_ARRAY</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is array, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_DICT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type dict</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is dict, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_TUPLE</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type tuple</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is tuple, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_NUMBER</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type int or float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is int or float, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_COLLECTION</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type array or tuple</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is array or tuple, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>ARE_SAME_TYPE</b> (<i>var, var, &ltvar&gt*</i>)</p><p>Checks whether all given <i>var</i> are of the same type</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if all given <i>var</i> are of the same type, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If any <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="errors"></a><h1>errors</h1>
-<hr/>
-<p class="fun_header"><b>GET_ERROR_FULL_INFO</b> (<i>err</i>)</p><p>Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>err</i> (<u>error</u>) - error to get full information from</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>) - containing full information about given error</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed value isn't error</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="math"></a><h1>math</h1>
-<hr/>
-<p class="fun_header"><b>SUM</b> (<i>col</i>)</p><p>In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be summed</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, string</u>) - If you passed collection of strings then return value would be string. If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>ADD</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return sum. In case of strings return concatenation. In case of collections return array with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float, string, array, tuple</u>) - value to be summed</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, string, array</u>) - If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array </p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DIFF</b> (<i>col</i>)</p><p>In case of numbers returns diffrence of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be diffrenced</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SUB</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return diffrence. In case of collections return array with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be diffrenced</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in DIFF function)</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>PRODUCT</b> (<i>col</i>)</p><p>In case of numbers returns product of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be producted</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>MUL</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return product. In case of collections return array with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be multiplied</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in PRODUCT function)</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>QUOTIENT</b> (<i>col</i>)</p><p>In case of numbers returns quotient of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned. <b>Caution: </b> if you want real division instead of integer division make sure that at least first element in passed collection is float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>col</i> (<u>array, tuple</u>) - collection to be quotiented</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float</p>
-<p><i>DIVISION_BY_ZERO</i> - division by zero</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DIV</b> (<i>val, val, &ltval&gt*</i>)</p><p>In case of numbers return quotient. In case of collections return array with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be divided</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, array</u>) - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in QUOTIENT function)</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections sizes differs</p>
-<p><i>DIVISION_BY_ZERO</i> - division by zero</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>SQRT</b> (<i>val</i>)</p><p>Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as an array of results</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float, array, tuple</u>) - value to be square rooted. </p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>float, array</u>) - square root of passed value or array if you pass collection</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> isn't number or collection or if elements in collection are not numbers</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>POW</b> (<i>a, b</i>)</p><p>Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as an array of results.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, array, tuple</u>) - base</p>
-<p><i>b</i> (<u>int, float, array, tuple</u>) - exponent</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>float, array</u>) - power of given values or array if you pass collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if passed parameters are not number or collection, if you mixed numbers and collections or if collections contains other types than numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections differs in size</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>MOD</b> (<i>a, b</i>)</p><p>Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as an array of results.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int ,float, array, tuple</u>)</p>
-<p><i>b</i> (<u>int, float, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float, array</u>) - if one number is float then returns float, if both are ints then returns int, if you pass collections then result will be array</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> is not int, float, array or tuple or if you mixed numbers and collections or if elements in collections aren't numbers.</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if given collections have got diffrent sizes</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>INC</b> (<i>id</i>)</p><p>Increments local number with given id</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - local number identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - return incremented value. If variable was of type int then it will return int, otherwise float</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if variable under <i>id</i> identifier is not int or float</p>
-<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>DEC</b> (<i>id</i>)</p><p>Decrements local number with given id</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - local number identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - return decremented value. If variable was of type int then it will return int, otherwise float</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if variable under <i>id</i> identifier is not int or float</p>
-<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>NEGATE</b> (<i>val</i>)</p><p>Negates given float or int</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>int, float</u>) - number to be negated</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, float</u>) - negate number of the same type that you passed</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>val</i> is not int or float</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>RAND</b> (<i></i>)</p><p>Returns random number from range <0.0, 1.0)</p><p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>float</u>) - random number from range <0.0, 1.0)</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="ints"></a><h1>ints</h1>
-<hr/>
-<p class="fun_header"><b>RSHIFT</b> (<i>num, shift</i>)</p><p>Right shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be right shifted by element at same index in second collection bits</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>num</i> (<u>int, array, tuple</u>)</p>
-<p><i>shift</i> (<u>int, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, array</u>) - if you pass ints right shifted int. If you pass collections array of right shifted ints</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>LSHIFT</b> (<i>num, shift</i>)</p><p>Left shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be left shifted by element at same index in second collection bits</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>num</i> (<u>int, array, tuple</u>)</p>
-<p><i>shift</i> (<u>int, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, array</u>) - if you pass ints left shifted int. If you pass collections array of left shifted ints</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>XOR</b> (<i>a, b</i>)</p><p>Perform xor (exclusive or) operation on two given ints. If you pass collections then it will xor every element from both collections at given index</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, array, tuple</u>)</p>
-<p><i>b</i> (<u>int, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int, array</u>) - if you pass ints xored int. If you pass collections array of xored ints</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> or <i>b</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a><a name="strings"></a><h1>strings</h1>
-<hr/>
-<p class="fun_header"><b>SUBSTR</b> (<i>str, start, end</i>)</p><p>Returns a new string that is a substring of <i>str</i> in range &lt<i>start</i>, <i>end</i>)</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>str</i> (<u>string</u>)</p>
-<p><i>start</i> (<u>int</u>)</p>
-<p><i>end</i> (<u>int</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string or <i>start</i> or <i>end</i> is not int</p>
-<p><i>START_GREATER_THAN_END</i> - If <i>start</i> is greater than <i>end</i></p>
-<p><i>INDEX_OUT_OF_BOUNDS</i> - If <i>start</i> is less than zero or <i>end</i> is greater or equals <i>str</i> length</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>LENGTH</b> (<i>str</i>)</p><p>Returns length of <i>str</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>str</i> (<u>string</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>int</u>)</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>str</i> is not string </p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_LOWERCASE</b> (<i>a</i>)</p><p>Converts all of the characters in string <i>a</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>string, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string, array</u>) - if you pass string returns string, if you pass array or tuple returns array </p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not string, array or tuple or collection contains not only strings</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>TO_UPPERCASE</b> (<i>a</i>)</p><p>Converts all of the characters in string <i>a</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>string, array, tuple</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>string, array</u>) - if you pass string returns string, if you pass array or tuple returns array </p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>a</i> is not string, array or tuple or collection contains not only strings</p>
-</div>
-<hr/>
-
-<a href="#index">table of contents</a></body>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="arrays"></a>
+   <h1>arrays</h1>
+   <p class="fun_header">
+      <b>CREATE_ARRAY</b> 
+            (<i>size</i>)
+   </p>
+   
+   <p>
+      Creates array of size <i>size</i> filled with none elements
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>size</i> (<u>int</u>) 
+                  - size of array
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - array with none elements
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if passed parameter is not int
+            </p>
+            <p>
+      <i>SIZE_LESS_THAN_ZERO</i> 
+            - if passed size is less than zero
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>CREATE_DICT</b> 
+            (<i>&ltkey, value&gt*</i>)
+   </p>
+   
+   <p>
+      Creates dict with string keys and any values. Initialize it with given <i>key</i> and <i>value</i> (can be repeated)
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>key</i> (<u>string</u>) 
+               </p>
+            <p>
+         <i>value</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>dict</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>key</i> is not string
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>CREATE_TUPLE</b> 
+            (<i>&ltel&gt*</i>)
+   </p>
+   
+   <p>
+      Creates tuple of given elements <i>el</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>el</i> (<u>all</u>) 
+                  - element to be inserted in tuple
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>tuple</u>)
+                  - tuple of given elements
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>CREATE_TUPLE_OF_ELEMENTS</b> 
+            (<i>size, el</i>)
+   </p>
+   
+   <p>
+      Creates tuple of size <i>size</i> filled with elements <i>el</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>size</i> (<u>int</u>) 
+                  - size of tuple
+               </p>
+            <p>
+         <i>el</i> (<u>all</u>) 
+                  - element that will be filled in tuple
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>tuple</u>)
+                  - tuple with given elements
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>size</i> isn't int
+            </p>
+            <p>
+      <i>SIZE_LESS_THAN_ZERO</i> 
+            - if <i>size</i> is int but less than zero
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SET</b> 
+            (<i>a, b, c</i>)
+   </p>
+   
+   <p>
+      Sets element at given index in array or at given key for dict. If there was value for given key in dict it will be replaced
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, dict</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, string</u>) 
+                  - index for array, key for dict
+               </p>
+            <p>
+         <i>c</i> (<u>all</u>) 
+                  - value to be set
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - value given as parameter c
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> is not array or dict or if <i>b</i> is not int if <i>a</i> is array or string if </i>a</i> is dict
+            </p>
+            <p>
+      <i>INDEX_OUT_OF_BOUNDS</i> 
+            - if given index is greater or equal array size
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GET</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Gets element at given index from array or tuple or at given key from dict
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, tuple, dict</u>) 
+                  - container from which we want to get element
+               </p>
+            <p>
+         <i>b</i> (<u>int, string</u>) 
+                  - index for collection, key for dict
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - returns element from <i>a</i> at given index or key
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> is not array, tuple or dict or or if <i>b</i> is not int if </i>a</i> is collection or string if <i>a</i> is dict
+            </p>
+            <p>
+      <i>INDEX_OUT_OF_BOUNDS</i> 
+            - if given index is greater or equal collection size
+            </p>
+            <p>
+      <i>KEY_DOESNT_EXIST</i> 
+            - if given key doesn't exist in dict
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SIZE</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Returns size of given collection or dict
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, tuple, dict</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+                  - size of given collection or dict
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not array tuple or dict
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>RANGE</b> 
+            (<i>min, max</i>)
+   </p>
+   
+   <p>
+      Returns all natural numbers in range of &lt<i>min</i>, <i>max</i>&gt
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>min</i> (<u>int</u>) 
+                  - lowerbound
+               </p>
+            <p>
+         <i>max</i> (<u>int</u>) 
+                  - upperbound
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - array that contains all natural numbers in given range
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>min</i> or <i>max</i> aren't int
+            </p>
+            <p>
+      <i>MIN_GREATER_THAN_MAX</i> 
+            - if min is greater than max
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>COPY</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Copy elements from given array or dict to new one. <b>Note:</b> It won't copy arrays and dicts recursively. To do this use DEEP_COPY instead
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, dict</u>) 
+                  - array or dict to be copy
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array, dict</u>)
+                  - new array or dict
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not array or dict
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>DEEP_COPY</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Copy elements from given array, tuple or dict to new one. <b>Note:</b> It will copy arrays, tuples and dicts recursively. If you don't want this behavior use COPY instead
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, tuple, dict</u>) 
+                  - array, tuple or dict to be copy
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array, tuple, dict</u>)
+                  - new array, tuple or dict
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not array, tuple or dict
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SLICE</b> 
+            (<i>col, start, end</i>)
+   </p>
+   
+   <p>
+      Returns new array or tuple with copied objects from given <i>col</i> range &lt<i>start</i>, <i>end</i>)
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be sliced 
+               </p>
+            <p>
+         <i>start</i> (<u>int</u>) 
+                  - start index of slice
+               </p>
+            <p>
+         <i>end</i> (<u>int</u>) 
+                  - end index of slice 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array, tuple</u>)
+                  - Returns new array if you pass array or new tuple if you pass tuple
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>col</i> is not array or tuple or if <i>start</i> or <i>end</i> are not int
+            </p>
+            <p>
+      <i>START_GREATER_THAN_END</i> 
+            - If <i>start</i> is greater than <i>end</i>
+            </p>
+            <p>
+      <i>INDEX_OUT_OF_BOUNDS</i> 
+            - If <i>start</i> or <i>end</i> are out of <i>col</i> bounds
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>EXTEND_ARRAY</b> 
+            (<i>arr, size</i>)
+   </p>
+   
+   <p>
+      Extends array to given size or if size is less than actual cut it. Fills elements above size with nones. <b>Note:</b> it will return extended array as new array, not affecting given one
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>arr</i> (<u>array</u>) 
+                  - array to be extended
+               </p>
+            <p>
+         <i>size</i> (<u>int</u>) 
+                  - new size
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - new extended array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>arr</i> is not array or <i>size</i> is not int
+            </p>
+            <p>
+      <i>SIZE_LESS_THAN_ZERO</i> 
+            - If <i>size</i> is less than zero
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>UNPACK</b> 
+            (<i>id, &ltid&gt*, col</i>)
+   </p>
+   
+   <p>
+      Unpacks collection to given variables. If size of collection is greater than number of variables it will assign all unassigned values as a tuple to the last variable. If number of variables is greater than size of collection than error would be returned. If error occurs during execution of this function than no variable would be affected by it
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+               </p>
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array, tuple</u>)
+                  - given collection
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>col</i> is not array or tuple
+            </p>
+            <p>
+      <i>NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE</i> 
+            - If number of variables is greater than collection size
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>CONTAINS</b> 
+            (<i>col, el</i>)
+   </p>
+   
+   <p>
+      Checks whether collection <i>col</i> contains element <i>el</i>. Uses EQ function to achive that
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+               </p>
+            <p>
+         <i>el</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if collection contains element, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If one of element in <i>col</i> is error or <i>el</i> is error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>CONTAINS_KEY</b> 
+            (<i>dict, key</i>)
+   </p>
+   
+   <p>
+      Checks whether dict <i>dict</i> contains key <i>key</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>dict</i> (<u>dict</u>) 
+               </p>
+            <p>
+         <i>key</i> (<u>string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if dict <i>dict</i> contains key <i>key</i>, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>dict</i> is not dict or <i>key</i> is not string
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>CONTAINS_VALUE</b> 
+            (<i>dict, val</i>)
+   </p>
+   
+   <p>
+      Checks whether dict <i>dict</i> contains value <i>val</i>. Uses EQ function to achive that
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>dict</i> (<u>dict</u>) 
+               </p>
+            <p>
+         <i>val</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if dict <i>dict</i> contains value <i>val</i>, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>dict</i> is not dict, if one of element in <i>dict</i> is error or <i>val</i> is error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GET_KEYS</b> 
+            (<i>dict</i>)
+   </p>
+   
+   <p>
+      Returns tuple with <i>dict</i> keys
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>dict</i> (<u>dict</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>tuple</u>)
+                  - tuple with <i>dict</i> keys
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>dict</i> is not dict
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>REMOVE_KEY</b> 
+            (<i>dict, key</i>)
+   </p>
+   
+   <p>
+      Removes <i>key</i> from <i>dict</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>dict</i> (<u>dict</u>) 
+               </p>
+            <p>
+         <i>key</i> (<u>string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - Value at key <i>key</i>
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>dict</i> is not dict or <i>key</i> is not string
+            </p>
+            <p>
+      <i>KEY_DOESNT_EXIST</i> 
+            - If <i>key</i> doesn't exist in <i>dict</i>
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>COUNT_ELEMENTS</b> 
+            (<i>a, el</i>)
+   </p>
+   
+   <p>
+      Count occurences of element <i>el</i> in collection or dict <i>a</i>. Uses EQ function to achive that
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>array, tuple, dict</u>) 
+               </p>
+            <p>
+         <i>el</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+                  - number of occurence of element <i>el</i> in collection or dict <i>a</i>
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not collection or dict or one of their element is error or <i>el</i> is error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SORT_ASC</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      Sorts given collection in ascending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be sorted
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - sorted collection as new array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SORT_DESC</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      Sorts given collection in descending order. Collection have to have only strings or numbers to be sorted. Strings are sorted alphabetically. In case of numbers their types remains the same. Returns sorted collection as new array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be sorted
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - sorted collection as new array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> is not collection, contains other elements than strings or numbers or there are mixed strings and numbers
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="basic"></a>
+   <h1>basic</h1>
+   <p class="fun_header">
+      <b>ASSIGN_LOCAL</b> 
+            (<i>id, val, &ltid, val&gt*</i>)
+   </p>
+   
+   <p>
+      Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - variable value
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>ASSIGN_GLOBAL</b> 
+            (<i>id, val, &ltid, val&gt*</i>)
+   </p>
+   
+   <p>
+      Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - variable value
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_LOCAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Checks whether variable with identifier <i>id</i> exists and is local
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if variable exists, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>GET_LOCAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - local variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - local variable value
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>NO_LOCAL_VARIABLE</i> 
+            - if there is no local variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_GLOBAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Checks whether variable with identifier <i>id</i> exists and is global
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if variable exists, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>GET_GLOBAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Returnes global variable with identifier <i>id</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - global variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - global variable value
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>NO_GLOBAL_VARIABLE</i> 
+            - if there is no global variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>RETURN</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Returnes value <i>val</i> from function
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - value to be returned
+               </p>
+         </div>
+   
+   
+      <p class="fun_header">
+      <b>EXIT</b> 
+            (<i></i>)
+   </p>
+   
+   <p>
+      Exits from BIO
+   </p>
+   
+   
+   
+      <p class="fun_header">
+      <b>onUNHANDLED_ERROR</b> 
+            (<i>err</i>)
+   </p>
+   
+   <p>
+      Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>err</i> (<u>error</u>) 
+                  - error returned from onSTART function or unhandled 
+               </p>
+         </div>
+   
+   
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="compare"></a>
+   <h1>compare</h1>
+   <p class="fun_header">
+      <b>LS</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is less then number <i>b</i> or if numbers at certain index in collection <i>a</i> are less then numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>LE</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is less or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are less or equals numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GT</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is greater then number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater then numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GE</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is greater or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater or equals numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>EQ</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>all except error</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if passed values are equals, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If at least one passed value is error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>NEQ</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details 
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>all</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if passed values aren't equals, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_IN_RANGE</b> 
+            (<i>num, min, max</i>)
+   </p>
+   
+   <p>
+      Checks if number <i>num</i> is in range of &lt<i>min</i>, <i>max</i>&gt
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>num</i> (<u>int, float</u>) 
+               </p>
+            <p>
+         <i>min</i> (<u>int, float</u>) 
+               </p>
+            <p>
+         <i>max</i> (<u>int, float</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>num</i> is in range, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if any of parameter are not number
+            </p>
+            <p>
+      <i>MIN_GREATER_THAN_MAX</i> 
+            - if <i>min</i> is greater than <i>max</i>
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="conversion"></a>
+   <h1>conversion</h1>
+   <p class="fun_header">
+      <b>TO_STRING</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Converts given <i>val</i> to string
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>TO_INT</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Converts given <i>val</i> to int. In case of bool convert true to 1 and false to 0. In case of float rounds number to the nearest int. In case of string tries to convert it to int
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>bool, float, int, string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>val</i> is not bool, float, int or string
+            </p>
+            <p>
+      <i>CONVERSION_ERROR</i> 
+            - If <i>val</i> is string but cannot be converted to int
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_FLOAT</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>bool, float, int, string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>float</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>val</i> is not bool, float, int or string
+            </p>
+            <p>
+      <i>CONVERSION_ERROR</i> 
+            - If <i>val</i> is string but cannot be converted to float
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_BOOL</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Converts given <i>val</i> to bool. In case of int or float convert zero value (0 or 0.0) to false and any non zero value to true. In case of string converts "true" to true and "false" to false
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>bool, float, int, string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>val</i> is not bool, float, int or string
+            </p>
+            <p>
+      <i>CONVERSION_ERROR</i> 
+            - If <i>val</i> is string but cannot be converted to bool
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_ARRAY</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      Converts given <i>col</i> to array. If you pass array it would return it. If you pass tuple it would copy it and return as array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>col</i> is not array or tuple
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_TUPLE</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      Converts given <i>col</i> to tuple. If you pass tuple it would return it. If you pass array it would copy it and return as tuple 
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>tuple</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>col</i> is not array or tuple
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="errors"></a>
+   <h1>errors</h1>
+   <p class="fun_header">
+      <b>GET_ERROR_FULL_INFO</b> 
+            (<i>err</i>)
+   </p>
+   
+   <p>
+      Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>err</i> (<u>error</u>) 
+                  - error to get full information from
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+                  - containing full information about given error
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if passed value isn't error
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="floats"></a>
+   <h1>floats</h1>
+   <p class="fun_header">
+      <b>CEIL</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Gives the smallest int that is greater than or equal to the passed <i>val</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>val</i> is not int or float
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>FLOOR</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Gives the largest integer that is less than or equals to the passed <i>val</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>val</i> is not int or float
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="ints"></a>
+   <h1>ints</h1>
+   <p class="fun_header">
+      <b>RSHIFT</b> 
+            (<i>num, shift</i>)
+   </p>
+   
+   <p>
+      Right shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be right shifted by element at same index in second collection bits
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>num</i> (<u>int, array, tuple</u>) 
+               </p>
+            <p>
+         <i>shift</i> (<u>int, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, array</u>)
+                  - if you pass ints right shifted int. If you pass collections array of right shifted ints
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>LSHIFT</b> 
+            (<i>num, shift</i>)
+   </p>
+   
+   <p>
+      Left shifts <i>num</i> by <i>shift</i> bits. If you pass collections than element at every index in first collection would be left shifted by element at same index in second collection bits
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>num</i> (<u>int, array, tuple</u>) 
+               </p>
+            <p>
+         <i>shift</i> (<u>int, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, array</u>)
+                  - if you pass ints left shifted int. If you pass collections array of left shifted ints
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>num</i> or <i>shift</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>XOR</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Perform xor (exclusive or) operation on two given ints. If you pass collections then it will xor every element from both collections at given index
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, array, tuple</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, array</u>)
+                  - if you pass ints xored int. If you pass collections array of xored ints
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> or <i>b</i> is not int, array or tuple or if you mixed ints and collections or if collections contains not only ints
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="io"></a>
+   <h1>io</h1>
+   <p class="fun_header">
+      <b>PRINT</b> 
+            (<i>&ltval&gt*</i>)
+   </p>
+   
+   <p>
+      Prints values <i>val</i> on standard output (typically screen) separated by space
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - value to print
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+                  - printed string
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>PRINTLN</b> 
+            (<i>&ltval&gt*</i>)
+   </p>
+   
+   <p>
+      Prints values <i>val</i> on standard output (typically screen) separated by newlines
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - value to print
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+                  - printed string
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>INPUT</b> 
+            (<i>&ltprompt&gt*</i>)
+   </p>
+   
+   <p>
+      If the <i>prompt</i> argument is present, it is written to standard output (typically screen) without a trailing newline. The function then reads a line from standard input (typically console), converts it to a string (stripping a trailing newline), and returns that. If there are repeated <i>prompt</i> arguments than there will be showed one after each other and for each one string from input would be read. The whole would be returned as array.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>prompt</i> (<u>string</u>) 
+                  - string to be showed to user
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string, array</u>)
+                  - If you pass zero or one prompt argument returns string, otherwise array of strings
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If any <i>prompt</i> argument is not string
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="logic"></a>
+   <h1>logic</h1>
+   <p class="fun_header">
+      <b>NOT</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Negates given bool or int value. If you pass collection than all elements would be negated
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, bool, array</u>)
+                  - If you pass int returns negated int, if you pass bool returns negated bool, if you pass collection returns array with negated values
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not int, bool, array or tuple or if collection contains other elements then int or bool
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>AND</b> 
+            (<i>a, b, &ltc&gt*</i>)
+   </p>
+   
+   <p>
+      Performs logical and for bools or bitwise and for ints. If you pass collection than it will perform AND operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+            <p>
+         <i>c</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, bool, array</u>)
+                  - If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index 
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>OR</b> 
+            (<i>a, b, &ltc&gt*</i>)
+   </p>
+   
+   <p>
+      Performs logical or for bools or bitwise or for ints. If you pass collection than it will perform OR operation on element at certain index from every collection. <b>Note:</b> that this will first evaluate all parameters and then perform operation
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+            <p>
+         <i>c</i> (<u>int, bool, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, bool, array</u>)
+                  - If you pass ints returns int, if you pass bools returns bool, if you pass collection returns array with results of operation for elements from every collection at certain index 
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i>, <i>b</i> or <i>c</i> is not int, bool, array or tuple or if you mixed ints, bools or collections or collections contains other elements then int or bool or there are mixed ints and bools in collections at the same index
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="math"></a>
+   <h1>math</h1>
+   <p class="fun_header">
+      <b>SUM</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      In case of numbers returns sum of numbers in collection <i>col</i>. In case of strings returns concatenation of strings in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be summed
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, string</u>)
+                  - If you passed collection of strings then return value would be string. If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float, string or there are mixed strings and numbers in collection
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>ADD</b> 
+            (<i>val, val, &ltval&gt*</i>)
+   </p>
+   
+   <p>
+      In case of numbers return sum. In case of strings return concatenation. In case of collections return array with sum of elements at index. Size of given collections must be the same. Internally uses SUM function to achieve this.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float, string, array, tuple</u>) 
+                  - value to be summed
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, string, array</u>)
+                  - If you passed strings then return value would be string. If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array 
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> isn't int, float, string, array or tuple or there are mixed strings, numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in SUM function)
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections sizes differs
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>DIFF</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      In case of numbers returns diffrence of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be diffrenced
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SUB</b> 
+            (<i>val, val, &ltval&gt*</i>)
+   </p>
+   
+   <p>
+      In case of numbers return diffrence. In case of collections return array with diffrence of elements at index. Size of given collections must be the same. Internally uses DIFF function to achieve this.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float, array, tuple</u>) 
+                  - value to be diffrenced
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, array</u>)
+                  - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in DIFF function)
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections sizes differs
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>PRODUCT</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      In case of numbers returns product of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be producted
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>MUL</b> 
+            (<i>val, val, &ltval&gt*</i>)
+   </p>
+   
+   <p>
+      In case of numbers return product. In case of collections return array with product of elements at index. Size of given collections must be the same. Internally uses PRODUCT function to achieve this.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float, array, tuple</u>) 
+                  - value to be multiplied
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, array</u>)
+                  - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in PRODUCT function)
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections sizes differs
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>QUOTIENT</b> 
+            (<i>col</i>)
+   </p>
+   
+   <p>
+      In case of numbers returns quotient of numbers in collection <i>col</i>. If size of collection <i>col</i> is zero then none would be returned. <b>Caution: </b> if you want real division instead of integer division make sure that at least first element in passed collection is float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>col</i> (<u>array, tuple</u>) 
+                  - collection to be quotiented
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - If you passed collection of ints then return value would be int. If you passed collection of floats and ints then return value would be float. If you passed collection of size zero, then none would be returned
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>col</i> isn't array or tuple or if collection <i>col</i> contains other data then int, float
+            </p>
+            <p>
+      <i>DIVISION_BY_ZERO</i> 
+            - division by zero
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>DIV</b> 
+            (<i>val, val, &ltval&gt*</i>)
+   </p>
+   
+   <p>
+      In case of numbers return quotient. In case of collections return array with quotient of elements at index. Size of given collections must be the same. Internally uses QUOTIENT function to achieve this. <b>Caution: </b> if you want real division instead of integer division make sure that at least first passed element is float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float, array, tuple</u>) 
+                  - value to be divided
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, array</u>)
+                  - If you passed ints then return value would be int. If you passed floats and ints then return value would be float. If you passed array or tuple then return value would be array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> isn't int, float, array or tuple or there are mixed numbers, arrays and tuples or in arrays or tuples the elements at the same index are of bad type or mixed (as explained in QUOTIENT function)
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections sizes differs
+            </p>
+            <p>
+      <i>DIVISION_BY_ZERO</i> 
+            - division by zero
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>SQRT</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Returns the correctly rounded positive square root of a <i>val</i>. If you pass int it will be casted to float. If you pass collection it will compute square root for every item and return as an array of results
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float, array, tuple</u>) 
+                  - value to be square rooted. 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>float, array</u>)
+                  - square root of passed value or array if you pass collection
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> isn't number or collection or if elements in collection are not numbers
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>POW</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Returns the value of <i>a</i> raised to the power of <i>b</i>. If you pass int it will be casted to float. If you pass collections then it will raise number from first collection to the power of number from second collection on certain index for every index and return as an array of results.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, array, tuple</u>) 
+                  - base
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, array, tuple</u>) 
+                  - exponent
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>float, array</u>)
+                  - power of given values or array if you pass collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if passed parameters are not number or collection, if you mixed numbers and collections or if collections contains other types than numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections differs in size
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>MOD</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Returns remainder of division number <i>a</i> by number <i>b</i>. If one number is float then other will be converted to float either. You can pass floats to this function. If you pass collections then it will compute remainder for numbers from every collection on certain index and return as an array of results.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int ,float, array, tuple</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float, array</u>)
+                  - if one number is float then returns float, if both are ints then returns int, if you pass collections then result will be array
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> is not int, float, array or tuple or if you mixed numbers and collections or if elements in collections aren't numbers.
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if given collections have got diffrent sizes
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>INC</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Increments local number with given id
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - local number identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - return incremented value. If variable was of type int then it will return int, otherwise float
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if variable under <i>id</i> identifier is not int or float
+            </p>
+            <p>
+      <i>NO_LOCAL_VARIABLE</i> 
+            - if there is no local variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>DEC</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Decrements local number with given id
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - local number identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - return decremented value. If variable was of type int then it will return int, otherwise float
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if variable under <i>id</i> identifier is not int or float
+            </p>
+            <p>
+      <i>NO_LOCAL_VARIABLE</i> 
+            - if there is no local variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>NEGATE</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Negates given float or int
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>int, float</u>) 
+                  - number to be negated
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int, float</u>)
+                  - negate number of the same type that you passed
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>val</i> is not int or float
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>RAND</b> 
+            (<i></i>)
+   </p>
+   
+   <p>
+      Returns random number from range <0.0, 1.0)
+   </p>
+   
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>float</u>)
+                  - random number from range <0.0, 1.0)
+               </p>
+   </div>
+   
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="observer"></a>
+   <h1>observer</h1>
+   <p class="fun_header">
+      <b>ATTACH_TO_EVENT</b> 
+            (<i>event, callback, &ltevent, callback&gt*</i>)
+   </p>
+   
+   <p>
+      Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>event</i> (<u>id</u>) 
+                  - function to be observed
+               </p>
+            <p>
+         <i>callback</i> (<u>id</u>) 
+                  - function to be attached
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>CALLBACK_ALREADY_ATTACHED</i> 
+            - if <i>callback</i> is already attached to <i>event</i> 
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_ATTACHED</b> 
+            (<i>event, callback</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>callback</i> is attached to <i>event</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>event</i> (<u>id</u>) 
+               </p>
+            <p>
+         <i>callback</i> (<u>id</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>callback</i> is attached to <i>event</i>, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>DETACH_FROM_EVENT</b> 
+            (<i>event, callback, &ltevent, callback&gt*</i>)
+   </p>
+   
+   <p>
+      Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>event</i> (<u>id</u>) 
+                  - observed function
+               </p>
+            <p>
+         <i>callback</i> (<u>id</u>) 
+                  - function to be detached
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>CALLBACK_NOT_ATTACHED</i> 
+            - if <i>callback</i> is not attached to <i>event</i> 
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="strings"></a>
+   <h1>strings</h1>
+   <p class="fun_header">
+      <b>SUBSTR</b> 
+            (<i>str, start, end</i>)
+   </p>
+   
+   <p>
+      Returns a new string that is a substring of <i>str</i> in range &lt<i>start</i>, <i>end</i>)
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>str</i> (<u>string</u>) 
+               </p>
+            <p>
+         <i>start</i> (<u>int</u>) 
+               </p>
+            <p>
+         <i>end</i> (<u>int</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>str</i> is not string or <i>start</i> or <i>end</i> is not int
+            </p>
+            <p>
+      <i>START_GREATER_THAN_END</i> 
+            - If <i>start</i> is greater than <i>end</i>
+            </p>
+            <p>
+      <i>INDEX_OUT_OF_BOUNDS</i> 
+            - If <i>start</i> is less than zero or <i>end</i> is greater or equals <i>str</i> length
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>LENGTH</b> 
+            (<i>str</i>)
+   </p>
+   
+   <p>
+      Returns length of <i>str</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>str</i> (<u>string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>int</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>str</i> is not string 
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_LOWERCASE</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Converts all of the characters in string <i>a</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>string, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string, array</u>)
+                  - if you pass string returns string, if you pass array or tuple returns array 
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not string, array or tuple or collection contains not only strings
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TO_UPPERCASE</b> 
+            (<i>a</i>)
+   </p>
+   
+   <p>
+      Converts all of the characters in string <i>a</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>string, array, tuple</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string, array</u>)
+                  - if you pass string returns string, if you pass array or tuple returns array 
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>a</i> is not string, array or tuple or collection contains not only strings
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+<a name="type_check"></a>
+   <h1>type_check</h1>
+   <p class="fun_header">
+      <b>IS_ERROR</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type error
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is error, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_INT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type int
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is int, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_FLOAT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is float, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_BOOL</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type bool
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is bool, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_STRING</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type string
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is string, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_NONE</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type none
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is none, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_ARRAY</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is array, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_DICT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type dict
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is dict, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_TUPLE</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type tuple
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is tuple, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_NUMBER</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type int or float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is int or float, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_COLLECTION</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type array or tuple
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is array or tuple, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>ARE_SAME_TYPE</b> 
+            (<i>var, var, &ltvar&gt*</i>)
+   </p>
+   
+   <p>
+      Checks whether all given <i>var</i> are of the same type
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if all given <i>var</i> are of the same type, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If any <i>var</i> is of type error
+            </p>
+         </div>
+   
+<hr/>
+<a href="#index">table of contents</a>
+<hr/>
+
+</body>
 </html>

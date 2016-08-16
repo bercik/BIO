@@ -1,166 +1,436 @@
-<h1>type_check</h1>
-<hr/>
-<p class="fun_header"><b>IS_ERROR</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type error</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is error, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_INT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type int</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is int, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_FLOAT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is float, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_BOOL</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type bool</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is bool, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_STRING</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type string</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is string, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_NONE</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type none</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is none, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_ARRAY</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type array</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is array, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_DICT</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type dict</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is dict, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_TUPLE</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type tuple</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is tuple, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_NUMBER</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type int or float</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is int or float, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_COLLECTION</b> (<i>var</i>)</p><p>Checks whether <i>var</i> is of type array or tuple</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>var</i> is array or tuple, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If <i>var</i> is of type error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>ARE_SAME_TYPE</b> (<i>var, var, &ltvar&gt*</i>)</p><p>Checks whether all given <i>var</i> are of the same type</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>var</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if all given <i>var</i> are of the same type, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If any <i>var</i> is of type error</p>
-</div>
-<hr/>
-
+   <p class="fun_header">
+      <b>IS_ERROR</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type error
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is error, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_INT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type int
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is int, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_FLOAT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is float, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_BOOL</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type bool
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is bool, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_STRING</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type string
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is string, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_NONE</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type none
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is none, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_ARRAY</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type array
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is array, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_DICT</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type dict
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is dict, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_TUPLE</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type tuple
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is tuple, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_NUMBER</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type int or float
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is int or float, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_COLLECTION</b> 
+            (<i>var</i>)
+   </p>
+   
+   <p>
+      Checks whether <i>var</i> is of type array or tuple
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>var</i> is array or tuple, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>var</i> is of type error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>ARE_SAME_TYPE</b> 
+            (<i>var, var, &ltvar&gt*</i>)
+   </p>
+   
+   <p>
+      Checks whether all given <i>var</i> are of the same type
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>var</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if all given <i>var</i> are of the same type, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If any <i>var</i> is of type error
+            </p>
+         </div>
+   

@@ -1,86 +1,250 @@
-<h1>basic</h1>
-<hr/>
-<p class="fun_header"><b>ASSIGN_LOCAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-<p><i>val</i> (<u>all</u>) - variable value</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>ASSIGN_GLOBAL</b> (<i>id, val, &ltid, val&gt*</i>)</p><p>Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-<p><i>val</i> (<u>all</u>) - variable value</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>none</u>)</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_LOCAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is local</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET_LOCAL</b> (<i>id</i>)</p><p>Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - local variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - local variable value</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>NO_LOCAL_VARIABLE</i> - if there is no local variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_GLOBAL</b> (<i>id</i>)</p><p>Checks whether variable with identifier <i>id</i> exists and is global</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if variable exists, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GET_GLOBAL</b> (<i>id</i>)</p><p>Returnes global variable with identifier <i>id</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>id</i> (<u>id</u>) - global variable identifier</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>all</u>) - global variable value</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>NO_GLOBAL_VARIABLE</i> - if there is no global variable with <i>id</i> identifier</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>RETURN</b> (<i>val</i>)</p><p>Returnes value <i>val</i> from function</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>val</i> (<u>all</u>) - value to be returned</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>EXIT</b> (<i></i>)</p><p>Exits from BIO</p><hr/>
-
-<p class="fun_header"><b>onUNHANDLED_ERROR</b> (<i>err</i>)</p><p>Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>err</i> (<u>error</u>) - error returned from onSTART function or unhandled </p>
-</div>
-<hr/>
-
+   <p class="fun_header">
+      <b>ASSIGN_LOCAL</b> 
+            (<i>id, val, &ltid, val&gt*</i>)
+   </p>
+   
+   <p>
+      Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - variable value
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>ASSIGN_GLOBAL</b> 
+            (<i>id, val, &ltid, val&gt*</i>)
+   </p>
+   
+   <p>
+      Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - variable value
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>none</u>)
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_LOCAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Checks whether variable with identifier <i>id</i> exists and is local
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if variable exists, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>GET_LOCAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - local variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - local variable value
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>NO_LOCAL_VARIABLE</i> 
+            - if there is no local variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>IS_GLOBAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Checks whether variable with identifier <i>id</i> exists and is global
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if variable exists, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>GET_GLOBAL</b> 
+            (<i>id</i>)
+   </p>
+   
+   <p>
+      Returnes global variable with identifier <i>id</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>id</i> (<u>id</u>) 
+                  - global variable identifier
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>all</u>)
+                  - global variable value
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>NO_GLOBAL_VARIABLE</i> 
+            - if there is no global variable with <i>id</i> identifier
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>RETURN</b> 
+            (<i>val</i>)
+   </p>
+   
+   <p>
+      Returnes value <i>val</i> from function
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>val</i> (<u>all</u>) 
+                  - value to be returned
+               </p>
+         </div>
+   
+   
+      <p class="fun_header">
+      <b>EXIT</b> 
+            (<i></i>)
+   </p>
+   
+   <p>
+      Exits from BIO
+   </p>
+   
+   
+   
+      <p class="fun_header">
+      <b>onUNHANDLED_ERROR</b> 
+            (<i>err</i>)
+   </p>
+   
+   <p>
+      Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>err</i> (<u>error</u>) 
+                  - error returned from onSTART function or unhandled 
+               </p>
+         </div>
+   
+   
+   

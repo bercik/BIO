@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 
+from jinja2 import Environment, FileSystemLoader
 import re
 import sys
+import os
+
+class Obj:
+    pass
 
 def unique(seq): 
    # order preserving
@@ -140,58 +145,61 @@ if __name__ == "__main__":
     s = fname
     fileName = s[s.rfind("/")+1:s.rfind(".")]
 
-    html = "<h1>" + fileName + "</h1>\n"
-    html += "<hr/>\n"
-    # create html
+    temp_funs = []
+    # create template_functions (temp_funs)
     for f in functions:
-        html += "<p class=\"fun_header\"><b>" + f.name + "</b>"
+        temp_fun = Obj()
+        temp_fun.name = f.name
         if f.alias != "":
-            html += "/<i>" + f.alias + "</i>"
+            temp_fun.alias = f.alias
 
-        html += " (<i>"
-
+        params_header = ""
         for i in range(0, len(f.params)):
             p = f.params[i]
             if i == f.repeatedFrom:
-                html += "&lt"
-            html += p.name
+                params_header += "&lt"
+            params_header += p.name
             if i == f.repeatedTo:
-                    html += "&gt*"
+                    params_header += "&gt*"
             if i != len(f.params) - 1:
-                html += ", "
+                params_header += ", "
+        
+        if params_header != "":
+            temp_fun.params_header = params_header
 
-        html += "</i>)</p>"
-        html += "<p>" + f.desc + "</p>"
+        temp_fun.desc = f.desc
 
         if len(f.params) > 0:
-            html += "<p><b>Parameters:</b></p>\n"
-            html += "<div class=\"params\">\n"
+            temp_fun.params = []
             # add only unique parameters
             for p in unique(f.params):
-                html += "<p><i>" + p.name + "</i> (<u>" + p.types + "</u>)" 
+                temp_par = Obj()
+                temp_par.name = p.name
+                temp_par.types = p.types
                 if p.desc.strip() != "":
-                    html += " - " + p.desc
-                html += "</p>\n"
-            html += "</div>\n"
+                    temp_par.desc = p.desc
+                temp_fun.params.append(temp_par)
 
         if f.returned != None:
-            html += "<p><b>Return value:</b></p>\n"
-            html += "<div class=\"returned\">\n"
-            html += "<p>(<u>" + f.returned.types + "</u>)"
+            temp_fun.ret = Obj()
+            temp_fun.ret.types = f.returned.types
             if f.returned.desc.strip() != "":
-                html += " - " + f.returned.desc 
-            html += "</p>\n"
-            html += "</div>\n"
+                temp_fun.ret.desc = f.returned.desc 
 
         if len(f.errors) > 0:
-            html += "<p><b>Errors:</b></p>\n"
-            html += "<div class=\"errors\">\n"
+            temp_fun.errors = []
             for e in f.errors:
-                html += "<p><i>" + e.name + "</i> - " + \
-                    e.desc + "</p>\n"
-            html += "</div>\n"
+                temp_err = Obj()
+                temp_err.name = e.name
+                if e.desc.strip() != "":
+                    temp_err.desc = e.desc
+                temp_fun.errors.append(temp_err)
+        
+        temp_funs.append(temp_fun)
 
-        html += "<hr/>\n\n"
+    THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+    j2_env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
+    html = j2_env.get_template('template.html').render(mod_name=fileName, functions=temp_funs)
 
     indx = fname.rfind("/")
     dir = "."

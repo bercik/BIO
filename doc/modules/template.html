@@ -1,0 +1,59 @@
+{% for f in functions %}
+   <p class="fun_header">
+      <b>{{ f.name }}</b> 
+      {% if f.alias %}
+         /<i>{{ f.alias }}</i>
+      {% endif %}
+      (<i>{{ f.params_header }}</i>)
+   </p>
+   
+   <p>
+      {{ f.desc }}
+   </p>
+   
+   {% if f.params %}
+   <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+      {% for p in f.params %}
+      <p>
+         <i>{{ p.name }}</i> (<u>{{ p.types }}</u>) 
+         {% if p.desc %}
+         - {{ p.desc }}
+         {% endif %}
+      </p>
+      {% endfor %}
+   </div>
+   {% endif %}
+
+   {% if f.ret %}
+   <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>{{ f.ret.types }}</u>)
+         {% if f.ret.desc %}
+         - {{ f.ret.desc }}
+         {% endif %}
+      </p>
+   </div>
+   {% endif %}
+
+   {% if f.errors %}
+   <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+      {% for e in f.errors %}
+      <p>
+      <i>{{ e.name }}</i> 
+      {% if e.desc %}
+      - {{ e.desc }}
+      {% endif %}
+      </p>
+      {% endfor %}
+   </div>
+   {% endif %}
+{% endfor %}

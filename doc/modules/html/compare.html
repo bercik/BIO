@@ -1,109 +1,295 @@
-<h1>compare</h1>
-<hr/>
-<p class="fun_header"><b>LS</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is less then number <i>b</i> or if numbers at certain index in collection <i>a</i> are less then numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>LE</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is less or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are less or equals numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GT</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is greater then number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater then numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>GE</b> (<i>a, b</i>)</p><p>Compare if number <i>a</i> is greater or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater or equals numbers at the same index in collection <i>b</i></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>int, float, tuple, array</u>)</p>
-<p><i>b</i> (<u>int, float, tuple, array</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool, array</u>) - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers</p>
-<p><i>COLLECTIONS_DIFFRENT_SIZES</i> - if you pass collections and their sizes are diffrent</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>EQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b></p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>all except error</u>)</p>
-<p><i>b</i> (<u>all except error</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if passed values are equals, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - If at least one passed value is error</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>NEQ</b> (<i>a, b</i>)</p><p>Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details </p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>a</i> (<u>all</u>)</p>
-<p><i>b</i> (<u>all</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if passed values aren't equals, otherwise false</p>
-</div>
-<hr/>
-
-<p class="fun_header"><b>IS_IN_RANGE</b> (<i>num, min, max</i>)</p><p>Checks if number <i>num</i> is in range of &lt<i>min</i>, <i>max</i>&gt</p><p><b>Parameters:</b></p>
-<div class="params">
-<p><i>num</i> (<u>int, float</u>)</p>
-<p><i>min</i> (<u>int, float</u>)</p>
-<p><i>max</i> (<u>int, float</u>)</p>
-</div>
-<p><b>Return value:</b></p>
-<div class="returned">
-<p>(<u>bool</u>) - true if <i>num</i> is in range, otherwise false</p>
-</div>
-<p><b>Errors:</b></p>
-<div class="errors">
-<p><i>BAD_PARAMETER_TYPE</i> - if any of parameter are not number</p>
-<p><i>MIN_GREATER_THAN_MAX</i> - if <i>min</i> is greater than <i>max</i></p>
-</div>
-<hr/>
-
+   <p class="fun_header">
+      <b>LS</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is less then number <i>b</i> or if numbers at certain index in collection <i>a</i> are less then numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LS on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>LE</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is less or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are less or equals numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation LE on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GT</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is greater then number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater then numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GT on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>GE</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if number <i>a</i> is greater or equals number <i>b</i> or if numbers at certain index in collection <i>a</i> are greater or equals numbers at the same index in collection <i>b</i>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>int, float, tuple, array</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>int, float, tuple, array</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool, array</u>)
+                  - if you pass two numbers then the result will be bool. However if you pass two collections the result will be array of bools, where every element in tuple corresponds to result of operation GE on numbers at this index in given collections
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if <i>a</i> or <i>b</i> aren't int, float, tuple or array or if you mix numbers with collections or if elements in collections aren't numbers
+            </p>
+            <p>
+      <i>COLLECTIONS_DIFFRENT_SIZES</i> 
+            - if you pass collections and their sizes are diffrent
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>EQ</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message </b>
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>all except error</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>all except error</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if passed values are equals, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If at least one passed value is error
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>NEQ</b> 
+            (<i>a, b</i>)
+   </p>
+   
+   <p>
+      Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details 
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>a</i> (<u>all</u>) 
+               </p>
+            <p>
+         <i>b</i> (<u>all</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if passed values aren't equals, otherwise false
+               </p>
+   </div>
+   
+      <p class="fun_header">
+      <b>IS_IN_RANGE</b> 
+            (<i>num, min, max</i>)
+   </p>
+   
+   <p>
+      Checks if number <i>num</i> is in range of &lt<i>min</i>, <i>max</i>&gt
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>num</i> (<u>int, float</u>) 
+               </p>
+            <p>
+         <i>min</i> (<u>int, float</u>) 
+               </p>
+            <p>
+         <i>max</i> (<u>int, float</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>bool</u>)
+                  - true if <i>num</i> is in range, otherwise false
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - if any of parameter are not number
+            </p>
+            <p>
+      <i>MIN_GREATER_THAN_MAX</i> 
+            - if <i>min</i> is greater than <i>max</i>
+            </p>
+         </div>
+   
