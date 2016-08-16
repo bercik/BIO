@@ -15,14 +15,14 @@
 !error (BAD_PARAMETER_TYPE) If <i>str</i> is not string 
 
 !name TO_LOWERCASE
-!desc Converts all of the characters in <i>str</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array
-!param str (string, array, tuple) 
+!desc Converts all of the characters in string <i>a</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array
+!param a (string, array, tuple) 
 !return (string, array) if you pass string returns string, if you pass array or tuple returns array 
-!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string, array or tuple or collection contains not only strings
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not string, array or tuple or collection contains not only strings
 
 !name TO_UPPERCASE
-!desc Converts all of the characters in <i>str</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array
-!param str (string, array, tuple) 
+!desc Converts all of the characters in string <i>a</i> to upper case and returns as new string. If you pass collection than it would convert all strings in it to upper case and returns as new array
+!param a (string, array, tuple) 
 !return (string, array) if you pass string returns string, if you pass array or tuple returns array 
-!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string, array or tuple or collection contains not only strings
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not string, array or tuple or collection contains not only strings
 
