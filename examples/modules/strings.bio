@@ -50,4 +50,13 @@ def onSTART()
    PRINTLN("LAST_INDEX_OF")
    PRINTLN(LAST_INDEX_OF("abcdb", "b")) % 4
    PRINTLN(LAST_INDEX_OF("abcdb", "e")) % -1
+
+   PRINTLN()
+   PRINTLN("SPLIT")
+   PRINTLN(SPLIT("a:b:cd:e:f", ":")) % [ "a", "b", "cd", "e", "f" ]
+   PRINTLN(SPLIT(" a,.b,cd,.e:f", ",\\.")) % [ " a", "b,cd", "e:f" ]
+
+   PRINTLN()
+   PRINTLN("TRIM")
+   PRINTLN(TRIM("\t  abc \t  ")) % abc
 end

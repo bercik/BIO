@@ -418,4 +418,84 @@
             - If <i>str</i> or <i>substr</i> is not string 
             </p>
          </div>
+      <p class="fun_header">
+      <b>SPLIT</b> 
+            (<i>str, regex</i>)
+   </p>
+   
+   <p>
+      Splits <i>str</i> around matches of the given regular expression <i>regex</i>. Because this function internally uses java String.split function, check <a href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#sum">java doc</a> for informations about creating regular expressions. Resulted strings does not include matched delimiter
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>str</i> (<u>string</u>) 
+               </p>
+            <p>
+         <i>regex</i> (<u>string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>array</u>)
+                  - the array of strings computed by splitting this string around matches of the given regular expression
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>str</i> or <i>regex</i> is not string
+            </p>
+            <p>
+      <i>REGEX_ERROR</i> 
+            - If <i>regex</i> is invalid regular expression
+            </p>
+         </div>
+      <p class="fun_header">
+      <b>TRIM</b> 
+            (<i>str</i>)
+   </p>
+   
+   <p>
+      Returns a copy of the string, with leading and trailing whitespace omitted
+   </p>
+   
+      <p>
+      <b>Parameters:</b>
+   </p>
+   <div class="params">
+            <p>
+         <i>str</i> (<u>string</u>) 
+               </p>
+         </div>
+   
+      <p>
+      <b>Return value:</b>
+   </p>
+   <div class="returned">
+      <p>
+         (<u>string</u>)
+               </p>
+   </div>
+   
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>BAD_PARAMETER_TYPE</i> 
+            - If <i>str</i> is not string 
+            </p>
+         </div>
    

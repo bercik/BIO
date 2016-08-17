@@ -44,6 +44,77 @@ public class StringsModule extends Module
         putFunction(new ReplaceFunction());
         putFunction(new IndexOfFunction());
         putFunction(new LastIndexOfFunction());
+        putFunction(new SplitFunction());
+        putFunction(new TrimFunction());
+    }
+    
+    private class TrimFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "TRIM";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <all>
+            Data str = params.get(0);
+            
+            // sprawdź czy typu string
+            TypeChecker tc = new TypeChecker(str, getName(), 0, str.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            String sstr = (String)str.getValue();
+            String res = sstr.trim();
+            
+            return Data.createStringData(res);
+        }
+    }
+    
+    private class SplitFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "SPLIT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all>
+            Data str = params.get(0);
+            Data regex = params.get(1);
+            
+            // sprawdź czy typu string
+            TypeChecker tc = new TypeChecker(params, getName(), 0, interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartości
+            String sstr = (String)str.getValue();
+            String sregex = (String)regex.getValue();
+            
+            // wykonaj split
+            String[] splited = sstr.split(sregex);
+            
+            // utwórz tablicę Data i wypełnij
+            Data[] datas = new Data[splited.length];
+            for (int i = 0; i < splited.length; ++i)
+            {
+                datas[i] = Data.createStringData(splited[i]);
+            }
+            
+            // zwróc jako tablicę
+            return Data.createArrayData(datas);
+        }
     }
     
     private static class IndexLastIndexOfFunction

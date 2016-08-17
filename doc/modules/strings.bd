@@ -73,3 +73,17 @@
 !return (int) the index of the last occurrence of the specified <i>substr</i>, or -1 if there is no such occurrence
 !error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>substr</i> is not string 
 
+!name SPLIT
+!desc Splits <i>str</i> around matches of the given regular expression <i>regex</i>. Because this function internally uses java String.split function, check <a href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#sum">java doc</a> for informations about creating regular expressions. Resulted strings does not include matched delimiter
+!param str (string) 
+!param regex (string) 
+!return (array) the array of strings computed by splitting this string around matches of the given regular expression
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>regex</i> is not string
+!error (REGEX_ERROR) If <i>regex</i> is invalid regular expression
+
+!name TRIM
+!desc Returns a copy of the string, with leading and trailing whitespace omitted
+!param str (string) 
+!return (string) 
+!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string 
+
