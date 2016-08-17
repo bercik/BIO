@@ -14,7 +14,7 @@
    <p> Errors are values of type error which are returned from function where an error occur. If you don't handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR event will occur (see in basic). It will occur also when there is error returned from onSTART function. There are two cases when error can cause function to return. Both are when you pass not bool to FOR or IF function as condition. Notice that there are few functions that takes error as parameter. Other will return error with cause as this given error parameter. This behavior is to prevent errors from disappearing</p>
 
    <h2>Conversions</h2>
-   <p> If needed int will be converted to float and arrays to tuples in most cases (read specific function documentation for details) </p>
+   <p> If needed int will be converted to float and arrays to tuples in most cases (see specific function documentation for details) </p>
    <p>Here is conversion table that tells you which type you can convert to which:</p>
    <table>
       <thead>
@@ -32,4 +32,7 @@
       <tr><td>tuple</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td></tr>
       </tbody>
    </table>
+
+   <br/>
+   <p><b>Note:</b> many functions can take not only single data types arguments but also tuple or arrays of values. See specific function documentation for details</p>
 </div>
