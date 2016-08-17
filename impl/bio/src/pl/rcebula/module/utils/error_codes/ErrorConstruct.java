@@ -113,4 +113,14 @@ public class ErrorConstruct
         
         return Data.createErrorData(error);
     }
+    
+    public static Data REGEX_ERROR(String funName, ErrorInfo ei, Interpreter interpreter, String regex)
+    {
+        String message = "regex \"" + regex + "\" is invalid";
+        
+        MyError error = new MyError(funName, message, ErrorCodes.REGEX_ERROR.getCode(), null, ei, 
+                interpreter);
+        
+        return Data.createErrorData(error);
+    }
 }

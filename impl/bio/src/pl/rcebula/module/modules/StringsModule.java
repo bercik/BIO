@@ -6,6 +6,7 @@
 package pl.rcebula.module.modules;
 
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -37,6 +38,285 @@ public class StringsModule extends Module
         putFunction(new LengthFunction());
         putFunction(new ToLowercaseFunction());
         putFunction(new ToUppercaseFunction());
+        putFunction(new InsertFunction());
+        putFunction(new StartsWithFunction());
+        putFunction(new EndsWithFunction());
+        putFunction(new ReplaceFunction());
+        putFunction(new IndexOfFunction());
+        putFunction(new LastIndexOfFunction());
+    }
+    
+    private static class IndexLastIndexOfFunction
+    {
+        private enum Operation
+        {
+            INDEX_OF,
+            LAST_INDEX_OF;
+        }
+        
+        public Data perform(List<Data> params, Interpreter interpreter, IFunction function, Operation operation)
+        {
+            // parametry: <all, all>
+            Data str = params.get(0);
+            Data substr = params.get(1);
+            
+            // sprawdź czy typu string
+            TypeChecker tc = new TypeChecker(params, function.getName(), 0, interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            String sstr = (String)str.getValue();
+            String ssubstr = (String)substr.getValue();
+            
+            int indexOf;
+            if (operation.equals(Operation.INDEX_OF))
+            {
+                indexOf = sstr.indexOf(ssubstr);
+            }
+            else
+            {
+                indexOf = sstr.lastIndexOf(ssubstr);
+            }
+            
+            return Data.createIntData(indexOf);
+        }
+    }
+    
+    private class IndexOfFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INDEX_OF";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new IndexLastIndexOfFunction().perform(params, interpreter, this, 
+                    IndexLastIndexOfFunction.Operation.INDEX_OF);
+        }
+    }
+    
+    private class LastIndexOfFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "LAST_INDEX_OF";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new IndexLastIndexOfFunction().perform(params, interpreter, this, 
+                    IndexLastIndexOfFunction.Operation.LAST_INDEX_OF);
+        }
+    }
+    
+    private class ReplaceFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "REPLACE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all, all>
+            Data str = params.get(0);
+            Data b = params.get(1);
+            Data replacement = params.get(2);
+            
+            // sprawdź czy str typu string
+            TypeChecker tc = new TypeChecker(str, getName(), 0, str.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // sprawdź czy b typu int lub string
+            tc = new TypeChecker(b, getName(), 1, b.getErrorInfo(), interpreter, DataType.STRING, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // sprawdź czy replacement typu string
+            tc = new TypeChecker(replacement, getName(), 0, str.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartości
+            String sstr = (String)str.getValue();
+            String sreplacement = (String)replacement.getValue();
+            
+            // jeżeli b to string
+            if (b.getDataType().equals(DataType.STRING))
+            {
+                String regex = (String)b.getValue();
+                try
+                {
+                    String res = sstr.replaceAll(regex, sreplacement);
+                    return Data.createStringData(res);
+                }
+                catch (PatternSyntaxException ex)
+                {
+                    return ErrorConstruct.REGEX_ERROR(getName(), b.getErrorInfo(), interpreter, regex);
+                }
+            }
+            // inaczej int
+            else
+            {
+                int ib = (int)b.getValue();
+                if (ib < 0 || ib > sstr.length())
+                {
+                    return ErrorConstruct.INDEX_OUT_OF_BOUNDS(getName(), b.getErrorInfo(), interpreter, ib);
+                }
+                
+                StringBuilder sb = new StringBuilder(sstr);
+                sb.replace(ib, ib + sreplacement.length(), sreplacement);
+                String res = sb.toString();
+                
+                return Data.createStringData(res);
+            }
+        }
+    }
+    
+    private static class StartsEndsWithFunction
+    {
+        private enum Operation
+        {
+            STARTS_WITH,
+            ENDS_WITH;
+        }
+        
+        public Data perform(List<Data> params, Interpreter interpreter, IFunction function, Operation operation)
+        {
+            // parametry: <all, all>
+            Data str = params.get(0);
+            Data prefixSufix = params.get(1);
+            
+            // sprawdź czy typu string
+            TypeChecker tc = new TypeChecker(params, function.getName(), 0, interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartość
+            String sstr = (String)str.getValue();
+            String sprefixSufix = (String)prefixSufix.getValue();
+            
+            boolean res;
+            if (operation.equals(Operation.STARTS_WITH))
+            {
+                // sprawdź czy str zaczyna się od prefix
+                res = sstr.startsWith(sprefixSufix);
+            }
+            else
+            {
+                // sprawdź czy str kończy się na sufix
+                res = sstr.endsWith(sprefixSufix);
+            }
+            
+            return Data.createBoolData(res);
+        }
+    }
+    
+    private class StartsWithFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "STARTS_WITH";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new StartsEndsWithFunction().perform(params, interpreter, this, 
+                    StartsEndsWithFunction.Operation.STARTS_WITH);
+        }
+    }
+    
+    private class EndsWithFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "ENDS_WITH";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return new StartsEndsWithFunction().perform(params, interpreter, this, 
+                    StartsEndsWithFunction.Operation.ENDS_WITH);
+        }
+    }
+    
+    private class InsertFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INSERT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all, all, all>
+            Data str = params.get(0);
+            Data index = params.get(1);
+            Data toInsert = params.get(2);
+            
+            // sprawdź czy str typu string
+            TypeChecker tc = new TypeChecker(str, getName(), 0, str.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // sprawdź czy index typu int
+            tc = new TypeChecker(index, getName(), 0, index.getErrorInfo(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // sprawdź czy toInsert typu string
+            tc = new TypeChecker(toInsert, getName(), 0, toInsert.getErrorInfo(), interpreter, DataType.STRING);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartości
+            String sstr = (String)str.getValue();
+            int iindex = (int)index.getValue();
+            String stoInsert = (String)toInsert.getValue();
+            
+            // sprawdź czy iindex nie wychodzi poza granicę sstr
+            if (iindex < 0 || iindex > sstr.length())
+            {
+                return ErrorConstruct.INDEX_OUT_OF_BOUNDS(getName(), index.getErrorInfo(), interpreter, iindex);
+            }
+            
+            // użyj klasy StringBuilder do wstawienia
+            StringBuilder sb = new StringBuilder(sstr);
+            sb.insert(iindex, stoInsert);
+            String res = sb.toString();
+            
+            return Data.createStringData(res);
+        }
     }
     
     private class ToLowerUpperCaseFunction

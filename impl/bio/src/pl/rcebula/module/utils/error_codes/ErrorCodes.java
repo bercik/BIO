@@ -28,7 +28,8 @@ public enum ErrorCodes
     KEY_DOESNT_EXIST(12),
     NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE(13),
     START_GREATER_THAN_END(14),
-    CONVERSION_ERROR(15);
+    CONVERSION_ERROR(15),
+    REGEX_ERROR(16);
     
     private final Data code;
             

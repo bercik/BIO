@@ -13,4 +13,41 @@ def onSTART()
    PRINTLN("TO_UPPERCASE")
    PRINTLN(TO_UPPERCASE("AbCĆł")) % ABCĆŁ
    PRINTLN(TO_UPPERCASE(CREATE_TUPLE("r", "Bb", "ćĆ"))) % [ R, BB, ĆĆ ]
+
+   PRINTLN()
+   PRINTLN("INSERT")
+   PRINTLN(INSERT("ad", 1, "bc")) % abcd
+   PRINTLN(INSERT("bc", 0, "a")) % abc
+   PRINTLN(INSERT("abc", 0, "")) % abc
+   PRINTLN(INSERT("ab", 2, "cd")) % abcd
+
+   PRINTLN()
+   PRINTLN("STARTS_WITH")
+   PRINTLN(STARTS_WITH("abcd", "ab")) % true
+   PRINTLN(STARTS_WITH("abcd", "bc")) % false
+   PRINTLN(STARTS_WITH("abcd", "")) % true
+
+   PRINTLN()
+   PRINTLN("ENDS_WITH")
+   PRINTLN(ENDS_WITH("abcd", "")) % true
+   PRINTLN(ENDS_WITH("abcd", "cd")) % true
+   PRINTLN(ENDS_WITH("abcd", "bc")) % false
+
+   PRINTLN()
+   PRINTLN("REPLACE")
+   PRINTLN(REPLACE("adda", "d", "b")) % abba
+   PRINTLN(REPLACE("ababcb", "ab", "")) % cb
+   PRINTLN(REPLACE("ab(ab)cd(d)()", "\\(\\w+\\)", "(0)")) % ab(0)cd(0)()
+   PRINTLN(REPLACE("adda", 1, "bb")) % abba
+   PRINTLN(REPLACE("abab", 4, "cd")) % ababcd
+
+   PRINTLN()
+   PRINTLN("INDEX_OF")
+   PRINTLN(INDEX_OF("abcdb", "b")) % 1
+   PRINTLN(INDEX_OF("abcdb", "e")) % -1
+
+   PRINTLN()
+   PRINTLN("LAST_INDEX_OF")
+   PRINTLN(LAST_INDEX_OF("abcdb", "b")) % 4
+   PRINTLN(LAST_INDEX_OF("abcdb", "e")) % -1
 end

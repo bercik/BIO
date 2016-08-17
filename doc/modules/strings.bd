@@ -26,3 +26,50 @@
 !return (string, array) if you pass string returns string, if you pass array or tuple returns array 
 !error (BAD_PARAMETER_TYPE) If <i>a</i> is not string, array or tuple or collection contains not only strings
 
+!name INSERT
+!desc Inserts <i>to_insert</i> string into <i>str</i> at position <i>index</i> and returns as new string
+!param str (string) 
+!param index (int) 
+!param to_insert (string) 
+!return (string) 
+!error (BAD_PARAMETER_TYPE) If <i>to_insert</i> or <i>str</i> is not string or <i>index</i> is not int
+!error (INDEX_OUT_OF_BOUNDS) If <i>index</i> is out of bounds <i>str</i>
+
+!name STARTS_WITH
+!desc Tests if <i>str</i> starts with the specified <i>prefix</i>
+!param str (string) 
+!param prefix (string) 
+!return (bool) True if <i>str</i> starts with <i>prefix</i>, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>prefix</i> is not string
+
+!name ENDS_WITH
+!desc Tests if <i>str</i> ends with the specified <i>sufix</i>
+!param str (string) 
+!param sufix (string) 
+!return (bool) True if <i>str</i> ends with <i>prefix</i>, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>sufix</i> is not string
+
+!name REPLACE
+!desc If <i>b</i> is string than replaces each substring of <i>str</i> that matches the given regular expression with the given <i>replacement</i>. Because this function internally uses java String.replaceAll function, check <a href="https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#sum">java doc</a> for informations about creating regular expressions. If <i>b</i> is int than replaces characters in <i>str</i> starting from position <i>b</i> by <i>replacement</i> string. If necessary resulting string can be longer than original <i>str</i>
+!param str (string) original string
+!param b (string, int) regular expression or index
+!param replacement (string) replacement string
+!return (string) new string
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>replacement</i> is not string or <i>b</i> is not int or string
+!error (INDEX_OUT_OF_BOUNDS) If <i>b</i> is int and it is less than zero or greater than <i>str</i> length
+!error (REGEX_ERROR) If <i>b</i> is string and it is invalid regular expression
+
+!name INDEX_OF
+!desc Returns the index within <i>str</i> of the first occurrence of the specified <i>substr</i>
+!param str (string) 
+!param substr (string) 
+!return (int) the index of the first occurrence of the specified <i>substr</i>, or -1 if there is no such occurrence
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>substr</i> is not string 
+
+!name LAST_INDEX_OF
+!desc Returns the index within <i>str</i> of the last occurrence of the specified <i>substr</i>
+!param str (string) 
+!param substr (string) 
+!return (int) the index of the last occurrence of the specified <i>substr</i>, or -1 if there is no such occurrence
+!error (BAD_PARAMETER_TYPE) If <i>str</i> or <i>substr</i> is not string 
+
