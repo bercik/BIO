@@ -5,13 +5,15 @@
 !repeat event (id) function to be observed
 !repeat callback (id) function to be attached
 !return (none) 
-!error (CALLBACK_ALREADY_ATTACHED) if <i>callback</i> is already attached to <i>event</i> 
+!error (CALLBACK_ALREADY_ATTACHED) If <i>callback</i> is already attached to <i>event</i> 
+!error (USER_FUNCTION_DOESNT_EXIST) If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
 
 !name IS_ATTACHED
 !desc Checks whether <i>callback</i> is attached to <i>event</i>
 !param event (id) 
 !param callback (id) 
 !return (bool) true if <i>callback</i> is attached to <i>event</i>, otherwise false
+!error (USER_FUNCTION_DOESNT_EXIST) If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
 
 !name DETACH_FROM_EVENT
 !desc Detach <i>callback</i> functions from <i>event</i> functions. If error occurs during execution of this function then no <i>callback</i> would be detached from <i>event</i>
@@ -20,5 +22,6 @@
 !repeat event (id) observed function
 !repeat callback (id) function to be detached 
 !return (none) 
-!error (CALLBACK_NOT_ATTACHED) if <i>callback</i> is not attached to <i>event</i> 
+!error (CALLBACK_NOT_ATTACHED) If <i>callback</i> is not attached to <i>event</i> 
+!error (USER_FUNCTION_DOESNT_EXIST) If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
 

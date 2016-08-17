@@ -36,7 +36,11 @@
    <div class="errors">
             <p>
       <i>CALLBACK_ALREADY_ATTACHED</i> 
-            - if <i>callback</i> is already attached to <i>event</i> 
+            - If <i>callback</i> is already attached to <i>event</i> 
+            </p>
+            <p>
+      <i>USER_FUNCTION_DOESNT_EXIST</i> 
+            - If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
             </p>
          </div>
       <p class="fun_header">
@@ -70,6 +74,15 @@
                </p>
    </div>
    
+      <p>
+      <b>Errors:</b>
+   </p>
+   <div class="errors">
+            <p>
+      <i>USER_FUNCTION_DOESNT_EXIST</i> 
+            - If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
+            </p>
+         </div>
       <p class="fun_header">
       <b>DETACH_FROM_EVENT</b> 
             (<i>event, callback, &ltevent, callback&gt*</i>)
@@ -108,7 +121,11 @@
    <div class="errors">
             <p>
       <i>CALLBACK_NOT_ATTACHED</i> 
-            - if <i>callback</i> is not attached to <i>event</i> 
+            - If <i>callback</i> is not attached to <i>event</i> 
+            </p>
+            <p>
+      <i>USER_FUNCTION_DOESNT_EXIST</i> 
+            - If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
             </p>
          </div>
    

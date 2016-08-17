@@ -123,4 +123,15 @@ public class ErrorConstruct
         
         return Data.createErrorData(error);
     }
+    
+    public static Data USER_FUNCTION_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter,
+            String function)
+    {
+        String message = "user function " + function + " doesn't exist";
+        
+        MyError error = new MyError(funName, message, 
+                ErrorCodes.USER_FUNCTION_DOESNT_EXIST.getCode(), null, ei, interpreter);
+        
+        return Data.createErrorData(error);
+    }
 }
