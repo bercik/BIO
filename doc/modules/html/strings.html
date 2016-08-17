@@ -50,11 +50,11 @@
          </div>
       <p class="fun_header">
       <b>LENGTH</b> 
-            (<i>str</i>)
+            (<i>a</i>)
    </p>
    
    <p>
-      Returns length of <i>str</i>
+      Returns length of string <i>a</i> or if you pass collection returns length of every string in it as new array
    </p>
    
       <p>
@@ -62,7 +62,7 @@
    </p>
    <div class="params">
             <p>
-         <i>str</i> (<u>string</u>) 
+         <i>a</i> (<u>string, array, tuple</u>) 
                </p>
          </div>
    
@@ -71,7 +71,8 @@
    </p>
    <div class="returned">
       <p>
-         (<u>int</u>)
+         (<u>int, array</u>)
+                  - if you pass string it would return int, if you pass collection it would return array of ints
                </p>
    </div>
    
@@ -81,7 +82,7 @@
    <div class="errors">
             <p>
       <i>BAD_PARAMETER_TYPE</i> 
-            - If <i>str</i> is not string 
+            - If <i>a</i> is not string, array or tuple or if collection contains not only strings
             </p>
          </div>
       <p class="fun_header">
@@ -464,11 +465,11 @@
          </div>
       <p class="fun_header">
       <b>TRIM</b> 
-            (<i>str</i>)
+            (<i>a</i>)
    </p>
    
    <p>
-      Returns a copy of the string, with leading and trailing whitespace omitted
+      Returns a copy of the string, with leading and trailing whitespace omitted. If you pass collection it would trim all strings in it and returns as new array
    </p>
    
       <p>
@@ -476,7 +477,7 @@
    </p>
    <div class="params">
             <p>
-         <i>str</i> (<u>string</u>) 
+         <i>a</i> (<u>string, array, tuple</u>) 
                </p>
          </div>
    
@@ -485,7 +486,8 @@
    </p>
    <div class="returned">
       <p>
-         (<u>string</u>)
+         (<u>string, array</u>)
+                  - If you pass string, result would be string. If you pass collection result would be array
                </p>
    </div>
    
@@ -495,7 +497,7 @@
    <div class="errors">
             <p>
       <i>BAD_PARAMETER_TYPE</i> 
-            - If <i>str</i> is not string 
+            - If <i>a</i> is not string, array or tuple or if collection contains not only strings
             </p>
          </div>
    

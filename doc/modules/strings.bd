@@ -9,10 +9,10 @@
 !error (INDEX_OUT_OF_BOUNDS) If <i>start</i> is less than zero or <i>end</i> is greater or equals <i>str</i> length
 
 !name LENGTH
-!desc Returns length of <i>str</i>
-!param str (string) 
-!return (int) 
-!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string 
+!desc Returns length of string <i>a</i> or if you pass collection returns length of every string in it as new array
+!param a (string, array, tuple) 
+!return (int, array) if you pass string it would return int, if you pass collection it would return array of ints
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not string, array or tuple or if collection contains not only strings
 
 !name TO_LOWERCASE
 !desc Converts all of the characters in string <i>a</i> to lower case and returns as new string. If you pass collection than it would convert all strings in it to lower case and returns as new array
@@ -82,8 +82,8 @@
 !error (REGEX_ERROR) If <i>regex</i> is invalid regular expression
 
 !name TRIM
-!desc Returns a copy of the string, with leading and trailing whitespace omitted
-!param str (string) 
-!return (string) 
-!error (BAD_PARAMETER_TYPE) If <i>str</i> is not string 
+!desc Returns a copy of the string, with leading and trailing whitespace omitted. If you pass collection it would trim all strings in it and returns as new array
+!param a (string, array, tuple) 
+!return (string, array) If you pass string, result would be string. If you pass collection result would be array
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not string, array or tuple or if collection contains not only strings
 

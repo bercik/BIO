@@ -3,8 +3,11 @@ def onSTART()
    PRINTLN(SUBSTR("abcdef", 1, 3)) % bc
    PRINTLN(SUBSTR("abcdef", 1, 1)) % 
 
+   PRINTLN()
+   PRINTLN("LENGTH")
    PRINTLN(LENGTH("abc")) % 3
    PRINTLN(LENGTH("")) % 0
+   PRINTLN(LENGTH(CREATE_TUPLE("", "a", "ab", "abc"))) % [ 0, 1, 2, 3 ]
 
    PRINTLN("TO_LOWERCASE")
    PRINTLN(TO_LOWERCASE("AbCĆł")) % abcćł
@@ -59,4 +62,5 @@ def onSTART()
    PRINTLN()
    PRINTLN("TRIM")
    PRINTLN(TRIM("\t  abc \t  ")) % abc
+   PRINTLN(TRIM(CREATE_TUPLE("  a  ", "  b", "c  "))) % [ "a", "b", "c" ]
 end
