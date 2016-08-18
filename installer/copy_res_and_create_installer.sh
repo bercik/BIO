@@ -2,8 +2,7 @@ mkdir -p ./res/doc
 cp ../doc/modules/html/index.html ./res/doc/
 cp ../doc/modules/html/index.css ./res/doc/
 
-mkdir -p ./res/examples
-cp -r ../examples/*.bio ./res/examples/
+rsync -avm --include='*.bio' -f 'hide,! */' ../examples ./res
 
 cp -r ../vim_plugin ./res/
 
@@ -19,4 +18,4 @@ cp ../impl/bioc/dist/bioc.jar ./res/bin/
 cp -r ../impl/bio/dist/lib ./res/bin/
 cp -r ../impl/bioc/dist/lib ./res/bin/
 
-~/IzPack/bin/compile install.xml -b . -o install.jar
+~/IzPack/bin/compile install.xml -b . -o bio_installer.jar

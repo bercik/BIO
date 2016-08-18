@@ -12,7 +12,7 @@
       </authors>
       <url>http://www.rcebula.pl/static/bio</url>
       <javaversion>1.8</javaversion>
-      <uninstaller name="uninstall.jar" path="${INSTALL_PATH}/uninstaller" write="yes"/>
+      <uninstaller name="bio_uninstaller.jar" path="${INSTALL_PATH}/uninstaller" write="yes"/>
       <run-privileged condition="izpack.linuxinstall"/>
    </info>
 

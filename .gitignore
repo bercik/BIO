@@ -12,4 +12,4 @@ private/
 *.cbio
 
 installer/res
-installer/install.jar
+installer/bio_installer.jar
