@@ -1,59 +1,183 @@
-{% for f in functions %}
-   <p class="fun_header">
-      <b>{{ f.name }}</b> 
-      {% if f.alias %}
-         /<i>{{ f.alias }}</i>
-      {% endif %}
-      (<i>{{ f.params_header }}</i>)
-   </p>
-   
-   <p>
-      {{ f.desc }}
-   </p>
-   
-   {% if f.params %}
-   <p>
-      <b>Parameters:</b>
-   </p>
-   <div class="params">
-      {% for p in f.params %}
-      <p>
-         <i>{{ p.name }}</i> (<u>{{ p.types }}</u>) 
-         {% if p.desc %}
-         - {{ p.desc }}
-         {% endif %}
-      </p>
-      {% endfor %}
-   </div>
-   {% endif %}
+<!DOCTYPE html>
+<html lang="en">
 
-   {% if f.ret %}
-   <p>
-      <b>Return value:</b>
-   </p>
-   <div class="returned">
-      <p>
-         (<u>{{ f.ret.types }}</u>)
-         {% if f.ret.desc %}
-         - {{ f.ret.desc }}
-         {% endif %}
-      </p>
-   </div>
-   {% endif %}
+<head>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>BIO DOC</title>
+   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="css/index.css">
+   <script src="js/jquery-3.1.0.min.js"></script>
+   <script src="js/scripts.js"></script>
+</head>
 
-   {% if f.errors %}
-   <p>
-      <b>Errors:</b>
-   </p>
-   <div class="errors">
-      {% for e in f.errors %}
-      <p>
-      <i>{{ e.name }}</i> 
-      {% if e.desc %}
-      - {{ e.desc }}
-      {% endif %}
-      </p>
+<body>
+
+<nav>
+   <ul>
+      <li>
+      <a href="#header">Basic informations</a>
+      <a href="#modules">Modules</a>
+      <ul>
+      {% for m in modules %}
+         <li>
+            <a href="#{{m.mod_name}}">{{m.mod_name}}</a>
+            <ul>
+               {% for f in m.functions %}
+               <li>
+                  <a class="function" href="#{{f.name}}_fun">{{f.name}}</a>
+                  <ul>
+                     {% if f.params %}
+                     <li><a href="#{{f.name}}_funparams">Parameters</a></li>
+                     {% endif %}
+                     {% if f.ret %}
+                     <li><a href="#{{f.name}}_funreturns">Returns</a></li>
+                     {% endif %}
+                     {% if f.errors %}
+                     <li><a href="#{{f.name}}_funerrors">Errors</a></li>
+                     {% endif %}
+                  </ul>
+               </li>
+               {% endfor %}
+            </ul>
+         </li>
       {% endfor %}
-   </div>
-   {% endif %}
+      </ul>
+   </ul>
+</nav>
+
+<main>
+<header>
+   <h1>BIO Documentation</h1>
+</header>
+
+<!-- header info -->
+<header>
+   <p id="header">Basic informations</p>
+</header>
+<article class="module block">
+   <header>
+      <h2>data types</h2>
+   </header>
+   <section>
+      <p><b>array</b> - series of elements of any type. Mutable</p>
+      <p><b>bool</b> - has only two posible values: true and false. Immutable</p>
+      <p><b>dict</b> - collections of pairs &ltstring, any&gt. Mutable</p>
+      <p><b>error</b> - contains informations about error that appears. Immutable</p>
+      <p><b>float</b> - single-precision 32-bit IEEE 754 floating point. Immutable</p>
+      <p><b>int</b> - 32-bit signed two's complement integer, which has a minimum value of -2<sup>31</sup> and a maximum value of 2<sup>31</sup>-1. Immutable</p>
+      <p><b>none</b> - represents absent of value. Immutable</p>
+      <p><b>string</b> - represents sequence of characters. Immutable</p>
+      <p><b>tuple</b> - series of elements of any type. Immutable</p>
+   </section>
+</article>
+
+<article class="module block">
+   <header>
+      <h2>errors</h2>
+   </header>
+   <section>
+      <p> Errors are values of type error which are returned from function where an error occur. If you don't handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR event will occur (see in basic). It will occur also when there is error returned from onSTART function. There are two cases when error can cause function to return. Both are when you pass not bool to FOR or IF function as condition. Notice that there are few functions that takes error as parameter. Other will return error with cause as this given error parameter. This behavior is to prevent errors from disappearing</p>
+   </section>
+</article>
+
+<article class="module block">
+   <header>
+      <h2>conversions</h2>
+   </header>
+   <section>
+      <p> If needed int will be converted to float and arrays to tuples in most cases (see specific function documentation for details) </p>
+      <p>Here is conversion table that tells you which type you can convert to which:</p>
+      <table>
+         <thead>
+            <tr><th></th><th>TO_STRING</th><th>TO_INT</th><th>TO_FLOAT</th><th>TO_BOOL</th><th>TO_ARRAY</th><th>TO_TUPLE</th></tr>
+         </thead>
+         <tbody>
+         <tr><td>array</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td></tr>
+         <tr><td>bool</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+         <tr><td>dict</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+         <tr><td>error</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+         <tr><td>float</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+         <tr><td>int</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+         <tr><td>none</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>no</td><td>no</td></tr>
+         <tr><td>string</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+         <tr><td>tuple</td><td>yes</td><td>no</td><td>no</td><td>no</td><td>yes</td><td>yes</td></tr>
+         </tbody>
+      </table>
+
+      <br/>
+      <p><b>Note:</b> many functions can take not only single data types arguments but also tuple or arrays of values. See specific function documentation for details</p> 
+   </section>
+</article>
+<!-- end of header info -->
+
+<header>
+   <p id="modules">Modules</p>
+</header>
+{% for m in modules %}
+   <article class="module block" id="{{m.mod_name}}">
+      <header>
+         <h2>{{m.mod_name}}</h2>
+      </header>
+         <section class="functions">
+            {% for f in m.functions %}
+            <article class="function sub-block" id="{{f.name}}_fun">
+
+               <header>
+                  <h4>{{f.name}} ({{f.params_header}})</h4>
+                  <p class="description">{{f.desc}}</p>
+               </header>
+
+               {% if f.params %}
+               <section class="parameters" id="{{f.name}}_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                     {% for p in f.params %}
+                     <dt><i>{{p.name}}</i> (<u>{{p.types}}</u>)</dt>
+                     {% if p.desc %}
+                     <dd>{{p.desc}}</dd>
+                     {% endif %}
+                     {% endfor %}
+                  </dl>
+               </section>
+               {% endif %}
+
+               {% if f.ret %}
+               <section class="returns" id="{{f.name}}_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>{{f.ret.types}}</u>)</dt>
+                     {% if f.ret.desc %}
+                        <dd>{{f.ret.desc}}</dd>
+                     {% endif %}
+                  </dl>
+               </section>
+               {% endif %}
+
+               {% if f.errors %}
+               <section class="errors" id="{{f.name}}_funerrors">
+                  <h5>Errors</h5>
+                  {% for e in f.errors %}
+                  <dl>
+                     <dt>{{e.name}}</dt>
+                     {% if e.desc %}
+                        <dd>{{e.desc}}</dd>
+                     {% endif %}
+                  </dl>
+                  {% endfor %}
+               </section>
+               {% endif %}
+
+            </article>
+            {% endfor %}
+         </section>
+      </header>
+   </article>
 {% endfor %}
+
+<button id="menu-switcher">Switch menu</button>
+
+</main>
+
+</body>
+</html>
