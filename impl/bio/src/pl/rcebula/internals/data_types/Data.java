@@ -104,6 +104,18 @@ public class Data
 
     public void setErrorInfo(ErrorInfo errorInfo)
     {
+        // jeżeli jesteśmy errorem
+        if (this.dataType.equals(DataType.ERROR))
+        {
+            // jeżeli przechowywane myErrorInfo nie ma przypisanego errorInfo
+            MyError me = (MyError)this.getValue();
+            if (me.getErrorInfo() == null)
+            {
+                // przypisz
+                me.setErrorInfo(errorInfo);
+            }
+        }
+        
         this.errorInfo = errorInfo;
     }
 

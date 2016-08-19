@@ -4,3 +4,41 @@
 !return (string) printed string
 !error (BAD_PARAMETER_TYPE) if <i>err</i> isn't error
 
+!name CREATE_ERROR
+!desc Creates error with string <i>msg</i>, any additional value (except error) <i>obj</i> and error <i>cause</i>
+!param msg (string) error message
+!param obj (all except error) any additional value
+!param cause (error, none) error which caused this or none if there isn't one
+!return (error) new error
+!error (BAD_PARAMETER_TYPE) If <i>msg</i> is not string, <i>obj</i> is error or <i>cause</i> is not error or none
+
+!name GET_ERROR_MESSAGE
+!desc Returns error message
+!param err (error) 
+!return (string) 
+!error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
+
+!name GET_ERROR_OBJECT
+!desc Returns error additional object
+!param err (error) 
+!return (all except error) 
+!error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
+
+!name GET_ERROR_CAUSE
+!desc Returns error cause
+!param err (error) 
+!return (error, none) error if there is cause, otherwise none
+!error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
+
+!name GET_ERROR_LINE
+!desc Returns error occurence line
+!param err (error) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
+
+!name GET_ERROR_CH
+!desc Returns error occurence character
+!param err (error) 
+!return (int) 
+!error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
+

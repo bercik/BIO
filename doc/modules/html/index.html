@@ -380,6 +380,54 @@
                                                                <li><a href="#PRINT_STACK_TRACE_funerrors">Errors</a></li>
                                        </ul>
                </li>
+                              <li>
+                  <a class="function" href="#CREATE_ERROR_fun">CREATE_ERROR</a>
+                  <ul>
+                                          <li><a href="#CREATE_ERROR_funparams">Parameters</a></li>
+                                                               <li><a href="#CREATE_ERROR_funreturns">Returns</a></li>
+                                                               <li><a href="#CREATE_ERROR_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#GET_ERROR_MESSAGE_fun">GET_ERROR_MESSAGE</a>
+                  <ul>
+                                          <li><a href="#GET_ERROR_MESSAGE_funparams">Parameters</a></li>
+                                                               <li><a href="#GET_ERROR_MESSAGE_funreturns">Returns</a></li>
+                                                               <li><a href="#GET_ERROR_MESSAGE_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#GET_ERROR_OBJECT_fun">GET_ERROR_OBJECT</a>
+                  <ul>
+                                          <li><a href="#GET_ERROR_OBJECT_funparams">Parameters</a></li>
+                                                               <li><a href="#GET_ERROR_OBJECT_funreturns">Returns</a></li>
+                                                               <li><a href="#GET_ERROR_OBJECT_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#GET_ERROR_CAUSE_fun">GET_ERROR_CAUSE</a>
+                  <ul>
+                                          <li><a href="#GET_ERROR_CAUSE_funparams">Parameters</a></li>
+                                                               <li><a href="#GET_ERROR_CAUSE_funreturns">Returns</a></li>
+                                                               <li><a href="#GET_ERROR_CAUSE_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#GET_ERROR_LINE_fun">GET_ERROR_LINE</a>
+                  <ul>
+                                          <li><a href="#GET_ERROR_LINE_funparams">Parameters</a></li>
+                                                               <li><a href="#GET_ERROR_LINE_funreturns">Returns</a></li>
+                                                               <li><a href="#GET_ERROR_LINE_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#GET_ERROR_CH_fun">GET_ERROR_CH</a>
+                  <ul>
+                                          <li><a href="#GET_ERROR_CH_funparams">Parameters</a></li>
+                                                               <li><a href="#GET_ERROR_CH_funreturns">Returns</a></li>
+                                                               <li><a href="#GET_ERROR_CH_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
                            </ul>
          </li>
                <li>
@@ -2334,6 +2382,193 @@
                                     <dl>
                      <dt>BAD_PARAMETER_TYPE</dt>
                                              <dd>if <i>err</i> isn't error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="CREATE_ERROR_fun">
+
+               <header>
+                  <h4>CREATE_ERROR (msg, obj, cause)</h4>
+                  <p class="description">Creates error with string <i>msg</i>, any additional value (except error) <i>obj</i> and error <i>cause</i></p>
+               </header>
+
+                              <section class="parameters" id="CREATE_ERROR_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>msg</i> (<u>string</u>)</dt>
+                                          <dd>error message</dd>
+                                                               <dt><i>obj</i> (<u>all except error</u>)</dt>
+                                          <dd>any additional value</dd>
+                                                               <dt><i>cause</i> (<u>error, none</u>)</dt>
+                                          <dd>error which caused this or none if there isn't one</dd>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="CREATE_ERROR_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>error</u>)</dt>
+                                             <dd>new error</dd>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="CREATE_ERROR_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>msg</i> is not string, <i>obj</i> is error or <i>cause</i> is not error or none</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="GET_ERROR_MESSAGE_fun">
+
+               <header>
+                  <h4>GET_ERROR_MESSAGE (err)</h4>
+                  <p class="description">Returns error message</p>
+               </header>
+
+                              <section class="parameters" id="GET_ERROR_MESSAGE_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>err</i> (<u>error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="GET_ERROR_MESSAGE_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>string</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="GET_ERROR_MESSAGE_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>err</i> is not error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="GET_ERROR_OBJECT_fun">
+
+               <header>
+                  <h4>GET_ERROR_OBJECT (err)</h4>
+                  <p class="description">Returns error additional object</p>
+               </header>
+
+                              <section class="parameters" id="GET_ERROR_OBJECT_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>err</i> (<u>error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="GET_ERROR_OBJECT_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>all except error</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="GET_ERROR_OBJECT_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>err</i> is not error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="GET_ERROR_CAUSE_fun">
+
+               <header>
+                  <h4>GET_ERROR_CAUSE (err)</h4>
+                  <p class="description">Returns error cause</p>
+               </header>
+
+                              <section class="parameters" id="GET_ERROR_CAUSE_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>err</i> (<u>error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="GET_ERROR_CAUSE_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>error, none</u>)</dt>
+                                             <dd>error if there is cause, otherwise none</dd>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="GET_ERROR_CAUSE_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>err</i> is not error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="GET_ERROR_LINE_fun">
+
+               <header>
+                  <h4>GET_ERROR_LINE (err)</h4>
+                  <p class="description">Returns error occurence line</p>
+               </header>
+
+                              <section class="parameters" id="GET_ERROR_LINE_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>err</i> (<u>error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="GET_ERROR_LINE_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>int</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="GET_ERROR_LINE_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>err</i> is not error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="GET_ERROR_CH_fun">
+
+               <header>
+                  <h4>GET_ERROR_CH (err)</h4>
+                  <p class="description">Returns error occurence character</p>
+               </header>
+
+                              <section class="parameters" id="GET_ERROR_CH_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>err</i> (<u>error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="GET_ERROR_CH_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>int</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="GET_ERROR_CH_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>err</i> is not error</dd>
                                        </dl>
                                  </section>
                

@@ -17,10 +17,19 @@ public class MyError
     private final String message;
     private final Data object;
     private final MyError cause;
-    private final ErrorInfo errorInfo;
+    private ErrorInfo errorInfo;
     
     private final CallStack callStack;
 
+    public MyError(String message, Data object, MyError cause, Interpreter interpreter)
+    {
+        this.message = message;
+        this.object = object;
+        this.cause = cause;
+        
+        this.callStack = new CallStack(interpreter.getFrameStack());
+    }
+    
     public MyError(String message, Data object, MyError cause, ErrorInfo errorInfo, Interpreter interpreter)
     {
         this.message = message;
@@ -31,9 +40,15 @@ public class MyError
         this.callStack = new CallStack(interpreter.getFrameStack());
     }
     
-    public MyError(String functionName, String message, Data object, MyError cause, ErrorInfo errorInfo, Interpreter interpreter)
+    public MyError(String functionName, String message, Data object, MyError cause, 
+            ErrorInfo errorInfo, Interpreter interpreter)
     {
         this("In function " + functionName + " " + message, object, cause, errorInfo, interpreter);
+    }
+
+    public void setErrorInfo(ErrorInfo errorInfo)
+    {
+        this.errorInfo = errorInfo;
     }
 
     public String getMessage()
