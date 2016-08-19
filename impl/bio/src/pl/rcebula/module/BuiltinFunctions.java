@@ -17,6 +17,7 @@ import pl.rcebula.module.modules.ErrorsModule;
 import pl.rcebula.module.modules.LogicModule;
 import pl.rcebula.module.modules.CompareModule;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,9 +176,13 @@ public class BuiltinFunctions
                 // inaczej wypisujemy błąd na ekran i przerywamy
                 else
                 {
-                    // wypisujemy błąd na ekran
-                    interpreter.getBuiltinFunctions().callFunction("PRINTLN", parameters, interpreter.getCurrentFrame(), 
-                            interpreter, ei);
+                    // wypisujemy błąd na ekran i nową linię
+                    interpreter.getBuiltinFunctions().callFunction("PRINTLN", 
+                            Arrays.asList(parameters.get(0), Data.createStringData("")), 
+                            interpreter.getCurrentFrame(), interpreter, ei);
+                    // wypisujemy stack trace
+                    interpreter.getBuiltinFunctions().callFunction("PRINT_STACK_TRACE", parameters, 
+                            interpreter.getCurrentFrame(), interpreter, ei);
                     // zakańczamy program
                     interpreter.getBuiltinFunctions().callFunction("EXIT", new ArrayList<Data>(), 
                             interpreter.getCurrentFrame(), interpreter, ei);

@@ -79,6 +79,7 @@ public class Preprocessor
 
         // dodajemy linię <fe
         lines.add(generateFileEndLine());
+        
         // analizujemy pod kątem <fs i <fe
         analyseLinesForFiles(lines);
 
@@ -240,6 +241,8 @@ public class Preprocessor
                     {
                         // na koniec dodajemy linię <fe
                         tmpLines.add(generateFileEndLine());
+                        // w tym miejscu wstawiamy pustą linię za dyrektywę #INCLUDE
+                        tmpLines.add("");
                     }
 
                     // dodajemy linijki do wynikowych
@@ -354,21 +357,6 @@ public class Preprocessor
         }
 
         return false;
-    }
-
-    private List<String> readInternalFile(String path, String encoding)
-            throws IOException
-    {
-        InputStream is = getClass().getResourceAsStream(path);
-        return readInputStreamAsLines(is, encoding);
-    }
-
-    private String readInputStreamToString(InputStream is, String encoding)
-    {
-        try (Scanner s = new Scanner(is, encoding))
-        {
-            return s.useDelimiter("\\A").hasNext() ? s.next() : "";
-        }
     }
 
     private List<String> readInputStreamAsLines(InputStream is, String encoding)

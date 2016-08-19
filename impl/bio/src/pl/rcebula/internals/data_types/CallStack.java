@@ -41,6 +41,9 @@ public class CallStack
             str += entry.getErrorInfo().toString() + ": " + entry.getFunName() + "\n";
         }
         
+        // usuwamy ostatni znak nowej linii
+        str = str.substring(0, str.length() - 1);
+        
         return str;
     }
     

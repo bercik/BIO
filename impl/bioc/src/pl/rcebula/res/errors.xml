@@ -72,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
-            GET_ERROR_FULL_INFO
+            PRINT_STACK_TRACE
         </name>
         <params>
             <param>

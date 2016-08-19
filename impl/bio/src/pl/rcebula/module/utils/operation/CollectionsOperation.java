@@ -89,6 +89,7 @@ public class CollectionsOperation
                         break;
                     case FLOAT:
                         possibleDataTypes.add(DataType.FLOAT);
+                        possibleDataTypes.add(DataType.INT);
                         break;
                     case INT:
                         possibleDataTypes.add(DataType.INT);
@@ -124,7 +125,8 @@ public class CollectionsOperation
                         }
                         break;
                     case FLOAT:
-                        if (firstPar.getDataType().equals(DataType.FLOAT))
+                        if (firstPar.getDataType().equals(DataType.FLOAT)
+                                || firstPar.getDataType().equals(DataType.INT))
                         {
                             dataType = OperationDataType.FLOAT;
                             break forLabel;

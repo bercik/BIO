@@ -1,0 +1,14 @@
+#INCLUDE("test.biom")
+
+def onSTART()
+   % ASSIGN_GLOBAL(x, 3)
+   PRINTLN(foo2(RANGE(3, 5)))
+   ASSIGN_LOCAL(x, foo(GET_GLOBAL(x), 4))
+   PRINTLN(x)
+   IF
+   (
+      IS_ERROR(x),
+      PRINT_STACK_TRACE(x),
+      DN()
+   )
+end

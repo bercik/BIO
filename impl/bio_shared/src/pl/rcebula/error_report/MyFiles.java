@@ -17,6 +17,7 @@
 package pl.rcebula.error_report;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -97,7 +98,7 @@ public class MyFiles
     {
         for (File f : files)
         {
-            f.normalizeIntervals();
+            f.normalizeAndSortIntervals();
         }
     }
 
@@ -159,7 +160,24 @@ public class MyFiles
             return -1;
         }
         
-        public void normalizeIntervals()
+        public int getSumOfLinesBeforeInterval(int line)
+        {
+            int sum = 0;
+            
+            for (Interval i : intervals)
+            {
+                if (line >= i.getStart() && line < i.getEnd())
+                {
+                    break;
+                }
+                
+                sum += i.sumOfLines();
+            }
+            
+            return sum;
+        }
+        
+        public void normalizeAndSortIntervals()
         {
             for (int i = 0; i < intervals.size() - 1; )
             {
@@ -178,6 +196,8 @@ public class MyFiles
                     ++i;
                 }
             }
+            
+            Collections.sort(intervals);
         }
         
         public void addInterval(Interval interval)
@@ -223,7 +243,7 @@ public class MyFiles
         {
             String str = "";
             str += name + "(" + num + ")\n";
-            str += "Intervals: ";
+            str += "Intervals:\n";
             
             for (Interval i : intervals)
             {
@@ -233,7 +253,7 @@ public class MyFiles
             return str;
         }
         
-        public static class Interval
+        public static class Interval implements Comparable<Interval>
         {
             private int start;
             private int end;
@@ -242,6 +262,23 @@ public class MyFiles
             {
                 this.start = start;
                 this.end = end;
+            }
+
+            @Override
+            public int compareTo(Interval o)
+            {
+                if (this.start < o.start)
+                {
+                    return -1;
+                }
+                else if (this.start > o.start)
+                {
+                    return 1;
+                }
+                else 
+                {
+                    return 0;
+                }
             }
             
             public int getStart()
@@ -262,6 +299,11 @@ public class MyFiles
             public void setEnd(int end)
             {
                 this.end = end;
+            }
+            
+            public int sumOfLines()
+            {
+                return end - start;
             }
         }
     }

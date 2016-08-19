@@ -5,6 +5,7 @@
  */
 package pl.rcebula.module.modules;
 
+import java.util.Arrays;
 import java.util.List;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
@@ -38,7 +39,7 @@ public class ErrorsModule extends Module
         @Override
         public String getName()
         {
-            return "GET_ERROR_FULL_INFO";
+            return "PRINT_STACK_TRACE";
         }
 
         @Override
@@ -53,9 +54,13 @@ public class ErrorsModule extends Module
             }
             
             MyError myError = (MyError)err.getValue();
-            String str = myError.getFullInfo();
+            String str = myError.getFirstCauseStackTrace();
+            Data dstr = Data.createStringData(str);
             
-            return Data.createStringData(str);
+            interpreter.getBuiltinFunctions().callFunction("PRINTLN", Arrays.asList(dstr), currentFrame, interpreter, 
+                    err.getErrorInfo());
+            
+            return dstr;
         }
     }
 }

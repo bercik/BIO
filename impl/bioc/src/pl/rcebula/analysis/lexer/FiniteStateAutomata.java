@@ -100,7 +100,8 @@ public class FiniteStateAutomata
     {
         // -1 bo w files linie numerowane od zera
         currentErrorFile = files.getFromLine(line - 1);
-        lineFromBeginningOfFile = line - currentErrorFile.getStartOfInterval(line - 1);
+        lineFromBeginningOfFile = line - currentErrorFile.getStartOfInterval(line - 1) + 
+                currentErrorFile.getSumOfLinesBeforeInterval(line - 1);
     }
     
     private ErrorInfo generateErrorInfo()
@@ -111,7 +112,8 @@ public class FiniteStateAutomata
     private ErrorInfo generateErrorInfoWithCurrentToken()
     {
         File f = files.getFromLine(currentTokenLine - 1);
-        int line = currentTokenLine - f.getStartOfInterval(currentTokenLine - 1);
+        int line = currentTokenLine - f.getStartOfInterval(currentTokenLine - 1) + 
+                f.getSumOfLinesBeforeInterval(currentTokenLine - 1);
         return new ErrorInfo(line, currentTokenChNum, f);
     }
 

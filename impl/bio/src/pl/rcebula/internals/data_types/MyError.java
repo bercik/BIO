@@ -77,12 +77,9 @@ public class MyError
         return str;
     }
     
-    public String getFullInfo()
+    public String getFirstCauseStackTrace()
     {
-        String str = "";
-        
-        str += toString() + "\n";
-        str += "Stack trace:\n";
+        String str = "Stack trace:\n";
         
         MyError callStackError = this;
         MyError causeError = cause;

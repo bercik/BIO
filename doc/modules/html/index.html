@@ -373,11 +373,11 @@
             <a href="#errors">errors</a>
             <ul>
                               <li>
-                  <a class="function" href="#GET_ERROR_FULL_INFO_fun">GET_ERROR_FULL_INFO</a>
+                  <a class="function" href="#PRINT_STACK_TRACE_fun">PRINT_STACK_TRACE</a>
                   <ul>
-                                          <li><a href="#GET_ERROR_FULL_INFO_funparams">Parameters</a></li>
-                                                               <li><a href="#GET_ERROR_FULL_INFO_funreturns">Returns</a></li>
-                                                               <li><a href="#GET_ERROR_FULL_INFO_funerrors">Errors</a></li>
+                                          <li><a href="#PRINT_STACK_TRACE_funparams">Parameters</a></li>
+                                                               <li><a href="#PRINT_STACK_TRACE_funreturns">Returns</a></li>
+                                                               <li><a href="#PRINT_STACK_TRACE_funerrors">Errors</a></li>
                                        </ul>
                </li>
                            </ul>
@@ -2307,34 +2307,33 @@
          <h2>errors</h2>
       </header>
          <section class="functions">
-                        <article class="function sub-block" id="GET_ERROR_FULL_INFO_fun">
+                        <article class="function sub-block" id="PRINT_STACK_TRACE_fun">
 
                <header>
-                  <h4>GET_ERROR_FULL_INFO (err)</h4>
-                  <p class="description">Returns error <i>err</i> full informations, that is error information itself, caused errors information and stack trace</p>
+                  <h4>PRINT_STACK_TRACE (err)</h4>
+                  <p class="description">Prints <i>err</i> first cause stack trace (or if there isn't any cause, this error stack trace)</p>
                </header>
 
-                              <section class="parameters" id="GET_ERROR_FULL_INFO_funparams">
+                              <section class="parameters" id="PRINT_STACK_TRACE_funparams">
                   <h5>Parameters</h5>
                   <dl>
                                           <dt><i>err</i> (<u>error</u>)</dt>
-                                          <dd>error to get full information from</dd>
                                                             </dl>
                </section>
                
-                              <section class="returns" id="GET_ERROR_FULL_INFO_funreturns">
+                              <section class="returns" id="PRINT_STACK_TRACE_funreturns">
                   <h5>Returns</h5>
                   <dl>
                      <dt>(<u>string</u>)</dt>
-                                             <dd>containing full information about given error</dd>
+                                             <dd>printed string</dd>
                                        </dl>
                </section>
                
-                              <section class="errors" id="GET_ERROR_FULL_INFO_funerrors">
+                              <section class="errors" id="PRINT_STACK_TRACE_funerrors">
                   <h5>Errors</h5>
                                     <dl>
                      <dt>BAD_PARAMETER_TYPE</dt>
-                                             <dd>if passed value isn't error</dd>
+                                             <dd>if <i>err</i> isn't error</dd>
                                        </dl>
                                  </section>
                
