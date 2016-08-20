@@ -105,6 +105,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            ASSERTS_ON
+        </name>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERTS_OFF
+        </name>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             ASSERT_TRUE
         </name>
         <params>

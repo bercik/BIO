@@ -103,6 +103,9 @@ public class Interpreter
             // koniec wczytywania
             timeProfiler.stop();
 
+            // TODELETE
+//            logger.finest(uf.getName());
+//            logger.finest(Integer.toString(ip));
 //            logger.fine(line.toString());
 
             // w zależności od opcode wykonujemy różne akcje

@@ -1,0 +1,6 @@
+def onSTART()
+   PRINTLN("ASSERT_TRUE")
+   ASSERT_TRUE(EQ(10, 10))
+   ASSERT_TRUE(EQ(10, "20"))
+   PRINTLN("control print")
+end

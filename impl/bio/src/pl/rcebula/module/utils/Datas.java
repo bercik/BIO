@@ -7,10 +7,12 @@ package pl.rcebula.module.utils;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
+import pl.rcebula.internals.data_types.Tuple;
 
 /**
  *
@@ -18,6 +20,95 @@ import pl.rcebula.internals.data_types.MyError;
  */
 public class Datas
 {
+    public static String toStr(Data data)
+    {
+        return toStr(data, false);
+    }
+    
+    public static String toStr(Data data, boolean inCollection)
+    {
+        String str = "";
+
+        switch (data.getDataType())
+        {
+            case ARRAY:
+                Data[] arr = (Data[])data.getValue();
+                str += "[ ";
+                for (Data d : arr)
+                {
+                    str += toStr(d, true) + ", ";
+                }
+                if (arr.length > 0)
+                {
+                    str = str.substring(0, str.length() - 2);
+                }
+                str += " ]";
+                break;
+            case BOOL:
+                Boolean b = (boolean)data.getValue();
+                str += b.toString();
+                break;
+            case DICT:
+                HashMap<String, Data> dict = (HashMap<String, Data>)data.getValue();
+                str += "{ ";
+                for (Map.Entry<String, Data> d : dict.entrySet())
+                {
+                    str += d.getKey() + ": " + toStr(d.getValue(), true) + ", ";
+                }
+                if (dict.size() > 0)
+                {
+                    str = str.substring(0, str.length() - 2);
+                }
+                str += " }";
+                break;
+            case ERROR:
+                MyError myError = (MyError)data.getValue();
+                str += myError.toString();
+                break;
+            case FLOAT:
+                Float f = (float)data.getValue();
+                str += f.toString();
+                break;
+            case INT:
+                Integer i = (int)data.getValue();
+                str += i.toString();
+                break;
+            case NONE:
+                str += "none";
+                break;
+            case STRING:
+                String s = (String)data.getValue();
+                if (inCollection)
+                {
+                    str += "\"" + s + "\"";
+                }
+                else
+                {
+                    str += s;
+                }
+                break;
+            case TUPLE:
+                Tuple tuple = (Tuple)data.getValue();
+                str += "( ";
+                for (i = 0; i < tuple.size(); ++i)
+                {
+                    Data d = tuple.get(i);
+                    str += toStr(d, true);
+                    if (i != tuple.size() - 1)
+                    {
+                        str += ", ";
+                    }
+                }
+                str += " )";
+                break;
+            default:
+                String message = "Unknown type " + data.getDataType().toString() + " in method toSTR()";
+                throw new RuntimeException(message);
+        }
+
+        return str;
+    }
+
     public static boolean equals(Data d1, Data d2)
     {
         // TODO
@@ -113,7 +204,7 @@ public class Datas
                     Entry<String, Data> entry = iterator.next();
                     String key = entry.getKey();
                     Data value = entry.getValue();
-                    
+
                     // pobieramy element pod tym samym kluczem w mapie 2
                     // jeżeli nie istnieje to zwracamy false
                     Data dict2Value = dict2.get(key);
@@ -121,14 +212,14 @@ public class Datas
                     {
                         return false;
                     }
-                    
+
                     // jeżeli obiekty pod tym samym kluczem nie są równe to false
                     if (!equals(value, dict2Value))
                     {
                         return false;
                     }
                 }
-                
+
                 return true;
             default:
                 throw new RuntimeException("Unknown type " + d1.getDataType().toString());

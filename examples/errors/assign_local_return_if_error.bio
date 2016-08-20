@@ -1,0 +1,11 @@
+def foo(par1, par2)
+   ASSIGN_LOCAL_RETURN_IF_ERROR(sum, ADD(par1, par2))
+   ASSIGN_LOCAL_RETURN_IF_ERROR(sum, MUL(sum, 2))
+   PRINT("control print")
+   RETURN(sum)
+end
+
+def onSTART()
+   PRINTLN(foo(10, 20))
+   PRINTLN(foo(10, "20"))
+end

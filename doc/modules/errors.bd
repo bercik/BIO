@@ -42,3 +42,38 @@
 !return (int) 
 !error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
 
+!name ASSERTS_ON
+!desc Turns on assertions checking in your program. By default assertions checking is turned on.
+!return (none) 
+
+!name ASSERTS_OFF
+!desc Turns off assertions checking in your program. By default assertions checking is turned on.
+!return (none) 
+
+!name ASSERT_TRUE
+!desc Inserts debugging assertion into a program. If assertions checking is turn on checks if given bool <i>val</i> is true, if not prints message and exits program.
+!param val (bool) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool
+
+!name ASSERT_FALSE
+!desc Inserts debugging assertion into a program. If assertions checking is turn on checks if given bool <i>val</i> is false, if not prints message and exits program.
+!param val (bool) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool
+
+!name ASSERT_EQ
+!desc Inserts debugging assertion into a program. If assertions checking is turn on checks if given value <i>expected</i> is equals to <i>actual</i> using EQ function. If not prints message and exits program. <b>Note:</b> You can't assert that two errors are equals using this function. To compare two errors compare one of their field like message or object.
+!param expected (all except error) 
+!param actual (all except error) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>expected</i> or <i>actual</i> is error
+
+!name ASSIGN_LOCAL_RETURN_IF_ERROR
+!desc Assigns value <i>val</i> to local variable with identifier <i>id</i>. If <i>val</i> is error than call RETURN function with it as parameter.
+!param identifier (id) 
+!param val (all) 
+!repeat identifier (id) 
+!repeat val (all) 
+!return (none) 
+

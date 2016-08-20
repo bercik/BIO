@@ -305,7 +305,8 @@
                   <ul>
                                           <li><a href="#NEQ_funparams">Parameters</a></li>
                                                                <li><a href="#NEQ_funreturns">Returns</a></li>
-                                                            </ul>
+                                                               <li><a href="#NEQ_funerrors">Errors</a></li>
+                                       </ul>
                </li>
                               <li>
                   <a class="function" href="#IS_IN_RANGE_fun">IS_IN_RANGE</a>
@@ -427,6 +428,49 @@
                                                                <li><a href="#GET_ERROR_CH_funreturns">Returns</a></li>
                                                                <li><a href="#GET_ERROR_CH_funerrors">Errors</a></li>
                                        </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSERTS_ON_fun">ASSERTS_ON</a>
+                  <ul>
+                                                               <li><a href="#ASSERTS_ON_funreturns">Returns</a></li>
+                                                            </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSERTS_OFF_fun">ASSERTS_OFF</a>
+                  <ul>
+                                                               <li><a href="#ASSERTS_OFF_funreturns">Returns</a></li>
+                                                            </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSERT_TRUE_fun">ASSERT_TRUE</a>
+                  <ul>
+                                          <li><a href="#ASSERT_TRUE_funparams">Parameters</a></li>
+                                                               <li><a href="#ASSERT_TRUE_funreturns">Returns</a></li>
+                                                               <li><a href="#ASSERT_TRUE_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSERT_FALSE_fun">ASSERT_FALSE</a>
+                  <ul>
+                                          <li><a href="#ASSERT_FALSE_funparams">Parameters</a></li>
+                                                               <li><a href="#ASSERT_FALSE_funreturns">Returns</a></li>
+                                                               <li><a href="#ASSERT_FALSE_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSERT_EQ_fun">ASSERT_EQ</a>
+                  <ul>
+                                          <li><a href="#ASSERT_EQ_funparams">Parameters</a></li>
+                                                               <li><a href="#ASSERT_EQ_funreturns">Returns</a></li>
+                                                               <li><a href="#ASSERT_EQ_funerrors">Errors</a></li>
+                                       </ul>
+               </li>
+                              <li>
+                  <a class="function" href="#ASSIGN_LOCAL_RETURN_IF_ERROR_fun">ASSIGN_LOCAL_RETURN_IF_ERROR</a>
+                  <ul>
+                                          <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funparams">Parameters</a></li>
+                                                               <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funreturns">Returns</a></li>
+                                                            </ul>
                </li>
                            </ul>
          </li>
@@ -2102,8 +2146,8 @@
                               <section class="parameters" id="NEQ_funparams">
                   <h5>Parameters</h5>
                   <dl>
-                                          <dt><i>a</i> (<u>all</u>)</dt>
-                                                               <dt><i>b</i> (<u>all</u>)</dt>
+                                          <dt><i>a</i> (<u>all except error</u>)</dt>
+                                                               <dt><i>b</i> (<u>all except error</u>)</dt>
                                                             </dl>
                </section>
                
@@ -2115,6 +2159,13 @@
                                        </dl>
                </section>
                
+                              <section class="errors" id="NEQ_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If at least one passed value is error</dd>
+                                       </dl>
+                                 </section>
                
             </article>
                         <article class="function sub-block" id="IS_IN_RANGE_fun">
@@ -2571,6 +2622,155 @@
                                              <dd>If <i>err</i> is not error</dd>
                                        </dl>
                                  </section>
+               
+            </article>
+                        <article class="function sub-block" id="ASSERTS_ON_fun">
+
+               <header>
+                  <h4>ASSERTS_ON ()</h4>
+                  <p class="description">Turns on assertions checking in your program. By default assertions checking is turned on.</p>
+               </header>
+
+               
+                              <section class="returns" id="ASSERTS_ON_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
+               
+            </article>
+                        <article class="function sub-block" id="ASSERTS_OFF_fun">
+
+               <header>
+                  <h4>ASSERTS_OFF ()</h4>
+                  <p class="description">Turns off assertions checking in your program. By default assertions checking is turned on.</p>
+               </header>
+
+               
+                              <section class="returns" id="ASSERTS_OFF_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
+               
+            </article>
+                        <article class="function sub-block" id="ASSERT_TRUE_fun">
+
+               <header>
+                  <h4>ASSERT_TRUE (val)</h4>
+                  <p class="description">Inserts debugging assertion into a program. If assertions checking is turn on checks if given bool <i>val</i> is true, if not prints message and exits program.</p>
+               </header>
+
+                              <section class="parameters" id="ASSERT_TRUE_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>val</i> (<u>bool</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="ASSERT_TRUE_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="ASSERT_TRUE_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>val</i> is not bool</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="ASSERT_FALSE_fun">
+
+               <header>
+                  <h4>ASSERT_FALSE (val)</h4>
+                  <p class="description">Inserts debugging assertion into a program. If assertions checking is turn on checks if given bool <i>val</i> is false, if not prints message and exits program.</p>
+               </header>
+
+                              <section class="parameters" id="ASSERT_FALSE_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>val</i> (<u>bool</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="ASSERT_FALSE_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="ASSERT_FALSE_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>val</i> is not bool</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="ASSERT_EQ_fun">
+
+               <header>
+                  <h4>ASSERT_EQ (expected, actual)</h4>
+                  <p class="description">Inserts debugging assertion into a program. If assertions checking is turn on checks if given value <i>expected</i> is equals to <i>actual</i> using EQ function. If not prints message and exits program. <b>Note:</b> You can't assert that two errors are equals using this function. To compare two errors compare one of their field like message or object.</p>
+               </header>
+
+                              <section class="parameters" id="ASSERT_EQ_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>expected</i> (<u>all except error</u>)</dt>
+                                                               <dt><i>actual</i> (<u>all except error</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="ASSERT_EQ_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
+                              <section class="errors" id="ASSERT_EQ_funerrors">
+                  <h5>Errors</h5>
+                                    <dl>
+                     <dt>BAD_PARAMETER_TYPE</dt>
+                                             <dd>If <i>expected</i> or <i>actual</i> is error</dd>
+                                       </dl>
+                                 </section>
+               
+            </article>
+                        <article class="function sub-block" id="ASSIGN_LOCAL_RETURN_IF_ERROR_fun">
+
+               <header>
+                  <h4>ASSIGN_LOCAL_RETURN_IF_ERROR (identifier, val, &ltidentifier, val&gt*)</h4>
+                  <p class="description">Assigns value <i>val</i> to local variable with identifier <i>id</i>. If <i>val</i> is error than call RETURN function with it as parameter.</p>
+               </header>
+
+                              <section class="parameters" id="ASSIGN_LOCAL_RETURN_IF_ERROR_funparams">
+                  <h5>Parameters</h5>
+                  <dl>
+                                          <dt><i>identifier</i> (<u>id</u>)</dt>
+                                                               <dt><i>val</i> (<u>all</u>)</dt>
+                                                            </dl>
+               </section>
+               
+                              <section class="returns" id="ASSIGN_LOCAL_RETURN_IF_ERROR_funreturns">
+                  <h5>Returns</h5>
+                  <dl>
+                     <dt>(<u>none</u>)</dt>
+                                       </dl>
+               </section>
+               
                
             </article>
                      </section>

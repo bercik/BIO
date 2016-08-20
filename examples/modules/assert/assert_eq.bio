@@ -1,0 +1,6 @@
+def onSTART()
+   PRINTLN("ASSERT_EQ")
+   ASSERT_EQ(CREATE_TUPLE(1, 2, 3), RANGE(1, 3))
+   ASSERT_EQ(CREATE_TUPLE(3, 2, 1), RANGE(1, 3))
+   PRINTLN("control print")
+end

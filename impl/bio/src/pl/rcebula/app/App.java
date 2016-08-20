@@ -38,6 +38,7 @@ public class App
     {
         try
         {
+            // TODELETE
             // init logger
             initLogger();
 

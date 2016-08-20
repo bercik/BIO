@@ -1,0 +1,6 @@
+def onSTART()
+   PRINTLN("ASSERT_FALSE")
+   ASSERT_FALSE(EQ(10, 20))
+   ASSERT_FALSE(EQ(10, 10))
+   PRINTLN("control print")
+end

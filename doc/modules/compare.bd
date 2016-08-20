@@ -39,8 +39,9 @@
 
 !name NEQ
 !desc Compare if element <i>a</i> isn't equals element <i>b</i>. It uses EQ function internally and just negate it result. Check EQ function for details 
-!param a (all) 
-!param b (all) 
+!param a (all except error) 
+!param b (all except error) 
+!error (BAD_PARAMETER_TYPE) If at least one passed value is error
 !return (bool) true if passed values aren't equals, otherwise false
 
 !name IS_IN_RANGE

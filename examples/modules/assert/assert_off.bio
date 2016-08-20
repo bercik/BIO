@@ -1,0 +1,5 @@
+def onSTART()
+   ASSERTS_OFF()
+   ASSERT_TRUE(false)
+   PRINTLN("control print")
+end

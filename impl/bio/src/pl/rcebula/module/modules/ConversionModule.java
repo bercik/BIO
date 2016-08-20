@@ -16,6 +16,7 @@ import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
+import pl.rcebula.module.utils.Datas;
 import pl.rcebula.module.utils.error_codes.ErrorConstruct;
 import pl.rcebula.module.utils.type_checker.TypeChecker;
 
@@ -211,92 +212,7 @@ public class ConversionModule extends Module
             // parametr: <all>
             Data par = params.get(0);
             
-            return Data.createStringData(toStr(par, false));
-        }
-        
-        // w przyszłości przenieść do metody TO_STR w module conversion
-        private String toStr(Data data, boolean inCollection)
-        {
-            String str = "";
-            
-            switch (data.getDataType())
-            {
-                case ARRAY:
-                    Data[] arr = (Data[])data.getValue();
-                    str += "[ ";
-                    for (Data d : arr)
-                    {
-                        str += toStr(d, true) + ", ";
-                    }
-                    if (arr.length > 0)
-                    {
-                        str = str.substring(0, str.length() - 2);
-                    }
-                    str += " ]";
-                    break;
-                case BOOL:
-                    Boolean b = (boolean)data.getValue();
-                    str += b.toString();
-                    break;
-                case DICT:
-                    HashMap<String, Data> dict = (HashMap<String, Data>)data.getValue();
-                    str += "{ ";
-                    for (Map.Entry<String, Data> d : dict.entrySet())
-                    {
-                        str += d.getKey() + ": " + toStr(d.getValue(), true) + ", ";
-                    }
-                    if (dict.size() > 0)
-                    {
-                        str = str.substring(0, str.length() - 2);
-                    }
-                    str += " }";
-                    break;
-                case ERROR:
-                    MyError myError = (MyError)data.getValue();
-                    str += myError.toString();
-                    break;
-                case FLOAT:
-                    Float f = (float)data.getValue();
-                    str += f.toString();
-                    break;
-                case INT:
-                    Integer i = (int)data.getValue();
-                    str += i.toString();
-                    break;
-                case NONE:
-                    str += "none";
-                    break;
-                case STRING:
-                    String s = (String)data.getValue();
-                    if (inCollection)
-                    {
-                        str += "\"" + s + "\"";
-                    }
-                    else
-                    {
-                        str += s;
-                    }
-                    break;
-                case TUPLE:
-                    Tuple tuple = (Tuple)data.getValue();
-                    str += "( ";
-                    for (i = 0; i < tuple.size(); ++i)
-                    {
-                        Data d = tuple.get(i);
-                        str += toStr(d, true);
-                        if (i != tuple.size() - 1)
-                        {
-                            str += ", ";
-                        }
-                    }
-                    str += " )";
-                    break;
-                default:
-                    String message = "Unknown type " + data.getDataType().toString() + " in method toSTR()";
-                    throw new RuntimeException(message);
-            }
-            
-            return str;
+            return Data.createStringData(Datas.toStr(par, false));
         }
     }
     
