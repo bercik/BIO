@@ -122,6 +122,32 @@ tr:hover > * {
   overflow: auto;
 }
 
+.block > header,
+.sub-block > header {
+  cursor: pointer;
+}
+
+.block > section,
+.sub-block > section {
+  display: none;
+}
+
+.block > header > h2:before,
+.sub-block > header > h3:before {
+  @include icon;
+  @extend .icon-open-closed:before;
+}
+
+.block.showed > section,
+.sub-block.showed > section {
+  display: block;
+}
+
+.block.showed > header > h2:before,
+.sub-block.showed > header > h3:before {
+  @extend .icon-list-openned:before;
+}
+
 .block > *:last-child,
 .sub-block > *:last-child {
   border-bottom: none;
@@ -130,7 +156,7 @@ tr:hover > * {
 body > nav {
 
   padding: 1em;
-  min-width: 250px;
+  min-width: 300px;
   background: $color-bkg-elem;
 
   ul {
@@ -140,18 +166,37 @@ body > nav {
     border-left: dotted 2px $color-elem;
   }
 
+  li.has-sub > a:before {
+    @include icon;
+    @extend .icon-open-closed:before;
+  }
+
+  li.has-sub.showed > a:before {
+    @extend .icon-list-openned:before;
+  }
+
+  li.has-sub > ul {
+    display: none;
+  }
+
+  li.has-sub.showed > ul {
+    display: block;
+  }
+
   a {
     text-decoration: none;
     color: $color-normal;
     display: block;
     padding: 0.2em;
-    transition: text-indent 0.25s;
+    transition: left 0.25s;
+    left: 0;
+    position: relative;
   }
 
   a:hover,
   a.current {
     background: $color-accent-lighter;
-    text-indent: 0.35em;
+    left: 0.25em;
   }
 
   .function {

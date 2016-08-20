@@ -15,8 +15,8 @@
 
 <nav>
     <ul>
-        <li>
-            <a href="#basic-info">Basic informations</a>
+        <li class="has-sub">
+            <a href="javascript:void(0)">Basic informations</a>
             <ul>
                 <li><a href="#basic-info-data-types">Data types</a></li>
                 <li><a href="#basic-info-errors">Errors</a></li>
@@ -24,13 +24,14 @@
             </ul>
         </li>
         {% for m in modules %}
-        <li>
-            <a href="#{{m.mod_name}}">{{m.mod_name}}</a>
+        <li class="has-sub">
+            <a href="javascript:void(0)">{{m.mod_name}}</a>
             <ul>
                 {% for f in m.functions %}
-                <li>
-                    <a class="function" href="#{{f.name}}_fun">{{f.name}}</a>
+                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">{{f.name}}</a>
                     <ul>
+                        <li><a href="#{{f.name}}_fun">Description</a></li>
                         {% if f.params %}
                         <li><a href="#{{f.name}}_funparams">Parameters</a></li>
                         {% endif %}
@@ -225,7 +226,7 @@
             <article class="function sub-block" id="{{f.name}}_fun">
 
                 <header>
-                    <h4>{{f.name}} ({{f.params_header}})</h4>
+                    <h3>{{f.name}} ({{f.params_header}})</h3>
                     <p class="description">{{f.desc}}</p>
                 </header>
 

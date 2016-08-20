@@ -50,11 +50,13 @@
   content: '\e802'; }
 
 /* '' */
-.icon-open-closed:before {
+.icon-open-closed:before, .block > header > h2:before,
+.sub-block > header > h3:before, body > nav li.has-sub > a:before {
   content: '\e803'; }
 
 /* '' */
-.icon-list-openned:before {
+.icon-list-openned:before, .block.showed > header > h2:before,
+.sub-block.showed > header > h3:before, body > nav li.has-sub.showed > a:before {
   content: '\e804'; }
 
 /* '' */
@@ -159,29 +161,101 @@ tr:hover > * {
   border-bottom: solid 1px #5CCCEB;
   overflow: auto; }
 
+.block > header,
+.sub-block > header {
+  cursor: pointer; }
+
+.block > section,
+.sub-block > section {
+  display: none; }
+
+.block > header > h2:before,
+.sub-block > header > h3:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: 0.75em;
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  /* margin-left: .2em; */
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
+
+.block.showed > section,
+.sub-block.showed > section {
+  display: block; }
+
 .block > *:last-child,
 .sub-block > *:last-child {
   border-bottom: none; }
 
 body > nav {
   padding: 1em;
-  min-width: 250px;
+  min-width: 300px;
   background: #ffffff; }
   body > nav ul {
     list-style: none;
     margin: 0;
     padding: 0 0 0 1em;
     border-left: dotted 2px #0062ae; }
+  body > nav li.has-sub > a:before {
+    font-family: "icons";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: 0.75em;
+    text-align: center;
+    /* opacity: .8; */
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    /* margin-left: .2em; */
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
+  body > nav li.has-sub > ul {
+    display: none; }
+  body > nav li.has-sub.showed > ul {
+    display: block; }
   body > nav a {
     text-decoration: none;
     color: #1F1F1F;
     display: block;
     padding: 0.2em;
-    transition: text-indent 0.25s; }
+    transition: left 0.25s;
+    left: 0;
+    position: relative; }
   body > nav a:hover,
   body > nav a.current {
     background: #b5f7ff;
-    text-indent: 0.35em; }
+    left: 0.25em; }
   body > nav .function {
     font-weight: bold;
     color: #0062ae; }
