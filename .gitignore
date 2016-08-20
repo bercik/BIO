@@ -7,9 +7,12 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 private/
+.idea/
 
 *.swp
 *.cbio
+*.pyc
+*.css.map
 
 installer/res
 installer/bio_installer.jar

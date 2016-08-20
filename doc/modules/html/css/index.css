@@ -66,6 +66,11 @@
   content: '\f0cb'; }
 
 /* '' */
+*,
+*:before,
+*:after {
+  box-sizing: border-box; }
+
 html {
   font-family: 'Quicksand', sans-serif;
   font-size: 18px;
@@ -114,33 +119,49 @@ h5 {
 dt {
   color: #0062ae; }
 
-dt:after + dd {
-  content: "";
-  display: block; }
+table {
+  border-collapse: collapse; }
+
+tr > * {
+  border-bottom: solid 1px #5CCCEB;
+  padding: 0.25em 0.5em; }
+
+tr > *:nth-child(even) {
+  background: #f4f4f4; }
+
+tr:hover > * {
+  background: #b5f7ff; }
+
+.scrollable {
+  overflow-x: auto; }
 
 .block {
   background: #ffffff;
   margin: 2em 1em;
-  border-top: solid 3px #5CCCEB;
-  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 6px; }
-
-.block > header {
-  background: #efefef;
-  overflow: hidden; }
-
-.block > * {
-  padding: 0 1em;
-  border-bottom: solid 1px #5CCCEB;
-  overflow: hidden; }
-
-.block > *:last-child {
-  border-bottom: none; }
+  border-top: solid 3px #5CCCEB; }
 
 .sub-block {
-  background: #efefef;
+  background: #f4f4f4;
   overflow: hidden;
-  padding: 0 1em;
   margin: 1em 0; }
+
+.block > header,
+.sub-block > header {
+  background: #efefef; }
+
+.block,
+.sub-block {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 6px; }
+
+.block > *,
+.sub-block > * {
+  padding: 0 1em;
+  border-bottom: solid 1px #5CCCEB;
+  overflow: auto; }
+
+.block > *:last-child,
+.sub-block > *:last-child {
+  border-bottom: none; }
 
 body > nav {
   padding: 1em;
