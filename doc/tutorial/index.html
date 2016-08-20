@@ -1,0 +1,84 @@
+<html>
+<head>
+   <link rel="stylesheet" type="text/css" href="index.css">
+   <title>BIO tutorial</title>
+</head>
+<body>
+<h1>BIO tutorial</h1>
+<p>Welcome to BIO language tutorial. It consist of:</p>
+<ol>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#first_program">First program</a></li>
+<li><a href="#functions">Defining functions</a></li>
+</ol>
+<a name="prerequisites"></a>
+<h2>1. Prerequisites</h2>
+<p>BIO compiler and interpreter works with java 1.8. You can download it <a href="https://www.java.com/pl/download/">here</a>. </p>
+<a name="installation"></a>
+<h2>2. Installation</h2>
+<p>Download installer from <a href="https://github.com/bercik/BIO/releases/tag/0.1">here</a>.</p>
+<h3>Linux</h3>
+<p>Run installer as root: <code>sudo java -jar bio_installer.jar</code></p>
+<p>It will carry you with the instalation process. After that you can happily use <code>bio</code> and <code>bioc</code> commands. If you selected vim_plugin during installation and you have got vim installed you can also write programs with nice syntax coloring. To turn it on open vim and type <code>:syntax on</code>. You can also download all my vim configuration from <a href="https://github.com/bercik/dotfiles">here</a> which contains some useful plugins like parenthesis matching or auto comments and .vimrc config file.</p>
+<h3>Windows</h3>
+<p>Enter command line by typing cmd in search panel.</p>
+<p>Run installer: <code>java -jar bio_installer.jar</code></p>
+<p>It will carry you with the instalation process. After that go to the folder when you install BIO (still in command line) and enter bin folder.</p>
+<p>To run compiler and interpreter you need to type <code>java -jar bioc.jar</code> and <code>java -jar bio.jar</code> inside bin directory. To change this behavior you can add bin directory to your PATH enviromental variable and create some batch scripts to easier run compiler and interpreter.</p>
+<h3>Mac</h3>
+<p>Not supported yet.</p>
+<h3>Compiling from sources</h3>
+<p>If you want you can compile bio and bioc on your own. To do that you will need jdk 1.8 and netbeans. Than download source code from github, open /impl/bio_shared, /impl/bio and /impl/bioc as projects in netbeans and compile them all. After that in /impl/bio/dist you will find bio.jar and in /impl/bioc/dist you will find bioc.jar. These are interpreter and compilator java programs. You can also use /impl/bio/bio and /impl/bioc/bioc scripts which helps running these programs. </p>
+<a name="first_program"></a>
+<h2>3. First Program</h2>
+<p>Now you are ready to write your first program in BIO, aren't you? So let's start with simple hello world.</p>
+<p>Create file hello_world.bio and open it in your favourite text editor. I recommend using vim with vim plugin to coloring syntax which i created.</p>
+<p>Paste this into text editor and save file:</p>
+<p><code> def onSTART() <br /> &nbsp;PRINTLN("Hello world!") <br /> end </code></p>
+<p>Now type this command: <code>bioc hello_world.bio</code></p>
+<p>It will compile given file to an intermediate form and save it as a.cbio.</p>
+<p>Now we can run our compiled file. To do so type: <code>bio a.cbio</code> and you should see string hello world! printed in console.</p>
+
+<a name="functions"></a>
+<h2>4. Defining functions</h2>
+<p>In previous chapter we write this code:</p>
+<p><code> def onSTART() <br /> &nbsp;PRINTLN("Hello world!") <br /> end </code></p>
+<p>Now I will explain it. In first line:</p>
+<p><code> def onSTART()</code></p>
+<p>We define function onSTART which takes no parameters. If function takes some parameters you write their names in brackets separated with commas like this:</p>
+<p><code>def some_function(par1, par2)</code></p>
+<p>Function onSTART is speciall function which is executed at the start of program. It can take zero or one parameter which are command line arguments:</p>
+<p><code>def onSTART(args)</code></p>
+<p>Function name must start with upper or lower case letter or underline and than you can use letter, underline and digits. You can use all UTF-8 characters in function name. It can be expressed as this regular expression: [a-zA-Z_][a-zA-Z_0-9]* where a-z,A-Z represents <b>any</b> letter. Same rules applies to parameters and variables name.</p>
+<p>If you want to return something from function you need to call RETURN function which takes one parameter, for example:</p>
+<p><code>RETURN(10)</code></p>
+<p>This will return int 10.</p>
+<p>Important thing is that if you don't specify return value than function will return none by default.</p>
+
+<br />
+<p>In second line we have:</p>
+<p><code>PRINTLN("Hello world!")</code></p>
+<p>This is function body, that is code that are executed when function is called</p>
+<p>Every function needs to have got at least one function call inside their body. But there can be more, and there needs to be separated by whiteline character (typically newline, but can be space or tabulator). So you can do something like this:</p>
+<p><code>def onSTART()<br/>&nbsp;PRINTLN("Hello")<br/>&nbsp;PRINTLN("world!")<br/>end</code></p>
+<p>Or this:</p>
+<p><code>def onSTART() PRINTLN("Hello") PRINTLN("world!") end</code></p>
+<p>Which are equivalent.</p>
+<p>Back to our code:</p>
+<p><code>PRINTLN("Hello world!")</code></p>
+<p>Here we are calling built in function <code>PRINTLN</code> with one parameter which are string <code>"Hello world!"</code>. You can find information about this and other built in functions in <a href="http://rcebula.pl/static/bio/doc">BIO doc</a>.</p>
+<p>One important thing about every function is that it must return some value. In this case we can read in documentation that <code>PRINTLN</code> function returns: "printed string".</p>
+<p>Also in documentation if you look at <code>PRINTLN</code> function accepted parameters you will see: <code>"(&ltval&gt*)"</code>. This means, that this function can take cycling parameters, meaning zero or more <code>val</code>. So for example you can call it like this:</p>
+<p><code>PRINTLN()</code></p>
+<p>And it will just print new line on screen, or:</p>
+<p><code>PRINTLN("a", "b", "c")</code></p>
+<p>And it will print:</p>
+<p><code>a<br/>b<br/>c<br/></code></p>
+
+<br/>
+<p>Our last line:</p>
+<p><code>end</code></p>
+<p>This is just the end of our function. Every function needs to have this word on the end.</p>
+</body>
+</html>
