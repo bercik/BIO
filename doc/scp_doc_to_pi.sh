@@ -1,2 +1,2 @@
-scp -r ./tutorial/ $PI:~/website/app/static/bio/
+scp ./tutorial/index.* $PI:~/website/app/static/bio/tutorial/
 scp -r ./modules/html/. $PI:~/website/app/static/bio/doc

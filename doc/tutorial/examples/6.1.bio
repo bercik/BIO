@@ -1,0 +1,4 @@
+def onSTART()
+ ASSIGN_LOCAL(number, TO_INT(INPUT("Type number: ")))
+ IF(EQ(MOD(number, 2), 0), PRINTLN("even"), PRINTLN("odd"))
+end

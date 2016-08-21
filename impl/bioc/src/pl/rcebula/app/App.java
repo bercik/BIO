@@ -133,6 +133,14 @@ public class App
             new CodeOptimizer(ic, statistic, preprocessor.getFiles());
             timeProfiler.stop();
             statistic.setLinesAfterOptimization(ic.numberOfLines());
+            
+            if (opts.isVerbose())
+            {
+                System.out.println("");
+                System.out.println("AFTER OPTIMIZATIONS");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringWithLinesNumber());
+            }
 
             // add informations about files to intermediate code
             timeProfiler.start("AddInformationsAboutFiles");
@@ -143,14 +151,6 @@ public class App
             timeProfiler.start("AddInformationsAboutModules");
             new AddInformationsAboutModules(ic, bfp.getModulesName());
             timeProfiler.stop();
-
-            if (opts.isVerbose())
-            {
-                System.out.println("");
-                System.out.println("AFTER OPTIMIZATIONS");
-                System.out.println("-------------------------");
-                System.out.println(ic.toStringWithLinesNumber());
-            }
 
             if (opts.isStatistics() || opts.isVerbose())
             {

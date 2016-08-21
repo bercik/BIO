@@ -105,8 +105,16 @@ public class ErrorConstruct
     public static Data CONVERSION_ERROR(String funName, ErrorInfo ei, Interpreter interpreter, 
             Data actual, DataType toWhat)
     {
-        String message = "can't convert " + actual.getDataType().toString() + " " + actual.getValue().toString()
-                + " to " + toWhat.toString();
+        String message = "can't convert " + actual.getDataType().toString() + " ";
+        if (actual.getDataType().equals(DataType.STRING))
+        {
+            message += "\"" + actual.getValue().toString() + "\"";
+        }
+        else
+        {
+            message += actual.getValue().toString();
+        }
+         message += " to " + toWhat.toString();
         
         MyError error = new MyError(funName, message, ErrorCodes.CONVERSION_ERROR.getCode(), null, 
                 ei, interpreter);

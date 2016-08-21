@@ -1,0 +1,8 @@
+def foo()
+ ASSIGN_GLOBAL(x, 10)
+end
+
+def onSTART()
+ foo()
+ PRINTLN(GET_GLOBAL(x))
+end

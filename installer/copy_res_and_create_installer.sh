@@ -1,6 +1,5 @@
 mkdir -p ./res/doc
-cp ../doc/modules/html/index.html ./res/doc/
-cp ../doc/modules/html/index.css ./res/doc/
+cp -r ../doc/modules/html/. ./res/doc/
 
 rsync -avm --include='*.bio' -f 'hide,! */' ../examples ./res
 

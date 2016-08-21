@@ -1,0 +1,9 @@
+def onSTART()
+   ASSIGN_LOCAL(number, TO_INT(INPUT("Type number: ")))
+   IF
+   (
+      IS_ERROR(number), 
+      PRINTLN("That's not a number!"),
+      IF(EQ(MOD(number, 2), 0), PRINTLN("even"), PRINTLN("odd"))
+   )
+end

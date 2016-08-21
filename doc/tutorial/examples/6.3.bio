@@ -1,0 +1,15 @@
+def onSTART()
+   FOR
+   (
+      ASSIGN_LOCAL(i, 1),
+      LS(i, 100),
+      CALL
+      (
+         IF(EQ(MOD(i, 15), 0), CALL(PRINT("Fizz Buzz,"), CONTINUE()), DN()),
+         IF(EQ(MOD(i, 3), 0), CALL(PRINT("Fizz,"), CONTINUE()), DN()),
+         IF(EQ(MOD(i, 5), 0), CALL(PRINT("Buzz,"), CONTINUE()), DN()),
+         PRINT(ADD(TO_STRING(i), ","))
+      ),
+      INC(i)
+   )
+end

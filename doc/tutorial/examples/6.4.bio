@@ -1,0 +1,4 @@
+def onSTART()
+ ASSIGN_LOCAL(i, 0)
+ FOR(DN(), LS(i, 10), CALL(PRINTLN(i), INC(i)), DN())
+end

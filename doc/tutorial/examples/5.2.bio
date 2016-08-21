@@ -1,0 +1,4 @@
+def onSTART()
+ IF(true, ASSIGN_LOCAL(flag, true), ASSIGN_LOCAL(flag, false))
+ PRINTLN(flag)
+end
