@@ -822,6 +822,57 @@
                             </ul>
         </li>
                 <li class="has-sub">
+            <a href="javascript:void(0)">special</a>
+            <ul>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">IF</a>
+                    <ul>
+                        <li><a href="#IF_fun">Description</a></li>
+                                                <li><a href="#IF_funparams">Parameters</a></li>
+                                                                        <li><a href="#IF_funreturns">Returns</a></li>
+                                                                        <li><a href="#IF_funerrors">Errors</a></li>
+                                            </ul>
+                </li>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">FOR</a>
+                    <ul>
+                        <li><a href="#FOR_fun">Description</a></li>
+                                                <li><a href="#FOR_funparams">Parameters</a></li>
+                                                                                                <li><a href="#FOR_funerrors">Errors</a></li>
+                                            </ul>
+                </li>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">BREAK</a>
+                    <ul>
+                        <li><a href="#BREAK_fun">Description</a></li>
+                                                                        <li><a href="#BREAK_funreturns">Returns</a></li>
+                                                                    </ul>
+                </li>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">CONTINUE</a>
+                    <ul>
+                        <li><a href="#CONTINUE_fun">Description</a></li>
+                                                                        <li><a href="#CONTINUE_funreturns">Returns</a></li>
+                                                                    </ul>
+                </li>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">CALL</a>
+                    <ul>
+                        <li><a href="#CALL_fun">Description</a></li>
+                                                <li><a href="#CALL_funparams">Parameters</a></li>
+                                                                        <li><a href="#CALL_funreturns">Returns</a></li>
+                                                                    </ul>
+                </li>
+                                <li class="has-sub">
+                    <a class="function" href="javascript:void(0)">DN</a>
+                    <ul>
+                        <li><a href="#DN_fun">Description</a></li>
+                                                                        <li><a href="#DN_funreturns">Returns</a></li>
+                                                                    </ul>
+                </li>
+                            </ul>
+        </li>
+                <li class="has-sub">
             <a href="javascript:void(0)">strings</a>
             <ul>
                                 <li class="has-sub">
@@ -4060,6 +4111,159 @@
                         <dd>If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function</dd>
                     </dl>
                                     </section>
+                
+            </article>
+                    </section>
+    </section>
+        <section class="module block" id="special">
+        <header>
+            <h2>special</h2>
+        </header>
+        <section class="functions">
+                        <article class="function sub-block" id="IF_fun">
+
+                <header>
+                    <h3>IF (cond, call_if_true, call_if_false)</h3>
+                    <p class="description">Conditional statement which perform diffrent functions execution depending on given bool value <i>cond</i></p>
+                </header>
+
+                                <section class="parameters" id="IF_funparams">
+                    <h5>Parameters</h5>
+                    <dl>
+                                                <dt><i>cond</i> (<u>bool</u>)</dt>
+                        <dd></dd>
+                                                <dt><i>call_if_true</i> (<u>call</u>)</dt>
+                        <dd></dd>
+                                                <dt><i>call_if_false</i> (<u>call</u>)</dt>
+                        <dd></dd>
+                                            </dl>
+                </section>
+                
+                                <section class="returns" id="IF_funreturns">
+                    <h5>Returns</h5>
+                    <dl>
+                        <dt>(<u>none</u>)</dt>
+                        <dd></dd>
+                    </dl>
+                </section>
+                
+                                <section class="errors" id="IF_funerrors">
+                    <h5>Errors</h5>
+                                        <dl>
+                        <dt>BAD_PARAMETER_TYPE</dt>
+                        <dd>If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.</dd>
+                    </dl>
+                                    </section>
+                
+            </article>
+                        <article class="function sub-block" id="FOR_fun">
+
+                <header>
+                    <h3>FOR (call_init, cond, call_statement, call_increment)</h3>
+                    <p class="description">Control flow statement for specifying iteration, which allows code to be executed repeatedly. You can use BREAK() and CONTINUE() functions inside for better control of flow</p>
+                </header>
+
+                                <section class="parameters" id="FOR_funparams">
+                    <h5>Parameters</h5>
+                    <dl>
+                                                <dt><i>call_init</i> (<u>call</u>)</dt>
+                        <dd>function called at start of FOR loop</dd>
+                                                <dt><i>cond</i> (<u>bool</u>)</dt>
+                        <dd>condition value, if false FOR loop breaks</dd>
+                                                <dt><i>call_statement</i> (<u>call</u>)</dt>
+                        <dd>function called at every iteration, can be skipped by calling CONTINUE() function</dd>
+                                                <dt><i>call_increment</i> (<u>call</u>)</dt>
+                        <dd>function called at every iteration, can't be skipped by calling CONTINUE() function</dd>
+                                            </dl>
+                </section>
+                
+                
+                                <section class="errors" id="FOR_funerrors">
+                    <h5>Errors</h5>
+                                        <dl>
+                        <dt>BAD_PARAMETER_TYPE</dt>
+                        <dd>If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.</dd>
+                    </dl>
+                                    </section>
+                
+            </article>
+                        <article class="function sub-block" id="BREAK_fun">
+
+                <header>
+                    <h3>BREAK ()</h3>
+                    <p class="description">Breaks current FOR loop</p>
+                </header>
+
+                
+                                <section class="returns" id="BREAK_funreturns">
+                    <h5>Returns</h5>
+                    <dl>
+                        <dt>(<u>none</u>)</dt>
+                        <dd></dd>
+                    </dl>
+                </section>
+                
+                
+            </article>
+                        <article class="function sub-block" id="CONTINUE_fun">
+
+                <header>
+                    <h3>CONTINUE ()</h3>
+                    <p class="description">Continues current FOR loop, meaning that it goes straight to call_increment function and executes it</p>
+                </header>
+
+                
+                                <section class="returns" id="CONTINUE_funreturns">
+                    <h5>Returns</h5>
+                    <dl>
+                        <dt>(<u>none</u>)</dt>
+                        <dd></dd>
+                    </dl>
+                </section>
+                
+                
+            </article>
+                        <article class="function sub-block" id="CALL_fun">
+
+                <header>
+                    <h3>CALL (fun, &ltfun&gt*)</h3>
+                    <p class="description">Calls every function passed to it, returns what last passed function returned</p>
+                </header>
+
+                                <section class="parameters" id="CALL_funparams">
+                    <h5>Parameters</h5>
+                    <dl>
+                                                <dt><i>fun</i> (<u>call</u>)</dt>
+                        <dd></dd>
+                                            </dl>
+                </section>
+                
+                                <section class="returns" id="CALL_funreturns">
+                    <h5>Returns</h5>
+                    <dl>
+                        <dt>(<u>all</u>)</dt>
+                        <dd>What last passed <i>fun</i> returned</dd>
+                    </dl>
+                </section>
+                
+                
+            </article>
+                        <article class="function sub-block" id="DN_fun">
+
+                <header>
+                    <h3>DN ()</h3>
+                    <p class="description">Function that literally do nothing. Can be used in places when you need to pass function but don't want to do that</p>
+                </header>
+
+                
+                                <section class="returns" id="DN_funreturns">
+                    <h5>Returns</h5>
+                    <dl>
+                        <dt>(<u>none</u>)</dt>
+                        <dd></dd>
+                    </dl>
+                </section>
+                
                 
             </article>
                     </section>

@@ -1,0 +1,34 @@
+!name IF
+!desc Conditional statement which perform diffrent functions execution depending on given bool value <i>cond</i>
+!param cond (bool) 
+!param call_if_true (call) 
+!param call_if_false (call) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.
+
+!name FOR
+!desc Control flow statement for specifying iteration, which allows code to be executed repeatedly. You can use BREAK() and CONTINUE() functions inside for better control of flow
+!param call_init (call) function called at start of FOR loop
+!param cond (bool) condition value, if false FOR loop breaks
+!param call_statement (call) function called at every iteration, can be skipped by calling CONTINUE() function
+!param call_increment (call) function called at every iteration, can't be skipped by calling CONTINUE() function
+!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.
+
+!name BREAK
+!desc Breaks current FOR loop
+!return (none) 
+
+!name CONTINUE
+!desc Continues current FOR loop, meaning that it goes straight to call_increment function and executes it
+!return (none) 
+
+!name CALL
+!desc Calls every function passed to it, returns what last passed function returned
+!param fun (call) 
+!repeat fun (call) 
+!return (all) What last passed <i>fun</i> returned
+
+!name DN
+!desc Function that literally do nothing. Can be used in places when you need to pass function but don't want to do that
+!return (none) 
+
