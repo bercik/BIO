@@ -1,0 +1,21 @@
+
+def onSTART()
+   % ASSIGN_LOCAL(a, GET_GLOBAL(x))
+   % IF
+   % (
+   %    IS_ERROR(a),
+   %    PRINTLN("error", a),
+   %    PRINTLN(ADD(10, a))
+   % )
+   ATTACH_TO_EVENT(onUNHANDLED_ERROR, error_handler)
+   foo()
+end
+
+def foo()
+   ASSIGN_LOCAL_RETURN_IF_ERROR(a, 10, b, GET_GLOBAL(y))
+   PRINTLN(ADD(10, a))
+end
+
+def error_handler(err)
+   PRINTLN("error handler", err)
+end

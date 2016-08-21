@@ -1,10 +1,27 @@
-def display(text)
-   PRINT(text, "text")
-   FOR
+def fizz_buzz(i)
+   ASSIGN_LOCAL(div_three, EQ(MOD(i, 3), 0))
+   ASSIGN_LOCAL(div_five, EQ(MOD(i, 5), 0))
+
+   IF
    (
-      ASSIGN_LOCAL(i, 0, j, 0),
-      LS(i, 100),
+      AND(NOT(div_three), NOT(div_five)),
       PRINT(i),
-      INC(i)
+      DN()
    )
+
+   IF
+   (
+      div_three,
+      PRINT("Fizz"),
+      DN()
+   )
+
+   IF
+   (
+      div_five,
+      PRINT("Buzz"),
+      DN()
+   )
+
+   PRINTLN()
 end

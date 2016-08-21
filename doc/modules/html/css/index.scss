@@ -1,0 +1,278 @@
+$color-normal: #1F1F1F;
+$color-elem: #0062ae;
+$color-accent: #5CCCEB;
+$color-accent-lighter: #b5f7ff;
+$color-bkg: #dbf1ff;
+$color-bkg-elem: #ffffff;
+$color-bkg-elem-deeper: #f4f4f4;
+$color-bkg-elem-head: #efefef;
+
+@import "icons";
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  color: $color-normal;
+}
+
+body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  background: $color-bkg;
+}
+
+button {
+  border: none;
+  background: $color-accent;
+  color: $color-bkg-elem;
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  padding: 0.5em;
+}
+
+body > * {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+body > main {
+  flex-grow: 1;
+}
+
+body > main > header {
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $color-elem;
+}
+
+h5 {
+  text-transform: uppercase;
+}
+
+dt {
+  color: $color-elem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tr > * {
+  border-bottom: solid 1px $color-accent;
+  padding: 0.25em 0.5em;
+}
+
+tr > *:nth-child(even) {
+  background: $color-bkg-elem-deeper;
+}
+
+tr:hover > * {
+  background: $color-accent-lighter;
+}
+
+.scrollable {
+  overflow-x: auto;
+}
+
+.block {
+  background: $color-bkg-elem;
+  margin: 2em 1em;
+  border-top: solid 3px $color-accent;
+}
+
+.sub-block {
+  background: $color-bkg-elem-deeper;
+  overflow: hidden;
+  margin: 1em 0;
+}
+
+.block > header,
+.sub-block > header {
+  background: $color-bkg-elem-head;
+}
+
+.block,
+.sub-block {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 6px;
+}
+
+.block > *,
+.sub-block > * {
+  padding: 0 1em;
+  border-bottom: solid 1px $color-accent;
+  overflow: auto;
+}
+
+.block > header,
+.sub-block > header {
+  cursor: pointer;
+}
+
+.block > section,
+.sub-block > section {
+  display: none;
+}
+
+.block > header > h2:before,
+.sub-block > header > h3:before {
+  @include icon;
+  @extend .icon-open-closed:before;
+}
+
+.block.showed > section,
+.sub-block.showed > section {
+  display: block;
+}
+
+.block.showed > header > h2:before,
+.sub-block.showed > header > h3:before {
+  @extend .icon-list-openned:before;
+}
+
+.block > *:last-child,
+.sub-block > *:last-child {
+  border-bottom: none;
+}
+
+body > nav {
+
+  padding: 1em;
+  min-width: 300px;
+  background: $color-bkg-elem;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1em;
+    border-left: dotted 2px $color-elem;
+  }
+
+  li.has-sub > a:before {
+    @include icon;
+    @extend .icon-open-closed:before;
+  }
+
+  li.has-sub.showed > a:before {
+    @extend .icon-list-openned:before;
+  }
+
+  li.has-sub > ul {
+    display: none;
+  }
+
+  li.has-sub.showed > ul {
+    display: block;
+  }
+
+  a {
+    text-decoration: none;
+    color: $color-normal;
+    display: block;
+    padding: 0.2em;
+    transition: left 0.25s;
+    left: 0;
+    position: relative;
+  }
+
+  a:hover,
+  a.current {
+    background: $color-accent-lighter;
+    left: 0.25em;
+  }
+
+  .function {
+    font-weight: bold;
+    color: $color-elem;
+  }
+
+}
+
+body > nav > ul {
+  border: none;
+  padding: 0;
+}
+
+#menu-switcher {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  display: none;
+}
+
+
+@media screen and (max-width: 950px) {
+
+  body > * {
+    padding-top: 60px !important;
+  }
+
+  body > nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    right: 0;
+    transition: all 0.25s;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  body > nav.showed {
+    visibility: visible;
+    left: 0;
+    opacity: 1;
+  }
+
+  #menu-switcher {
+    display: block;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  .block {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+}
+
+.returns > h5:before {
+  @include icon;
+  @extend .icon-return:before;
+}
+
+.parameters > h5:before {
+  @include icon;
+  @extend .icon-parameters:before;
+}
+
+.data-types > h3:before {
+  @include icon;
+  @extend .icon-types:before;
+}
+
+.errors > h5:before {
+  @include icon;
+  @extend .icon-error:before;
+}

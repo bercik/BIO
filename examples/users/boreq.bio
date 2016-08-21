@@ -5,7 +5,7 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 0),
       LS(i, 100),
-      display(i),
+      fizz_buzz(i),
       INC(i)
    )
 end
