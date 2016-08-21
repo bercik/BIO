@@ -12,6 +12,7 @@ private/
 *.swp
 *.cbio
 *.pyc
+__pycache__/
 *.css.map
 
 installer/res
