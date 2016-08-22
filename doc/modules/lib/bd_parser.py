@@ -149,10 +149,10 @@ def parse_bd(fname):
         for i in range(0, len(f.params)):
             p = f.params[i]
             if i == f.repeatedFrom:
-                params_header += "&lt"
+                params_header += "&lt;"
             params_header += p.name
             if i == f.repeatedTo:
-                    params_header += "&gt*"
+                    params_header += "&gt;*"
             if i != len(f.params) - 1:
                 params_header += ", "
         

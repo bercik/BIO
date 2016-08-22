@@ -1,5 +1,5 @@
 !name SUBSTR
-!desc Returns a new string that is a substring of <i>str</i> in range &lt<i>start</i>, <i>end</i>)
+!desc Returns a new string that is a substring of <i>str</i> in range &lt;<i>start</i>, <i>end</i>)
 !param str (string) 
 !param start (int) 
 !param end (int) 

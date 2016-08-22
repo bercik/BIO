@@ -103,6 +103,6 @@
 !error (BAD_PARAMETER_TYPE) if <i>val</i> is not int or float
 
 !name RAND
-!desc Returns random number from range <0.0, 1.0)
-!return (float) random number from range <0.0, 1.0)
+!desc Returns random number from range &lt;0.0, 1.0)
+!return (float) random number from range &lt;0.0, 1.0)
 

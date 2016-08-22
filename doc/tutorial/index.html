@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
    <link rel="stylesheet" type="text/css" href="index.css">
    <title>BIO tutorial</title>
@@ -71,7 +72,7 @@
 <p><code>PRINTLN("Hello world!")</code></p>
 <p>Here we are calling built in function <code>PRINTLN</code> with one parameter which are string <code>"Hello world!"</code>. You can find information about this and other built in functions in <a href="http://rcebula.pl/static/bio/doc">BIO doc</a>.</p>
 <p>One important thing about every function is that it must return some value. In this case we can read in documentation that <code>PRINTLN</code> function returns: "printed string".</p>
-<p>Also in documentation if you look at <code>PRINTLN</code> function accepted parameters you will see: <code>"(&ltval&gt*)"</code>. This means, that this function can take cycling parameters, meaning zero or more <code>val</code>. So for example you can call it like this:</p>
+<p>Also in documentation if you look at <code>PRINTLN</code> function accepted parameters you will see: <code>"(&lt;val&gt;*)"</code>. This means, that this function can take cycling parameters, meaning zero or more <code>val</code>. So for example you can call it like this:</p>
 <p><code>PRINTLN()</code></p>
 <p>And it will just print new line on screen, or:</p>
 <p><code>PRINTLN("a", "b", "c")</code></p>
@@ -86,7 +87,7 @@
 <a name="variables"></a>
 <h2>5. Defining variables</h2>
 <p>In BIO are two types of variables: local and global. Global variables as name suggest are accessible from whole program. You can assign one using <code>ASSIGN_GLOBAL</code> function, and get one using <code>GET_GLOBAL</code> function. Variable name, same as function name, must start with upper or lower case letter or underline and than you can use letter, underline and digits. You can use all UTF-8 characters in variable name. It can be expressed as this regular expression: [a-zA-Z_][a-zA-Z_0-9]* where a-z,A-Z represents <b>any</b> letter. You can use same name for function and variable, these would be two diffrent things. So as example for assigning global variable:</p>
-<p><code>def foo()<br/>&nbsp;ASSIGN_GLOBAL(x, 10)<br/>end</br><br/>def onSTART()<br/>&nbsp;foo()<br/>&nbsp;PRINTLN(GET_GLOBAL(x))<br/>end<br/></code></p>
+<p><code>def foo()<br/>&nbsp;ASSIGN_GLOBAL(x, 10)<br/>end<br/>def onSTART()<br/>&nbsp;foo()<br/>&nbsp;PRINTLN(GET_GLOBAL(x))<br/>end<br/></code></p>
 <p>Code above would print 10.</p>
 <br/>
 <p>Local variables are accessible only from current function scope. But if you assign local variable it would be accessible for the rest of current function scope. There is no additional scopes inside function, like for example in IF or FOR function. So for example if you do:</p>

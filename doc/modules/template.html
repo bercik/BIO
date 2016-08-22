@@ -2,275 +2,305 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIO DOC</title>
-    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script src="js/jquery-3.1.0.min.js"></script>
-    <script src="js/scripts.js"></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO DOC</title>
+<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<script src="js/jquery-3.1.0.min.js"></script>
+<script src="js/scripts.js"></script>
 </head>
 
 <body>
 
 <nav>
-    <ul>
-        <li class="has-sub">
-            <a href="javascript:void(0)">Basic informations</a>
-            <ul>
-                <li><a href="#basic-info-data-types">Data types</a></li>
-                <li><a href="#basic-info-errors">Errors</a></li>
-                <li><a href="#basic-info-conversions">Conversions</a></li>
-            </ul>
-        </li>
-        {% for m in modules %}
-        <li class="has-sub">
-            <a href="javascript:void(0)">{{m.mod_name}}</a>
-            <ul>
-                {% for f in m.functions %}
-                <li class="has-sub">
-                    <a class="function" href="javascript:void(0)">{{f.name}}</a>
-                    <ul>
-                        <li><a href="#{{f.name}}_fun">Description</a></li>
-                        {% if f.params %}
-                        <li><a href="#{{f.name}}_funparams">Parameters</a></li>
-                        {% endif %}
-                        {% if f.ret %}
-                        <li><a href="#{{f.name}}_funreturns">Returns</a></li>
-                        {% endif %}
-                        {% if f.errors %}
-                        <li><a href="#{{f.name}}_funerrors">Errors</a></li>
-                        {% endif %}
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endfor %}
-    </ul>
+   <ul>
+      <li class="has-sub">
+      <a href="javascript:void(0)">Basic informations</a>
+      <ul>
+         <li><a href="#basic-info-data-types">Data types</a></li>
+         <li><a href="#basic-info-errors">Errors</a></li>
+         <li><a href="#basic-info-conversions">Conversions</a></li>
+      </ul>
+      </li>
+      {% for m in modules %}
+      <li class="has-sub">
+      <a href="javascript:void(0)">{{m.mod_name}}</a>
+      <ul>
+         {% for f in m.functions %}
+         <li class="has-sub">
+         <a class="function" href="javascript:void(0)">{{f.name}}</a>
+         <ul>
+            <li><a href="#{{f.name}}_fun">Description</a></li>
+            {% if f.params %}
+            <li><a href="#{{f.name}}_funparams">Parameters</a></li>
+            {% endif %}
+            {% if f.ret %}
+            <li><a href="#{{f.name}}_funreturns">Returns</a></li>
+            {% endif %}
+            {% if f.errors %}
+            <li><a href="#{{f.name}}_funerrors">Errors</a></li>
+            {% endif %}
+         </ul>
+         </li>
+         {% endfor %}
+      </ul>
+      </li>
+      {% endfor %}
+   </ul>
 </nav>
 
 <main>
 
-    <header>
-        <h1>BIO Documentation</h1>
-    </header>
+<header>
+   <h1>BIO Documentation</h1>
+</header>
 
-    <!-- header info -->
-    <section id="basic-info" class="block">
+<!-- header info -->
+<section id="basic-info" class="block">
 
-        <header>
-            <h2>Basic informations</h2>
-        </header>
+   <header>
+      <h2>Basic informations</h2>
+   </header>
 
-        <section id="basic-info-data-types">
-            <header>
-                <h3>Data types</h3>
-            </header>
+   <section id="basic-info-data-types">
+      <header>
+         <h3>Data types</h3>
+      </header>
+      <dl>
+         <dt>array</dt>
+         <dd>series of elements of any type. Mutable</dd>
+         <dt>bool</dt>
+         <dd>has only two posible values: true and false. Immutable</dd>
+         <dt>dict</dt>
+         <dd>collections of pairs &lt;string, any&gt;. Mutable</dd>
+         <dt>error</dt>
+         <dd>contains informations about error that appears. Immutable</dd>
+         <dt>float</dt>
+         <dd>single-precision 32-bit IEEE 754 floating point. Immutable</dd>
+         <dt>int</dt>
+         <dd>32-bit signed two's complement integer, which has a minimum value of -2<sup>31</sup> and a maximum
+         value of 2<sup>31</sup>-1. Immutable
+         </dd>
+         <dt>none</dt>
+         <dd>represents absent of value. Immutable</dd>
+         <dt>string</dt>
+         <dd>represents sequence of characters. Immutable</dd>
+         <dt>tuple</dt>
+         <dd>series of elements of any type. Immutable</dd>
+      </dl>
+   </section>
+
+   <section id="basic-info-errors">
+      <header>
+         <h3>Errors</h3>
+      </header>
+      <p>Errors are values of type error which are returned from function where an error occur. If you don't
+      handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR
+      event will occur (see in basic). It will occur also when there is error returned from onSTART function.
+      There are two cases when error can cause function to return. Both are when you pass not bool to FOR or
+      IF function as condition. Notice that there are few functions that takes error as parameter. Other will
+      return error with cause as this given error parameter. This behavior is to prevent errors from
+      disappearing</p>
+      <p>Here are all errors with their codes, which you can access by GET_OBJECT function:</p>
+      <div class="scrollable">
+         <table>
+            <thead>
+               <tr>
+                  <th>code</th>
+                  <th>name</th>
+               </tr>
+            </thead>
+            <tbody>
+            <tr><td>1</td><td>NO_GLOBAL_VARIABLE </td></tr>
+            <tr><td>2</td><td>NO_LOCAL_VARIABLE </td></tr>
+            <tr><td>3</td><td>BAD_PARAMETER_TYPE </td></tr>
+            <tr><td>4</td><td>COLLECTIONS_DIFFRENT_SIZES </td></tr>
+            <tr><td>5</td><td>BUILTIN_FUNCTION_NOT_IMPLEMENTED </td></tr>
+            <tr><td>6</td><td>CALLBACK_ALREADY_ATTACHED </td></tr>
+            <tr><td>7</td><td>CALLBACK_NOT_ATTACHED </td></tr>
+            <tr><td>8</td><td>INDEX_OUT_OF_BOUNDS </td></tr>
+            <tr><td>9</td><td>DIVISION_BY_ZERO </td></tr>
+            <tr><td>10</td><td>SIZE_LESS_THAN_ZERO </td></tr>
+            <tr><td>11</td><td>MIN_GREATER_THAN_MAX </td></tr>
+            <tr><td>12</td><td>KEY_DOESNT_EXIST </td></tr>
+            <tr><td>13</td><td>NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE </td></tr>
+            <tr><td>14</td><td>START_GREATER_THAN_END </td></tr>
+            <tr><td>15</td><td>CONVERSION_ERROR </td></tr>
+            <tr><td>16</td><td>REGEX_ERROR </td></tr>
+            <tr><td>17</td><td>USER_FUNCTION_DOESNT_EXIST </td></tr>
+            </tbody>
+         </table>
+      </div>
+   </section>
+
+   <section id="basic-info-conversions">
+      <header>
+         <h3>Conversions</h3>
+      </header>
+      <p>If needed int will be converted to float and arrays to tuples in most cases (see specific function
+      documentation for details)</p>
+      <p>Here is conversion table that tells you which type you can convert to which:</p>
+      <div class="scrollable">
+         <table>
+            <thead>
+               <tr>
+                  <th></th>
+                  <th>TO_STRING</th>
+                  <th>TO_INT</th>
+                  <th>TO_FLOAT</th>
+                  <th>TO_BOOL</th>
+                  <th>TO_ARRAY</th>
+                  <th>TO_TUPLE</th>
+               </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <td>array</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>yes</td>
+               <td>yes</td>
+            </tr>
+            <tr>
+               <td>bool</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>dict</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>error</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>float</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>int</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>none</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>string</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>tuple</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
+               <td>yes</td>
+               <td>yes</td>
+            </tr>
+            </tbody>
+         </table>
+      </div>
+      <p><b>Note:</b> many functions can take not only single data types arguments but also tuple or arrays of
+      values. See specific function documentation for details</p>
+   </section>
+
+</section>
+<!-- end of header info -->
+
+{% for m in modules %}
+<section class="module block" id="{{m.mod_name}}">
+   <header>
+      <h2>{{m.mod_name}}</h2>
+   </header>
+   <section class="functions">
+      {% for f in m.functions %}
+      <article class="function sub-block" id="{{f.name}}_fun">
+
+         <header>
+            <h3>{{f.name}} ({{f.params_header}})</h3>
+            <p class="description">{{f.desc}}</p>
+         </header>
+
+         {% if f.params %}
+         <section class="parameters" id="{{f.name}}_funparams">
+            <h5>Parameters</h5>
             <dl>
-                <dt>array</dt>
-                <dd>series of elements of any type. Mutable</dd>
-                <dt>bool</dt>
-                <dd>has only two posible values: true and false. Immutable</dd>
-                <dt>dict</dt>
-                <dd>collections of pairs &lt;string, any&gt;. Mutable</dd>
-                <dt>error</dt>
-                <dd>contains informations about error that appears. Immutable</dd>
-                <dt>float</dt>
-                <dd>single-precision 32-bit IEEE 754 floating point. Immutable</dd>
-                <dt>int</dt>
-                <dd>32-bit signed two's complement integer, which has a minimum value of -2<sup>31</sup> and a maximum
-                    value of 2<sup>31</sup>-1. Immutable
-                </dd>
-                <dt>none</dt>
-                <dd>represents absent of value. Immutable</dd>
-                <dt>string</dt>
-                <dd>represents sequence of characters. Immutable</dd>
-                <dt>tuple</dt>
-                <dd>series of elements of any type. Immutable</dd>
+               {% for p in f.params %}
+               <dt><i>{{p.name}}</i> (<u>{{p.types}}</u>)</dt>
+               <dd>{{p.desc}}</dd>
+               {% endfor %}
             </dl>
-        </section>
+         </section>
+         {% endif %}
 
-        <section id="basic-info-errors">
-            <header>
-                <h3>Errors</h3>
-            </header>
-            <p>Errors are values of type error which are returned from function where an error occur. If you don't
-                handle an error, that is don't assign it to variable or pass to another function, then onUNHANDLED_ERROR
-                event will occur (see in basic). It will occur also when there is error returned from onSTART function.
-                There are two cases when error can cause function to return. Both are when you pass not bool to FOR or
-                IF function as condition. Notice that there are few functions that takes error as parameter. Other will
-                return error with cause as this given error parameter. This behavior is to prevent errors from
-                disappearing</p>
-        </section>
+         {% if f.ret %}
+         <section class="returns" id="{{f.name}}_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>{{f.ret.types}}</u>)</dt>
+               <dd>{{f.ret.desc}}</dd>
+            </dl>
+         </section>
+         {% endif %}
 
-        <section id="basic-info-conversions">
-            <header>
-                <h3>Conversions</h3>
-            </header>
-            <p>If needed int will be converted to float and arrays to tuples in most cases (see specific function
-                documentation for details)</p>
-            <p>Here is conversion table that tells you which type you can convert to which:</p>
-            <div class="scrollable">
-                <table>
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>TO_STRING</th>
-                        <th>TO_INT</th>
-                        <th>TO_FLOAT</th>
-                        <th>TO_BOOL</th>
-                        <th>TO_ARRAY</th>
-                        <th>TO_TUPLE</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>array</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                    </tr>
-                    <tr>
-                        <td>bool</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>dict</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>error</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>float</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>int</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>none</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>string</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                    </tr>
-                    <tr>
-                        <td>tuple</td>
-                        <td>yes</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>no</td>
-                        <td>yes</td>
-                        <td>yes</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p><b>Note:</b> many functions can take not only single data types arguments but also tuple or arrays of
-                values. See specific function documentation for details</p>
-        </section>
-
-    </section>
-    <!-- end of header info -->
-
-    {% for m in modules %}
-    <section class="module block" id="{{m.mod_name}}">
-        <header>
-            <h2>{{m.mod_name}}</h2>
-        </header>
-        <section class="functions">
-            {% for f in m.functions %}
-            <article class="function sub-block" id="{{f.name}}_fun">
-
-                <header>
-                    <h3>{{f.name}} ({{f.params_header}})</h3>
-                    <p class="description">{{f.desc}}</p>
-                </header>
-
-                {% if f.params %}
-                <section class="parameters" id="{{f.name}}_funparams">
-                    <h5>Parameters</h5>
-                    <dl>
-                        {% for p in f.params %}
-                        <dt><i>{{p.name}}</i> (<u>{{p.types}}</u>)</dt>
-                        <dd>{{p.desc}}</dd>
-                        {% endfor %}
-                    </dl>
-                </section>
-                {% endif %}
-
-                {% if f.ret %}
-                <section class="returns" id="{{f.name}}_funreturns">
-                    <h5>Returns</h5>
-                    <dl>
-                        <dt>(<u>{{f.ret.types}}</u>)</dt>
-                        <dd>{{f.ret.desc}}</dd>
-                    </dl>
-                </section>
-                {% endif %}
-
-                {% if f.errors %}
-                <section class="errors" id="{{f.name}}_funerrors">
-                    <h5>Errors</h5>
-                    {% for e in f.errors %}
-                    <dl>
-                        <dt>{{e.name}}</dt>
-                        <dd>{{e.desc}}</dd>
-                    </dl>
-                    {% endfor %}
-                </section>
-                {% endif %}
-
-            </article>
+         {% if f.errors %}
+         <section class="errors" id="{{f.name}}_funerrors">
+            <h5>Errors</h5>
+            {% for e in f.errors %}
+            <dl>
+               <dt>{{e.name}}</dt>
+               <dd>{{e.desc}}</dd>
+            </dl>
             {% endfor %}
-        </section>
-    </section>
-    {% endfor %}
+         </section>
+         {% endif %}
 
-    <button id="menu-switcher">Switch menu</button>
+      </article>
+      {% endfor %}
+   </section>
+</section>
+{% endfor %}
+
+<button id="menu-switcher">Switch menu</button>
 
 </main>
 
