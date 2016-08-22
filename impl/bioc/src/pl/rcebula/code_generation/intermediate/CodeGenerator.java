@@ -209,8 +209,16 @@ public class CodeGenerator
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);
                         call1 = (Call)call.getCallParams().get(1);
-                        call2 = (Call)call.getCallParams().get(2);
-                        sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getErrorInfo());
+                        // jeżeli podano opcjonalny argument
+                        if (call.getRepeatCycles() == 1)
+                        {
+                            call2 = (Call)call.getCallParams().get(2);
+                            sfg.generateIf(cp, call1, call2, forStart, forEnd, call.getErrorInfo());
+                        }
+                        else
+                        {
+                            sfg.generateIf(cp, call1, forStart, forEnd, call.getErrorInfo());
+                        }
                         break;
                     case SpecialFunctionsName.callFunctionName:
                         call1 = (Call)call.getCallParams().get(0);

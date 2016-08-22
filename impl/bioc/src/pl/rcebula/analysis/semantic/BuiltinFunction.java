@@ -40,6 +40,7 @@ public class BuiltinFunction
     private final int additionalParams;
     
     private final boolean isRepeated;
+    private final boolean  isOptional;
 
     public BuiltinFunction(String name, boolean special, List<ParamType> params)
     {
@@ -55,6 +56,7 @@ public class BuiltinFunction
         this.additionalParams = 0;
         this.repeatPatternTypes = new ArrayList<>();
         this.isRepeated = false;
+        this.isOptional = false;
     }
 
     public BuiltinFunction(String name, boolean special, ParamType... params)
@@ -63,6 +65,12 @@ public class BuiltinFunction
     }
 
     public BuiltinFunction(String name, boolean special, List<ParamType> params, List<Boolean> repeatPattern)
+    {
+        this(name, special, params, repeatPattern, false);
+    }
+    
+    public BuiltinFunction(String name, boolean special, List<ParamType> params, 
+            List<Boolean> repeatPattern, boolean isOptional)
     {
         this.name = name;
         this.special = special;
@@ -119,8 +127,14 @@ public class BuiltinFunction
         this.additionalParams = repeatPatternTypes.size();
         this.minParams = params.size() - this.additionalParams;
         this.isRepeated = (repeatPatternTypes.size() > 0);
+        this.isOptional = isOptional;
     }
 
+    public boolean isOptional()
+    {
+        return isOptional;
+    }
+    
     public boolean isRepeated()
     {
         return isRepeated;
@@ -156,13 +170,21 @@ public class BuiltinFunction
             return false;
         }
         
-        if (additionalParams > 0)
+        if (isOptional)
         {
-            return ((numberOfParams - minParams) % (additionalParams) == 0);
+            return numberOfParams == minParams || 
+                    numberOfParams == minParams + additionalParams;
         }
         else
         {
-            return numberOfParams == minParams;
+            if (additionalParams > 0)
+            {
+                return ((numberOfParams - minParams) % (additionalParams) == 0);
+            }
+            else
+            {
+                return numberOfParams == minParams;
+            }
         }
     }
 

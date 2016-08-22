@@ -119,6 +119,37 @@ public class SpecialFunctionsGenerator
         ic.appendLine(line);
     }
 
+    // wersja z jedną funkcją
+    public void generateIf(CallParam callParam, Call call1, Label forStart, Label forEnd, ErrorInfo ei)
+    {
+        // callParam
+        // pop, 1
+        // jmp_if_false, etykieta1
+        // call1
+        // popc, 1
+        // etykieta1:
+        // push, none:
+        Label l1 = new Label();
+
+        cg.eval(callParam, forStart, forEnd);
+        Line line = ifg.generatePop(1);
+        ic.appendLine(line);
+
+        line = ifg.generateJmpIfFalse(l1, ei);
+        ic.appendLine(line);
+
+        cg.eval(call1, forStart, forEnd);
+        line = ifg.generatePopc(1);
+        ic.appendLine(line);
+
+        ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
+        line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
+                mockErrorInfo));
+        line.addLabel(l1);
+        ic.appendLine(line);
+    }
+    
+    // wersja z dwoma funkcjami
     public void generateIf(CallParam callParam, Call call1, Call call2, Label forStart, Label forEnd,
             ErrorInfo ei)
     {

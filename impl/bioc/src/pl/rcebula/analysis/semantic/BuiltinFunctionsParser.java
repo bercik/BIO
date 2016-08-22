@@ -194,6 +194,8 @@ public class BuiltinFunctionsParser
 
                 List<ParamType> params = new ArrayList<>();
                 List<Boolean> repeatPattern = new ArrayList<>();
+                boolean isOptional = false;
+                boolean isRepeat = false;
 
                 Element e = (Element)elem.getElementsByTagName("params").item(0);
                 NodeList nl = e.getElementsByTagName("param");
@@ -204,6 +206,7 @@ public class BuiltinFunctionsParser
                     Node attr = n.getAttributes().getNamedItem("repeat");
                     if (attr != null)
                     {
+                        isRepeat = true;
                         if (allowRepeat)
                         {
                             repeat = Boolean.parseBoolean(attr.getNodeValue());
@@ -211,6 +214,33 @@ public class BuiltinFunctionsParser
                         else
                         {
                             String message = "In event " + name + " repeat attribute isn't allowed";
+                            throw new RuntimeException(message);
+                        }
+                        
+                        if (isOptional)
+                        {
+                            String message = "In function " + name + " you can't mix repeat and optional attributes";
+                            throw new RuntimeException(message);
+                        }
+                    }
+                    
+                    attr = n.getAttributes().getNamedItem("optional");
+                    if (attr != null)
+                    {
+                        isOptional = true;
+                        if (allowRepeat)
+                        {
+                            repeat = Boolean.parseBoolean(attr.getNodeValue());
+                        }
+                        else
+                        {
+                            String message = "In event " + name + " optional attribute isn't allowed";
+                            throw new RuntimeException(message);
+                        }
+                        
+                        if (isRepeat)
+                        {
+                            String message = "In function " + name + " you can't mix repeat and optional attributes";
                             throw new RuntimeException(message);
                         }
                     }
@@ -230,7 +260,7 @@ public class BuiltinFunctionsParser
                     repeatPattern.add(repeat);
                 }
 
-                builtinFunctions.add(new BuiltinFunction(name, special, params, repeatPattern));
+                builtinFunctions.add(new BuiltinFunction(name, special, params, repeatPattern, isOptional));
             }
         }
     }

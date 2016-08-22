@@ -58,6 +58,28 @@ public class BuiltinFunctionsParserTest
     {
     }
 
+    @Test
+    public void testOptionalParameter()
+            throws Exception
+    {
+        System.out.println("testOptionalParameter()");
+        
+        BuiltinFunctionsParser instance
+                = new BuiltinFunctionsParser(true, "/pl/rcebula/res/builtin_functions_test_optional.xml");
+        
+        List<BuiltinFunction> expResult = new ArrayList<BuiltinFunction>()
+        {
+            {
+                add(new BuiltinFunction("IF", true, Arrays.asList(ParamType.ALL, ParamType.CALL, ParamType.CALL),
+                        Arrays.asList(false, false, true), true));
+            }
+        };
+
+        List<BuiltinFunction> result = instance.getBuiltinFunctions();
+
+        assertThat(expResult, is(result));
+    }
+    
     /**
      * Test of getBuiltinFunctions method, of class BuiltinFunctionsParser.
      */

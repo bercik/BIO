@@ -99,7 +99,7 @@
    
 <a name="control_statements"></a>
 <h2>6. Control statements</h2>
-<p>In BIO are two control statements: IF and FOR. IF is function that takes 3 arguments and returns none (because every function in BIO must return some value). First parameter is condition, second is call that is called if condition is true, and third is call that is called if condition is false. So for example:</p>
+<p>In BIO are two control statements: IF and FOR. IF is function that takes 2 or 3 arguments (third argument is optional, you don't need to specify it) and returns none (because every function in BIO must return some value). First parameter is condition, second is call that is called if condition is true, and third is call that is called if condition is false. So for example:</p>
 <p><code>def onSTART()<br/>&nbsp;ASSIGN_LOCAL(number, TO_INT(INPUT("Type number: ")))<br/>&nbsp;IF(EQ(MOD(number, 2), 0), PRINTLN("even"), PRINTLN("odd"))<br/>end<br/></code></p>
 <p>This code would get number from user and print if its odd or even.</p>
 <p>Notice what happens if you pass something that is not a number, for example: "a". You would get:</p>

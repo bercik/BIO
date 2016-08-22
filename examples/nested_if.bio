@@ -1,4 +1,6 @@
 def onSTART()
+   ASSIGN_LOCAL(i, 20)
+   ASSIGN_LOCAL(j, 10)
    IF
    (
       EQ(i, 20), 

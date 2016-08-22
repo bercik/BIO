@@ -6,7 +6,7 @@ class Obj:
     pass
 
 def unique(seq): 
-   # order preserving
+    # order preserving
    checked = []
    for e in seq:
        if e not in checked:
@@ -15,7 +15,7 @@ def unique(seq):
 
 class Function:
     def __init__(self, name, alias, params, errors,
-            returned, desc, repeatedFrom, repeatedTo):
+            returned, desc, repeatedFrom, repeatedTo, isOptional):
         self.name = name
         self.alias = alias
         self.params = params
@@ -24,6 +24,7 @@ class Function:
         self.desc = desc
         self.repeatedFrom = repeatedFrom
         self.repeatedTo = repeatedTo
+        self.isOptional = isOptional
 
 class Returned:
     def __init__(self, types, desc):
@@ -42,10 +43,10 @@ class Param:
         self.desc = desc
     def __eq__(self, other):
         return (isinstance(other, self.__class__)
-            and self.name == other.name)
+                and self.name == other.name)
 
-    def __ne__(self, other):
-        return not self.__eq__(other)
+        def __ne__(self, other):
+            return not self.__eq__(other)
 
 
 def parse_bd(fname):
@@ -56,6 +57,7 @@ def parse_bd(fname):
     aliasRe = re.compile("^!alias\s+([^\s]+)$")
     paramRe = re.compile("^!param\s+([^\s]+)\s+\(([^\)]+)\)\s+(.*)$")
     repeatedRe = re.compile("^!repeat\s+([^\s]+)\s+\(([^\)]+)\)\s+(.*)$")
+    optionalRe = re.compile("^!optional\s+([^\s]+)\s+\(([^\)]+)\)\s+(.*)$")
     returnRe = re.compile("^!return\s+\(([^\)]+)\)\s+(.*)$")
     errorRe = re.compile("^!error\s+\(([^\)]+)\)\s+(.*)$")
     descRe = re.compile("^!desc\s+(.*)$")
@@ -70,13 +72,14 @@ def parse_bd(fname):
     desc = ""
     repeatedFrom = None
     repeatedTo = None
-    
+    isOptional = False
+
     for i in range(0, len(lines)):
         line = lines[i]
 
         if line == "":
             fun = Function(name, alias, params, errors, 
-                    returned, desc, repeatedFrom, repeatedTo)
+                    returned, desc, repeatedFrom, repeatedTo, isOptional)
             functions.append(fun)
             params = []
             errors = []
@@ -86,6 +89,7 @@ def parse_bd(fname):
             desc = ""
             repeatedFrom = None
             repeatedTo = None
+            isOptional = False
 
         m = nameRe.match(line)
         if m != None:
@@ -112,6 +116,18 @@ def parse_bd(fname):
                 repeatedTo = len(params)
             param = Param(m.group(1), m.group(2), m.group(3))
             params.append(param)
+            continue
+
+        m = optionalRe.match(line)
+        if m != None:
+            if repeatedFrom == None:
+                repeatedFrom = len(params)
+                repeatedTo = len(params)
+            else:
+                repeatedTo = len(params)
+            param = Param(m.group(1), m.group(2), m.group(3))
+            params.append(param)
+            isOptional = True
             continue
 
         m = returnRe.match(line)
@@ -152,10 +168,14 @@ def parse_bd(fname):
                 params_header += "&lt;"
             params_header += p.name
             if i == f.repeatedTo:
-                    params_header += "&gt;*"
+                params_header += "&gt;"
+                if f.isOptional:
+                    params_header += "+"
+                else:
+                    params_header += "*"
             if i != len(f.params) - 1:
                 params_header += ", "
-        
+
         if params_header != "":
             temp_fun.params_header = params_header
 
@@ -186,7 +206,7 @@ def parse_bd(fname):
                 if e.desc.strip() != "":
                     temp_err.desc = e.desc
                 temp_fun.errors.append(temp_err)
-        
+
         temp_funs.append(temp_fun)
 
     mod = Obj()

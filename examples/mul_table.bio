@@ -1,17 +1,27 @@
 def onSTART()
    % konstruujemy tablicę dwuwymiarową, która zawiera tabliczkę mnożenia
    % następnie wypisujemy na ekran
-   ASSIGN_LOCAL(tab, construct_tab(5, 5))
+   ASSIGN_LOCAL(tab, construct_tab(4, 5))
    print_tab(tab)
 end
 
 def construct_tab(n, m)
+   INC(n)
+   INC(m)
    ASSIGN_LOCAL(tab, CREATE_ARRAY(n))
+   SET(tab, 0, CREATE_ARRAY(m))
    FOR
    (
       ASSIGN_LOCAL(i, 0),
+      LS(i, m),
+      SET(GET(tab, 0), i, i),
+      INC(i)
+   )
+   FOR
+   (
+      ASSIGN_LOCAL(i, 1),
       LS(i, n),
-      SET(tab, i, construct_tab_helper(n, m)),
+      SET(tab, i, construct_tab_helper(i, m)),
       INC(i)
    )
    RETURN(tab)
@@ -19,11 +29,12 @@ end
 
 def construct_tab_helper(n, m)
    ASSIGN_LOCAL(tab, CREATE_ARRAY(m))
+   SET(tab, 0, n)
    FOR
    (
-      ASSIGN_LOCAL(i, 0),
+      ASSIGN_LOCAL(i, 1),
       LS(i, m),
-      SET(tab, i, MUL(m, n)),
+      SET(tab, i, MUL(i, n)),
       INC(i)
    )
    RETURN(tab)
@@ -33,6 +44,15 @@ def print_tab(tab)
    FOR
    (
       ASSIGN_LOCAL(i, 0),
+      LS(i, SIZE(GET(tab, 0))),
+      PRINT(ADD(TO_STRING(GET(GET(tab, 0), i)), "|")),
+      INC(i)
+   )
+   PRINTLN()
+
+   FOR
+   (
+      ASSIGN_LOCAL(i, 1),
       LS(i, SIZE(tab)),
       CALL
       (
@@ -40,7 +60,12 @@ def print_tab(tab)
          (
             ASSIGN_LOCAL(j, 0),
             LS(j, SIZE(GET(tab, i))),
-            PRINT(GET(GET(tab, i), j)),
+            CALL
+            (
+               IF(EQ(j, 0), ASSIGN_LOCAL(ch, "|"), ASSIGN_LOCAL(ch, ",")),
+               IF(EQ(j, SUB(SIZE(GET(tab, i)), 1)), ASSIGN_LOCAL(ch, ""), DN()),
+               PRINT(ADD(TO_STRING(GET(GET(tab, i), j)), ch))
+            ),
             INC(j)
          ),
          PRINTLN("")

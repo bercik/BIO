@@ -6,8 +6,7 @@ def onSTART()
       (
          IF
          (
-            IS_INT(i),
-            DN(),
+            NOT(IS_INT(i)),
             CALL
             (
                PRINT("variable i isn't int\n"),
@@ -23,8 +22,7 @@ def onSTART()
          IF
          (
             EQ(i, 10),
-            ASSIGN_LOCAL(i, true),
-            DN()
+            ASSIGN_LOCAL(i, true)
          )
       )
    )

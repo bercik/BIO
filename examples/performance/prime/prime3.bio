@@ -1,26 +1,10 @@
 def isPrime(num)
-   % change to RANGE(2, CEIL(SQRT(num)))
-   ASSIGN_LOCAL(tup1, RANGE(2, DIV(num, 2)))
-   % change to SIZE(tup1)
-   ASSIGN_LOCAL(size, SUB(DIV(num, 2), 1))
+   ASSIGN_LOCAL(tup1, RANGE(2, CEIL(SQRT(num))))
+   ASSIGN_LOCAL(size, SIZE(tup1))
    ASSIGN_LOCAL(tup2, CREATE_TUPLE_OF_ELEMENTS(size, num))
    ASSIGN_LOCAL(mod, MOD(tup2, tup1))
 
-   % change to IF(CONTAINS(mod, 0), RETURN(false), RETURN(true))
-   FOR
-   (
-      ASSIGN_LOCAL(i, 0),
-      LS(i, size),
-      IF
-      (
-         EQ(GET(mod, i), 0),
-         RETURN(none),
-         DN()
-      ),
-      INC(i)
-   )
-
-   PRINT(num, "\n")
+   IF(CONTAINS(mod, 0), RETURN(false), RETURN(true))
 end
 
 def onSTART()
@@ -29,7 +13,12 @@ def onSTART()
    (
       ASSIGN_LOCAL(i, 2), 
       LS(i, MAX_I), 
-      isPrime(i),
+      IF
+      (
+         isPrime(i),
+         PRINTLN(i),
+         DN()
+      ),
       INC(i)
    )
 end

@@ -2,7 +2,7 @@
 !desc Conditional statement which perform diffrent functions execution depending on given bool value <i>cond</i>
 !param cond (bool) 
 !param call_if_true (call) 
-!param call_if_false (call) 
+!optional call_if_false (call) 
 !return (none) 
 !error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.
 

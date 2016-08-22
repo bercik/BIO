@@ -228,7 +228,14 @@ public class SemanticChecker
                     // sprawdź ilość
                     if (!bf.isGoodNumberOfParams(callParams.size()))
                     {
-                        if (bf.isRepeated())
+                        if (bf.isOptional())
+                        {
+                            List<Integer> list = bf.getGoodNumberOfParamsList(2);
+                            String message = "Function " + call.getName() + " takes " + list.get(0) + " or " + list.get(1) + 
+                                    " parameters, got " + callParams.size();
+                            throw new SemanticError(call.getErrorInfo(), message);
+                        }
+                        else if (bf.isRepeated())
                         {
                             List<Integer> gnop = bf.getGoodNumberOfParamsList(3);
                             String goodParamsStr = gnop.get(0).toString() + ", " + gnop.get(1).toString() + ", "

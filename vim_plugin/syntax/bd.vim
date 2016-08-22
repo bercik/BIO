@@ -13,6 +13,7 @@ syn match keyword "!return\s\+"
 syn match keyword "!error\s\+"
 syn match keyword "!alias\s\+"
 syn match keyword "!repeat\s\+"
+syn match keyword "!optional\s\+"
 syn match keyword "!desc\s\+"
 
 let b:current_syntax = "bio"

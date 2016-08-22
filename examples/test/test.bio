@@ -1,0 +1,6 @@
+#IMPORT("test")
+
+def onSTART()
+   TEST(1, a)
+   TEST(1, "a", true, c)
+end
