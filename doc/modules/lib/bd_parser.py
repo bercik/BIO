@@ -170,7 +170,7 @@ def parse_bd(fname):
             if i == f.repeatedTo:
                 params_header += "&gt;"
                 if f.isOptional:
-                    params_header += "+"
+                    params_header += "?"
                 else:
                     params_header += "*"
             if i != len(f.params) - 1:
