@@ -1,47 +1,33 @@
-def CREATE_LIST(size)
-   RETURN(CREATE_DICT("count", 0, "arr", CREATE_ARRAY(size)))
+% creates list with given capacity
+% returns error if capacity is less than zero
+def CREATE_LIST(capacity)
+   IF(LS(capacity, 0), RET(CR_ERR("Capacity less than zero!", none, none)))
+   RET(CR_DICT("count", 0, "arr", CR_ARR(capacity)))
 end
 
-def GET_LIST_TUPLE(list)
-   ASSIGN_LOCAL(count, GET(list, "count"))
-   ASSIGN_LOCAL(arr, GET(list, "arr"))
-   RETURN(CREATE_TUPLE(count, arr))
-end
-
-def EXTEND_LIST_IF_NEEDED(list)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
-   ASSIGN_LOCAL(arr_size, SIZE(arr))
-   % jeżeli nie ma już miejsca w tablicy
-   IF
-   (
-      GE(count, arr_size), 
-      CALL
-      (
-         % nowy rozmiar jest dwa razy większy niż obecny
-         ASSIGN_LOCAL(new_size, MUL(arr_size, 2)),
-         % rozszerzamy listę
-         ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, new_size)),
-         % przypisujemy do dict
-         SET(list, "arr", arr)
-      ),
-      DN()
-   )
-end
-
+% append item to list, extend it if needed
 def APPEND_TO_LIST(list, item)
-   EXTEND_LIST_IF_NEEDED(list)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   _EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
    SET(arr, count, item)
    SET(list, "count", INC(count))
 end
 
+% inserts item into list at index, extend it if needed
+% If index is less than zero or greater than count returns error
 def INSERT_INTO_LIST(list, index, item)
-   EXTEND_LIST_IF_NEEDED(list)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   _EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   % sprawdzamy czy index zawiera się w granicach
+   IF
+   (
+      OR(LS(index, 0), GT(index, count)),
+      RET(CR_ERR("Index out of bounds", none, none))
+   )
    % pętla od count-1 do -1 co -1
    FOR
    (
-      ASSIGN_LOCAL(i, SUB(count, 1)),
+      AS_LOC(i, SUB(count, 1)),
       GE(i, -1),
       % jeżeli i == index-1 to wstaw w miejsce o jeden w prawo item i zatrzymaj
       % inaczej przenieś element z arr[i] do arr[i+1]
@@ -60,13 +46,21 @@ def INSERT_INTO_LIST(list, index, item)
    SET(list, "count", INC(count))
 end
 
+% Remove item at index from list. Returns none
+% If index is less than zero or greater or equals than count returns error
 def REMOVE_FROM_LIST(list, index)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   % sprawdzamy czy index zawiera się w granicach
+   IF
+   (
+      OR(LS(index, 0), GE(index, count)),
+      RET(CR_ERR("Index out of bounds", none, none))
+   )
    % iterujemy od index do count-2 co +1
    % przesuwając element z arr[i+1] do arr[i]
    FOR
    (
-      ASSIGN_LOCAL(i, index),
+      AS_LOC(i, index),
       LS(i, SUB(count, 1)),
       SET(arr, i, GET(arr, ADD(i, 1))),
       INC(i)
@@ -74,29 +68,34 @@ def REMOVE_FROM_LIST(list, index)
    SET(list, "count", DEC(count))
 end
 
+% return index of item in list or none it there is no one
 def INDEX_OF_ITEM_LIST(list, item)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
    FOR
    (
-      ASSIGN_LOCAL(i, 0),
+      AS_LOC(i, 0),
       LS(i, count),
       IF
       (
          EQ(item, GET(arr, i)),
-         RETURN(i),
-         DN()
+         RET(i)
       ),
       INC(i)
    )
-   RETURN(none)
+   RET(none)
+end
+
+def GET_ARRAY_LIST(list)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   RET(SLICE(arr, 0, count))
 end
 
 def PRINT_LIST(list)
-   UNPACK(count, arr, GET_LIST_TUPLE(list))
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
    PRINT("<")
    FOR
    (
-      ASSIGN_LOCAL(i, 0),
+      AS_LOC(i, 0),
       LS(i, count),
       CALL
       (
@@ -104,11 +103,35 @@ def PRINT_LIST(list)
          IF
          (
             NEQ(i, SUB(count, 1)),
-            PRINT(", "),
-            DN()
+            PRINT(", ")
          )
       ),
       INC(i)
    )
    PRINT(">\n")
 end
+
+def _GET_LIST_TUPLE(list)
+   AS_LOC(count, GET(list, "count"), arr, GET(list, "arr"))
+   RET(CR_TUP(count, arr))
+end
+
+def _EXTEND_LIST_IF_NEEDED(list)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   AS_LOC(arr_size, SIZE(arr))
+   % jeżeli nie ma już miejsca w tablicy
+   IF
+   (
+      GE(count, arr_size), 
+      CALL
+      (
+         % nowy rozmiar jest dwa razy większy niż obecny
+         AS_LOC(new_size, MUL(arr_size, 2)),
+         % rozszerzamy listę
+         AS_LOC(arr, EXT_ARR(arr, new_size)),
+         % przypisujemy do dict
+         SET(list, "arr", arr)
+      )
+   )
+end
+
