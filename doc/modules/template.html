@@ -21,6 +21,7 @@
          <li><a href="#basic-info-data-types">Data types</a></li>
          <li><a href="#basic-info-errors">Errors</a></li>
          <li><a href="#basic-info-conversions">Conversions</a></li>
+         <li><a href="#basic-info-aliases">Aliases</a></li>
       </ul>
       </li>
       {% for m in modules %}
@@ -29,7 +30,12 @@
       <ul>
          {% for f in m.functions %}
          <li class="has-sub">
-         <a class="function" href="javascript:void(0)">{{f.name}}</a>
+         <a class="function" href="javascript:void(0)">{{f.name}}
+            {% if f.alias %}
+            /<wbr><i>{{f.alias}}</i>
+            {% endif %}
+         </a>
+         </a>
          <ul>
             <li><a href="#{{f.name}}_fun">Description</a></li>
             {% if f.params %}
@@ -243,6 +249,15 @@
       values. See specific function documentation for details</p>
    </section>
 
+   <section id="basic-info-aliases">
+      <header>
+         <h3>Aliases</h3>
+      </header>
+
+      <p>Many functions have got their name shorter alias (for example: CREATE_ARRAY -&gt; CR_ARR). You can check function alias reading documentation. Alias is after function name and slash printed in italic (for example: CREATE_ARRAY / <i>CR_ARR</i>). Function name alias is usually created by taking two or three first letters of word. So for example CREATE become CR and ARRAY become ARR. <b>Note:</b> during compilation process aliases are replaced by real function names, so even if you use alias you will see error reporting with full function name.</p>
+
+   </section>
+
 </section>
 <!-- end of header info -->
 
@@ -256,7 +271,11 @@
       <article class="function sub-block" id="{{f.name}}_fun">
 
          <header>
-            <h3>{{f.name}} ({{f.params_header}})</h3>
+            <h3>{{f.name}}
+            {% if f.alias %}
+            / <i>{{f.alias}}</i>
+            {% endif %}
+            ({{f.params_header}})</h3>
             <p class="description">{{f.desc}}</p>
          </header>
 

@@ -1,4 +1,5 @@
 !name CREATE_ARRAY
+!alias CR_ARR
 !desc Creates array of size <i>size</i> filled with none elements
 !param size (int) size of array
 !return (array) array with none elements
