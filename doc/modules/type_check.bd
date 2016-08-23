@@ -1,4 +1,5 @@
 !name IS_ERROR
+!alias IS_ERR
 !desc Checks whether <i>var</i> is of type error
 !param var (all) 
 !return (bool) true if <i>var</i> is error, otherwise false
@@ -22,6 +23,7 @@
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
 !name IS_STRING
+!alias IS_STR
 !desc Checks whether <i>var</i> is of type string
 !param var (all except error) 
 !return (bool) true if <i>var</i> is string, otherwise false
@@ -34,6 +36,7 @@
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
 !name IS_ARRAY
+!alias IS_ARR
 !desc Checks whether <i>var</i> is of type array
 !param var (all except error) 
 !return (bool) true if <i>var</i> is array, otherwise false
@@ -46,18 +49,21 @@
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
 !name IS_TUPLE
+!alias IS_TUP
 !desc Checks whether <i>var</i> is of type tuple
 !param var (all except error) 
 !return (bool) true if <i>var</i> is tuple, otherwise false
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
 !name IS_NUMBER
+!alias IS_NUM
 !desc Checks whether <i>var</i> is of type int or float
 !param var (all except error) 
 !return (bool) true if <i>var</i> is int or float, otherwise false
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
 !name IS_COLLECTION
+!alias IS_COL
 !desc Checks whether <i>var</i> is of type array or tuple
 !param var (all except error) 
 !return (bool) true if <i>var</i> is array or tuple, otherwise false

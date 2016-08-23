@@ -5,6 +5,7 @@
 !error (BAD_PARAMETER_TYPE) if <i>err</i> isn't error
 
 !name CREATE_ERROR
+!alias CR_ERR
 !desc Creates error with string <i>msg</i>, any additional value (except error) <i>obj</i> and error <i>cause</i>
 !param msg (string) error message
 !param obj (all except error) any additional value
@@ -13,30 +14,35 @@
 !error (BAD_PARAMETER_TYPE) If <i>msg</i> is not string, <i>obj</i> is error or <i>cause</i> is not error or none
 
 !name GET_ERROR_MESSAGE
+!alias GET_ERR_MSG
 !desc Returns error message
 !param err (error) 
 !return (string) 
 !error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
 
 !name GET_ERROR_OBJECT
+!alias GET_ERR_OBJ
 !desc Returns error additional object
 !param err (error) 
 !return (all except error) 
 !error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
 
 !name GET_ERROR_CAUSE
+!alias GET_ERR_CAUSE
 !desc Returns error cause
 !param err (error) 
 !return (error, none) error if there is cause, otherwise none
 !error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
 
 !name GET_ERROR_LINE
+!alias GET_ERR_LINE
 !desc Returns error occurence line
 !param err (error) 
 !return (int) 
 !error (BAD_PARAMETER_TYPE) If <i>err</i> is not error
 
 !name GET_ERROR_CH
+!alias GET_ERR_CH
 !desc Returns error occurence character
 !param err (error) 
 !return (int) 
@@ -69,7 +75,15 @@
 !return (none) 
 !error (BAD_PARAMETER_TYPE) If <i>expected</i> or <i>actual</i> is error
 
+!name ASSERT_NEQ
+!desc Inserts debugging assertion into a program. If assertions checking is turn on checks if given value <i>expected</i> is not equals to <i>actual</i> using NEQ function. If not prints message and exits program. <b>Note:</b> You can't assert that two errors aren't equals using this function. To compare two errors compare one of their field like message or object.
+!param expected (all except error) 
+!param actual (all except error) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>expected</i> or <i>actual</i> is error
+
 !name ASSIGN_LOCAL_RETURN_IF_ERROR
+!alias AS_LOC_RET_IF_ERR
 !desc Assigns value <i>val</i> to local variable with identifier <i>id</i>. If <i>val</i> is error than call RETURN function with it as parameter.
 !param identifier (id) 
 !param val (all) 

@@ -1,4 +1,5 @@
 !name ASSIGN_LOCAL
+!alias AS_LOC
 !desc Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.
 !param id (id) variable identifier
 !param val (all) variable value
@@ -7,6 +8,7 @@
 !return (none) 
 
 !name ASSIGN_GLOBAL
+!alias AS_GLOB
 !desc Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
 !param id (id) variable identifier
 !param val (all) variable value
@@ -15,28 +17,33 @@
 !return (none) 
 
 !name IS_LOCAL
+!alias IS_LOC
 !desc Checks whether variable with identifier <i>id</i> exists and is local
 !param id (id) variable identifier
 !return (bool) true if variable exists, otherwise false
 
 !name GET_LOCAL
+!alias GET_LOC
 !desc Returnes local variable with identifier <i>id</i>. Instead of using this function you can just type identifier in place where you want to get local variable
 !param id (id) local variable identifier
 !return (all) local variable value
 !error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
 
 !name IS_GLOBAL
+!alias IS_GLOB
 !desc Checks whether variable with identifier <i>id</i> exists and is global
 !param id (id) variable identifier
 !return (bool) true if variable exists, otherwise false
 
 !name GET_GLOBAL
+!alias GET_GLOB
 !desc Returnes global variable with identifier <i>id</i>
 !param id (id) global variable identifier
 !return (all) global variable value
 !error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier
 
 !name RETURN
+!alias RET
 !desc Returnes value <i>val</i> from function
 !param val (all) value to be returned
 

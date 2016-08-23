@@ -24,6 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             CREATE_ERROR
         </name>
+        <alias>
+            CR_ERR
+        </alias>
         <params>
             <param>
                 all
@@ -41,6 +44,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_ERROR_MESSAGE
         </name>
+        <alias>
+            GET_ERR_MSG
+        </alias>
         <params>
             <param>
                 all
@@ -52,6 +58,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_ERROR_OBJECT
         </name>
+        <alias>
+            GET_ERR_OBJ
+        </alias>
         <params>
             <param>
                 all
@@ -63,6 +72,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_ERROR_CAUSE
         </name>
+        <alias>
+            GET_ERR_CAUSE
+        </alias>
         <params>
             <param>
                 all
@@ -74,6 +86,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_ERROR_LINE
         </name>
+        <alias>
+            GET_ERR_LINE
+        </alias>
         <params>
             <param>
                 all
@@ -85,6 +100,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_ERROR_CH
         </name>
+        <alias>
+            GET_ERR_CH
+        </alias>
         <params>
             <param>
                 all
@@ -173,6 +191,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             ASSIGN_LOCAL_RETURN_IF_ERROR
         </name>
+        <alias>
+            AS_LOC_RET_IF_ERR
+        </alias>
         <params>
             <param>
                 id

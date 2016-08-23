@@ -7,6 +7,7 @@
 !error (SIZE_LESS_THAN_ZERO) if passed size is less than zero
 
 !name CREATE_DICT
+!alias CR_DICT
 !desc Creates dict with string keys and any values. Initialize it with given <i>key</i> and <i>value</i> (can be repeated)
 !repeat key (string) 
 !repeat value (all) 
@@ -14,11 +15,13 @@
 !error (BAD_PARAMETER_TYPE) if <i>key</i> is not string
 
 !name CREATE_TUPLE
+!alias CR_TUP
 !desc Creates tuple of given elements <i>el</i>
 !repeat el (all) element to be inserted in tuple
 !return (tuple) tuple of given elements
 
 !name CREATE_TUPLE_OF_ELEMENTS
+!alias CR_TUP_OF_EL
 !desc Creates tuple of size <i>size</i> filled with elements <i>el</i>
 !param size (int) size of tuple
 !param el (all) element that will be filled in tuple
@@ -81,6 +84,7 @@
 !error (INDEX_OUT_OF_BOUNDS) If <i>start</i> or <i>end</i> are out of <i>col</i> bounds
 
 !name EXTEND_ARRAY
+!alias EXT_ARR
 !desc Extends array to given size or if size is less than actual cut it. Fills elements above size with nones. <b>Note:</b> it will return extended array as new array, not affecting given one
 !param arr (array) array to be extended
 !param size (int) new size
@@ -112,6 +116,7 @@
 !error (BAD_PARAMETER_TYPE) If <i>dict</i> is not dict or <i>key</i> is not string
 
 !name CONTAINS_VALUE
+!alias CONTAINS_VAL
 !desc Checks whether dict <i>dict</i> contains value <i>val</i>. Uses EQ function to achive that
 !param dict (dict) 
 !param val (all except error) 
@@ -133,6 +138,7 @@
 !error (KEY_DOESNT_EXIST) If <i>key</i> doesn't exist in <i>dict</i>
 
 !name COUNT_ELEMENTS
+!alias COUNT_EL
 !desc Count occurences of element <i>el</i> in collection or dict <i>a</i>. Uses EQ function to achive that
 !param a (array, tuple, dict) 
 !param el (all except error) 

@@ -1,4 +1,5 @@
 !name TO_STRING
+!alias TO_STR
 !desc Converts given <i>val</i> to string
 !param val (all) 
 !return (string) 
@@ -25,12 +26,14 @@
 !error (CONVERSION_ERROR) If <i>val</i> is string but cannot be converted to bool
 
 !name TO_ARRAY
+!alias TO_ARR
 !desc Converts given <i>col</i> to array. If you pass array it would return it. If you pass tuple it would copy it and return as array
 !param col (array, tuple) 
 !return (array) 
 !error (BAD_PARAMETER_TYPE) If <i>col</i> is not array or tuple
 
 !name TO_TUPLE
+!alias TO_TUP
 !desc Converts given <i>col</i> to tuple. If you pass tuple it would return it. If you pass array it would copy it and return as tuple 
 !param col (array, tuple) 
 !return (tuple) 

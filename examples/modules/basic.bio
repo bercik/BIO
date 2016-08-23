@@ -1,21 +1,21 @@
 def onSTART()
-   ASSIGN_LOCAL(i, 10)
-   ASSIGN_LOCAL(j, i)
+   AS_LOC(i, 10)
+   AS_LOC(j, i)
    PRINT(i, j, "\n")
-   ASSIGN_LOCAL(i, 20)
+   AS_LOC(i, 20)
    PRINT(i, j, "\n")
 
-   ASSIGN_GLOBAL(x, "global x")
-   ASSIGN_LOCAL(x, "local onSTART x")
+   AS_GLOB(x, "global x")
+   AS_LOC(x, "local onSTART x")
    foo()
-   PRINT(GET_LOCAL(x), GET_GLOBAL(x), "\n")
+   PRINT(GET_LOC(x), GET_GLOB(x), "\n")
 
-   PRINT(GET_GLOBAL(z), "\n")
+   PRINT(GET_GLOB(z), "\n")
 end
 
 def foo()
-   ASSIGN_LOCAL(x, "local x")
-   PRINT(GET_LOCAL(x), GET_GLOBAL(x), "\n")
-   PRINT(x, GET_GLOBAL(x), "\n")
-   ASSIGN_GLOBAL(x, "foo global x")
+   AS_LOC(x, "local x")
+   PRINT(GET_LOC(x), GET_GLOB(x), "\n")
+   PRINT(x, GET_GLOB(x), "\n")
+   AS_GLOB(x, "foo global x")
 end

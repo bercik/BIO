@@ -23,6 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_ERROR
         </name>
+        <alias>
+            IS_ERR
+        </alias>
         <params>
             <param>
                 all
@@ -67,6 +70,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_STRING
         </name>
+        <alias>
+            IS_STR
+        </alias>
         <params>
             <param>
                 all
@@ -89,6 +95,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_ARRAY
         </name>
+        <alias>
+            IS_ARR
+        </alias>
         <params>
             <param>
                 all
@@ -111,6 +120,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_TUPLE
         </name>
+        <alias>
+            IS_TUP
+        </alias>
         <params>
             <param>
                 all
@@ -122,6 +134,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_NUMBER
         </name>
+        <alias>
+            IS_NUM
+        </alias>
         <params>
             <param>
                 all
@@ -133,6 +148,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_COLLECTION
         </name>
+        <alias>
+            IS_COL
+        </alias>
         <params>
             <param>
                 all

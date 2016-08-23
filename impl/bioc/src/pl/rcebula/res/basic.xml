@@ -25,6 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             ASSIGN_LOCAL
         </name>
+        <alias>
+            AS_LOC
+        </alias>
         <params>
             <param>
                 id
@@ -45,6 +48,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             ASSIGN_GLOBAL
         </name>
+        <alias>
+            AS_GLOB
+        </alias>
         <params>
             <param>
                 id
@@ -65,6 +71,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_LOCAL
         </name>
+        <alias>
+            IS_LOC
+        </alias>
         <params>
             <param>
                 id
@@ -76,6 +85,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_LOCAL
         </name>
+        <alias>
+            GET_LOC
+        </alias>
         <params>
             <param>
                 id
@@ -87,6 +99,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             IS_GLOBAL
         </name>
+        <alias>
+            IS_GLOB
+        </alias>
         <params>
             <param>
                 id
@@ -98,6 +113,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             GET_GLOBAL
         </name>
+        <alias>
+            GET_GLOB
+        </alias>
         <params>
             <param>
                 id
@@ -109,6 +127,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             RETURN
         </name>
+        <alias>
+            RET
+        </alias>
         <params>
             <param>
                 all

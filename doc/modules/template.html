@@ -30,9 +30,11 @@
       <ul>
          {% for f in m.functions %}
          <li class="has-sub">
-         <a class="function" href="javascript:void(0)">{{f.name}}
+         <a class="function" href="javascript:void(0)">
             {% if f.alias %}
-            /<wbr><i>{{f.alias}}</i>
+            {{f.name}}/<wbr><i>{{f.alias}}</i>
+            {% else %}
+            {{f.name}}
             {% endif %}
          </a>
          </a>
@@ -254,7 +256,7 @@
          <h3>Aliases</h3>
       </header>
 
-      <p>Many functions have got their name shorter alias (for example: CREATE_ARRAY -&gt; CR_ARR). You can check function alias reading documentation. Alias is after function name and slash printed in italic (for example: CREATE_ARRAY / <i>CR_ARR</i>). Function name alias is usually created by taking two or three first letters of word. So for example CREATE become CR and ARRAY become ARR. <b>Note:</b> during compilation process aliases are replaced by real function names, so even if you use alias you will see error reporting with full function name.</p>
+      <p>Many functions have got their name shorter alias (for example: CREATE_ARRAY -&gt; CR_ARR). You can check function alias reading documentation. Alias is after function name and slash printed in italic (for example: CREATE_ARRAY / <i>CR_ARR</i>). Function name alias is usually created by taking two, three or four first letters of word. So for example CREATE become CR and ARRAY become ARR. <b>Note:</b> during compilation process aliases are replaced by real function names, so even if you use alias you will see error reporting with full function name.</p>
 
    </section>
 

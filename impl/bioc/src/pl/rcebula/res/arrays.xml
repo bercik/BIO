@@ -43,6 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             CREATE_DICT
         </name>
+        <alias>
+            CR_DICT
+        </alias>
         <params>
             <param repeat="true">
                 all
@@ -57,6 +60,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             CREATE_TUPLE
         </name>
+        <alias>
+            CR_TUP
+        </alias>
         <params>
             <param repeat="true">
                 all
@@ -68,6 +74,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             CREATE_TUPLE_OF_ELEMENTS
         </name>
+        <alias>
+            CR_TUP_OF_EL
+        </alias>
         <params>
             <param>
                 all
@@ -135,6 +144,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             EXTEND_ARRAY
         </name>
+        <alias>
+            EXT_ARR
+        </alias>
         <params>
             <param>
                 all
@@ -194,6 +206,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             CONTAINS_VALUE
         </name>
+        <alias>
+            CONTAINS_VAL
+        </alias>
         <params>
             <param>
                 all
@@ -233,6 +248,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <name>
             COUNT_ELEMENTS
         </name>
+        <alias>
+            COUNT_EL
+        </alias>
         <params>
             <param>
                 all

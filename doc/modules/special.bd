@@ -19,6 +19,7 @@
 !return (none) 
 
 !name CONTINUE
+!alias CONT
 !desc Continues current FOR loop, meaning that it goes straight to call_increment function and executes it
 !return (none) 
 
