@@ -29,6 +29,8 @@ import java.util.Objects;
 public class BuiltinFunction
 {
     private final String name;
+    private final String alias;
+    
     private final boolean special;
     private final List<ParamType> params;
     private final List<ParamType> repeatPatternTypes;
@@ -42,9 +44,10 @@ public class BuiltinFunction
     private final boolean isRepeated;
     private final boolean  isOptional;
 
-    public BuiltinFunction(String name, boolean special, List<ParamType> params)
+    public BuiltinFunction(String name, String alias, boolean special, List<ParamType> params)
     {
         this.name = name;
+        this.alias = alias;
         this.special = special;
         this.params = new ArrayList<>(params);
 
@@ -59,20 +62,22 @@ public class BuiltinFunction
         this.isOptional = false;
     }
 
-    public BuiltinFunction(String name, boolean special, ParamType... params)
+    public BuiltinFunction(String name, String alias, boolean special, ParamType... params)
     {
-        this(name, special, Arrays.asList(params));
+        this(name, alias, special, Arrays.asList(params));
     }
 
-    public BuiltinFunction(String name, boolean special, List<ParamType> params, List<Boolean> repeatPattern)
+    public BuiltinFunction(String name, String alias, 
+            boolean special, List<ParamType> params, List<Boolean> repeatPattern)
     {
-        this(name, special, params, repeatPattern, false);
+        this(name, alias, special, params, repeatPattern, false);
     }
     
-    public BuiltinFunction(String name, boolean special, List<ParamType> params, 
+    public BuiltinFunction(String name, String alias, boolean special, List<ParamType> params, 
             List<Boolean> repeatPattern, boolean isOptional)
     {
         this.name = name;
+        this.alias = alias;
         this.special = special;
         this.params = params;
         this.repeatPattern = repeatPattern;
@@ -193,6 +198,11 @@ public class BuiltinFunction
         return name;
     }
 
+    public String getAlias()
+    {
+        return alias;
+    }
+    
     public boolean isSpecial()
     {
         return special;
@@ -213,6 +223,7 @@ public class BuiltinFunction
     {
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.alias);
         hash = 97 * hash + (this.special ? 1 : 0);
         hash = 97 * hash + Objects.hashCode(this.params);
         hash = 97 * hash + Objects.hashCode(this.repeatPattern);
@@ -240,6 +251,10 @@ public class BuiltinFunction
             return false;
         }
         if (!Objects.equals(this.name, other.name))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.alias, other.alias))
         {
             return false;
         }

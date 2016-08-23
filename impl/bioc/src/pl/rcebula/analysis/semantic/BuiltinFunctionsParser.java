@@ -173,7 +173,7 @@ public class BuiltinFunctionsParser
                 String name = elem.getElementsByTagName("name")
                         .item(0).getChildNodes().item(0).getNodeValue().trim();
 
-                // Sprawdź czy ta nazwa się nie powtarza
+                // Sprawdź czy ta nazwa się nie powtarza w innych nazwach i aliasach
                 if (contains(builtinFunctions, name))
                 {
                     // jeżeli tak to rzuć wyjątek
@@ -181,10 +181,32 @@ public class BuiltinFunctionsParser
                     throw new RuntimeException(msg);
                 }
 
+                String alias = null;
+                NodeList tmpNL = elem.getElementsByTagName("alias");
+                if (tmpNL.getLength() > 0)
+                {
+                    alias = tmpNL.item(0).getChildNodes().item(0).getNodeValue().trim();
+
+                    // sprawdź czy alias nie jest taki sam jak nazwa
+                    if (alias.equals(name))
+                    {
+                        String msg = "In function " + name + " name and alias are the same";
+                        throw new RuntimeException(msg);
+                    }
+                    // sprawdź czy alias się nie powtarza wśród innych nazw i aliasów
+                    if (contains(builtinFunctions, alias))
+                    {
+                        // jeżeli tak to rzuć wyjątek
+                        String msg = "In function " + name + " alias " + alias + " is already defined in builtin functions "
+                                + "XML";
+                        throw new RuntimeException(msg);
+                    }
+                }
+
                 boolean special = false;
                 if (allowSpecial)
                 {
-                    NodeList tmpNL = elem.getElementsByTagName("special");
+                    tmpNL = elem.getElementsByTagName("special");
                     if (tmpNL.getLength() > 0)
                     {
                         special = Boolean.parseBoolean(tmpNL.item(0)
@@ -216,14 +238,14 @@ public class BuiltinFunctionsParser
                             String message = "In event " + name + " repeat attribute isn't allowed";
                             throw new RuntimeException(message);
                         }
-                        
+
                         if (isOptional)
                         {
                             String message = "In function " + name + " you can't mix repeat and optional attributes";
                             throw new RuntimeException(message);
                         }
                     }
-                    
+
                     attr = n.getAttributes().getNamedItem("optional");
                     if (attr != null)
                     {
@@ -237,7 +259,7 @@ public class BuiltinFunctionsParser
                             String message = "In event " + name + " optional attribute isn't allowed";
                             throw new RuntimeException(message);
                         }
-                        
+
                         if (isRepeat)
                         {
                             String message = "In function " + name + " you can't mix repeat and optional attributes";
@@ -260,7 +282,7 @@ public class BuiltinFunctionsParser
                     repeatPattern.add(repeat);
                 }
 
-                builtinFunctions.add(new BuiltinFunction(name, special, params, repeatPattern, isOptional));
+                builtinFunctions.add(new BuiltinFunction(name, alias, special, params, repeatPattern, isOptional));
             }
         }
     }
@@ -270,6 +292,10 @@ public class BuiltinFunctionsParser
         for (BuiltinFunction bf : bfs)
         {
             if (bf.getName().equals(name))
+            {
+                return true;
+            }
+            else if (bf.getAlias() != null && bf.getAlias().equals(name))
             {
                 return true;
             }

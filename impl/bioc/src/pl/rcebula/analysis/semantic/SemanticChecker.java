@@ -85,7 +85,7 @@ public class SemanticChecker
             {
                 BuiltinFunction bf = builtinFunctions.get(j);
 
-                if (uf.getName().equals(bf.getName()))
+                if (uf.getName().equals(bf.getName()) || uf.getName().equals(bf.getAlias()))
                 {
                     String message = "Function " + uf.getName() + " is already declared as builtin function";
                     throw new SemanticError(uf.getErrorInfo(), message);
@@ -219,6 +219,13 @@ public class SemanticChecker
             for (int i = 0; i < builtinFunctions.size(); ++i)
             {
                 BuiltinFunction bf = builtinFunctions.get(i);
+                // sprawdź czy jest aliasem
+                if (call.getName().equals(bf.getAlias()))
+                {
+                    // podmień alias na prawdziwą nazwę
+                    call.setName(bf.getName());
+                }
+                
                 if (call.getName().equals(bf.getName()))
                 {
                     functionExists = true;

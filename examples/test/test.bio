@@ -3,4 +3,7 @@
 def onSTART()
    TEST(1, a)
    TEST(1, "a", true, c)
+
+   TEST_ALIAS(1, a)
+   TEST_ALIAS(1, "a", true, c)
 end

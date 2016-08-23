@@ -27,7 +27,7 @@ import pl.rcebula.error_report.ErrorInfo;
  */
 public class Call extends CallParam
 {
-    private final String name;
+    private String name;
     private final Call parentCall;
     private final List<CallParam> callParams = new ArrayList<>();
     // używane przy generowaniu funkcji wbudowanych o zmiennej ilości parametrów
@@ -48,6 +48,11 @@ public class Call extends CallParam
     public String getName()
     {
         return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public Call getParentCall()

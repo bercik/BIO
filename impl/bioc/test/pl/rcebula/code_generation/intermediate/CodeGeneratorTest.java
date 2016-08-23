@@ -57,25 +57,25 @@ public class CodeGeneratorTest
         builtinFunctions = new ArrayList<BuiltinFunction>()
         {
             {
-                add(new BuiltinFunction("FOR", true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
-                add(new BuiltinFunction("CALL", true,
+                add(new BuiltinFunction("FOR", null, true, ParamType.CALL, ParamType.ALL, ParamType.CALL));
+                add(new BuiltinFunction("CALL", null, true,
                         Arrays.asList(ParamType.CALL, ParamType.CALL),
                         Arrays.asList(false, true)));
-                add(new BuiltinFunction("DN", true));
-                add(new BuiltinFunction("IF", true, ParamType.ALL, ParamType.CALL, ParamType.CALL));
-                add(new BuiltinFunction("BREAK", true));
-                add(new BuiltinFunction("CONTINUE", true));
+                add(new BuiltinFunction("DN", null, true));
+                add(new BuiltinFunction("IF", null, true, ParamType.ALL, ParamType.CALL, ParamType.CALL));
+                add(new BuiltinFunction("BREAK", null, true));
+                add(new BuiltinFunction("CONTINUE", null, true));
 
-                add(new BuiltinFunction("LS", false, ParamType.ALL, ParamType.ALL));
-                add(new BuiltinFunction("GT", false, ParamType.ALL, ParamType.ALL));
-                add(new BuiltinFunction("LE", false, ParamType.ALL, ParamType.ALL));
-                add(new BuiltinFunction("ASSIGN_LOCAL", false, ParamType.ID, ParamType.ALL));
-                add(new BuiltinFunction("PRINT", false, ParamType.ALL));
-                add(new BuiltinFunction("DEC", false, ParamType.ID));
-                add(new BuiltinFunction("INC", false, ParamType.ID));
-                add(new BuiltinFunction("RETURN", false, ParamType.ALL));
-                add(new BuiltinFunction("MUL", false, ParamType.ALL, ParamType.ALL));
-                add(new BuiltinFunction("FOO", false,
+                add(new BuiltinFunction("LS", null, false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("GT", null, false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("LE", null, false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("ASSIGN_LOCAL", null, false, ParamType.ID, ParamType.ALL));
+                add(new BuiltinFunction("PRINT", null, false, ParamType.ALL));
+                add(new BuiltinFunction("DEC", null, false, ParamType.ID));
+                add(new BuiltinFunction("INC", null, false, ParamType.ID));
+                add(new BuiltinFunction("RETURN", null, false, ParamType.ALL));
+                add(new BuiltinFunction("MUL", null, false, ParamType.ALL, ParamType.ALL));
+                add(new BuiltinFunction("FOO", null, false,
                         Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL),
                         Arrays.asList(false, true, true, false)));
             }
@@ -513,6 +513,7 @@ public class CodeGeneratorTest
         // CONTINUE()
         call1 = new Call("CONTINUE", ifCall, generateErrorInfo(8, 6));
         ifCall.addCallParam(call1);
+        ifCall.setRepeatCycles(1);
 
         // DN()
         call1 = new Call("DN", forCall, generateErrorInfo(9, 1));

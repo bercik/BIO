@@ -159,7 +159,7 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
 
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        BuiltinFunction bf = new BuiltinFunction("ASSIGN_LOCAL", false);
+        BuiltinFunction bf = new BuiltinFunction("ASSIGN_LOCAL", null, false);
         builtinFunctions.add(bf);
 
         boolean catched = false;
@@ -339,9 +339,9 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
 
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, true, ParamType.CALL,
-                ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, null, true, 
+                ParamType.CALL, ParamType.ALL, ParamType.CALL));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, null, true));
 
         boolean catched = false;
         try
@@ -382,10 +382,10 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
 
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, true, ParamType.CALL,
-                ParamType.ALL, ParamType.CALL));
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.breakFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.forLoopFunctionName, null, true, 
+                ParamType.CALL, ParamType.ALL, ParamType.CALL));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, null, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.breakFunctionName, null, true));
 
         boolean catched = false;
         try
@@ -427,10 +427,10 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
 
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction("FOO", false,
+        builtinFunctions.add(new BuiltinFunction("FOO", null, false,
                 Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL),
                 Arrays.asList(false, true, true, false)));
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, null, true));
 
         boolean catched = false;
         try
@@ -470,10 +470,10 @@ public class SemanticCheckerTest
         pt.addUserFunction(uf);
 
         List<BuiltinFunction> builtinFunctions = new ArrayList<>();
-        builtinFunctions.add(new BuiltinFunction("FOO", false,
+        builtinFunctions.add(new BuiltinFunction("FOO", null, false,
                 Arrays.asList(ParamType.ID, ParamType.ID, ParamType.ALL, ParamType.ALL),
                 Arrays.asList(false, true, true, false)));
-        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, true));
+        builtinFunctions.add(new BuiltinFunction(SpecialFunctionsName.doNothingFunctionName, null, true));
 
         boolean catched = false;
         try
