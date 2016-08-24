@@ -75,6 +75,12 @@ public class CodeOptimizer
             {
                 optimize = true;
             }
+            
+            optimizer = new RemoveClearStackAtBeginning(ic, statistics);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
         }
         
         logger.fine(ic.toStringWithLinesNumber());

@@ -30,6 +30,7 @@ public class OptimizationStatistics
     private int pushBoolJmpSequencesRemoved;
     private int popcJmpClearStackSequencesRemoved;
     private int unusedCodeBlocksLinesRemoved;
+    private int clearStackAtBeginningRemoved;
     private int optimizationIterations;
             
     private int linesBeforeOptimization;
@@ -43,10 +44,16 @@ public class OptimizationStatistics
         pushSequencesRemoved = 0;
         unusedCodeBlocksLinesRemoved = 0;
         popcJmpClearStackSequencesRemoved = 0;
+        clearStackAtBeginningRemoved = 0;
         optimizationIterations = 0;
         
         linesAfterOptimization = 0;
         linesBeforeOptimization = 0;
+    }
+
+    public int getClearStackAtBeginningRemoved()
+    {
+        return clearStackAtBeginningRemoved;
     }
 
     public int getOptimizationIterations()
@@ -92,6 +99,11 @@ public class OptimizationStatistics
     public int getUnusedCodeBlocksLinesRemoved()
     {
         return unusedCodeBlocksLinesRemoved;
+    }
+    
+    public void addClearStackAtBeginningRemoved()
+    {
+        ++clearStackAtBeginningRemoved;
     }
     
     public void addOptimizationIteration()
@@ -163,6 +175,7 @@ public class OptimizationStatistics
         float unusedCodeBlocksLinesRemovedOpt = relativeDiffrence(lbo, lbo - (float)unusedCodeBlocksLinesRemoved);
         float removedJumpsToNextLineOpt = relativeDiffrence(lbo, lbo - (float)jumpsToNextLineRemoved);
         float popcJmpClearStackSequencesOpt = relativeDiffrence(lbo, lbo - (float)popcJmpClearStackSequencesRemoved);
+        float clearStackAtBeginningOpt = relativeDiffrence(lbo, lbo - (float)clearStackAtBeginningRemoved);
         
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
@@ -178,6 +191,10 @@ public class OptimizationStatistics
                 "% (" + pushBoolJmpSequencesRemoved + ")");
         System.out.println("  Removed popc jmp clear stack sequences: " + df.format(popcJmpClearStackSequencesOpt) + 
                 "% (" + popcJmpClearStackSequencesRemoved + ")");
+        
+        System.out.println("  Removed clear stack at beginning: " + df.format(clearStackAtBeginningOpt) + 
+                "% (" + clearStackAtBeginningRemoved + ")");
+        
         System.out.println("  Removed unused code blocks lines: " + 
                 df.format(unusedCodeBlocksLinesRemovedOpt) + "% (" + unusedCodeBlocksLinesRemoved + ")");
         System.out.println("  Removed jumps to next line: " + removedJumpsToNextLineOpt + 
