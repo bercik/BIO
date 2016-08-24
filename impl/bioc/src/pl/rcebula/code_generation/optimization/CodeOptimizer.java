@@ -44,6 +44,7 @@ public class CodeOptimizer
         new RemoveRedundantJumps(ic, statistics);
         new FlowGraphAnalyse(ic, statistics, files);
         new RemoveJmpsToNextLine(ic, statistics);
+        new RemovePopcJmpClearStackSequences(ic, statistics);
         
         logger.fine(ic.toStringWithLinesNumber());
     }
