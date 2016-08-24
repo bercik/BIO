@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.utils;
+package pl.rcebula.code_generation.optimization;
 
 import java.text.DecimalFormat;
 
@@ -30,6 +30,7 @@ public class OptimizationStatistics
     private int pushBoolJmpSequencesRemoved;
     private int popcJmpClearStackSequencesRemoved;
     private int unusedCodeBlocksLinesRemoved;
+    private int optimizationIterations;
             
     private int linesBeforeOptimization;
     private int linesAfterOptimization;
@@ -42,9 +43,15 @@ public class OptimizationStatistics
         pushSequencesRemoved = 0;
         unusedCodeBlocksLinesRemoved = 0;
         popcJmpClearStackSequencesRemoved = 0;
+        optimizationIterations = 0;
         
         linesAfterOptimization = 0;
         linesBeforeOptimization = 0;
+    }
+
+    public int getOptimizationIterations()
+    {
+        return optimizationIterations;
     }
 
     public int getPopcJmpClearStackSequencesRemoved()
@@ -85,6 +92,11 @@ public class OptimizationStatistics
     public int getUnusedCodeBlocksLinesRemoved()
     {
         return unusedCodeBlocksLinesRemoved;
+    }
+    
+    public void addOptimizationIteration()
+    {
+        ++optimizationIterations;
     }
     
     public void addPopcJmpClearStackRemoved()
@@ -154,6 +166,9 @@ public class OptimizationStatistics
         
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
+        
+        System.out.println("Optimization iterations: " + optimizationIterations);
+        System.out.println("");
         
         System.out.println("Removed lines of code: " + df.format(percentOpt) + "% (" 
                 + (linesBeforeOptimization - linesAfterOptimization) + ")");

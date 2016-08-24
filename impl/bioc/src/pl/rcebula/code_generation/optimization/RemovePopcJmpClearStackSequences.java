@@ -17,24 +17,21 @@
 package pl.rcebula.code_generation.optimization;
 
 import pl.rcebula.code.InterpreterFunction;
-import pl.rcebula.code.ValueType;
-import pl.rcebula.code_generation.intermediate.InterpreterFunctionsGenerator;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.error_report.ErrorInfo;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemovePopcJmpClearStackSequences
+public class RemovePopcJmpClearStackSequences implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
+    private boolean optimize = false;
 
     public RemovePopcJmpClearStackSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
@@ -42,6 +39,12 @@ public class RemovePopcJmpClearStackSequences
         this.statistics = statistics;
         
         analyseAndRemove();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
     
     private void analyseAndRemove()
@@ -78,6 +81,7 @@ public class RemovePopcJmpClearStackSequences
                                 // usuń linię c
                                 ic.removeLine(c);
                                 statistics.addPopcJmpClearStackRemoved();
+                                optimize = true;
                             }
                         }
                     }

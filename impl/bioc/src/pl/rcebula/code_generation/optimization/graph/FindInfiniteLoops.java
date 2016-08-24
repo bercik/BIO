@@ -19,7 +19,6 @@ package pl.rcebula.code_generation.optimization.graph;
 import java.util.Collections;
 import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
-import pl.rcebula.utils.Pair;
 import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntStringField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;

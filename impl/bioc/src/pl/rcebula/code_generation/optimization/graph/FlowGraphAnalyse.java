@@ -19,18 +19,21 @@ package pl.rcebula.code_generation.optimization.graph;
 import java.util.logging.Logger;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
+import pl.rcebula.code_generation.optimization.IOptimizer;
 import pl.rcebula.error_report.MyFiles;
-import pl.rcebula.utils.OptimizationStatistics;
+import pl.rcebula.code_generation.optimization.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class FlowGraphAnalyse
+public class FlowGraphAnalyse implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final MyFiles files;
+    
+    private boolean optimize = false;
 
     public FlowGraphAnalyse(IntermediateCode ic, OptimizationStatistics statistics,
             MyFiles files)
@@ -44,6 +47,12 @@ public class FlowGraphAnalyse
         this.files = files;
         
         analyse();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
     
     private void analyse()
@@ -82,7 +91,8 @@ public class FlowGraphAnalyse
         // tworzymy graf przepływu
         FlowGraph fg = new FlowGraph(ic, start, end);
         // usuwamy nieużywane bloki kodu
-        new RemoveUnusedCodeBlocks(ic, statistics, fg);
+        IOptimizer optimizer = new RemoveUnusedCodeBlocks(ic, statistics, fg);
+        optimize = optimizer.isOptimized();
         // szukamy nieskończonych pętli
         new FindInfiniteLoops(ic, fg, files);
     }

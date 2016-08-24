@@ -18,17 +18,20 @@ package pl.rcebula.code_generation.optimization.graph;
 
 import java.util.List;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
-import pl.rcebula.utils.OptimizationStatistics;
+import pl.rcebula.code_generation.optimization.IOptimizer;
+import pl.rcebula.code_generation.optimization.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemoveUnusedCodeBlocks
+public class RemoveUnusedCodeBlocks implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final FlowGraph fg;
+    
+    private boolean optimize = false;
 
     public RemoveUnusedCodeBlocks(IntermediateCode ic, OptimizationStatistics statistics, FlowGraph fg)
     {
@@ -37,6 +40,12 @@ public class RemoveUnusedCodeBlocks
         this.fg = fg;
         
         analyseAndRemove();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
     
     private void analyseAndRemove()
@@ -55,6 +64,7 @@ public class RemoveUnusedCodeBlocks
             {
                 ic.removeLineWithLabels(lnr);
                 statistics.addUnusedCodeBlocksLinesRemoved();
+                optimize = true;
             }
             // usuwamy blok kodu z grafu przepływu
             fg.removeCodeBlock(cb);

@@ -21,16 +21,17 @@ import pl.rcebula.code.InterpreterFunction;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemovePushPopcSequences
+public class RemovePushPopcSequences implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
+    
+    private boolean optimize = false;
 
     public RemovePushPopcSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
@@ -43,6 +44,12 @@ public class RemovePushPopcSequences
         
         // powtarzamy proces tak długo aż nie dokonujemy żadnych usunięć w kodzie
         while (analyseAndRemove()) { }
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
 
     private boolean analyseAndRemove()
@@ -115,6 +122,7 @@ public class RemovePushPopcSequences
             {
                 ic.removeLine(lineStart);
                 statistics.addPushSequenceRemoved();
+                optimize = true;
             }
 
             lineEnd = lineStart - 1;

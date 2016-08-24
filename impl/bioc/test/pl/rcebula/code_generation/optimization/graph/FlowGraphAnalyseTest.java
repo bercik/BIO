@@ -33,7 +33,7 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.optimization.CodeOptimizationError;
 import pl.rcebula.error_report.MyFiles;
-import pl.rcebula.utils.OptimizationStatistics;
+import pl.rcebula.code_generation.optimization.OptimizationStatistics;
 
 /**
  *

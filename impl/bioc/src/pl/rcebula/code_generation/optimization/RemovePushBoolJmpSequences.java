@@ -27,17 +27,18 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import pl.rcebula.error_report.MyFiles;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemovePushBoolJmpSequences
+public class RemovePushBoolJmpSequences implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final MyFiles files;
+    
+    private boolean optimize = false;
 
     public RemovePushBoolJmpSequences(IntermediateCode ic, OptimizationStatistics statistics, MyFiles files)
     {
@@ -50,6 +51,12 @@ public class RemovePushBoolJmpSequences
         this.files = files;
         
         analyseAndRemove();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
     
     private void analyseAndRemove()
@@ -101,6 +108,7 @@ public class RemovePushBoolJmpSequences
                                         line = ifg.generateJmp(label, jmpErrorInfo);
                                         ic.insertLine(line, c+1);
                                         statistics.removePushBoolSequenceRemoved();
+                                        optimize = true;
                                     }
                                     // usuń linijki c-2,c-1,c
                                     int i = 3;
@@ -108,6 +116,7 @@ public class RemovePushBoolJmpSequences
                                     {
                                         ic.removeLine(c - 2);
                                         statistics.addPushBoolSequenceRemoved();
+                                        optimize = true;
                                     }
                                     
                                     c = c - 2;

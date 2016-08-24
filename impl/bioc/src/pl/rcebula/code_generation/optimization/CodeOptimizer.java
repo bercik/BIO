@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.IntermediateCode;
 import pl.rcebula.code_generation.optimization.graph.FlowGraphAnalyse;
 import pl.rcebula.error_report.MyFiles;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
@@ -39,12 +38,44 @@ public class CodeOptimizer
         
         this.ic = ic;
         
-        new RemovePushPopcSequences(ic, statistics);
-        new RemovePushBoolJmpSequences(ic, statistics, files);
-        new RemoveRedundantJumps(ic, statistics);
-        new FlowGraphAnalyse(ic, statistics, files);
-        new RemoveJmpsToNextLine(ic, statistics);
-        new RemovePopcJmpClearStackSequences(ic, statistics);
+        boolean optimize = true;
+        while (optimize)
+        {
+            statistics.addOptimizationIteration();
+            
+            IOptimizer optimizer = new RemovePushPopcSequences(ic, statistics);
+            optimize = optimizer.isOptimized();
+            
+            optimizer = new RemovePushBoolJmpSequences(ic, statistics, files);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
+            
+            optimizer = new RemoveRedundantJumps(ic, statistics);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
+            
+            optimizer = new FlowGraphAnalyse(ic, statistics, files);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
+            
+            optimizer = new RemoveJmpsToNextLine(ic, statistics);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
+            
+            optimizer = new RemovePopcJmpClearStackSequences(ic, statistics);
+            if (!optimize && optimizer.isOptimized())
+            {
+                optimize = true;
+            }
+        }
         
         logger.fine(ic.toStringWithLinesNumber());
     }

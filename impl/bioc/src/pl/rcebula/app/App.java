@@ -31,7 +31,7 @@ import pl.rcebula.preprocessor.Preprocessor;
 import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
-import pl.rcebula.utils.OptimizationStatistics;
+import pl.rcebula.code_generation.optimization.OptimizationStatistics;
 import pl.rcebula.utils.TimeProfiler;
 
 /**

@@ -23,17 +23,18 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemoveRedundantJumps
+public class RemoveRedundantJumps implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final Logger logger = Logger.getGlobal();
+    
+    private boolean optimize = false;
 
     public RemoveRedundantJumps(IntermediateCode ic, OptimizationStatistics statistics)
     {
@@ -44,6 +45,12 @@ public class RemoveRedundantJumps
         this.statistics = statistics;
 
         analyseAndRemove();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
 
     private void analyseAndRemove()
@@ -60,6 +67,7 @@ public class RemoveRedundantJumps
             else
             {
                 statistics.addRedundantJumpRemoved();
+                optimize = true;
             }
         }
     }

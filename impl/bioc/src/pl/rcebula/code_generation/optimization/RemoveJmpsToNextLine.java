@@ -23,17 +23,17 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Label
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.LabelField;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Line;
 import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
-import pl.rcebula.utils.OptimizationStatistics;
 
 /**
  *
  * @author robert
  */
-public class RemoveJmpsToNextLine
+public class RemoveJmpsToNextLine implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private final Logger logger = Logger.getGlobal();
+    private boolean optimize = false;
 
     public RemoveJmpsToNextLine(IntermediateCode ic, OptimizationStatistics statistics)
     {
@@ -44,6 +44,12 @@ public class RemoveJmpsToNextLine
         this.statistics = statistics;
         
         analyseAndRemove();
+    }
+
+    @Override
+    public boolean isOptimized()
+    {
+        return optimize;
     }
     
     private void analyseAndRemove()
@@ -73,6 +79,7 @@ public class RemoveJmpsToNextLine
                 // jeżeli skok do następnej lini
                 if (jmpDest == lnr + 1)
                 {
+                    optimize = true;
                     statistics.addJumpsToNextLineRemoved();
                     // jeżeli JMP to po prostu usuń
                     if (funName.equals(InterpreterFunction.JMP.toString()))
