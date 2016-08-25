@@ -73,9 +73,17 @@ def parse_bd(fname):
     repeatedFrom = None
     repeatedTo = None
     isOptional = False
+    isModOptional = False
 
-    for i in range(0, len(lines)):
+    line_iter = iter(range(0, len(lines)))
+    for i in line_iter:
         line = lines[i]
+
+        # sprawdź czy pierwsza linia to nie !optional, jeżeli tak to pomiń następną
+        if i == 0 and line.rstrip() == "!optional":
+            isModOptional = True
+            next(line_iter)
+            continue
 
         if line == "":
             fun = Function(name, alias, params, errors, 
@@ -210,6 +218,7 @@ def parse_bd(fname):
         temp_funs.append(temp_fun)
 
     mod = Obj()
+    mod.optional = isModOptional
     mod.mod_name = fileName
     mod.functions = temp_funs
 

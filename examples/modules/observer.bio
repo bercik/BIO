@@ -18,6 +18,14 @@ def FOO21(param)
    PRINT("FOO21:", param, "\n")
 end
 
+def EVENT(par1, par2)
+   DN()
+end
+
+def CALLBACK(par1, par2, par3)
+   DN()
+end
+
 def onSTART()
    ATTACH_TO_EVENT(SOME_EVENT, FOO1, SOME_EVENT, FOO2)
    ATTACH_TO_EVENT(FOO1, FOO11)
@@ -48,4 +56,8 @@ def onSTART()
    % FOO1: test2
    % error is already attached
    % error is not attached
+
+   AS_LOC(val, ATTACH_TO_EVENT(EVENT, CALLBACK))
+   ASSERT_TRUE(IS_ERROR(val))
+   PRINTLN(val)
 end

@@ -68,7 +68,8 @@ public class ObserverModule extends Module
                             interpreter, eventName);
                 }
                 // sprawdzamy czy callback istnieje
-                if (!interpreter.getUserFunctions().containsKey(callbackName))
+                UserFunction callbackUf = interpreter.getUserFunctions().get(callbackName);
+                if (callbackUf == null)
                 {
                     return ErrorConstruct.USER_FUNCTION_DOESNT_EXIST(getName(), callbackData.getErrorInfo(),
                             interpreter, callbackName);
@@ -92,6 +93,16 @@ public class ObserverModule extends Module
 
                     if (!duplicate)
                     {
+                        int eventParams = eventUf.getParams().size();
+                        int callbackParams = callbackUf.getParams().size();
+                        // sprawdzamy czy ilość parametrów callback jest mniejsza lub równa ilości parametrów event
+                        if (callbackParams > eventParams)
+                        {
+                            return ErrorConstruct.CALLBACK_PARAMS_GREATER_THAN_EVENT(getName(), 
+                                    eventData.getErrorInfo(), interpreter, eventName, eventParams, callbackName, 
+                                    callbackParams);
+                        }
+                        
                         error = false;
                         tmp.add(new Pair<>(callbackName, eventUf));
                     }

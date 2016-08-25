@@ -30,7 +30,9 @@ public enum ErrorCodes
     START_GREATER_THAN_END(14),
     CONVERSION_ERROR(15),
     REGEX_ERROR(16),
-    USER_FUNCTION_DOESNT_EXIST(17);
+    USER_FUNCTION_DOESNT_EXIST(17),
+    CALLBACK_PARAMS_GREATER_THAN_EVENT(18),
+    TOO_LITTLE_PARAMETERS(19);
     
     private final Data code;
             

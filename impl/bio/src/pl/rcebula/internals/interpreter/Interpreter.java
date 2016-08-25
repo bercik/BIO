@@ -244,7 +244,7 @@ public class Interpreter
     {
         if (uf.getParams().size() == parameters.size())
         {
-            new PerformCall(parameters, uf, this, ei);
+            new PerformCall(parameters, false, uf, this, ei);
         }
         else
         {

@@ -22,11 +22,18 @@
          <li><a href="#basic-info-errors">Errors</a></li>
          <li><a href="#basic-info-conversions">Conversions</a></li>
          <li><a href="#basic-info-aliases">Aliases</a></li>
+         <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
       </ul>
       </li>
       {% for m in modules %}
       <li class="has-sub">
-      <a href="javascript:void(0)">{{m.mod_name}}</a>
+      <a href="javascript:void(0)">
+         {% if m.optional %}
+         {{m.mod_name}} <i>(optional)</i>
+         {% else %}
+         {{m.mod_name}}
+         {% endif %}
+      </a>
       <ul>
          {% for f in m.functions %}
          <li class="has-sub">
@@ -260,13 +267,35 @@
 
    </section>
 
+   <section id="basic-info-preprocessor">
+      <header>
+         <h3>Preprocessor</h3>
+      </header>
+
+      <p>There are two preprocessor directives: #INCLUDE and #IMPORT. They must be typed alone and one directive per line. So for example:</p>
+      <p><code>#IMPORT("reflections")<br/>#INCLUDE("list.biom")<br/></code></p>
+      <p>Is ok, but this:</p>
+      <p><code>#IMPORT("reflections") #INCLUDE("list.biom")<br/></code></p>
+      <p>Isn't</p>
+      <h4>#IMPORT</h4>
+      <p>#IMPORT directive is used when you want to use some module which is marked as optional (you can find this in documentation after module name). Than you need to type #IMPORT("mod_name") somewhere in your source file. <b>Note: </b> you can type #IMPORT("all") to import all optional modules available.</p>
+      <h4>#INCLUDE</h4>
+      <p>Informations not available yet.</p>
+   </section>
+
 </section>
 <!-- end of header info -->
 
 {% for m in modules %}
 <section class="module block" id="{{m.mod_name}}">
    <header>
-      <h2>{{m.mod_name}}</h2>
+      <h2>
+         {% if m.optional %}
+         {{m.mod_name}} <i>(optional)</i>
+         {% else %}
+         {{m.mod_name}}
+         {% endif %}
+      </h2>
    </header>
    <section class="functions">
       {% for f in m.functions %}

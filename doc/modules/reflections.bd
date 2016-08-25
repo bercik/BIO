@@ -1,0 +1,15 @@
+!optional
+
+!name CALL_BY_NAME
+!desc Calls user function with <i>name</i>, passing to it parameters <i>par</i>
+!param name (string) user function name
+!repeat par (all) parameter to pass
+!return (all) what called function returns
+!error (BAD_PARAMETER_TYPE) If <i>name</i> is not string
+!error (USER_FUNCTION_DOESNT_EXIST) If user function with <i>name</i> doesn't exist
+!error (TOO_LITTLE_PARAMETERS) If you passed less parameters <i>par</i> than user function <i>name</i> takes
+
+!name GET_USER_FUNCTIONS_NAMES
+!desc Returns array with all user functions names
+!return (array) new array with all user functions names 
+

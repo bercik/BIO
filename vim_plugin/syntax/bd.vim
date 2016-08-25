@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language: BIO documentation file
+" Language: BD documentation file
 " Maintainer: Robert Cebula
-" Latest Revision: 13 July 2016
+" Latest Revision: 25 August 2016
 
 if exists("b:current_syntax")
   finish
@@ -16,4 +16,6 @@ syn match keyword "!repeat\s\+"
 syn match keyword "!optional\s\+"
 syn match keyword "!desc\s\+"
 
-let b:current_syntax = "bio"
+syn match Function "^!optional\s*$"
+
+let b:current_syntax = "bd"

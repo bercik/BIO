@@ -20,10 +20,10 @@ import pl.rcebula.internals.data_types.Data;
  */
 public class PerformCall
 {
-    public PerformCall(List<Data> parameters, UserFunction uf, Interpreter interpreter, ErrorInfo ei)
+    public PerformCall(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, ErrorInfo ei)
     {
-        // tworzymy ramkę i odkładamy na stos zaznaczając, że nie interesuje nas wartość zwracana
-        CallFrame cf = new CallFrame(parameters, uf, ei, false);
+        // tworzymy ramkę i odkładamy na stos zaznaczając, czy interesuje nas wartość zwracana
+        CallFrame cf = new CallFrame(parameters, uf, ei, returnValue);
         interpreter.pushFrameToStack(cf);
 
         // tworzymy ramki dla każdego obserwatora w odwrotnej kolejności w jakiej były dodawane, 

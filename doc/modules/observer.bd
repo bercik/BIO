@@ -1,5 +1,5 @@
 !name ATTACH_TO_EVENT
-!desc Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i>
+!desc Attach <i>callback</i> functions to <i>event</i> functions. When <i>event</i> function is called, then <i>callback</i> functions attached to it are executed in the same order that they were added and at the end <i>event</i> function is executed. If there are attached callbacks to this callbacks there are also executed in the same manner. Values returned form <i>callback</i> functions are ommited. If error occurs during execution of this function then no <i>callback</i> would be attached to <i>event</i>. <i>Callback</i> function can take less number of parameters than <i>event</i> function, if so less parameters would be passed to it. However if <i>callback</i> function takes more parameters than <i>event</i> function than error would be returned.
 !param event (id) function to be observed
 !param callback (id) function to be attached
 !repeat event (id) function to be observed
@@ -7,6 +7,7 @@
 !return (none) 
 !error (CALLBACK_ALREADY_ATTACHED) If <i>callback</i> is already attached to <i>event</i> 
 !error (USER_FUNCTION_DOESNT_EXIST) If <i>event</i> or <i>callback</i> user function doesn't exist. <b>Note:</b> that you can't pass builtin functions to this function
+!error (CALLBACK_PARAMS_GREATER_THAN_EVENT) If <i>callback</i> number of parameters are greater than <i>event</i> number of parameters
 
 !name IS_ATTACHED
 !desc Checks whether <i>callback</i> is attached to <i>event</i>

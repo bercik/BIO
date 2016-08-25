@@ -101,8 +101,8 @@ public class ErrorConstruct
 
         return Data.createErrorData(error);
     }
-    
-    public static Data CONVERSION_ERROR(String funName, ErrorInfo ei, Interpreter interpreter, 
+
+    public static Data CONVERSION_ERROR(String funName, ErrorInfo ei, Interpreter interpreter,
             Data actual, DataType toWhat)
     {
         String message = "can't convert " + actual.getDataType().toString() + " ";
@@ -114,31 +114,55 @@ public class ErrorConstruct
         {
             message += actual.getValue().toString();
         }
-         message += " to " + toWhat.toString();
-        
-        MyError error = new MyError(funName, message, ErrorCodes.CONVERSION_ERROR.getCode(), null, 
+        message += " to " + toWhat.toString();
+
+        MyError error = new MyError(funName, message, ErrorCodes.CONVERSION_ERROR.getCode(), null,
                 ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
+
     public static Data REGEX_ERROR(String funName, ErrorInfo ei, Interpreter interpreter, String regex)
     {
         String message = "regex \"" + regex + "\" is invalid";
-        
-        MyError error = new MyError(funName, message, ErrorCodes.REGEX_ERROR.getCode(), null, ei, 
+
+        MyError error = new MyError(funName, message, ErrorCodes.REGEX_ERROR.getCode(), null, ei,
                 interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
+
     public static Data USER_FUNCTION_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter,
             String function)
     {
         String message = "user function " + function + " doesn't exist";
-        
-        MyError error = new MyError(funName, message, 
+
+        MyError error = new MyError(funName, message,
                 ErrorCodes.USER_FUNCTION_DOESNT_EXIST.getCode(), null, ei, interpreter);
+
+        return Data.createErrorData(error);
+    }
+
+    public static Data CALLBACK_PARAMS_GREATER_THAN_EVENT(String funName, ErrorInfo ei,
+            Interpreter interpreter, String eventName, int eventParams, String callbackName, int callbackParams)
+    {
+        String message = "callback " + callbackName + " takes " + callbackParams + " parameters which is "
+                + "greater than event " + eventName + " " + eventParams + " parameters";
+
+        MyError error = new MyError(funName, message, 
+                ErrorCodes.CALLBACK_PARAMS_GREATER_THAN_EVENT.getCode(), null, ei, interpreter);
+        
+        return Data.createErrorData(error);
+    }
+    
+    public static Data TOO_LITTLE_PARAMETERS(String funName, ErrorInfo ei, Interpreter interpreter, 
+            String callFunName, int callFunNameParams, int passedParams)
+    {
+        String message = "function " + callFunName + " takes " + callFunNameParams + " parameters, got " +
+                passedParams;
+        
+        MyError error = new MyError(funName, message, ErrorCodes.TOO_LITTLE_PARAMETERS.getCode(), 
+                null, ei, interpreter);
         
         return Data.createErrorData(error);
     }
