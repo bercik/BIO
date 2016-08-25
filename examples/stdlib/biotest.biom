@@ -1,0 +1,126 @@
+#IMPORT("reflections")
+#INCLUDE("list.biom")
+
+def onSTART()
+   % słownik przechowujący liczbę errorów dla każdej funkcji
+   AS_GLOB(bt_errors_dict, CREATE_DICT())
+   % pobieramy tablicę nazw funkcji użytkownika
+   AS_LOC(funNames, GET_USER_FUNCTIONS_NAMES())
+   % tworzymy listę
+   AS_LOC(list, CREATE_LIST(10))
+   % dodajemy do list wszystkie nazwy funkcji, które zaczynają
+   % się od test (wielkość liter bez znaczenia)
+   FOR
+   (
+      AS_LOC(it, 0),
+      LS(it, SIZE(funNames)),
+      CALL
+      (
+         AS_LOC(funName, GET(funNames, it)),
+         IF(STARTS_WITH(TO_LOWERCASE(funName), "test"), APPEND_TO_LIST(list, funName))
+      ),
+      INC(it)
+   )
+
+   % wywołujemy wszystkie funkcje
+   FOR
+   (
+      AS_LOC(it, 0),
+      LS(it, SIZE_OF_LIST(list)),
+      CALL
+      (
+         AS_GLOB(bt_fun_name, GET_ITEM_FROM_LIST(list, it)),
+         CALL_BY_NAME(GET_GLOB(bt_fun_name))
+      ),
+      INC(it)
+   )
+
+   % wyświetlamy podsumowanie
+   AS_LOC(errors_dict, GET_GLOB(bt_errors_dict))
+   % podliczamy ilość zer
+   AS_LOC(zeros, COUNT_EL(errors_dict, 0))
+
+   PRINTLN()
+   PRINTLN("SUMMARY")
+   PRINTLN("--------------")
+
+   % jeżeli ilość zer jest równa ilości funkcji to znaczy
+   % że żaden test nie zawiódł
+   IF
+   (
+      EQ(zeros, SIZE_OF_LIST(list)),
+      CALL
+      (
+         PRINTLN("All test passed without errors"),
+         EXIT()
+      )
+   )
+
+   PRINTLN("Some test passed with errors. Here is list of tests and number of errors:")
+   AS_LOC(keys, GET_KEYS(errors_dict))
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, SIZE(keys)),
+      CALL
+      (
+         AS_LOC(key, GET(keys, i)),
+         AS_LOC(val, GET(errors_dict, key)),
+         AS_LOC(msg, ADD(key, ": ", TO_STR(val))),
+         PRINTLN(msg)
+      ),
+      INC(i)
+   )
+end
+
+def BT_ASSERT_TRUE(bval, msg)
+   AS_LOC(funName, GET_GLOB(bt_fun_name))
+   IF
+   (
+      NOT(bval),
+      _error(funName, msg)
+   )
+end
+
+def BT_ASSERT_FALSE(bval, msg)
+   AS_LOC(funName, GET_GLOB(bt_fun_name))
+   IF
+   (
+      bval,
+      _error(funName, msg)
+   )
+end
+
+def BT_ASSERT_EQ(val1, val2, msg)
+   AS_LOC(funName, GET_GLOB(bt_fun_name))
+   IF
+   (
+      NEQ(val1, val2),
+      _error(funName, msg)
+   )
+end
+
+def BT_ASSERT_NEQ(val1, val2, msg)
+   AS_LOC(funName, GET_GLOB(bt_fun_name))
+   IF
+   (
+      EQ(val1, val2),
+      _error(funName, msg)
+   )
+end
+
+def _error(funName, msg)
+   _add_error(funName)
+   PRINT_NTH_LAST_STACK_TRACE(CREATE_ERROR("", none, none), 1)
+   PRINT(" failed")
+   IF(NOT(IS_NONE(msg)), PRINTLN(ADD(": \"", msg, "\"")), PRINTLN())
+end
+
+def _add_error(funName)
+   % przypisujemy globalny słownik do zmiennej lokalnej
+   AS_LOC(dict, GET_GLOB(bt_errors_dict))
+   % jeżeli klucz funName nie jest ustawiony to ustawiamy na 0
+   IF(NOT(CONTAINS_KEY(dict, funName)), SET(dict, funName, 0)) 
+   % dodajemy jeden do klucza funName
+   SET(dict, funName, ADD(GET(dict, funName), 1))
+end

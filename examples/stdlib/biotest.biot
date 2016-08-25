@@ -1,0 +1,35 @@
+#INCLUDE("biotest.biom")
+
+def TEST_ONE()
+   PRINTLN("test one")
+   BT_ASSERT_TRUE(true, none)
+   BT_ASSERT_TRUE(false, none)
+   BT_ASSERT_FALSE(true, "test one error msg 2")
+   BT_ASSERT_TRUE(false, "test_one error msg")
+end
+
+def TEST_TWO()
+   PRINTLN("test two")
+   someFoo()
+end
+
+def someFoo()
+   BT_ASSERT_TRUE(false, "someFoo error msg")
+   someFooFoo()
+end
+
+def someFooFoo()
+   BT_ASSERT_EQ(10, 10, "ints equals")
+   BT_ASSERT_EQ(10, 20, "ints not equals!")
+end
+
+def tEsT_Three()
+   PRINTLN("test three")
+   BT_ASSERT_TRUE(false, none)
+   BT_ASSERT_NEQ(10, 10, "ints equals!")
+   BT_ASSERT_NEQ(10, 20, "ints not equals")
+end
+
+def NO_TEST(par)
+   PRINTLN("no test")
+end

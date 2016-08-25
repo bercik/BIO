@@ -85,6 +85,23 @@ def INDEX_OF_ITEM_LIST(list, item)
    RET(none)
 end
 
+% return element at index from list
+def GET_ITEM_FROM_LIST(list, index)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   % sprawdzamy czy index zawiera się w granicach
+   IF
+   (
+      OR(LS(index, 0), GT(index, count)),
+      RET(CR_ERR("Index out of bounds", none, none))
+   )
+   RET(GET(arr, index))
+end
+
+def SIZE_OF_LIST(list)
+   UNPACK(count, arr, _GET_LIST_TUPLE(list))
+   RET(count)
+end
+
 def GET_ARRAY_LIST(list)
    UNPACK(count, arr, _GET_LIST_TUPLE(list))
    RET(SLICE(arr, 0, count))

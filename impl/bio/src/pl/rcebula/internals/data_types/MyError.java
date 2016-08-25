@@ -108,4 +108,19 @@ public class MyError
         
         return str;
     }
+    
+    public String getFirstCauseNthLastStackTrace(int n)
+    {
+        MyError callStackError = this;
+        MyError causeError = cause;
+        while (causeError != null)
+        {
+            callStackError = causeError;
+            causeError = causeError.getCause();
+        }
+        
+        String str = callStackError.getCallStack().toStringNthLastTrace(n);
+        
+        return str;
+    }
 }

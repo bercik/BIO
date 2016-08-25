@@ -32,7 +32,8 @@ public enum ErrorCodes
     REGEX_ERROR(16),
     USER_FUNCTION_DOESNT_EXIST(17),
     CALLBACK_PARAMS_GREATER_THAN_EVENT(18),
-    TOO_LITTLE_PARAMETERS(19);
+    TOO_LITTLE_PARAMETERS(19),
+    NO_STACK_TRACE(20);
     
     private final Data code;
             

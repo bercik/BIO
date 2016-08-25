@@ -4,6 +4,14 @@
 !return (string) printed string
 !error (BAD_PARAMETER_TYPE) if <i>err</i> isn't error
 
+!name PRINT_LAST_NTH_STACK_TRACE
+!desc Prints <i>err</i> first cause <i>n</i>th last stack trace (or if there isn't any cause, this error last stack trace)
+!param err (error) 
+!param n (int) which trace to print, zero means last, one means one before last etc.
+!return (string) printed string
+!error (BAD_PARAMETER_TYPE) If <i>err</i> isn't error or <i>n</i> is not int
+!error (NO_STACK_TRACE) If there is no <i>n</i>th last stack trace
+
 !name CREATE_ERROR
 !alias CR_ERR
 !desc Creates error with string <i>msg</i>, any additional value (except error) <i>obj</i> and error <i>cause</i>

@@ -123,6 +123,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            PRINT_NTH_LAST_STACK_TRACE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             ASSERTS_ON
         </name>
         <params>

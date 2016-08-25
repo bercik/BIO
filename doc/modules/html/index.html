@@ -575,6 +575,18 @@
          </li>
                   <li class="has-sub">
          <a class="function" href="javascript:void(0)">
+                        PRINT_LAST_NTH_STACK_TRACE
+                     </a>
+         </a>
+         <ul>
+            <li><a href="#PRINT_LAST_NTH_STACK_TRACE_fun">Description</a></li>
+                        <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funparams">Parameters</a></li>
+                                    <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funreturns">Returns</a></li>
+                                    <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funerrors">Errors</a></li>
+                     </ul>
+         </li>
+                  <li class="has-sub">
+         <a class="function" href="javascript:void(0)">
                         CREATE_ERROR/<wbr><i>CR_ERR</i>
                      </a>
          </a>
@@ -3280,6 +3292,45 @@
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
                <dd>if <i>err</i> isn't error</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="PRINT_LAST_NTH_STACK_TRACE_fun">
+
+         <header>
+            <h3>PRINT_LAST_NTH_STACK_TRACE
+                        (err, n)</h3>
+            <p class="description">Prints <i>err</i> first cause <i>n</i>th last stack trace (or if there isn't any cause, this error last stack trace)</p>
+         </header>
+
+                  <section class="parameters" id="PRINT_LAST_NTH_STACK_TRACE_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>err</i> (<u>error</u>)</dt>
+               <dd></dd>
+                              <dt><i>n</i> (<u>int</u>)</dt>
+               <dd>which trace to print, zero means last, one means one before last etc.</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="PRINT_LAST_NTH_STACK_TRACE_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>string</u>)</dt>
+               <dd>printed string</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="PRINT_LAST_NTH_STACK_TRACE_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>err</i> isn't error or <i>n</i> is not int</dd>
+            </dl>
+                        <dl>
+               <dt>NO_STACK_TRACE</dt>
+               <dd>If there is no <i>n</i>th last stack trace</dd>
             </dl>
                      </section>
          

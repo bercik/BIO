@@ -166,4 +166,15 @@ public class ErrorConstruct
         
         return Data.createErrorData(error);
     }
+    
+    public static Data NO_STACK_TRACE(String funName, ErrorInfo ei, Interpreter interpreter, 
+            int nthStackTrace)
+    {
+        String message = "there is no " + nthStackTrace + " stack trace";
+        
+        MyError error = new MyError(funName, message, ErrorCodes.NO_STACK_TRACE.getCode(), null, ei, 
+                interpreter);
+        
+        return Data.createErrorData(error);
+    }
 }

@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *.bio,*.biom,*.biol set filetype=bio
+au BufRead,BufNewFile *.bio,*.biom,*.biol,*.biot set filetype=bio

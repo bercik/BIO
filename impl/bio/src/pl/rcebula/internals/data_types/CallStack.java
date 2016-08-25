@@ -47,6 +47,23 @@ public class CallStack
         return str;
     }
     
+    public String toStringNthLastTrace(int n)
+    {
+        String str = "";
+        
+        CallStackEntry cse = callStack.get(n);
+        if (cse == null)
+        {
+            return null;
+        }
+        else
+        {
+            str += cse.getErrorInfo().toString() + ": " + cse.getFunName();
+        }
+        
+        return str;
+    }
+    
     public class CallStackEntry
     {
         private final ErrorInfo errorInfo;

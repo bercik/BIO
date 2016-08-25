@@ -17,6 +17,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
 import pl.rcebula.module.utils.Datas;
+import pl.rcebula.module.utils.error_codes.ErrorConstruct;
 import pl.rcebula.module.utils.type_checker.TypeChecker;
 
 /**
@@ -35,6 +36,7 @@ public class ErrorsModule extends Module
     public void createFunctionsAndEvents()
     {
         putFunction(new PrintStackTraceFunction());
+        putFunction(new PrintNthLastStackTraceFunction());
         putFunction(new CreateErrorFunction());
         putFunction(new GetErrorMessage());
         putFunction(new GetErrorObject());
@@ -469,6 +471,49 @@ public class ErrorsModule extends Module
             Data dstr = Data.createStringData(str);
             
             interpreter.getBuiltinFunctions().callFunction("PRINTLN", Arrays.asList(dstr), currentFrame, interpreter, 
+                    err.getErrorInfo());
+            
+            return dstr;
+        }
+    }
+    
+    private class PrintNthLastStackTraceFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "PRINT_NTH_LAST_STACK_TRACE";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametr: <error, int>
+            Data err = params.get(0);
+            Data n = params.get(1);
+            TypeChecker tc = new TypeChecker(err, getName(), 0, err.getErrorInfo(), interpreter, DataType.ERROR);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            tc = new TypeChecker(n, getName(), 1, n.getErrorInfo(), interpreter, DataType.INT);
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            int in = (int)n.getValue();
+            
+            MyError myError = (MyError)err.getValue();
+            String str = myError.getFirstCauseNthLastStackTrace(in);
+            if (str == null)
+            {
+                return ErrorConstruct.NO_STACK_TRACE(getName(), n.getErrorInfo(), interpreter, in);
+            }
+            Data dstr = Data.createStringData(str);
+            
+            interpreter.getBuiltinFunctions().callFunction("PRINT", Arrays.asList(dstr), currentFrame, interpreter, 
                     err.getErrorInfo());
             
             return dstr;
