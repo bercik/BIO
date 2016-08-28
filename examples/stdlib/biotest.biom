@@ -30,6 +30,7 @@ def onSTART()
       CALL
       (
          AS_GLOB(bt_fun_name, GET_ITEM_FROM_LIST(list, it)),
+         PRINTLN(GET_GLOB(bt_fun_name)),
          CALL_BY_NAME(GET_GLOB(bt_fun_name))
       ),
       INC(it)
@@ -66,6 +67,7 @@ def onSTART()
       (
          AS_LOC(key, GET(keys, i)),
          AS_LOC(val, GET(errors_dict, key)),
+         IF(EQ(val, 0), CONTINUE()),
          AS_LOC(msg, ADD(key, ": ", TO_STR(val))),
          PRINTLN(msg)
       ),
@@ -75,6 +77,7 @@ end
 
 def BT_ASSERT_TRUE(bval, msg)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
+   _init_errors_dict(funName)
    IF
    (
       NOT(bval),
@@ -84,6 +87,7 @@ end
 
 def BT_ASSERT_FALSE(bval, msg)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
+   _init_errors_dict(funName)
    IF
    (
       bval,
@@ -93,6 +97,7 @@ end
 
 def BT_ASSERT_EQ(val1, val2, msg)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
+   _init_errors_dict(funName)
    IF
    (
       NEQ(val1, val2),
@@ -102,9 +107,20 @@ end
 
 def BT_ASSERT_NEQ(val1, val2, msg)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
+   _init_errors_dict(funName)
    IF
    (
       EQ(val1, val2),
+      _error(funName, msg)
+   )
+end
+
+def BT_ASSERT_ERROR(val, msg)
+   AS_LOC(funName, GET_GLOB(bt_fun_name))
+   _init_errors_dict(funName)
+   IF
+   (
+      NOT(IS_ERROR(val)),
       _error(funName, msg)
    )
 end
@@ -116,11 +132,16 @@ def _error(funName, msg)
    IF(NOT(IS_NONE(msg)), PRINTLN(ADD(": \"", msg, "\"")), PRINTLN())
 end
 
-def _add_error(funName)
+def _init_errors_dict(funName)
    % przypisujemy globalny słownik do zmiennej lokalnej
    AS_LOC(dict, GET_GLOB(bt_errors_dict))
    % jeżeli klucz funName nie jest ustawiony to ustawiamy na 0
    IF(NOT(CONTAINS_KEY(dict, funName)), SET(dict, funName, 0)) 
+end
+
+def _add_error(funName)
+   % przypisujemy globalny słownik do zmiennej lokalnej
+   AS_LOC(dict, GET_GLOB(bt_errors_dict))
    % dodajemy jeden do klucza funName
    SET(dict, funName, ADD(GET(dict, funName), 1))
 end
