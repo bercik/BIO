@@ -17,23 +17,27 @@
 package pl.rcebula.utils;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Pozwala na mierzenie rzeczywistego czasu jaki upłynął między wywołaniem metod start i stop
- * można wielokrotnie wywoływać metody start i stop dla tej samej metody, czasy zostaną dodane
- * 
+ * Pozwala na mierzenie rzeczywistego czasu jaki upłynął między wywołaniem metod
+ * start i stop można wielokrotnie wywoływać metody start i stop dla tej samej
+ * metody, czasy zostaną dodane
+ *
  * @author robert
  */
 public class TimeProfiler
 {
     private final boolean works;
     private final boolean averages;
-    
+
     private final Map<String, Pair<Double, Integer>> times = new HashMap<>();
     private double totalTime;
-    
+
     private boolean started = false;
     private long startTime;
     private long startTotalTime;
@@ -50,7 +54,7 @@ public class TimeProfiler
         this.works = works;
         this.averages = averages;
     }
-    
+
     public void startTotal()
     {
         if (works)
@@ -58,7 +62,7 @@ public class TimeProfiler
             startTotalTime = System.nanoTime();
         }
     }
-    
+
     public void stopTotal()
     {
         if (works)
@@ -66,7 +70,7 @@ public class TimeProfiler
             totalTime = durationInMs(startTotalTime, System.nanoTime());
         }
     }
-    
+
     public void start(String name)
     {
         if (works)
@@ -81,7 +85,7 @@ public class TimeProfiler
             this.started = true;
         }
     }
-    
+
     public void stop()
     {
         if (works)
@@ -97,10 +101,10 @@ public class TimeProfiler
             if (times.containsKey(name))
             {
                 Pair<Double, Integer> p = times.get(name);
-                
+
                 Double time = p.getLeft();
                 Integer count = p.getRight();
-                
+
                 Integer newCount = count + 1;
                 Double newTime = time + duration;
                 // zmieniamy wartości na nowe
@@ -115,7 +119,7 @@ public class TimeProfiler
             this.started = false;
         }
     }
-    
+
     private double durationInMs(long start, long end)
     {
         long duration = (end - start);
@@ -130,26 +134,38 @@ public class TimeProfiler
             String str = "";
             str += "total time: " + totalTime + " ms\n";
 
+            List<Entry> entries = new ArrayList<>();
+
+            // dodaj do listy
             for (Map.Entry<String, Pair<Double, Integer>> e : times.entrySet())
             {
-                DecimalFormat df2 = new DecimalFormat();
-                df2.setMaximumFractionDigits(2);
-                
-                DecimalFormat df8 = new DecimalFormat();
-                df8.setMaximumFractionDigits(8);
-                
                 Pair<Double, Integer> p = e.getValue();
                 double time = p.getLeft();
                 int count = p.getRight();
                 String name = e.getKey();
-                double percentTime = (time * 100.0 / totalTime);
-                
-                String col1 = name + ": " + df8.format(time) + " ms (" + df2.format(percentTime) + "%)";
+                entries.add(new Entry(name, time, count));
+            }
+
+            // sortuj
+            Collections.sort(entries);
+
+            // wypisz
+            for (Entry e : entries)
+            {
+                DecimalFormat df2 = new DecimalFormat();
+                df2.setMaximumFractionDigits(2);
+
+                DecimalFormat df8 = new DecimalFormat();
+                df8.setMaximumFractionDigits(8);
+
+                double percentTime = (e.getTime() * 100.0 / totalTime);
+
+                String col1 = e.getName() + ": " + df8.format(e.getTime()) + " ms (" + df2.format(percentTime) + "%)";
                 if (averages)
                 {
-                    double avgTime = (time / (double)count);
-                    String col2 = " { avg: " + df8.format(avgTime) + " ms (" + count + ") }";
-                    
+                    double avgTime = (e.getTime() / (double)e.getCount());
+                    String col2 = " { avg: " + df8.format(avgTime) + " ms (" + e.getCount() + ") }";
+
                     str += String.format("%-50.50s  %-40.40s%n", col1, col2);
                 }
                 else
@@ -163,6 +179,52 @@ public class TimeProfiler
         else
         {
             return "TimeProfiler didn't work (you need to change this behavior when calling constructor)";
+        }
+    }
+
+    private class Entry implements Comparable<Entry>
+    {
+        private String name;
+        private Double time;
+        private Integer count;
+
+        public Entry(String name, Double time, Integer count)
+        {
+            this.name = name;
+            this.time = time;
+            this.count = count;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public Double getTime()
+        {
+            return time;
+        }
+
+        public Integer getCount()
+        {
+            return count;
+        }
+
+        @Override
+        public int compareTo(Entry o)
+        {
+            if (time > o.time)
+            {
+                return -1;
+            }
+            else if (time < o.time)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
