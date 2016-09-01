@@ -14,7 +14,7 @@ import pl.rcebula.intermediate_code.line.Line;
  */
 public class PerformJmp
 {
-    public PerformJmp(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         JmpLine jmpLine = (JmpLine)line;
         // ustawiamy instruction pointer na dest

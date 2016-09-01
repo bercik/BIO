@@ -81,7 +81,7 @@ public class ReflectionsModule extends Module
             
             // wywołujemy funkcję sname z parametrami params, zaznaczając, że interesuje nas zwracana przez nią
             // wartość
-            new PerformCall(params, true, uf, interpreter, name.getErrorInfo());
+            new PerformCall().perform(params, true, uf, interpreter, name.getErrorInfo());
             
             // zwracamy null ponieważ chcemy, żeby wartość zwrócona z wywołanej funkcji była brana pod uwagę, 
             // a nie z naszej funkcji

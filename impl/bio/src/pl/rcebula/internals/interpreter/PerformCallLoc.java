@@ -17,21 +17,21 @@ import pl.rcebula.internals.data_types.Data;
  */
 public class PerformCallLoc
 {
-    public PerformCallLoc(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         CallLine callLine = (CallLine) line;
         String funName = callLine.getFunName();
         ErrorInfo ei = callLine.getErrorInfo();
 
-        perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), ei);
+        _perform(interpreter, funName, interpreter.currentFrame.getStackParameters(), ei);
     }
 
-    public PerformCallLoc(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
+    public void perform(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
-        perform(interpreter, funName, parameters, ei);
+        _perform(interpreter, funName, parameters, ei);
     }
 
-    private void perform(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
+    private void _perform(Interpreter interpreter, String funName, List<Data> parameters, ErrorInfo ei)
     {
         // profiler
         interpreter.profiler.enter(funName);

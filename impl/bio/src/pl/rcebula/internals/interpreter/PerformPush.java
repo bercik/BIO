@@ -18,7 +18,7 @@ import pl.rcebula.internals.data_types.Data;
  */
 public class PerformPush
 {
-    public PerformPush(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         PushLine pushLine = (PushLine)line;
         Param param = pushLine.getParam();

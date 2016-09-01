@@ -20,7 +20,7 @@ import pl.rcebula.internals.data_types.Data;
  */
 public class PerformCall
 {
-    public PerformCall(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, ErrorInfo ei)
+    public void perform(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, ErrorInfo ei)
     {
         // tworzymy ramkę i odkładamy na stos zaznaczając, czy interesuje nas wartość zwracana
         CallFrame cf = new CallFrame(parameters, uf, ei, returnValue);
@@ -35,7 +35,7 @@ public class PerformCall
         interpreter.currentFrame.getStackParameters().clear();
     }
     
-    public PerformCall(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         CallLine callLine = (CallLine)line;
         String funName = callLine.getFunName();

@@ -52,6 +52,16 @@ public class Interpreter
     private final MyFiles files;
     // wartość zwrócona z funckji onSTART
     private Data valueReturnedFromMainFunction;
+    
+    // klasy wykonujące podstawowe (CALL, POP) instrukcje interpretera
+    private PerformCall call = new PerformCall();
+    private PerformCallLoc callLoc = new PerformCallLoc();
+    private PerformClearStack clearStack = new PerformClearStack();
+    private PerformJmp jmp = new PerformJmp();
+    private PerformJmpIfFalse jmpIfFalse = new PerformJmpIfFalse();
+    private PerformPop pop = new PerformPop();
+    private PerformPopc popc = new PerformPopc();
+    private PerformPush push = new PerformPush();
 
     public Interpreter(String pathToScript, String[] args, Map<String, UserFunction> userFunctions,
             BuiltinFunctions builtinFunctions, TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
@@ -113,42 +123,42 @@ public class Interpreter
             {
                 case CALL:
                     timeProfiler.start("CALL");
-                    new PerformCall(this, line);
+                    call.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case CALL_LOC:
                     timeProfiler.start("CALL_LOC");
-                    new PerformCallLoc(this, line);
+                    callLoc.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case PUSH:
                     timeProfiler.start("PUSH");
-                    new PerformPush(this, line);
+                    push.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case POP:
                     timeProfiler.start("POP");
-                    new PerformPop(this, line);
+                    pop.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case POPC:
                     timeProfiler.start("POPC");
-                    new PerformPopc(this, line);
+                    popc.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case JMP:
                     timeProfiler.start("JMP");
-                    new PerformJmp(this, line);
+                    jmp.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case JMP_IF_FALSE:
                     timeProfiler.start("JMP_IF_FALSE");
-                    new PerformJmpIfFalse(this, line);
+                    jmpIfFalse.perform(this, line);
                     timeProfiler.stop();
                     break;
                 case CLEAR_STACK:
                     timeProfiler.start("CLEAR_STACK");
-                    new PerformClearStack(this, line);
+                    clearStack.perform(this, line);
                     timeProfiler.stop();
                     break;
             }
@@ -244,7 +254,7 @@ public class Interpreter
     {
         if (uf.getParams().size() == parameters.size())
         {
-            new PerformCall(parameters, false, uf, this, ei);
+            call.perform(parameters, false, uf, this, ei);
         }
         else
         {

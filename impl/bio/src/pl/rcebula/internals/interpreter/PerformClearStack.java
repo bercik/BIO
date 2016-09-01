@@ -17,7 +17,7 @@ import pl.rcebula.internals.data_types.DataType;
  */
 public class PerformClearStack
 {
-    public PerformClearStack(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         while (true)
         {

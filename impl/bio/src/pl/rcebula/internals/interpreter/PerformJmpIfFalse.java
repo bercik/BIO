@@ -21,7 +21,9 @@ import pl.rcebula.module.utils.type_checker.TypeChecker;
  */
 public class PerformJmpIfFalse
 {
-    public PerformJmpIfFalse(Interpreter interpreter, Line line)
+    private PerformCallLoc callLoc = new PerformCallLoc();
+    
+    public void perform(Interpreter interpreter, Line line)
     {
         JmpLine jmpLine = (JmpLine)line;
         ErrorInfo ei = jmpLine.getErrorInfo();
@@ -47,7 +49,7 @@ public class PerformJmpIfFalse
         {
             List<Data> params = Arrays.asList(new Data[] { tc.getError() });
             // jeżeli wystąpił błąd to wychodzimy z aktualnej funkcji przekazując błąd wyżej
-            new PerformCallLoc(interpreter, Constants.returnFunctionName, params, ei);
+            callLoc.perform(interpreter, Constants.returnFunctionName, params, ei);
         }
     }
 }

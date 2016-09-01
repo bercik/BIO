@@ -18,7 +18,7 @@ import pl.rcebula.internals.data_types.DataType;
  */
 public class PerformPop
 {
-    public PerformPop(Interpreter interpreter, Line line)
+    public void perform(Interpreter interpreter, Line line)
     {
         PopLine popLine = (PopLine)line;
         int amount = popLine.getAmount();
