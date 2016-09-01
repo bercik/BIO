@@ -1,0 +1,22 @@
+#INCLUDE("../stdlib/biotest.biom")
+
+def foo()
+   RETURN(CREATE_ERROR("foo error", 10, none))
+end
+
+def test()
+   ASSIGN_LOCAL(a_err, GET_GLOBAL(x))
+   ASSIGN_LOCAL(a_err, CREATE_ERROR("My message", 100, a_err))
+
+   ASSIGN_LOCAL(err, foo())
+
+   BT_ASSERT_EQ(GET_ERROR_MESSAGE(err), "foo error", "") % foo error
+
+   BT_ASSERT_EQ(GET_ERROR_OBJECT(err), 10, "") % 10
+
+   BT_ASSERT_EQ(GET_ERROR_OBJECT(GET_ERROR_CAUSE(a_err)), 1, "") % There is no global variable x (1)
+
+   BT_ASSERT_EQ(GET_ERROR_LINE(a_err), 9, "") % 9
+
+   BT_ASSERT_EQ(GET_ERROR_CH(a_err), 24, "") % 24
+end
