@@ -1,7 +1,4 @@
-def foo()
-   DN()
-end
-
 def onSTART()
-   foo()
+   AS_LOC(_, 10)
+   PRINTLN(_)
 end

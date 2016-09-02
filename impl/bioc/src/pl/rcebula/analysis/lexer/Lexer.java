@@ -14,7 +14,7 @@ public class Lexer
     // separatory po których następuje rozpoznanie tokenu
     public static final Character[] separators = new Character[]
     {
-        '(', ')', ' ', '\t', '\n', '%', ','
+        '(', ')', ' ', '\t', '\n', '%', ',', '='
     };
     // słowo kluczowe def
     public static final String defKeyword = "def";

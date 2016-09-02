@@ -22,13 +22,13 @@ public class FiniteStateAutomata
     private final Integer[] allowSeparatorStates
             = new Integer[]
             {
-                startState, 2, 3, 4, 10, 12
+                startState, 2, 3, 4, 10, 12, 26
             };
     // stany akceptujące końcowe (nie posiadające dalszych przejść)
     private final Integer[] acceptedEndStates
             = new Integer[]
             {
-                7, 9, 13, 14, 15, 20
+                7, 9, 13, 14, 15, 20, 22, 24
             };
     // słownik stan:typ tokenu (jeżeli typ tokenu to null oznacza to, że
     // dany stan jest specjalny (np. komentarz))
@@ -47,15 +47,18 @@ public class FiniteStateAutomata
             put(14, TokenType.OPEN_BRACKET);
             put(15, TokenType.CLOSE_BRACKET);
             put(20, TokenType.END);
+            put(22, TokenType.EQUAL);
+            put(24, TokenType.EXPRESSION);
+            put(26, TokenType.ID_STRUCT);
         }
     };
     // stan komentarza
     private final Integer commentState = 9;
 
     // liczba stanów
-    private final Integer states = 22;
+    private final Integer states = 27;
     // liczba symboli (maksymalna wartość zwracana przez getCharCol() plus dwa)
-    private final Integer symbols = 20;
+    private final Integer symbols = 24;
     // tablica przejść, zawiera informację o następnym stanie dla danej 
     // pary stan-symbol. -1 oznacza zabronione przejście
     private final Integer[][] transitionsTable = new Integer[states][symbols];
@@ -170,7 +173,13 @@ public class FiniteStateAutomata
                         case OPEN_BRACKET:
                         case COMMA:
                         case END:
+                        case EQUAL:
                             token = new Token(tokenType, null, generateErrorInfoWithCurrentToken());
+                            break;
+                        case EXPRESSION:
+                            // usuwamy pierwszy i ostatni znak (nawiasy wąsiaste)
+                            String tokVal = tokenValue.substring(1, tokenValue.length() - 1);
+                            token = new Token(TokenType.EXPRESSION, tokVal, generateErrorInfoWithCurrentToken());
                             break;
                         case STRING:
                             // usuwamy początkowy i końcowy cudzysłów i zamieniamy znaki specjalne
@@ -244,6 +253,7 @@ public class FiniteStateAutomata
                             }
                             break;
                         case ID:
+                        case ID_STRUCT:
                             token = new Token(tokenType, tokenValue, generateErrorInfoWithCurrentToken());
                             break;
                         default:
@@ -363,6 +373,8 @@ public class FiniteStateAutomata
         }
 
         // stan 0
+        transitionsTable[0][getCharCol('=')] = 22; // znak równości
+        transitionsTable[0][getCharCol('{')] = 23; // nawias wąsiasty otwierający
         transitionsTable[0][getCharCol('(')] = 14; // nawias otwierający
         transitionsTable[0][getCharCol(')')] = 15; // nawias zamykający
         transitionsTable[0][getCharCol('+')] = 1; // plus
@@ -397,6 +409,7 @@ public class FiniteStateAutomata
         transitionsTable[3][getCharCol('E')] = 3; // litera E
         transitionsTable[3][getCharCol('O')] = 3; // litera O
         transitionsTable[3][getCharCol('F')] = 3; // litera F
+        transitionsTable[3][getCharCol('.')] = 25; // kropka
 
         // stan 4
         transitionsTable[4][getCharCol('0')] = 4; // cyfra zero
@@ -406,6 +419,7 @@ public class FiniteStateAutomata
         transitionsTable[4][getCharCol('E')] = 4; // litera E
         transitionsTable[4][getCharCol('O')] = 4; // litera O
         transitionsTable[4][getCharCol('F')] = 4; // litera F
+        transitionsTable[4][getCharCol('.')] = 25; // kropka
 
         // stan 5
         transitionsTable[5][getCharCol('"')] = 7; // cudzysłów
@@ -444,6 +458,27 @@ public class FiniteStateAutomata
         
         // stan 21
         transitionsTable[21][getCharCol('.')] = 11; // kropka
+        
+        // stan 23
+        transitionsTable[23][getCharCol('}')] = 24; // nawias wąsiasty zamykający
+        transitionsTable[23][getEveryCharCol()] = 23; // wszystko inne
+        
+        // stan 25
+        transitionsTable[25][getCharCol('a')] = 26; // dowolna litera z wyjątkiem
+        transitionsTable[25][getCharCol('_')] = 26; // podkreślnik
+        transitionsTable[25][getCharCol('E')] = 26; // litera E
+        transitionsTable[25][getCharCol('O')] = 26; // litera O
+        transitionsTable[25][getCharCol('F')] = 26; // litera F
+        
+        // stan 26
+        transitionsTable[26][getCharCol('0')] = 26; // cyfra zero
+        transitionsTable[26][getCharCol('1')] = 26; // dowolna cyfra poza zerem
+        transitionsTable[26][getCharCol('a')] = 26; // dowolna litera z wyjątkiem
+        transitionsTable[26][getCharCol('_')] = 26; // podkreślnik
+        transitionsTable[26][getCharCol('E')] = 26; // litera E
+        transitionsTable[26][getCharCol('O')] = 26; // litera O
+        transitionsTable[26][getCharCol('F')] = 26; // litera F
+        transitionsTable[26][getCharCol('.')] = 25; // kropka
     }
 
     // funkcja która mapuje znak na kolumnę w tablicy przejść
@@ -524,6 +559,22 @@ public class FiniteStateAutomata
         if (ch == '>')
         {
             return 18;
+        }
+        if (ch == '=')
+        {
+            return 19;
+        }
+        if (ch == '{')
+        {
+            return 20;
+        }
+        if (ch == '}')
+        {
+            return 21;
+        }
+        if (ch == '.')
+        {
+            return 22;
         }
 
         return getEveryCharCol();

@@ -22,18 +22,21 @@ package pl.rcebula.analysis.lexer;
  */
 public enum TokenType
 {
-    INT (Integer.class),
-    FLOAT (Float.class),
-    STRING (String.class),
-    BOOL (Boolean.class),
-    NONE (null),
-    OPEN_BRACKET (null),
-    CLOSE_BRACKET (null),
-    COMMA (null),
-    ID (String.class),
-    END (null),
-    KEYWORD (String.class);
-    
+    INT(Integer.class),
+    FLOAT(Float.class),
+    STRING(String.class),
+    BOOL(Boolean.class),
+    NONE(null),
+    OPEN_BRACKET(null),
+    CLOSE_BRACKET(null),
+    COMMA(null),
+    EQUAL(null),
+    ID(String.class),
+    ID_STRUCT(String.class),
+    END(null),
+    KEYWORD(String.class),
+    EXPRESSION(String.class);
+
     private final Class valueType;
 
     private TokenType(Class type)

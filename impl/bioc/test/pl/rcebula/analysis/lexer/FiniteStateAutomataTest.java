@@ -174,11 +174,25 @@ public class FiniteStateAutomataTest
         };
         testStringArray(fsa, ids, TokenType.ID, null);
     }
+    
+    @Test
+    public void testIdsStruct() throws Exception
+    {
+        System.out.println("testIdsStruct()");
+
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
+
+        String[] ids = new String[]
+        {
+            "_._._", "_012.x", "_a02.x.y", "a0.a2a", "_._b12", "Lic.Zba", "num.x12.z", "x.z.c._12dsa"
+        };
+        testStringArray(fsa, ids, TokenType.ID_STRUCT, null);
+    }
 
     @Test
-    public void testBracketsComma() throws Exception
+    public void testBracketsCommaEqual() throws Exception
     {
-        System.out.println("testBracketsComma()");
+        System.out.println("testBracketsCommaEqual()");
 
         FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
@@ -187,6 +201,8 @@ public class FiniteStateAutomataTest
         testToken(fsa, "num1\nidentifier)", TokenType.CLOSE_BRACKET, null, 11, 2, false);
 
         testToken(fsa, "al ( x,", TokenType.COMMA, null, 7, 1, false);
+        
+        testToken(fsa, "al ( x=", TokenType.EQUAL, null, 7, 1, false);
     }
 
     @Test
@@ -246,6 +262,18 @@ public class FiniteStateAutomataTest
         testToken(fsa, "0.5 ", TokenType.FLOAT, 0.5f, 1, 1, true);
 
         testToken(fsa, "0.0 ", TokenType.FLOAT, 0.0f, 1, 1, true);
+    }
+    
+    @Test
+    public void testExpression() throws Exception
+    {
+        System.out.println("testExpression()");
+
+        FiniteStateAutomata fsa = new FiniteStateAutomata(files);
+
+        testToken(fsa, "{num % 2 == 0}", TokenType.EXPRESSION, "num % 2 == 0", 1, 1, false);
+        
+        testToken(fsa, "{ 1 + 2 + 3 }", TokenType.EXPRESSION, " 1 + 2 + 3 ", 1, 1, false);
     }
 
     @Test

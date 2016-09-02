@@ -81,6 +81,13 @@ public class App
             Lexer lexer = new Lexer(preprocessor.getInput(), preprocessor.getFiles());
             timeProfiler.stop();
             List<Token<?>> tokens = lexer.getTokens();
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("TOKENS");
+                System.out.println("-------------------------");
+                printTokens(tokens);
+            }
 
             // parser
             timeProfiler.start("Parser");
@@ -238,5 +245,13 @@ public class App
         logger.setLevel(Level.OFF);
 
         logger.info("Init logger");
+    }
+    
+    private static void printTokens(List<Token<?>> tokens)
+    {
+        for (Token<?> t : tokens)
+        {
+            System.out.println(t);
+        }
     }
 }

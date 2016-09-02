@@ -104,4 +104,17 @@ public class Token<T>
         }
         return true;
     }
+
+    @Override
+    public String toString()
+    {
+        String str = "[";
+        str += tokenType.toString() + "]";
+        if (value != null)
+        {
+            str += ": " + value.toString();
+        }
+        
+        return str;
+    }
 }
