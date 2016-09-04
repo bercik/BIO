@@ -94,6 +94,13 @@ public class App
             Parser parser = new Parser(tokens);
             timeProfiler.stop();
             List<Integer> steps = parser.getSteps();
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("PARSE STEPS");
+                System.out.println("-------------------------");
+                printSteps(steps);
+            }
 
             // program tree creator
             timeProfiler.start("ProgramTreeCreator");
@@ -252,6 +259,14 @@ public class App
         for (Token<?> t : tokens)
         {
             System.out.println(t);
+        }
+    }
+    
+    private static void printSteps(List<Integer> steps)
+    {
+        for (Integer step : steps)
+        {
+            System.out.println(step);
         }
     }
 }
