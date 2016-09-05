@@ -1,0 +1,7 @@
+def foo(arg1, arg2=10, arg3=RANGE(ADD(1, 2), 5))
+   DN()
+end
+
+def onSTART()
+   foo(10)
+end

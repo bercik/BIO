@@ -1,9 +1,13 @@
-def foo(name, age=20, pets=CR_ARR(2))
-   PRINTLN(name, age, pets)
+def foo(isMan, name, age=20, pets=CR_ARR(2))
+   PRINTLN(isMan, name, age, pets)
+end
+
+def foo2(arg1, arg2)
+   DN()
 end
 
 def onSTART()
    AS_LOC(family.sister_age, 10)
    AS_LOC(family.my_age, MUL(family.sister_age, 2))
-   foo(age=age, name=TO_LOWERCASE("Robert"))
+   foo(true, age=age, name=foo2(arg2="Robert", arg1=true))
 end

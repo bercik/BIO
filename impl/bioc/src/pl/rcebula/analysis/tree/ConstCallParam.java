@@ -31,7 +31,12 @@ public class ConstCallParam extends CallParam
 
     public ConstCallParam(Token<?> token, ErrorInfo errorInfo)
     {
-        super(errorInfo);
+        this(token, errorInfo, "");
+    }
+    
+    public ConstCallParam(Token<?> token, ErrorInfo errorInfo, String parName)
+    {
+        super(errorInfo, parName);
 
         switch (token.getTokenType())
         {

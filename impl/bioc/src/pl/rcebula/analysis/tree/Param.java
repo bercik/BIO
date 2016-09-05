@@ -27,11 +27,13 @@ public class Param
 {
     private final String name;
     private final ErrorInfo errorInfo;
+    private CallParam defaultCallParam;
 
     public Param(String name, ErrorInfo errorInfo)
     {
         this.name = name;
         this.errorInfo = errorInfo;
+        this.defaultCallParam = null;
     }
 
     public String getName()
@@ -44,12 +46,23 @@ public class Param
         return errorInfo;
     }
 
+    public void setDefaultCallParam(CallParam defaultCallParam)
+    {
+        this.defaultCallParam = defaultCallParam;
+    }
+    
+    public CallParam getDefaultCallParam()
+    {
+        return defaultCallParam;
+    }
+
     @Override
     public int hashCode()
     {
         int hash = 5;
-        hash = 73 * hash + Objects.hashCode(this.name);
-        hash = 73 * hash + Objects.hashCode(this.errorInfo);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.errorInfo);
+        hash = 79 * hash + Objects.hashCode(this.defaultCallParam);
         return hash;
     }
 
@@ -68,12 +81,16 @@ public class Param
         {
             return false;
         }
-        final Param other = (Param)obj;
+        final Param other = (Param) obj;
         if (!Objects.equals(this.name, other.name))
         {
             return false;
         }
         if (!Objects.equals(this.errorInfo, other.errorInfo))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.defaultCallParam, other.defaultCallParam))
         {
             return false;
         }

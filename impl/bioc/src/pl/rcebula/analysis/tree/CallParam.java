@@ -26,10 +26,12 @@ import pl.rcebula.error_report.ErrorInfo;
 public abstract class CallParam
 {
     private final ErrorInfo errorInfo;
+    private final String parName;
 
-    public CallParam(ErrorInfo errorInfo)
+    public CallParam(ErrorInfo errorInfo, String parName)
     {
         this.errorInfo = errorInfo;
+        this.parName = parName;
     }
 
     public ErrorInfo getErrorInfo()
@@ -37,11 +39,17 @@ public abstract class CallParam
         return errorInfo;
     }
 
+    public String getParName()
+    {
+        return parName;
+    }
+    
     @Override
     public int hashCode()
     {
         int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.errorInfo);
+        hash = 89 * hash + Objects.hashCode(this.errorInfo);
+        hash = 89 * hash + Objects.hashCode(this.parName);
         return hash;
     }
 
@@ -60,7 +68,11 @@ public abstract class CallParam
         {
             return false;
         }
-        final CallParam other = (CallParam)obj;
+        final CallParam other = (CallParam) obj;
+        if (!Objects.equals(this.parName, other.parName))
+        {
+            return false;
+        }
         if (!Objects.equals(this.errorInfo, other.errorInfo))
         {
             return false;

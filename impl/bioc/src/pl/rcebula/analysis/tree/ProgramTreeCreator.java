@@ -37,9 +37,12 @@ public class ProgramTreeCreator
         int ct = 0;
         // referencje
         UserFunction uf = null;
+        Param p = null;
         Call c = null;
         // zmienne pomocnicze
         Token<?> tokenStep18 = null;
+        Token<?> tokenStep39 = null;
+        String parName = null;
         
         for (int cs = 0; cs < steps.size(); ++cs)
         {
@@ -66,6 +69,7 @@ public class ProgramTreeCreator
                 // koniec parametrów funkcji użytkownika
                 case 5:
                 case 8:
+                case 25:
                     // przesuwamy o 1
                     ct += 1;
                     // koniec
@@ -79,12 +83,102 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)token.getValue();
                     // dodajemy do parametrów funkcji użytkownika
-                    Param param = new Param(name, token.getErrorInfo());
-                    uf.addParam(param);
+                    p = new Param(name, token.getErrorInfo());
+                    uf.addParam(p);
                     // koniec
                     break;
                 // kolejny parametr funkcji użytkownika
                 case 7:
+                    // przesuwamy o 1
+                    ct += 1;
+                    // koniec
+                    break;
+                // parametr z wart. domyślną
+                case 22:
+                    // przesuwamy o 1
+                    ct += 1;
+                    // koniec
+                    break;
+                // kolejny parametr z wart. domyślną
+                case 24:
+                    // token z informacją na drugim miejscu
+                    token = tokens.get(ct + 1);
+                    // przesuwamy o 3
+                    ct += 3;
+                    // wyciągamy nazwę
+                    name = (String)token.getValue();
+                    // dodajemy parametr funkcji użytkownika
+                    p = new Param(name, token.getErrorInfo());
+                    uf.addParam(p);
+                    // koniec
+                    break;
+                // domyślna wartość parametru funkcji użytkownika jako stała
+                case 26:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // tworzymy const call param
+                    ConstCallParam ccp = new ConstCallParam(token, token.getErrorInfo());
+                    // dodajemy jako domyślny parametr
+                    p.setDefaultCallParam(ccp);
+                    // koniec
+                    break;
+                // domyślna wartość parametru funkcji użytkownika jako wywołanie funkcyjne
+                case 27:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 2
+                    ct += 2;
+                    // wyciągamy nazwę funkcji
+                    name = (String)token.getValue();
+                    // tworzymy nowe wywołanie
+                    c = new Call(name, null, token.getErrorInfo());
+                    // koniec
+                    break;
+                // koniec wywołania funkcyjnego parametru domyślnego (rekursywne wyjście)
+                case 29:
+                case 33:
+                    // przesuwamy o 1
+                    ct += 1;
+                    // jeżeli to korzeń to dodajemy jako domyślny parametr
+                    if (c.getParentCall() == null)
+                    {
+                        p.setDefaultCallParam(c);
+                    }
+                    // wyjście
+                    c = c.getParentCall();
+                    // koniec
+                    break;
+                // stała wartość jako kolejny parametr wywołania funkcyjnego dla parametru domyślnego
+                case 31:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // tworzymy const call param
+                    ccp = new ConstCallParam(token, token.getErrorInfo());
+                    // dodajemy jako kolejny parametr wywołania funkcyjnego
+                    c.addCallParam(ccp);
+                    // koniec
+                    break;
+                // wywołanie funkcyjne jako kolejny parametr wywołania funkcyjnego dla parametru domyślnego
+                case 32:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 2
+                    ct += 2;
+                    // wyciągamy nazwę
+                    name = (String)token.getValue();
+                    // tworzymy nowy call i dodajemy jako parametr obecnego
+                    Call tmpCall = new Call(name, c, token.getErrorInfo());
+                    c.addCallParam(tmpCall);
+                    // ustawiamy jako obecny (rekursywne wejście)
+                    c = tmpCall;
+                    // koniec
+                    break;
+                // kolejny parametr wywołania funkcyjnego dla parametru domyślnego
+                case 34:
                     // przesuwamy o 1
                     ct += 1;
                     // koniec
@@ -142,8 +236,21 @@ public class ProgramTreeCreator
                     // przesuwamy o 1
                     ct += 1;
                     // tworzymy nowy parametr o stałej wartości i dodajemy
-                    ConstCallParam ccp = new ConstCallParam(token, token.getErrorInfo());
+                    ccp = new ConstCallParam(token, token.getErrorInfo());
                     c.addCallParam(ccp);
+                    // koniec
+                    break;
+                // parametrem funkcji jest identyfikator struktury
+                case 35:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // wyciągamy nazwę
+                    name = (String)token.getValue();
+                    // tworzymy parametr i dodajemy
+                    IdCallParam icp = new IdCallParam(name, token.getErrorInfo());
+                    c.addCallParam(icp);
                     // koniec
                     break;
                 // prametrem funkcji jest wywołanie funkcyjne (rekursywne wejście)
@@ -163,8 +270,74 @@ public class ProgramTreeCreator
                     // nie przesuwamy, wyciągamy nazwę
                     name = (String)tokenStep18.getValue();
                     // tworzymy parametr i dodajemy
-                    IdCallParam icp = new IdCallParam(name, tokenStep18.getErrorInfo());
+                    icp = new IdCallParam(name, tokenStep18.getErrorInfo());
                     c.addCallParam(icp);
+                    // koniec
+                    break;
+                // nazywany parametr funkcji
+                case 36:
+                    // przesuwamy o 1
+                    ct += 1;
+                    // ustawiamy zmienną pomocniczą
+                    parName = (String)tokenStep18.getValue();
+                    // koniec
+                    break;
+                // parametr nazywany to stała
+                case 37:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // tworzymy const call param
+                    ccp = new ConstCallParam(token, token.getErrorInfo(), parName);
+                    // dodajemy do parametrów funkcji
+                    c.addCallParam(ccp);
+                    // koniec
+                    break;
+                // parametr nazywany to identyfikator struktury
+                case 38:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // wyciągamy nazwę
+                    name = (String)token.getValue();
+                    // tworzymy id call param
+                    icp = new IdCallParam(name, token.getErrorInfo(), parName);
+                    // dodajemy do parametrów funkcji
+                    c.addCallParam(icp);
+                    // koniec
+                    break;
+                // nazywanym parametrem funkcji jest identyfikator lub wywołanie funkcyjne
+                case 39:
+                    // informacja na pierwszym miejscu
+                    token = tokens.get(ct);
+                    // przesuwamy o 1
+                    ct += 1;
+                    // zapisujemy
+                    tokenStep39 = token;
+                    // koniec
+                    break;
+                // parametrem nazywanym jest identyfikator
+                case 40:
+                    // nie przesuwamy, wyciągamy nazwę
+                    name = (String)tokenStep39.getValue();
+                    // tworzymy id call param
+                    icp = new IdCallParam(name, tokenStep39.getErrorInfo(), parName);
+                    // dodajemy do parametrów
+                    c.addCallParam(icp);
+                    // koniec
+                    break;
+                // parametrem nazywanym jest wywołanie funkcyjne (rekursywne wejście)
+                case 41:
+                    // przesuwamy o 1
+                    ct += 1;
+                    // wyciągamy nazwę
+                    name = (String)tokenStep39.getValue();
+                    // tworzymy nowe wywołanie funkcyjne i dodajemy
+                    tmpC = new Call(name, c, tokenStep39.getErrorInfo(), parName);
+                    c.addCallParam(tmpC);
+                    c = tmpC;
                     // koniec
                     break;
             }

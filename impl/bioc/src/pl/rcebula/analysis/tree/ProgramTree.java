@@ -28,7 +28,7 @@ import java.util.Objects;
 public class ProgramTree
 {
     private final List<UserFunction> userFunctions = new ArrayList<>();
-    
+
     public void addUserFunction(UserFunction uf)
     {
         userFunctions.add(uf);
@@ -62,7 +62,7 @@ public class ProgramTree
         {
             return false;
         }
-        final ProgramTree other = (ProgramTree)obj;
+        final ProgramTree other = (ProgramTree) obj;
         if (!Objects.equals(this.userFunctions, other.userFunctions))
         {
             return false;
@@ -75,24 +75,22 @@ public class ProgramTree
     {
         String toReturn = "";
         int indent = 0;
-        
+
         for (UserFunction uf : userFunctions)
         {
-            toReturn += uf.getName() + "\n";
-            
-            toReturn += "params: [";
-            boolean comma = false;
+            toReturn += "function " + uf.getName() + "\n";
+
+            toReturn += "params:\n";
             for (Param p : uf.getParams())
             {
-                toReturn += p.getName() + ", ";
-                comma = true;
+                toReturn += "-" + p.getName() + "\n";
+                if (p.getDefaultCallParam() != null)
+                {
+                    toReturn += callParamToString(p.getDefaultCallParam(), 4) + "\n";
+                }
             }
-            if (comma)
-            {
-                toReturn = toReturn.substring(0, toReturn.length() - 2);
-            }
-            toReturn += "]\n";
-            
+            toReturn += "\ncalls:\n";
+
             indent += 4;
             for (Call c : uf.getCalls())
             {
@@ -103,66 +101,122 @@ public class ProgramTree
                 toReturn += "\n";
             }
             indent -= 4;
-            
+
             toReturn += "\n";
         }
-        
+
         return toReturn;
     }
-    
+
     private String callToString(Call c, int indent)
     {
         String toReturn = "";
-        
+
         for (CallParam cp : c.getCallParams())
         {
             if (cp instanceof IdCallParam)
             {
-                IdCallParam icp = (IdCallParam)cp;
-                toReturn += indent(indent) + "id: " + icp.getName();
+                IdCallParam icp = (IdCallParam) cp;
+                toReturn += idCallParamToString(icp, indent);
             }
             else if (cp instanceof ConstCallParam)
             {
-                ConstCallParam ccp = (ConstCallParam)cp;
-                toReturn += indent(indent) + 
-                        ccp.getValueType().toString() + ": ";
-                
-                if (ccp.getValueType().equals(ValueType.STRING))
-                {
-                    toReturn += "\"";
-                }
-                
-                toReturn += (ccp.getValue() != null ? ccp.getValue() : "");
-                
-                if (ccp.getValueType().equals(ValueType.STRING))
-                {
-                    toReturn += "\"";
-                }
+                ConstCallParam ccp = (ConstCallParam) cp;
+                toReturn += constCallParamToString(ccp, indent);
             }
             else if (cp instanceof Call)
             {
-                Call cc = (Call)cp;
-                toReturn += indent(indent) + cc.getName() + "\n";
+                Call cc = (Call) cp;
+                toReturn += indent(indent);
+                if (cc.getParName() != "")
+                {
+                    toReturn += cc.getParName() + "= ";
+                }
+                toReturn += cc.getName() + "\n";
                 indent += 4;
-                    toReturn += callToString(cc, indent);
+                toReturn += callToString(cc, indent);
                 indent -= 4;
             }
-            
+
             toReturn += "\n";
+        }
+
+        return toReturn;
+    }
+
+    private String idCallParamToString(IdCallParam icp, int indent)
+    {
+        String toReturn = indent(indent);
+        if (icp.getParName() != "")
+        {
+            toReturn += icp.getParName() + "= ";
+        }
+        toReturn += "id: " + icp.getName();
+        return toReturn;
+    }
+    
+    private String constCallParamToString(ConstCallParam ccp, int indent)
+    {
+        String toReturn = indent(indent);
+        if (ccp.getParName() != "")
+        {
+            toReturn += ccp.getParName() + "= ";
+        }
+        
+        toReturn += ccp.getValueType().toString() + ": ";
+
+        if (ccp.getValueType().equals(ValueType.STRING))
+        {
+            toReturn += "\"";
+        }
+
+        toReturn += (ccp.getValue() != null ? ccp.getValue() : "");
+
+        if (ccp.getValueType().equals(ValueType.STRING))
+        {
+            toReturn += "\"";
         }
         
         return toReturn;
     }
     
+    private String callParamToString(CallParam cp, int indent)
+    {
+        if (cp instanceof ConstCallParam)
+        {
+            return constCallParamToString((ConstCallParam)cp, indent);
+        }
+        else if (cp instanceof IdCallParam)
+        {
+            return idCallParamToString((IdCallParam)cp, indent);
+        }
+        else if (cp instanceof Call)
+        {
+            Call c = (Call)cp;
+            String name = c.getName();
+            String res = indent(indent);
+            if (c.getParName() != "")
+            {
+                res += c.getParName() + "= ";
+            }
+            res += name + "\n";
+            res += callToString((Call)cp, indent + 4);
+            
+            return res;
+        }
+        
+        throw new RuntimeException("Unknown type of CallParam");
+    }
+
     private String indent(int indent)
     {
         String toReturn = "";
-        
+
         for (int i = 0; i < indent; ++i)
         {
             toReturn += " ";
         }
-        
+
         return toReturn;
     }
 }
