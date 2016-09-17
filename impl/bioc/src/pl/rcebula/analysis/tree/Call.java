@@ -30,6 +30,7 @@ public class Call extends CallParam
     private String name;
     private final Call parentCall;
     private final List<CallParam> callParams = new ArrayList<>();
+    private List<Integer> orderList = null;
     // używane przy generowaniu funkcji wbudowanych o zmiennej ilości parametrów
     private int repeatCycles = 0;
 
@@ -48,6 +49,16 @@ public class Call extends CallParam
     public void addCallParam(CallParam cp)
     {
         callParams.add(cp);
+    }
+
+    public List<Integer> getOrderList()
+    {
+        return orderList;
+    }
+
+    public void setOrderList(List<Integer> orderList)
+    {
+        this.orderList = orderList;
     }
     
     public String getName()

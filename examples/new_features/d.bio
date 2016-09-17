@@ -1,0 +1,7 @@
+def foo(arg1, arg2=RANGE(10, 20), arg3="hello")
+   DN()
+end
+
+def onSTART()
+   foo(arg2=20, arg1=none)
+end

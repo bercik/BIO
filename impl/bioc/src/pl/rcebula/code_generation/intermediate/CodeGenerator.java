@@ -320,6 +320,12 @@ public class CodeGenerator
                     ic.appendLine(line);
                 }
 
+                // jeżeli lista kolejności parametrów jest nie pusta to generujemy instrukcję dla niej
+                if (call.getOrderList() != null)
+                {
+                    line = ifg.generateOrder(call.getOrderList());
+                    ic.appendLine(line);
+                }
                 line = ifg.generateCall(call.getName(), call.getErrorInfo());
                 ic.appendLine(line);
             }

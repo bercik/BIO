@@ -153,4 +153,20 @@ public class InterpreterFunctionsGenerator
 
         return new Line(fields);
     }
+    
+    public Line generateOrder(List<Integer> orderList)
+    {
+        List<IField> fields = new ArrayList<>();
+
+        // order, num1, num2, ..., numN, 0
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.ORDER));
+        for (Integer i : orderList)
+        {
+            fields.add(new IntStringField(i));
+        }
+        // dodajemy 0 na końcu
+        fields.add(new IntStringField(0));
+
+        return new Line(fields);
+    }
 }

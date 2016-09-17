@@ -30,6 +30,7 @@ public class UserFunction
     private final List<Call> calls = new ArrayList<>();
     private final List<Param> params = new ArrayList<>();
     
+    private int nonDefaultParams = -1;
     private final String name;
     private final ErrorInfo errorInfo;
 
@@ -37,6 +38,18 @@ public class UserFunction
     {
         this.name = name;
         this.errorInfo = errorInfo;
+    }
+    
+    public void countNonDefaultParams()
+    {
+        nonDefaultParams = 0;
+        for (int i = 0; i < params.size(); ++i)
+        {
+            if (params.get(i).getDefaultCallParam() == null)
+            {
+                ++nonDefaultParams;
+            }
+        }
     }
     
     public void addCall(Call c)
@@ -49,6 +62,11 @@ public class UserFunction
         params.add(p);
     }
 
+    public int getNonDefaultParams()
+    {
+        return nonDefaultParams;
+    }
+    
     public List<Call> getCalls()
     {
         return calls;

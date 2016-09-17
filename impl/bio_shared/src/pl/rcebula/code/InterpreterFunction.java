@@ -18,7 +18,8 @@ public enum InterpreterFunction
     POPC((byte)5),
     JMP((byte)6),
     JMP_IF_FALSE((byte)7),
-    CLEAR_STACK((byte)8);
+    CLEAR_STACK((byte)8),
+    ORDER((byte)9);
     
     private final byte opcode;
 

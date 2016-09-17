@@ -1,7 +1,7 @@
 def foo(arg1, arg2=10, arg3=RANGE(ADD(1, 2), 5))
-   DN()
+   PRINTLN(arg1, arg2, arg3)
 end
 
 def onSTART()
-   foo(10)
+   foo(5)
 end
