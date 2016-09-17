@@ -1,7 +1,11 @@
-def foo(arg1, arg2=RANGE(10, 20), arg3="hello")
-   DN()
+def foo(arg0, arg1, arg2=RANGE(10, 20), arg3=foo2())
+   PRINTLN(arg0, arg1, arg2, arg3)
+end
+
+def foo2(arg1=true)
+   PRINTLN(ADD("foo2: ", TO_STR(arg1)))
 end
 
 def onSTART()
-   foo(arg2=20, arg1=none)
+   foo("arg0", arg2=20, arg1=CALL(PRINTLN("arg1"), DN()))
 end

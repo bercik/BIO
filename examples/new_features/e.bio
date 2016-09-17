@@ -1,0 +1,11 @@
+def foo(arg1=foo2())
+   DN()
+end
+
+def foo2(arg1=foo())
+   DN()
+end
+
+def onSTART()
+   foo()
+end

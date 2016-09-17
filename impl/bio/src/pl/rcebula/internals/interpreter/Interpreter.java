@@ -52,6 +52,8 @@ public class Interpreter
     private final MyFiles files;
     // wartość zwrócona z funckji onSTART
     private Data valueReturnedFromMainFunction;
+    // kolejność przekazywania argumentów
+    private List<Integer> orderList;
     
     // klasy wykonujące podstawowe (CALL, POP) instrukcje interpretera
     private PerformCall call = new PerformCall();
@@ -62,6 +64,7 @@ public class Interpreter
     private PerformPop pop = new PerformPop();
     private PerformPopc popc = new PerformPopc();
     private PerformPush push = new PerformPush();
+    private PerformOrder order = new PerformOrder();
 
     public Interpreter(String pathToScript, String[] args, Map<String, UserFunction> userFunctions,
             BuiltinFunctions builtinFunctions, TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
@@ -161,6 +164,14 @@ public class Interpreter
                     clearStack.perform(this, line);
                     timeProfiler.stop();
                     break;
+                case ORDER:
+                    timeProfiler.start("ORDER");
+                    order.perform(this, line);
+                    timeProfiler.stop();
+                    break;
+                default:
+                    String message = "Don't know what to do with " + line.getInterpreterFunction() + " instruction";
+                    throw new RuntimeException(message);
             }
         }
     }
@@ -243,6 +254,16 @@ public class Interpreter
     public void setValueReturnedFromMainFunction(Data valueReturnedFromMainFunction)
     {
         this.valueReturnedFromMainFunction = valueReturnedFromMainFunction;
+    }
+
+    public List<Integer> getOrderList()
+    {
+        return orderList;
+    }
+
+    public void setOrderList(List<Integer> orderList)
+    {
+        this.orderList = orderList;
     }
 
     public void setCurrentFrame(CallFrame currentFrame)

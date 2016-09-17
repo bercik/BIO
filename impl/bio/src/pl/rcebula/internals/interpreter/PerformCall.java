@@ -5,6 +5,8 @@
  */
 package pl.rcebula.internals.interpreter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
@@ -20,8 +22,12 @@ import pl.rcebula.internals.data_types.Data;
  */
 public class PerformCall
 {
-    public void perform(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, ErrorInfo ei)
+    public void perform(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, 
+            ErrorInfo ei)
     {
+        // czyścimy order list
+        interpreter.setOrderList(null);
+        
         // tworzymy ramkę i odkładamy na stos zaznaczając, czy interesuje nas wartość zwracana
         CallFrame cf = new CallFrame(parameters, uf, ei, returnValue);
         interpreter.pushFrameToStack(cf);
@@ -42,8 +48,24 @@ public class PerformCall
         ErrorInfo ei = callLine.getErrorInfo();
         UserFunction uf = interpreter.userFunctions.get(funName);
 
-        // tworzymy ramkę i odkładamy na stos
+        // pobieramy parametry
         List<Data> stackParams = interpreter.currentFrame.getStackParameters();
+        // pobieramy ich kolejność
+        List<Integer> orderList = interpreter.getOrderList();
+        // jeżeli różne od null to zamieniamy kolejność parametrów w odpowiedni sposób
+        if (orderList != null)
+        {
+            Data[] tmp = new Data[stackParams.size()];
+            for (int i = 0; i < orderList.size(); ++i)
+            {
+                tmp[orderList.get(i) - 1] = stackParams.get(i);
+            }
+            
+            stackParams = Arrays.asList(tmp);
+            // czyścimy order list
+            interpreter.setOrderList(null);
+        }
+        // tworzymy ramkę i odkładamy na stos
         CallFrame cf = new CallFrame(stackParams, uf, ei);
         interpreter.pushFrameToStack(cf);
 

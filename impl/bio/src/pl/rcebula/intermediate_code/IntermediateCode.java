@@ -26,6 +26,7 @@ import pl.rcebula.intermediate_code.line.PopLine;
 import pl.rcebula.intermediate_code.line.PushLine;
 import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.error_report.MyFiles.File;
+import pl.rcebula.intermediate_code.line.OrderLine;
 
 /**
  *
@@ -236,6 +237,17 @@ public class IntermediateCode
                         break;
                     case CLEAR_STACK:
                         line = new ClearStackLine(interpreterFunction, createErrorInfo(lineNum, chNum, fnum, files));
+                        break;
+                    case ORDER:
+                        List<Integer> orderList = new ArrayList<>();
+                        int readInt = dis.readInt();
+                        while (readInt != 0)
+                        {
+                            orderList.add(readInt);
+                            readInt = dis.readInt();
+                        }
+                        line = new OrderLine(interpreterFunction, createErrorInfo(lineNum, chNum, fnum, files), 
+                                orderList);
                         break;
                     default:
                         throw new RuntimeException("Don't know what to do with " + interpreterFunction.toString());
