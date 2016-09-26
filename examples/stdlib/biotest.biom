@@ -75,7 +75,7 @@ def onSTART()
    )
 end
 
-def BT_ASSERT_TRUE(bval, msg)
+def BT_ASSERT_TRUE(bval, msg="")
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -85,7 +85,7 @@ def BT_ASSERT_TRUE(bval, msg)
    )
 end
 
-def BT_ASSERT_FALSE(bval, msg)
+def BT_ASSERT_FALSE(bval, msg="")
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -95,7 +95,7 @@ def BT_ASSERT_FALSE(bval, msg)
    )
 end
 
-def BT_ASSERT_EQ(val1, val2, msg)
+def BT_ASSERT_EQ(val1, val2, msg="")
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -105,7 +105,7 @@ def BT_ASSERT_EQ(val1, val2, msg)
    )
 end
 
-def BT_ASSERT_NEQ(val1, val2, msg)
+def BT_ASSERT_NEQ(val1, val2, msg="")
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -115,7 +115,7 @@ def BT_ASSERT_NEQ(val1, val2, msg)
    )
 end
 
-def BT_ASSERT_ERROR(val, msg)
+def BT_ASSERT_ERROR(val, msg="")
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF

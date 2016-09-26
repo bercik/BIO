@@ -11,38 +11,19 @@ package pl.rcebula.internals.data_types;
  */
 public enum DataType
 {
-    // pass by value, mutable
-    ARRAY(false, true),
-    BOOL(true, true),
-    DICT(false, true),
-    ERROR(false, false),
-    FLOAT(true, true),
-    ID(false, false),
-    INT(true, true),
-    NONE(false, false),
-    STRING(false, false),
-    TUPLE(false, false),
-    VAR(false, false);
+    ARRAY,
+    BOOL,
+    DICT,
+    ERROR,
+    FLOAT,
+    ID,
+    INT,
+    NONE,
+    STRING,
+    STRUCT,
+    TUPLE,
+    VAR;
     
-    private final boolean passByValue;
-    private final boolean mutable;
-
-    private DataType(boolean passByValue, boolean mutable)
-    {
-        this.passByValue = passByValue;
-        this.mutable = mutable;
-    }
-
-    public boolean isPassByValue()
-    {
-        return passByValue;
-    }
-
-    public boolean isMutable()
-    {
-        return mutable;
-    }
-
     @Override
     public String toString()
     {

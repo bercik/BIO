@@ -1,6 +1,8 @@
 #INCLUDE("boreq_lib.biom")
 
 def onSTART()
+   splash(architectures = CREATE_TUPLE("x86"), program_name="Fizz Buzz")
+
    FOR
    (
       ASSIGN_LOCAL(i, 0),

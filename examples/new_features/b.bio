@@ -1,13 +1,13 @@
-def foo(isMan, name, age=20, pets=CR_ARR(2))
+def foo(isMan, name, age=0, pets=CR_ARR(2))
    PRINTLN(isMan, name, age, pets)
 end
 
 def foo2(arg1, arg2)
-   DN()
+   RETURN(ADD(TO_STR(arg1), " ", TO_STR(arg2)))
 end
 
 def onSTART()
    AS_LOC(family.sister_age, 10)
    AS_LOC(family.my_age, MUL(family.sister_age, 2))
-   foo(true, age=age, name=foo2(arg2="Robert", arg1=true))
+   foo(true, age=family.my_age, name=foo2(arg2="Cebula", arg1="Robert"))
 end

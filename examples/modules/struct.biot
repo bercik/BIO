@@ -1,0 +1,30 @@
+#INCLUDE("../stdlib/biotest.biom")
+
+def test()
+   AS_LOC(a.b, 10)
+   BT_ASSERT_TRUE(IS_LOCAL(a))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b))
+   BT_ASSERT_FALSE(IS_LOCAL(a.c))
+
+   AS_LOC(a.b.c, "a.b.c")
+   BT_ASSERT_TRUE(IS_LOCAL(a))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b.c))
+   BT_ASSERT_FALSE(IS_LOCAL(a.b.c.d))
+   BT_ASSERT_FALSE(IS_LOCAL(a.c))
+
+   AS_LOC(a, 20)
+   BT_ASSERT_TRUE(IS_LOCAL(a))
+   BT_ASSERT_FALSE(IS_LOCAL(a.b))
+
+   AS_LOC(a.b.c, "a.b.c")
+   AS_LOC(a.b.cc, "a.b.cc")
+   BT_ASSERT_TRUE(IS_LOCAL(a))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b.c))
+   BT_ASSERT_TRUE(IS_LOCAL(a.b.cc))
+   BT_ASSERT_FALSE(IS_LOCAL(a.c))
+
+   BT_ASSERT_EQ(a.b.c, "a.b.c")
+   BT_ASSERT_EQ(a.b.cc, "a.b.cc")
+end

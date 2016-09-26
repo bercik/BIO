@@ -92,6 +92,11 @@ public class Data
         return new Data(DataType.VAR, var);
     }
     
+    public static Data createStructData(Struct struct)
+    {
+        return new Data(DataType.STRUCT, struct);
+    }
+    
     public DataType getDataType()
     {
         return dataType;

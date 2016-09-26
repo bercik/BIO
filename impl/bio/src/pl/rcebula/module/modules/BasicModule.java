@@ -13,10 +13,11 @@ import pl.rcebula.module.utils.error_codes.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
+import pl.rcebula.internals.data_types.Struct;
 import pl.rcebula.module.IEvent;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
-import pl.rcebula.module.utils.Datas;
+import pl.rcebula.utils.Pair;
 
 /**
  *
@@ -67,6 +68,10 @@ public class BasicModule extends Module
                 String id = (String)params.get(i).getValue();
                 var = params.get(i + 1);
 
+                Pair<String, Data> p = Struct.create(id, var, currentFrame.getLocalVariables());
+                id = p.getLeft();
+                var = p.getRight();
+                
                 currentFrame.getLocalVariables().put(id, var);
             }
 
@@ -92,6 +97,10 @@ public class BasicModule extends Module
                 String id = (String)params.get(i).getValue();
                 var = params.get(i + 1);
 
+                Pair<String, Data> p = Struct.create(id, var, interpreter.getGlobalVariables());
+                id = p.getLeft();
+                var = p.getRight();
+                
                 interpreter.getGlobalVariables().put(id, var);
             }
 
@@ -112,7 +121,7 @@ public class BasicModule extends Module
         {
             // parametr id
             String id = (String)params.get(0).getValue();
-            boolean isLocal = currentFrame.getLocalVariables().containsKey(id);
+            boolean isLocal = Struct.exists(id, currentFrame.getLocalVariables());
             return Data.createBoolData(isLocal);
         }
     }
@@ -130,7 +139,7 @@ public class BasicModule extends Module
         {
             // parametr id
             String id = (String)params.get(0).getValue();
-            boolean isGlobal = interpreter.getGlobalVariables().containsKey(id);
+            boolean isGlobal = Struct.exists(id, interpreter.getGlobalVariables());
             return Data.createBoolData(isGlobal);
         }
     }
@@ -151,7 +160,8 @@ public class BasicModule extends Module
             String id = (String)data.getValue();
             ErrorInfo ei = data.getErrorInfo();
             // pobierz zmienną lokalną
-            data = interpreter.getCurrentFrame().getLocalVariables().get(id);
+            Pair<Data, String> p = Struct.get(id, interpreter.getCurrentFrame().getLocalVariables());
+            data = p.getLeft();
             // jeżeli istnieje to utwórz nową zmienną i ustaw jej linię i znak
             if (data != null)
             {
@@ -161,7 +171,7 @@ public class BasicModule extends Module
             // jeżeli nie istnieje to utwórz zmienną błędu zamiast niej
             else
             {
-                String message = "There is no local variable " + id;
+                String message = "There is no local variable " + id + ". " + p.getRight();
                 MyError myError = new MyError(message, ErrorCodes.NO_LOCAL_VARIABLE.getCode(),
                         null, ei, interpreter);
                 data = Data.createErrorData(myError);
@@ -185,10 +195,13 @@ public class BasicModule extends Module
             // parametr id
             Data did = params.get(0);
             String id = (String)did.getValue();
-            Data var = interpreter.getGlobalVariables().get(id);
+            // pobierz zmienną globalną
+            Pair<Data, String> p = Struct.get(id, interpreter.getGlobalVariables());
+            Data var = p.getLeft();
+            // jeżeli nie istnieje
             if (var == null)
             {
-                String message = "there is no global variable " + id;
+                String message = "there is no global variable " + id + ". " + p.getRight();
                 MyError error = new MyError(getName(), message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
                         null, did.getErrorInfo(), interpreter);
                 return Data.createErrorData(error);

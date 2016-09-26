@@ -1,3 +1,9 @@
+def splash(program_name, version = "1.0.0", architectures = CREATE_TUPLE("x86", "x64"))
+   PRINTLN("Program name:", program_name)
+   PRINTLN("Version:", version)
+   PRINTLN("Architectures:", architectures)
+end
+
 def fizz_buzz(i)
    ASSIGN_LOCAL(div_three, EQ(MOD(i, 3), 0))
    ASSIGN_LOCAL(div_five, EQ(MOD(i, 5), 0))

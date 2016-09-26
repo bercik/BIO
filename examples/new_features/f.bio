@@ -1,0 +1,4 @@
+def onSTART()
+   AS_LOC(a.x, 10, a.x.y, 20)
+   PRINTLN(a.x, a.x.y)
+end
