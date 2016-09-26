@@ -1,0 +1,5 @@
+def onSTART()
+   AS_LOC(a.x, 10)
+   AS_LOC(a.x, a)
+   PRINTLN(a.x.x.x.x.x.x.x.x.x.x.x.x.x)
+end
