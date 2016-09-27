@@ -62,16 +62,16 @@
 !error (MIN_GREATER_THAN_MAX) if min is greater than max
 
 !name COPY
-!desc Copy elements from given array or dict to new one. <b>Note:</b> It won't copy arrays and dicts recursively. To do this use DEEP_COPY instead
-!param a (array, dict) array or dict to be copy
-!return (array, dict) new array or dict
-!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array or dict
+!desc Copy elements from given array, dict or struct to new one. <b>Note:</b> It won't copy arrays, dicts and structs recursively. To do this use DEEP_COPY instead
+!param a (array, dict, struct) array, dict or struct to be copy
+!return (array, dict, struct) new array, dict or struct
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array, dict or struct
 
 !name DEEP_COPY
-!desc Copy elements from given array, tuple or dict to new one. <b>Note:</b> It will copy arrays, tuples and dicts recursively. If you don't want this behavior use COPY instead
-!param a (array, tuple, dict) array, tuple or dict to be copy
-!return (array, tuple, dict) new array, tuple or dict
-!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array, tuple or dict
+!desc Copy elements from given array, tuple, dict or struct to new one. <b>Note:</b> It will copy arrays, tuples, dicts and structs recursively. If you don't want this behavior use COPY instead
+!param a (array, tuple, dict, struct) array, tuple, dict or struct to be copy
+!return (array, tuple, dict, struct) new array, tuple, dict or struct
+!error (BAD_PARAMETER_TYPE) If <i>a</i> is not array, tuple, dict or struct
 
 !name SLICE
 !desc Returns new array or tuple with copied objects from given <i>col</i> range &lt;<i>start</i>, <i>end</i>)

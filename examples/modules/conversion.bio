@@ -6,6 +6,9 @@ def onSTART()
    PRINT(TO_STRING(-5), "\n") % -5
    PRINT(TO_STRING("asd"), "\n") % asd
    PRINT(TO_STRING(CREATE_TUPLE(1, "asd", true)), "\n") % ( 1, "asd", true )
+   AS_LOC(a.x, 10, a.y, 20, a.z.k, "Bob", a.z.l, "Onion")
+   PRINTLN(TO_STR(a))
+   PRINT(TO_STRING(CREATE_DICT("a", 1, "b", "tekst", "c", a)))
 
    PRINTLN()
    PRINTLN("TO_INT")

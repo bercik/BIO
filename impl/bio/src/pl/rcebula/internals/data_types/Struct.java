@@ -5,11 +5,11 @@
  */
 package pl.rcebula.internals.data_types;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import pl.rcebula.utils.Pair;
 
 /**
@@ -28,6 +28,11 @@ public class Struct
     public void addField(String fieldName, Data data)
     {
         fields.put(fieldName, data);
+    }
+    
+    public Set<String> getFieldsName()
+    {
+        return fields.keySet();
     }
     
     private static String constructStructName(List<String> ids)

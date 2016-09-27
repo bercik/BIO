@@ -102,7 +102,7 @@ def GET_ARRAY_LIST(list)
 end
 
 def PRINT_LIST(list)
-   PRINT("<")
+   PRINT("<[")
    FOR
    (
       AS_LOC(i, 0),
@@ -118,7 +118,7 @@ def PRINT_LIST(list)
       ),
       INC(i)
    )
-   PRINT(">\n")
+   PRINT("]>\n")
 end
 
 def _EXTEND_LIST_IF_NEEDED(list)

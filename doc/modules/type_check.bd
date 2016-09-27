@@ -35,6 +35,12 @@
 !return (bool) true if <i>var</i> is none, otherwise false
 !error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
 
+!name IS_STRUCT
+!desc Checks whether <i>var</i> is of type struct
+!param var (all except error) 
+!return (bool) true if <i>var</i> is struct, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>var</i> is of type error
+
 !name IS_ARRAY
 !alias IS_ARR
 !desc Checks whether <i>var</i> is of type array

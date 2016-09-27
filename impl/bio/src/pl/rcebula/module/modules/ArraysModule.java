@@ -15,6 +15,7 @@ import java.util.Set;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
+import pl.rcebula.internals.data_types.Struct;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
@@ -970,9 +971,9 @@ public class ArraysModule extends Module
             // parametr: <all>
             Data par = params.get(0);
 
-            // sprawdź czy typu array lub dict
+            // sprawdź czy typu array lub dict lub struct
             TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter,
-                    DataType.ARRAY, DataType.DICT);
+                    DataType.ARRAY, DataType.DICT, DataType.STRUCT);
             if (tc.isError())
             {
                 return tc.getError();
@@ -991,8 +992,8 @@ public class ArraysModule extends Module
                 // zwróc nową tablicę
                 return Data.createArrayData(newDatas);
             }
-            // inaczej dict
-            else
+            // inaczej jeżeli dict
+            else if (par.getDataType().equals(DataType.DICT))
             {
                 // pobierz mapę
                 HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
@@ -1000,6 +1001,31 @@ public class ArraysModule extends Module
                 HashMap<String, Data> newMap = new HashMap<>(map);
                 // zwróc nowy dict
                 return Data.createDictData(newMap);
+            }
+            // inaczej struct
+            else
+            {
+                // pobierz stukturę
+                Struct struct = (Struct)par.getValue();
+                // stwórz nową
+                Struct newStruct = new Struct();
+                
+                // skopiuj pola z starej do nowej
+                for (String fn : struct.getFieldsName())
+                {
+                    // jeżeli pole jest strukturą to wykonujemy tą samą operację COPY na nim
+                    Data fData = struct.getField(fn);
+                    if (fData.getDataType().equals(DataType.STRUCT))
+                    {
+                        fData = call(Arrays.asList(fData), currentFrame, interpreter);
+                    }
+                    
+                    // dodajemy pole do nowej struktury
+                    newStruct.addField(fn, fData);
+                }
+                
+                // zwróc
+                return Data.createStructData(newStruct);
             }
         }
     }
@@ -1020,7 +1046,7 @@ public class ArraysModule extends Module
 
             // sprawdź czy typu array lub dict
             TypeChecker tc = new TypeChecker(par, getName(), 0, par.getErrorInfo(), interpreter,
-                    DataType.ARRAY, DataType.DICT, DataType.TUPLE);
+                    DataType.ARRAY, DataType.DICT, DataType.TUPLE, DataType.STRUCT);
             if (tc.isError())
             {
                 return tc.getError();
@@ -1038,14 +1064,51 @@ public class ArraysModule extends Module
                 Tuple tuple = (Tuple)par.getValue();
                 return Data.createTupleData(deepCopy(tuple));
             }
-            // inaczej dict
-            else
+            // inaczej jeżeli dict
+            else if (par.getDataType().equals(DataType.DICT))
             {
                 HashMap<String, Data> map = (HashMap<String, Data>)par.getValue();
                 return Data.createDictData(deepCopy(map));
             }
+            // inaczej struct
+            else
+            {
+                Struct struct = (Struct)par.getValue();
+                return Data.createStructData(deepCopy(struct));
+            }
         }
 
+        private Struct deepCopy(Struct struct)
+        {
+            Struct newStruct = new Struct();
+            
+            for (String fn : struct.getFieldsName())
+            {
+                Data d = struct.getField(fn);
+                
+                if (d.getDataType().equals(DataType.ARRAY))
+                {
+                    d = Data.createArrayData(deepCopy((Data[])d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.TUPLE))
+                {
+                    d = Data.createTupleData(deepCopy((Tuple)d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.DICT))
+                {
+                    d = Data.createDictData(deepCopy((HashMap<String, Data>)d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.STRUCT))
+                {
+                    d = Data.createStructData(deepCopy((Struct)d.getValue()));
+                }
+                
+                newStruct.addField(fn, d);
+            }
+            
+            return newStruct;
+        }
+        
         private Tuple deepCopy(Tuple tuple)
         {
             Data[] arr = tuple.getValues();
@@ -1070,6 +1133,10 @@ public class ArraysModule extends Module
                 else if (d.getDataType().equals(DataType.DICT))
                 {
                     d = Data.createDictData(deepCopy((HashMap<String, Data>)d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.STRUCT))
+                {
+                    d = Data.createStructData(deepCopy((Struct)d.getValue()));
                 }
 
                 newArr[i] = d;
@@ -1097,6 +1164,10 @@ public class ArraysModule extends Module
                 else if (d.getDataType().equals(DataType.DICT))
                 {
                     d = Data.createDictData(deepCopy((HashMap<String, Data>)d.getValue()));
+                }
+                else if (d.getDataType().equals(DataType.STRUCT))
+                {
+                    d = Data.createStructData(deepCopy((Struct)d.getValue()));
                 }
 
                 newMap.put(entry.getKey(), d);

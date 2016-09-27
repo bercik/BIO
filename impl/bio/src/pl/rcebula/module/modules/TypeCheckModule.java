@@ -41,6 +41,7 @@ public class TypeCheckModule extends Module
         putFunction(new IsNumberFunction());
         putFunction(new IsCollectionFunction());
         putFunction(new AreSameTypeFunction());
+        putFunction(new IsStructFunction());
     }
 
     private static class CheckVarType
@@ -50,7 +51,7 @@ public class TypeCheckModule extends Module
             // sprawdź czy nie error
             TypeChecker tc = new TypeChecker(var, funName, 0, var.getErrorInfo(), interpreter, DataType.ARRAY,
                     DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE,
-                    DataType.STRING, DataType.TUPLE);
+                    DataType.STRING, DataType.TUPLE, DataType.STRUCT);
             if (tc.isError())
             {
                 return tc.getError();
@@ -83,7 +84,7 @@ public class TypeCheckModule extends Module
             // sprawdź czy nie error
             TypeChecker tc = new TypeChecker(var, funName, 0, var.getErrorInfo(), interpreter, DataType.ARRAY,
                     DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE,
-                    DataType.STRING, DataType.TUPLE);
+                    DataType.STRING, DataType.TUPLE, DataType.STRUCT);
             if (tc.isError())
             {
                 return tc.getError();
@@ -122,7 +123,7 @@ public class TypeCheckModule extends Module
                 // sprawdź czy nie error
                 TypeChecker tc = new TypeChecker(p, getName(), i, p.getErrorInfo(), interpreter,
                         DataType.ARRAY, DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT,
-                        DataType.NONE, DataType.STRING, DataType.TUPLE);
+                        DataType.NONE, DataType.STRING, DataType.TUPLE, DataType.STRUCT);
                 if (tc.isError())
                 {
                     return tc.getError();
@@ -287,6 +288,24 @@ public class TypeCheckModule extends Module
             Data par = params.get(0);
 
             return CheckVarType.check(getName(), interpreter, par, DataType.NONE);
+        }
+    }
+    
+    private class IsStructFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "IS_STRUCT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <all>
+            Data par = params.get(0);
+
+            return CheckVarType.check(getName(), interpreter, par, DataType.STRUCT);
         }
     }
 

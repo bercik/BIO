@@ -39,6 +39,7 @@ import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.module.modules.FloatsModule;
 import pl.rcebula.module.modules.ReflectionsModule;
 import pl.rcebula.module.modules.StringsModule;
+import pl.rcebula.module.modules.StructsModule;
 
 /**
  *
@@ -68,6 +69,7 @@ public class BuiltinFunctions
         putModule(new FloatsModule());
         putModule(new StringsModule());
         putModule(new ReflectionsModule());
+        putModule(new StructsModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

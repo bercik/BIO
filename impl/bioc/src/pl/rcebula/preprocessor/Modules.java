@@ -44,6 +44,7 @@ public class Modules
             add(new Module("observer"));
             add(new Module("special"));
             add(new Module("strings"));
+            add(new Module("structs"));
             add(new Module("type_check"));
         }
     };

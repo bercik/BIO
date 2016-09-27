@@ -47,6 +47,18 @@ def test()
    BT_ASSERT_TRUE(EQ(true, true), "\n") % true
    BT_ASSERT_TRUE(EQ("abcd", "abcd"), "\n") % true
 
+   ASSIGN_LOCAL(struct.x, 10)
+   ASSIGN_LOCAL(struct2.x, 10)
+   BT_ASSERT_TRUE(EQ(struct, struct2))
+   ASSIGN_LOCAL(struct2.x, 20)
+   BT_ASSERT_FALSE(EQ(struct, struct2))
+   ASSIGN_LOCAL(struct.y.z, CR_TUP(1, 2, 3))
+   ASSIGN_LOCAL(struct2.x, 10)
+   ASSIGN_LOCAL(struct2.y.z, CR_TUP(3, 2, 1))
+   BT_ASSERT_FALSE(EQ(struct, struct2))
+   ASSIGN_LOCAL(struct2.y, 20)
+   BT_ASSERT_FALSE(EQ(struct, struct2))
+
    PRINT("NEQ\n")
    BT_ASSERT_FALSE(NEQ(1, 1.0), "\n") % false
    BT_ASSERT_TRUE(NEQ("string", true), "\n") % true

@@ -67,6 +67,25 @@ def test_copy()
    SET(dict2, "el1", -2.5)
    BT_ASSERT_EQ(dict, CREATE_DICT("el1", arr, "el2", true), "")
    BT_ASSERT_EQ(dict2, CREATE_DICT("el1", -2.5, "el2", true), "")
+
+   ASSIGN_LOCAL(struct.x, 10)
+   ASSIGN_LOCAL(struct2, struct)
+   ASSIGN_LOCAL(struct2.y, 20)
+   BT_ASSERT_EQ(struct, struct2)
+
+   % clear structure struct and struct2
+   ASSIGN_LOCAL(struct, none, struct2, none)
+   ASSIGN_LOCAL(struct.x, 10)
+   ASSIGN_LOCAL(struct2, COPY(struct))
+   ASSIGN_LOCAL(struct2.y, 20)
+   BT_ASSERT_NEQ(struct, struct2)
+
+   % clear structure struct and struct2
+   ASSIGN_LOCAL(struct, none, struct2, none)
+   ASSIGN_LOCAL(struct.x.y, 10)
+   ASSIGN_LOCAL(struct2, COPY(struct))
+   ASSIGN_LOCAL(struct2.x.z, 20)
+   BT_ASSERT_NEQ(struct, struct2)
 end
 
 def test_deep_copy()
@@ -76,6 +95,11 @@ def test_deep_copy()
    SET(GET(dict3, "el1"), 1, true)
    BT_ASSERT_EQ(dict, CREATE_DICT("el1", CREATE_TUPLE("siema", none), "el2", true), "")
    BT_ASSERT_EQ(dict3, CREATE_DICT("el1", CREATE_TUPLE("siema", true), "el2", true), "")
+
+   AS_LOC(a.b.c, CR_DICT("el1", 10, "el2", 20))
+   AS_LOC(b, DEEP_COPY(a))
+   SET(b.b.c, "el1", 20)
+   BT_ASSERT_NEQ(a, b)
 end
 
 def test_extend_array()

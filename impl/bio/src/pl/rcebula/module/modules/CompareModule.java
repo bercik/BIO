@@ -337,7 +337,7 @@ public class CompareModule extends Module
             // jeżeli jedna z wartości to error to zwróć błąd
             TypeChecker tc = new TypeChecker(params, getName(), 0, interpreter, DataType.ARRAY, 
                     DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, 
-                    DataType.STRING, DataType.TUPLE);
+                    DataType.STRING, DataType.TUPLE, DataType.STRUCT);
             
             if (tc.isError())
             {
@@ -367,7 +367,7 @@ public class CompareModule extends Module
             // jeżeli jedna z wartości to error to zwróć błąd
             TypeChecker tc = new TypeChecker(params, getName(), 0, interpreter, DataType.ARRAY, 
                     DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, 
-                    DataType.STRING, DataType.TUPLE);
+                    DataType.STRING, DataType.TUPLE, DataType.STRUCT);
             
             if (tc.isError())
             {

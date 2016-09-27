@@ -5,13 +5,10 @@
  */
 package pl.rcebula.module.modules;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
-import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.data_types.Tuple;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;

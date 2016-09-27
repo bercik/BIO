@@ -1377,6 +1377,25 @@
       </li>
             <li class="has-sub">
       <a href="javascript:void(0)">
+                  structs
+               </a>
+      <ul>
+                  <li class="has-sub">
+         <a class="function" href="javascript:void(0)">
+                        HAS_FIELD
+                     </a>
+         </a>
+         <ul>
+            <li><a href="#HAS_FIELD_fun">Description</a></li>
+                        <li><a href="#HAS_FIELD_funparams">Parameters</a></li>
+                                    <li><a href="#HAS_FIELD_funreturns">Returns</a></li>
+                                    <li><a href="#HAS_FIELD_funerrors">Errors</a></li>
+                     </ul>
+         </li>
+               </ul>
+      </li>
+            <li class="has-sub">
+      <a href="javascript:void(0)">
                   type_check
                </a>
       <ul>
@@ -1449,6 +1468,18 @@
                         <li><a href="#IS_NONE_funparams">Parameters</a></li>
                                     <li><a href="#IS_NONE_funreturns">Returns</a></li>
                                     <li><a href="#IS_NONE_funerrors">Errors</a></li>
+                     </ul>
+         </li>
+                  <li class="has-sub">
+         <a class="function" href="javascript:void(0)">
+                        IS_STRUCT
+                     </a>
+         </a>
+         <ul>
+            <li><a href="#IS_STRUCT_fun">Description</a></li>
+                        <li><a href="#IS_STRUCT_funparams">Parameters</a></li>
+                                    <li><a href="#IS_STRUCT_funreturns">Returns</a></li>
+                                    <li><a href="#IS_STRUCT_funerrors">Errors</a></li>
                      </ul>
          </li>
                   <li class="has-sub">
@@ -1551,7 +1582,7 @@
          <dt>bool</dt>
          <dd>has only two posible values: true and false. Immutable</dd>
          <dt>dict</dt>
-         <dd>collections of pairs &lt;string, any&gt;. Mutable</dd>
+         <dd>collection of pairs &lt;string, any&gt;. Mutable</dd>
          <dt>error</dt>
          <dd>contains informations about error that appears. Immutable</dd>
          <dt>float</dt>
@@ -1609,6 +1640,9 @@
             <tr><td>15</td><td>CONVERSION_ERROR </td></tr>
             <tr><td>16</td><td>REGEX_ERROR </td></tr>
             <tr><td>17</td><td>USER_FUNCTION_DOESNT_EXIST </td></tr>
+            <tr><td>18</td><td>CALLBACK_PARAMS_GREATER_THAN_EVENT </td></tr>
+            <tr><td>19</td><td>TOO_LITTLE_PARAMETERS </td></tr>
+            <tr><td>20</td><td>NO_STACK_TRACE </td></tr>
             </tbody>
          </table>
       </div>
@@ -1704,6 +1738,15 @@
                <td>yes</td>
                <td>yes</td>
                <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+            </tr>
+            <tr>
+               <td>struct</td>
+               <td>yes</td>
+               <td>no</td>
+               <td>no</td>
+               <td>no</td>
                <td>no</td>
                <td>no</td>
             </tr>
@@ -2060,22 +2103,22 @@
          <header>
             <h3>COPY
                         (a)</h3>
-            <p class="description">Copy elements from given array or dict to new one. <b>Note:</b> It won't copy arrays and dicts recursively. To do this use DEEP_COPY instead</p>
+            <p class="description">Copy elements from given array, dict or struct to new one. <b>Note:</b> It won't copy arrays, dicts and structs recursively. To do this use DEEP_COPY instead</p>
          </header>
 
                   <section class="parameters" id="COPY_funparams">
             <h5>Parameters</h5>
             <dl>
-                              <dt><i>a</i> (<u>array, dict</u>)</dt>
-               <dd>array or dict to be copy</dd>
+                              <dt><i>a</i> (<u>array, dict, struct</u>)</dt>
+               <dd>array, dict or struct to be copy</dd>
                            </dl>
          </section>
          
                   <section class="returns" id="COPY_funreturns">
             <h5>Returns</h5>
             <dl>
-               <dt>(<u>array, dict</u>)</dt>
-               <dd>new array or dict</dd>
+               <dt>(<u>array, dict, struct</u>)</dt>
+               <dd>new array, dict or struct</dd>
             </dl>
          </section>
          
@@ -2083,7 +2126,7 @@
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
-               <dd>If <i>a</i> is not array or dict</dd>
+               <dd>If <i>a</i> is not array, dict or struct</dd>
             </dl>
                      </section>
          
@@ -2093,22 +2136,22 @@
          <header>
             <h3>DEEP_COPY
                         (a)</h3>
-            <p class="description">Copy elements from given array, tuple or dict to new one. <b>Note:</b> It will copy arrays, tuples and dicts recursively. If you don't want this behavior use COPY instead</p>
+            <p class="description">Copy elements from given array, tuple, dict or struct to new one. <b>Note:</b> It will copy arrays, tuples, dicts and structs recursively. If you don't want this behavior use COPY instead</p>
          </header>
 
                   <section class="parameters" id="DEEP_COPY_funparams">
             <h5>Parameters</h5>
             <dl>
-                              <dt><i>a</i> (<u>array, tuple, dict</u>)</dt>
-               <dd>array, tuple or dict to be copy</dd>
+                              <dt><i>a</i> (<u>array, tuple, dict, struct</u>)</dt>
+               <dd>array, tuple, dict or struct to be copy</dd>
                            </dl>
          </section>
          
                   <section class="returns" id="DEEP_COPY_funreturns">
             <h5>Returns</h5>
             <dl>
-               <dt>(<u>array, tuple, dict</u>)</dt>
-               <dd>new array, tuple or dict</dd>
+               <dt>(<u>array, tuple, dict, struct</u>)</dt>
+               <dd>new array, tuple, dict or struct</dd>
             </dl>
          </section>
          
@@ -2116,7 +2159,7 @@
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
-               <dd>If <i>a</i> is not array, tuple or dict</dd>
+               <dd>If <i>a</i> is not array, tuple, dict or struct</dd>
             </dl>
                      </section>
          
@@ -2935,7 +2978,7 @@
          <header>
             <h3>EQ
                         (a, b)</h3>
-            <p class="description">Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message</p>
+            <p class="description">Compare if element <i>a</i> is equals element <i>b</i>. Two elements must be the same type to be considered equals (except numbers (ints and floats) and collections (arrays and tuples)). Two elements are considered to be equals in various cases: <br/> - Underlying references are the same <br/> - Numbers, strings, bools have got the same value <br/> - Nones are always equals <br/> - Dicts have got the same keys and values at these keys are equals <br/> - Collections have got the same sizes and values at the same index are equals <br/> - Structs has got the same fields and values at these fields are equals <br/> <b>Note:</b> you can't compare two errors. Instead compare one of its element like object or message</p>
          </header>
 
                   <section class="parameters" id="EQ_funparams">
@@ -5493,6 +5536,50 @@
       </article>
          </section>
 </section>
+<section class="module block" id="structs">
+   <header>
+      <h2>
+                  structs
+               </h2>
+   </header>
+   <section class="functions">
+            <article class="function sub-block" id="HAS_FIELD_fun">
+
+         <header>
+            <h3>HAS_FIELD
+                        (struct, field)</h3>
+            <p class="description">Checks whether <i>struct</i> has got <i>field</i>. As <i>field</i> you can pass nested fields, for example: a.b.c</p>
+         </header>
+
+                  <section class="parameters" id="HAS_FIELD_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>struct</i> (<u>struct</u>)</dt>
+               <dd></dd>
+                              <dt><i>field</i> (<u>id</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="HAS_FIELD_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>true if <i>struct</i> has got <i>field</i>, otherwise false</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="HAS_FIELD_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if <i>struct</i> is not struct</dd>
+            </dl>
+                     </section>
+         
+      </article>
+         </section>
+</section>
 <section class="module block" id="type_check">
    <header>
       <h2>
@@ -5685,6 +5772,39 @@
          </section>
          
                   <section class="errors" id="IS_NONE_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>var</i> is of type error</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="IS_STRUCT_fun">
+
+         <header>
+            <h3>IS_STRUCT
+                        (var)</h3>
+            <p class="description">Checks whether <i>var</i> is of type struct</p>
+         </header>
+
+                  <section class="parameters" id="IS_STRUCT_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>var</i> (<u>all except error</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="IS_STRUCT_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>true if <i>var</i> is struct, otherwise false</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="IS_STRUCT_funerrors">
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>

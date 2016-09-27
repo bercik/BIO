@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
+import pl.rcebula.internals.data_types.Struct;
 import pl.rcebula.internals.data_types.Tuple;
 
 /**
@@ -101,6 +102,22 @@ public class Datas
                 }
                 str += " )";
                 break;
+            case STRUCT:
+                str += "<";
+                Struct struct = (Struct)data.getValue();
+                // iterujemy po wszystkich polach struktury
+                for (String fn : struct.getFieldsName())
+                {
+                    str += fn + ": " + toStr(struct.getField(fn), true) + ", ";
+                }
+                // jeżeli struktura zawierała jakieś pola
+                if (struct.getFieldsName().size() > 0)
+                {
+                    // obcinamy dwa ostatnie znaki (średnik i spację)
+                    str = str.substring(0, str.length() - 2);
+                }
+                str += ">";
+                break;
             default:
                 String message = "Unknown type " + data.getDataType().toString() + " in method toSTR()";
                 throw new RuntimeException(message);
@@ -111,7 +128,6 @@ public class Datas
 
     public static boolean equals(Data d1, Data d2)
     {
-        // TODO
         // sprawdź czy referencje nie są te same
         if (d1 == d2)
         {
@@ -220,6 +236,34 @@ public class Datas
                     }
                 }
 
+                return true;
+            case STRUCT:
+                Struct struct1 = (Struct)d1.getValue();
+                Struct struct2 = (Struct)d2.getValue();
+                
+                // sprawdzamy czy obydwie struktury mają taką samą ilość pól
+                if (struct1.getFieldsName().size() != struct2.getFieldsName().size())
+                {
+                    return false;
+                }
+                
+                // sprawdzamy czy mają pola o tej samej nazwie i czy obiekty pod tymi polami są takie same
+                for (String fn : struct1.getFieldsName())
+                {
+                    Data sd1 = struct1.getField(fn);
+                    Data sd2 = struct2.getField(fn);
+                    
+                    if (sd2 == null)
+                    {
+                        return false;
+                    }
+                    
+                    if (!equals(sd1, sd2))
+                    {
+                        return false;
+                    }
+                }
+                
                 return true;
             default:
                 throw new RuntimeException("Unknown type " + d1.getDataType().toString());

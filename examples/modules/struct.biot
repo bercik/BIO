@@ -1,6 +1,6 @@
 #INCLUDE("../stdlib/biotest.biom")
 
-def test()
+def test_creation()
    AS_LOC(a.b, 10)
    BT_ASSERT_TRUE(IS_LOCAL(a))
    BT_ASSERT_TRUE(IS_LOCAL(a.b))
@@ -27,4 +27,19 @@ def test()
 
    BT_ASSERT_EQ(a.b.c, "a.b.c")
    BT_ASSERT_EQ(a.b.cc, "a.b.cc")
+end
+
+def test_has_field()
+   AS_LOC(a.b.c, 10)
+   AS_LOC(a.b.d, "test")
+
+   BT_ASSERT_TRUE(HAS_FIELD(a, b))
+   BT_ASSERT_TRUE(HAS_FIELD(a, b.c))
+   BT_ASSERT_TRUE(HAS_FIELD(a, b.d))
+   BT_ASSERT_TRUE(HAS_FIELD(a.b, c))
+
+   BT_ASSERT_FALSE(HAS_FIELD(a, c))
+   BT_ASSERT_FALSE(HAS_FIELD(a, b.c.d))
+
+   BT_ASSERT_ERROR(HAS_FIELD(x, a.b.c.d.e))
 end

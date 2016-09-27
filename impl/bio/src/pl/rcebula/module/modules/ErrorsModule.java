@@ -547,7 +547,7 @@ public class ErrorsModule extends Module
             // sprawdź czy obj to nie error
             tc = new TypeChecker(obj, getName(), 1, obj.getErrorInfo(), interpreter, DataType.ARRAY, 
                     DataType.BOOL, DataType.DICT, DataType.FLOAT, DataType.INT, DataType.NONE, 
-                    DataType.STRING, DataType.TUPLE);
+                    DataType.STRING, DataType.TUPLE, DataType.STRUCT);
             if (tc.isError())
             {
                 return tc.getError();
