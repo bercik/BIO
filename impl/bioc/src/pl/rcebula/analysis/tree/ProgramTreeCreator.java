@@ -19,6 +19,7 @@ package pl.rcebula.analysis.tree;
 import pl.rcebula.analysis.lexer.Token;
 import java.util.List;
 import java.util.logging.Logger;
+import pl.rcebula.error_report.ErrorInfo;
 
 /**
  *
@@ -43,6 +44,7 @@ public class ProgramTreeCreator
         Token<?> tokenStep18 = null;
         Token<?> tokenStep39 = null;
         String parName = null;
+        ErrorInfo parNameErrorInfo = null;
         
         for (int cs = 0; cs < steps.size(); ++cs)
         {
@@ -280,6 +282,7 @@ public class ProgramTreeCreator
                     ct += 1;
                     // ustawiamy zmienną pomocniczą
                     parName = (String)tokenStep18.getValue();
+                    parNameErrorInfo = tokenStep18.getErrorInfo();
                     // koniec
                     break;
                 // parametr nazywany to stała
@@ -289,7 +292,7 @@ public class ProgramTreeCreator
                     // przesuwamy o 1
                     ct += 1;
                     // tworzymy const call param
-                    ccp = new ConstCallParam(token, token.getErrorInfo(), parName);
+                    ccp = new ConstCallParam(token, token.getErrorInfo(), parName, parNameErrorInfo);
                     // dodajemy do parametrów funkcji
                     c.addCallParam(ccp);
                     // koniec
@@ -303,7 +306,7 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)token.getValue();
                     // tworzymy id call param
-                    icp = new IdCallParam(name, token.getErrorInfo(), parName);
+                    icp = new IdCallParam(name, token.getErrorInfo(), parName, parNameErrorInfo);
                     // dodajemy do parametrów funkcji
                     c.addCallParam(icp);
                     // koniec
@@ -323,7 +326,7 @@ public class ProgramTreeCreator
                     // nie przesuwamy, wyciągamy nazwę
                     name = (String)tokenStep39.getValue();
                     // tworzymy id call param
-                    icp = new IdCallParam(name, tokenStep39.getErrorInfo(), parName);
+                    icp = new IdCallParam(name, tokenStep39.getErrorInfo(), parName, parNameErrorInfo);
                     // dodajemy do parametrów
                     c.addCallParam(icp);
                     // koniec
@@ -335,7 +338,7 @@ public class ProgramTreeCreator
                     // wyciągamy nazwę
                     name = (String)tokenStep39.getValue();
                     // tworzymy nowe wywołanie funkcyjne i dodajemy
-                    tmpC = new Call(name, c, tokenStep39.getErrorInfo(), parName);
+                    tmpC = new Call(name, c, tokenStep39.getErrorInfo(), parName, parNameErrorInfo);
                     c.addCallParam(tmpC);
                     c = tmpC;
                     // koniec

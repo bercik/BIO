@@ -31,10 +31,10 @@ import pl.rcebula.utils.TimeProfiler;
  *
  * @author robert
  */
-public class Interpreter
+public final class Interpreter
 {
     // logger
-    Logger logger = Logger.getGlobal();
+    static final Logger logger = Logger.getGlobal();
 
     // time profiler
     final TimeProfiler timeProfiler;

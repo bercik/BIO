@@ -32,8 +32,8 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Strin
  */
 public class FlowGraph
 {
-    private List<CodeBlock> codeBlocks = new ArrayList<>();
-    private List<CodeBlock> endBlocks = new ArrayList<>();
+    private final List<CodeBlock> codeBlocks = new ArrayList<>();
+    private final List<CodeBlock> endBlocks = new ArrayList<>();
     private CodeBlock startBlock = null;
 
     private final IntermediateCode ic;

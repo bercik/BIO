@@ -28,12 +28,12 @@ public class IdCallParam extends CallParam
 
     public IdCallParam(String name, ErrorInfo errorInfo)
     {
-        this(name, errorInfo, "");
+        this(name, errorInfo, "", null);
     }
     
-    public IdCallParam(String name, ErrorInfo errorInfo, String parName)
+    public IdCallParam(String name, ErrorInfo errorInfo, String parName, ErrorInfo parNameErrorInfo)
     {
-        super(errorInfo, parName);
+        super(errorInfo, parName, parNameErrorInfo);
         this.name = name;
     }
 

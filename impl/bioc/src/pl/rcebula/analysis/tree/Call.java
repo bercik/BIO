@@ -36,12 +36,12 @@ public class Call extends CallParam
 
     public Call(String name, Call parentCall, ErrorInfo errorInfo)
     {
-        this(name, parentCall, errorInfo, "");
+        this(name, parentCall, errorInfo, "", null);
     }
     
-    public Call(String name, Call parentCall, ErrorInfo errorInfo, String parName)
+    public Call(String name, Call parentCall, ErrorInfo errorInfo, String parName, ErrorInfo parNamErrorInfo)
     {
-        super(errorInfo, parName);
+        super(errorInfo, parName, parNamErrorInfo);
         this.name = name;
         this.parentCall = parentCall;
     }

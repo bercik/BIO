@@ -32,7 +32,7 @@ public class RemoveJmpsToNextLine implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
-    private final Logger logger = Logger.getGlobal();
+    private static final Logger logger = Logger.getGlobal();
     private boolean optimize = false;
 
     public RemoveJmpsToNextLine(IntermediateCode ic, OptimizationStatistics statistics)

@@ -128,7 +128,7 @@ public class ProgramTree
             {
                 Call cc = (Call) cp;
                 toReturn += indent(indent);
-                if (cc.getParName() != "")
+                if (!cc.getParName().equals(""))
                 {
                     toReturn += cc.getParName() + "= ";
                 }
@@ -147,7 +147,7 @@ public class ProgramTree
     private String idCallParamToString(IdCallParam icp, int indent)
     {
         String toReturn = indent(indent);
-        if (icp.getParName() != "")
+        if (!icp.getParName().equals(""))
         {
             toReturn += icp.getParName() + "= ";
         }
@@ -158,7 +158,7 @@ public class ProgramTree
     private String constCallParamToString(ConstCallParam ccp, int indent)
     {
         String toReturn = indent(indent);
-        if (ccp.getParName() != "")
+        if (!ccp.getParName().equals(""))
         {
             toReturn += ccp.getParName() + "= ";
         }
@@ -195,7 +195,7 @@ public class ProgramTree
             Call c = (Call)cp;
             String name = c.getName();
             String res = indent(indent);
-            if (c.getParName() != "")
+            if (!c.getParName().equals(""))
             {
                 res += c.getParName() + "= ";
             }

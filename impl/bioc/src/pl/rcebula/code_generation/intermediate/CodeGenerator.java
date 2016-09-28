@@ -286,7 +286,7 @@ public class CodeGenerator
 
                 Line line;
 
-                if (callParams.size() != 0)
+                if (!callParams.isEmpty())
                 {
                     line = ifg.generatePop(callParams.size());
                     ic.appendLine(line);
@@ -314,7 +314,7 @@ public class CodeGenerator
 
                 Line line;
 
-                if (uf.getParams().size() != 0)
+                if (!uf.getParams().isEmpty())
                 {
                     line = ifg.generatePop(uf.getParams().size());
                     ic.appendLine(line);

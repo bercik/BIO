@@ -28,7 +28,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -134,7 +133,7 @@ public class Preprocessor
                 currentFile.addInterval(new File.Interval(intervalStart, intervalEnd));
                 intervalStart = i;
                 // jeżeli nie ma nic więcej na stosie, kończymy
-                if (stack.size() == 0)
+                if (stack.isEmpty())
                 {
                     break;
                 }

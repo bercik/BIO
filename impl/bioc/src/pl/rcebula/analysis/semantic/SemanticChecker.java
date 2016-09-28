@@ -294,7 +294,7 @@ public class SemanticChecker
                         {
                             String message = "In function " + call.getName() + " there are multiple values for argument "
                                     + p.getLeft();
-                            throw new SemanticError(cp.getErrorInfo(), message);
+                            throw new SemanticError(cp.getParNameErrorInfo(), message);
                         }
                         p.setRight(true);
                         orderList.add(k + 1);
@@ -306,7 +306,7 @@ public class SemanticChecker
                 if (!ok)
                 {
                     String message = "In function " + call.getName() + " there is no argument " + parName;
-                    throw new SemanticError(cp.getErrorInfo(), message);
+                    throw new SemanticError(cp.getParNameErrorInfo(), message);
                 }
             }
         }
@@ -361,7 +361,7 @@ public class SemanticChecker
             {
                 String message = "In function " + call.getName() + " you can't pass named parameter into "
                         + "builtin function";
-                throw new SemanticError(cp.getErrorInfo(), message);
+                throw new SemanticError(cp.getParNameErrorInfo(), message);
             }
         }
         

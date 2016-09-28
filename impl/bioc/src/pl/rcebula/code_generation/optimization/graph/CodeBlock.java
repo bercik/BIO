@@ -27,7 +27,7 @@ public class CodeBlock
 {
     private final int start;
     private final int end;
-    private List<CodeBlock> out = new ArrayList<>();
+    private final List<CodeBlock> out = new ArrayList<>();
     private boolean visited = false;
 
     public CodeBlock(int start, int end)

@@ -27,11 +27,13 @@ public abstract class CallParam
 {
     private final ErrorInfo errorInfo;
     private final String parName;
+    private final ErrorInfo parNameErrorInfo;
 
-    public CallParam(ErrorInfo errorInfo, String parName)
+    public CallParam(ErrorInfo errorInfo, String parName, ErrorInfo parNameErrorInfo)
     {
         this.errorInfo = errorInfo;
         this.parName = parName;
+        this.parNameErrorInfo = parNameErrorInfo;
     }
 
     public ErrorInfo getErrorInfo()
@@ -43,6 +45,11 @@ public abstract class CallParam
     {
         return parName;
     }
+
+    public ErrorInfo getParNameErrorInfo()
+    {
+        return parNameErrorInfo;
+    }
     
     @Override
     public int hashCode()
@@ -50,6 +57,7 @@ public abstract class CallParam
         int hash = 3;
         hash = 89 * hash + Objects.hashCode(this.errorInfo);
         hash = 89 * hash + Objects.hashCode(this.parName);
+        hash = 89 * hash + Objects.hashCode(this.parNameErrorInfo);
         return hash;
     }
 
@@ -74,6 +82,10 @@ public abstract class CallParam
             return false;
         }
         if (!Objects.equals(this.errorInfo, other.errorInfo))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.parNameErrorInfo, other.parNameErrorInfo))
         {
             return false;
         }

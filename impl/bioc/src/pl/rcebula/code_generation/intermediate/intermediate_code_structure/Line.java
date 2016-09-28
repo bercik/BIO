@@ -42,19 +42,19 @@ public class Line
     public Line(IField... fields)
     {
         this.fields.addAll(Arrays.asList(fields));
-        empty = this.fields.size() == 0;
+        empty = this.fields.isEmpty();
     }
     
     public Line(List<IField> fields)
     {
         this.fields.addAll(fields);
-        empty = this.fields.size() == 0;
+        empty = this.fields.isEmpty();
     }
     
     private Line(IField field, boolean empty)
     {
         this.fields.add(field);
-        this.empty = true;
+        this.empty = empty;
     }
     
     public static Line generateEmptyStringLine()
@@ -142,7 +142,7 @@ public class Line
         int added = 0;
         for (IField f : fields)
         {
-            if (f.toString() != "")
+            if (!f.toString().equals(""))
             {
                 result += f.toString() + Constants.fieldsSeparator;
                 ++added;

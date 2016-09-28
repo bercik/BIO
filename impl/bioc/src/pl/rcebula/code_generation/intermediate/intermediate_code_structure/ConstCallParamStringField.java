@@ -16,7 +16,6 @@
  */
 package pl.rcebula.code_generation.intermediate.intermediate_code_structure;
 
-import pl.rcebula.code_generation.intermediate.intermediate_code_structure.StringField;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import pl.rcebula.Constants;
