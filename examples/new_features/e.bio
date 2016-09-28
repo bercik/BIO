@@ -1,11 +1,31 @@
-def foo(arg1=foo2())
+def bar(arg1=bar2())
    DN()
 end
 
-def foo2(arg1=foo())
+def bar2(arg1=bar3())
+   DN()
+end
+
+def bar3(arg1=bar4())
+   DN()
+end
+
+def bar4(arg1=foo2())
+   DN()
+end
+
+def foo(arg1=foo2(), arg=foo3(), arg2=foo(1, 2))
+   DN()
+end
+
+def foo2(arg1=foo(1, 2))
+   DN()
+end
+
+def foo3(arg1=foo(1, 2))
    DN()
 end
 
 def onSTART()
-   foo()
+   DN()
 end

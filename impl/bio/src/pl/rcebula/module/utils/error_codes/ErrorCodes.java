@@ -33,7 +33,9 @@ public enum ErrorCodes
     USER_FUNCTION_DOESNT_EXIST(17),
     CALLBACK_PARAMS_GREATER_THAN_EVENT(18),
     TOO_LITTLE_PARAMETERS(19),
-    NO_STACK_TRACE(20);
+    NO_STACK_TRACE(20),
+    STACK_OVERFLOW(21),
+    HEAP_OVERFLOW(22);
     
     private final Data code;
             

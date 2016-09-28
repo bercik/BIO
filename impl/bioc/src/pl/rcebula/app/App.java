@@ -142,10 +142,13 @@ public class App
                 System.out.println(ic.toStringWithLinesNumber());
             }
 
-            // optimizations
-            timeProfiler.start("CodeOptimizer");
-            new CodeOptimizer(ic, statistic, preprocessor.getFiles());
-            timeProfiler.stop();
+            if (opts.isOptimizations())
+            {
+                // optimizations
+                timeProfiler.start("CodeOptimizer");
+                new CodeOptimizer(ic, statistic, preprocessor.getFiles());
+                timeProfiler.stop();
+            }
             statistic.setLinesAfterOptimization(ic.numberOfLines());
             
             if (opts.isVerbose())

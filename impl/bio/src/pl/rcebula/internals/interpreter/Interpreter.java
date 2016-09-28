@@ -21,7 +21,9 @@ import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
+import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.module.BuiltinFunctions;
+import pl.rcebula.module.utils.error_codes.ErrorCodes;
 import pl.rcebula.tools.IProfiler;
 import pl.rcebula.utils.TimeProfiler;
 
@@ -87,7 +89,23 @@ public class Interpreter
         pushFrameToStack(mainFrame);
 
         // zaczynamy wykonywanie kodu
-        run();
+        // try catch na wypadek błędów końca stosu lub pamięci
+        try
+        {
+            run();
+        }
+        catch (StackOverflowError ex)
+        {
+            ErrorInfo ei = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+            MyError error = new MyError("Stack overflow", ErrorCodes.STACK_OVERFLOW.getCode(), null, ei, this);
+            valueReturnedFromMainFunction = Data.createErrorData(error);
+        }
+        catch (OutOfMemoryError ex)
+        {
+            ErrorInfo ei = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+            MyError error = new MyError("Heap overflow", ErrorCodes.HEAP_OVERFLOW.getCode(), null, ei, this);
+            valueReturnedFromMainFunction = Data.createErrorData(error);
+        }
         // po wykonaniu kodu, uruchamiamy ewentualną obsługę błędu zwróconego z funckji onSTART
         endOfFirstRun();
     }

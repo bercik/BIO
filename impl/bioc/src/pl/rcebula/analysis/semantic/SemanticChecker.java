@@ -47,6 +47,8 @@ public class SemanticChecker
 
     private int insideForLoopCounter = 0;
 
+    private Call lastCallInCheckCall = null;
+    
     public SemanticChecker(ProgramTree programTree, List<BuiltinFunction> builtinFunctions, MyFiles files)
             throws SemanticError
     {
@@ -58,7 +60,16 @@ public class SemanticChecker
         this.files = files;
 
         checkUserFunctions();
-        checkDefaultParameters();
+        // try catch w przypadku nieskończonej rekurencji dla domyślnych parametrów z wywołaniem funkcji
+        try
+        {
+            checkDefaultParameters();
+        }
+        catch (StackOverflowError ex)
+        {
+            String msg = "Endless recursion when checking default parameters";
+            throw new SemanticError(lastCallInCheckCall.getErrorInfo(), msg);
+        }
         checkUserFunctionsCalls();
     }
 
@@ -472,10 +483,12 @@ public class SemanticChecker
 
         return forLoopFunction;
     }
-
+    
     private void checkCall(Call call)
             throws SemanticError
     {
+        lastCallInCheckCall = call;
+        
         List<CallParam> callParams = call.getCallParams();
         List<UserFunction> userFunctions = programTree.getUserFunctions();
 
@@ -489,7 +502,7 @@ public class SemanticChecker
             if (call.getName().equals(uf.getName()))
             {
                 functionExists = true;
-
+                
                 checkUserFunctionCall(call, uf);
 
                 break;
@@ -531,7 +544,9 @@ public class SemanticChecker
         {
             if (cp instanceof Call)
             {
-                checkCall((Call)cp);
+                Call c = (Call)cp;
+                
+                checkCall(c);
             }
         }
 
@@ -541,7 +556,7 @@ public class SemanticChecker
             --insideForLoopCounter;
         }
     }
-
+    
     private void compareThrowIfNotEqual(ParamType pt1, ParamType pt2, Call call, int k)
             throws SemanticError
     {

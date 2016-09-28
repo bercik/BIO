@@ -1,4 +1,11 @@
+def foo(arg1)
+   DN()
+end
+
+def foo2(arg1)
+   DN()
+end
+
 def onSTART()
-   AS_LOC(a.x, 10, a.x.y, 20)
-   PRINTLN(a.x, a.x.y)
+   foo(foo2(foo(foo2(foo(1)))))
 end

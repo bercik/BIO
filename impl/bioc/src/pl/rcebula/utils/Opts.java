@@ -30,6 +30,7 @@ public class Opts
     private boolean disassemble = false;
     private boolean times = false;
     private boolean debugInfo = false;
+    private boolean optimizations = true;
     private String inputFilePath;
     private String outputFilePath;
     private static final String defaultOutputFile = "a.cbio";
@@ -93,6 +94,10 @@ public class Opts
             {
                 debugInfo = true;
             }
+            else if (opt.equals("-c"))
+            {
+                optimizations = false;
+            }
             else
             {
                 String message = "Unrecognized option " + opt + "\n";
@@ -112,6 +117,7 @@ public class Opts
     {
         String help = "usage: java -jar bioc.jar input_file [options]\n";
         help += "options:\n";
+        help += "  -c disable optimizations, turns off compiler code optimizations\n";
         help += "  -d disassemble, print compiled code in readable form\n";
         help += "  -g debug info, add full files name to compiled file\n";
         help += "  -h --help, show this text\n";
@@ -157,5 +163,10 @@ public class Opts
     public String getOutputFilePath()
     {
         return outputFilePath;
+    }
+
+    public boolean isOptimizations()
+    {
+        return optimizations;
     }
 }
