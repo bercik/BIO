@@ -78,12 +78,15 @@
       </pack>
 
       <pack name="core" required="yes">
-         <description>Compiler and interpreter .jar files.</description>
+         <description>Compiler and interpreter .jar files. Standard library bio modules</description>
          <fileset dir="./res/bin" targetdir="$INSTALL_PATH/bin">
             <include name="*.jar" />
          </fileset>
          <fileset dir="./res/bin/lib" targetdir="$INSTALL_PATH/bin/lib">
             <include name="**" />
+         </fileset>
+         <fileset dir="./res/lib" targetdir="$INSTALL_PATH/lib">
+            <include  name="**" />
          </fileset>
 
          <file os="unix" src="./scripts/unix.sh" targetdir="$INSTALL_PATH/bin">

@@ -17,4 +17,7 @@ cp ../impl/bioc/dist/bioc.jar ./res/bin/
 cp -r ../impl/bio/dist/lib ./res/bin/
 cp -r ../impl/bioc/dist/lib ./res/bin/
 
+mkdir -p ./res/lib
+cp -r ../lib ./res/
+
 ~/IzPack/bin/compile install.xml -b . -o bio_installer.jar

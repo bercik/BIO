@@ -1,4 +1,4 @@
-#INCLUDE("../stdlib/biotest.biom")
+#INCLUDE("<stdlib/biotest.biom>")
 
 def test()
    ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, 5, -10, 20.0, 3, 2))

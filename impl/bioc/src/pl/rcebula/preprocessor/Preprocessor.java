@@ -55,6 +55,8 @@ public class Preprocessor
     private final boolean debugInfo;
     private final MyFiles files = new MyFiles();
     private final Modules modules = new Modules();
+    
+    private final String libPath;
 
     public Preprocessor(String path, boolean debugInfo)
             throws IOException, PreprocessorError
@@ -63,6 +65,9 @@ public class Preprocessor
         logger.info("Preprocessor");
 
         this.debugInfo = debugInfo;
+        
+        // odczytujemy ścieżkę do bibliotek z właściwości systemowych
+        this.libPath = System.getProperty("libpath");
 
         // wczytujemy plik główny
         Path p = Paths.get(path);
@@ -200,6 +205,24 @@ public class Preprocessor
                     matched = true;
                     // pobieramy ścieżkę do pliku
                     String filePath = m.group(1);
+                    
+                    // sprawdzamy czy nie zaczyna się od <
+                    if (filePath.startsWith("<"))
+                    {
+                        // sprawdzamy czy kończy się na >
+                        if (!filePath.endsWith(">"))
+                        {
+                            String msg = "Missing enclosing > in directive: " + line;
+                            throw new PreprocessorError(file, msg, it);
+                        }
+                        
+                        // obcinamy pierwszy i ostatni znak (< i >)
+                        filePath = filePath.substring(1, filePath.length() - 1);
+                        
+                        // dodajemy na początek ścieżkę do katalogu z bibliotekami
+                        filePath = libPath + filePath;
+                    }
+                    
                     Path p;
                     // próbujemy utworzyć obiekt Path
                     try
@@ -256,7 +279,7 @@ public class Preprocessor
                 else
                 {
                     matched = true;
-                    // sprawdzamy czy linia pasuje do wzorca include
+                    // sprawdzamy czy linia pasuje do wzorca import
                     m = importPattern.matcher(line);
                     if (m.find())
                     {

@@ -1,4 +1,4 @@
-#INCLUDE("../stdlib/biotest.biom")
+#INCLUDE("<stdlib/biotest.biom>")
 
 def foo()
    RETURN(CREATE_ERROR("foo error", 10, none))

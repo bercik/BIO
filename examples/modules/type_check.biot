@@ -1,4 +1,4 @@
-#INCLUDE("../stdlib/biotest.biom")
+#INCLUDE("<stdlib/biotest.biom>")
 
 def test()
    PRINT("IS_ERROR\n")
