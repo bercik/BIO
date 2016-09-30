@@ -23,6 +23,9 @@ public class CallFrame
 {
     // czy mamy skopiować wartość z funkcji RETURN do poprzedniej ramki
     private final boolean returnToCaller;
+    // flaga informująca o tym czy należy wywołać funkcję FOREACH w momencie kiedy
+    // zostanie ściągnięta poprzednia ramka
+    private boolean callForeach;
     // informacja o miejscu występowania w kodzie źródłowym
     private final ErrorInfo errorInfo;
     // instruction pointer, wskaźnik na linijkę w kodzie
@@ -64,6 +67,16 @@ public class CallFrame
         }
     }
 
+    public boolean isCallForeach()
+    {
+        return callForeach;
+    }
+
+    public void setCallForeach(boolean callForeach)
+    {
+        this.callForeach = callForeach;
+    }
+    
     public Map<String, Data> getLocalVariables()
     {
         return localVariables;

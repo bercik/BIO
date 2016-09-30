@@ -37,6 +37,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.module.modules.FloatsModule;
+import pl.rcebula.module.modules.IterModule;
 import pl.rcebula.module.modules.ReflectionsModule;
 import pl.rcebula.module.modules.StringsModule;
 import pl.rcebula.module.modules.StructsModule;
@@ -70,6 +71,7 @@ public class BuiltinFunctions
         putModule(new StringsModule());
         putModule(new ReflectionsModule());
         putModule(new StructsModule());
+        putModule(new IterModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

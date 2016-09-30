@@ -855,6 +855,25 @@
       </li>
             <li class="has-sub">
       <a href="javascript:void(0)">
+                  iter
+               </a>
+      <ul>
+                  <li class="has-sub">
+         <a class="function" href="javascript:void(0)">
+                        FOREACH
+                     </a>
+         </a>
+         <ul>
+            <li><a href="#FOREACH_fun">Description</a></li>
+                        <li><a href="#FOREACH_funparams">Parameters</a></li>
+                                    <li><a href="#FOREACH_funreturns">Returns</a></li>
+                                    <li><a href="#FOREACH_funerrors">Errors</a></li>
+                     </ul>
+         </li>
+               </ul>
+      </li>
+            <li class="has-sub">
+      <a href="javascript:void(0)">
                   logic
                </a>
       <ul>
@@ -1126,7 +1145,7 @@
       </li>
             <li class="has-sub">
       <a href="javascript:void(0)">
-                  reflections <i>(optional)</i>
+                  reflections
                </a>
       <ul>
                   <li class="has-sub">
@@ -4090,6 +4109,58 @@
       </article>
          </section>
 </section>
+<section class="module block" id="iter">
+   <header>
+      <h2>
+                  iter
+               </h2>
+   </header>
+   <section class="functions">
+            <article class="function sub-block" id="FOREACH_fun">
+
+         <header>
+            <h3>FOREACH
+                        (iterable, function)</h3>
+            <p class="description">Calls <i>function</i> for every element in given <i>iterable</i> (that is array, tuple or dict). <b>Note:</b> if <i>function</i> returns error then this error would be returned from FOREACH and it will stop working immediately. <b>Note:</b> when you passed iterable interpreter will make copy of it, so even if you changed it during <i>function</i> calls, it will iterate over this what you passed at the beginning. <b>Caution:</b> don't call FOREACH method inside <i>function</i>. This will cause interpreter crash</p>
+         </header>
+
+                  <section class="parameters" id="FOREACH_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>iterable</i> (<u>array, tuple, dict</u>)</dt>
+               <dd>iterable object</dd>
+                              <dt><i>function</i> (<u>id</u>)</dt>
+               <dd>function name. Function must take at least 2 parameters: <br/> - el - struct that contains one or two fields:<br/> &nbsp; - val - value of element <br/> &nbsp; - key - in case of dict key <br/> - obj - struct that contains no fields but is passed between next <i>function</i> calls so you can use it to save some values between <i>function</i> calls <br/> <br/> Example of <i>function</i> definition: <br/> <code>def sumEACH(el, obj)<br/>&nbsp;IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))<br/>&nbsp;AS_LOC(obj.sum, ADD(obj.sum, el.val))<br/>&nbsp;RET(obj.sum)<br/>end</code> </dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="FOREACH_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>all</u>)</dt>
+               <dd>what last call of <i>function</i> returns. If <i>iterable</i> contains no elements than return value would be none</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="FOREACH_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>iterable</i> is not array, tuple or dict</dd>
+            </dl>
+                        <dl>
+               <dt>USER_FUNCTION_DOESNT_EXIST</dt>
+               <dd>If user <i>function</i> doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TOO_LITTLE_PARAMETERS</dt>
+               <dd>If <i>function</i> takes less parameters than two</dd>
+            </dl>
+                     </section>
+         
+      </article>
+         </section>
+</section>
 <section class="module block" id="logic">
    <header>
       <h2>
@@ -4869,7 +4940,7 @@
 <section class="module block" id="reflections">
    <header>
       <h2>
-                  reflections <i>(optional)</i>
+                  reflections
                </h2>
    </header>
    <section class="functions">

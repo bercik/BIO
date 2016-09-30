@@ -1,0 +1,9 @@
+!name FOREACH
+!desc Calls <i>function</i> for every element in given <i>iterable</i> (that is array, tuple or dict). <b>Note:</b> if <i>function</i> returns error then this error would be returned from FOREACH and it will stop working immediately. <b>Note:</b> when you passed iterable interpreter will make copy of it, so even if you changed it during <i>function</i> calls, it will iterate over this what you passed at the beginning. <b>Caution:</b> don't call FOREACH method inside <i>function</i>. This will cause interpreter crash
+!param iterable (array, tuple, dict) iterable object
+!param function (id) function name. Function must take at least 2 parameters: <br/> - el - struct that contains one or two fields:<br/> &nbsp; - val - value of element <br/> &nbsp; - key - in case of dict key <br/> - obj - struct that contains no fields but is passed between next <i>function</i> calls so you can use it to save some values between <i>function</i> calls <br/> <br/> Example of <i>function</i> definition: <br/> <code>def sumEACH(el, obj)<br/>&nbsp;IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))<br/>&nbsp;AS_LOC(obj.sum, ADD(obj.sum, el.val))<br/>&nbsp;RET(obj.sum)<br/>end</code> 
+!return (all) what last call of <i>function</i> returns. If <i>iterable</i> contains no elements than return value would be none
+!error (BAD_PARAMETER_TYPE) If <i>iterable</i> is not array, tuple or dict
+!error (USER_FUNCTION_DOESNT_EXIST) If user <i>function</i> doesn't exist
+!error (TOO_LITTLE_PARAMETERS) If <i>function</i> takes less parameters than two
+

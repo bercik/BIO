@@ -6,6 +6,7 @@
 package pl.rcebula.internals.interpreter;
 
 import java.util.List;
+import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;
@@ -56,6 +57,20 @@ public class PerformCallLoc
             if (interpreter.currentFrame != null)
             {
                 interpreter.currentFrame.getVariableStack().push(data);
+                
+                // sprawdzamy czy należy wywołać funkcję FOREACH
+                if (interpreter.currentFrame.isCallForeach())
+                {
+                    // wywołujemy
+                    data = interpreter.getBuiltinFunctions().callFunction("FOREACH", null, interpreter.getCurrentFrame(), 
+                            interpreter, null);
+                    // jeżeli zmieniono callForeach na false
+                    if (!interpreter.currentFrame.isCallForeach())
+                    {
+                        // zapisujemy na stosie wartości aktualnej ramki
+                        interpreter.currentFrame.getVariableStack().push(data);
+                    }
+                }
             }
             else
             {

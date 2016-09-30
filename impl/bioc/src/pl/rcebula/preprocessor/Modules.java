@@ -28,6 +28,7 @@ public class Modules
 {
     private final Set<Module> modules = new HashSet<>();
 
+    // dodaj domyślne moduły tutaj
     private final Set<Module> defaultModules = new HashSet<Module>()
     {
         {
@@ -40,8 +41,10 @@ public class Modules
             add(new Module("ints"));
             add(new Module("io"));
             add(new Module("logic"));
+            add(new Module("iter"));
             add(new Module("math"));
             add(new Module("observer"));
+            add(new Module("reflections"));
             add(new Module("special"));
             add(new Module("strings"));
             add(new Module("structs"));

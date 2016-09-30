@@ -133,7 +133,11 @@ public class Data
     public String toString()
     {
         String str = "";
-        str += dataType.toString() + ": " + value.toString();
+        str += dataType.toString() + ": ";
+        if (value != null)
+        {
+            str += value.toString();
+        }
         return str;
     }
 }

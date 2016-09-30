@@ -1,5 +1,16 @@
+def sumEACH(el, obj)
+   IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
+   AS_LOC(obj.sum, ADD(obj.sum, el.val))
+   RET(obj.sum)
+end
+
+def foo()
+   AS_LOC(tup, CR_TUP(1, 2, 3))
+   PRINTLN(FOREACH(tup, sumEACH))
+end
+
 def onSTART()
-   AS_LOC(vec, CR_STRUCT(x, 10, y, 20))
-   AS_LOC(dist, SQRT(ADD(POW(vec.x, 2), POW(vec.y, 2))))
-   PRINTLN(vec, dist)
+   foo()
+   AS_LOC(a, 10)
+   PRINTLN(a)
 end

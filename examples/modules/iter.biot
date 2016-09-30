@@ -1,0 +1,12 @@
+#INCLUDE("<stdlib/biotest.biom>")
+
+def sumEACH(el, obj)
+   IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
+   AS_LOC(obj.sum, ADD(obj.sum, el.val))
+   RET(obj.sum)
+end
+
+def test_foreach()
+   AS_LOC(dict, CR_DICT("el1", 1, "el2", 2, "el3", 10))
+   BT_ASSERT_EQ(FOREACH(dict, sumEACH), 13)
+end
