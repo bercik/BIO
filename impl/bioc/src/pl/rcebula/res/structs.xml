@@ -21,6 +21,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- operacje na strukturach -->
     <function>
         <name>
+            CREATE_STRUCT
+        </name>
+        <alias>
+            CR_STRUCT
+        </alias>
+        <params>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             HAS_FIELD
         </name>
         <params>

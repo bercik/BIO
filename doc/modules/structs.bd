@@ -5,3 +5,10 @@
 !return (bool) true if <i>struct</i> has got <i>field</i>, otherwise false
 !error (BAD_PARAMETER_TYPE) if <i>struct</i> is not struct
 
+!name CREATE_STRUCT
+!alias CR_STRUCT
+!desc Creates struct with given fields or empty one
+!repeat id (id) Struct field, can be nested field like a.b.c
+!repeat val (all) Value for this field
+!return (struct) New struct with given fields and values
+

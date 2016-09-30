@@ -43,3 +43,13 @@ def test_has_field()
 
    BT_ASSERT_ERROR(HAS_FIELD(x, a.b.c.d.e))
 end
+
+def test_create_struct()
+   AS_LOC(struct, CR_STRUCT())
+   BT_ASSERT_TRUE(IS_STRUCT(struct))
+   AS_LOC(struct.x, 10)
+   AS_LOC(struct.y, 20)
+   AS_LOC(struct.x.a, "text")
+   AS_LOC(struct2, CR_STRUCT(x, 10, y, 20, x.a, "text"))
+   BT_ASSERT_EQ(struct, struct2)
+end

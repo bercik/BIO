@@ -5,6 +5,7 @@
  */
 package pl.rcebula.module.modules;
 
+import java.util.ArrayList;
 import java.util.List;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
@@ -31,6 +32,35 @@ public class StructsModule extends Module
     public void createFunctionsAndEvents()
     {
         putFunction(new HasFieldFunction());
+        putFunction(new CreateStruct());
+    }
+    
+    private class CreateStruct implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "CREATE_STRUCT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: <id, all>*
+            Struct struct = new Struct();
+            
+            for (int i = 0; i < params.size(); i += 2)
+            {
+                Data did = params.get(i);
+                Data dval = params.get(i + 1);
+                
+                String id = (String)did.getValue();
+                
+                Struct.createStructTreeFromScratch(struct, id, dval);
+            }
+            
+            return Data.createStructData(struct);
+        }
     }
     
     private class HasFieldFunction implements IFunction

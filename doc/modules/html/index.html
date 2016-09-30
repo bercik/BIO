@@ -1392,6 +1392,17 @@
                                     <li><a href="#HAS_FIELD_funerrors">Errors</a></li>
                      </ul>
          </li>
+                  <li class="has-sub">
+         <a class="function" href="javascript:void(0)">
+                        CREATE_STRUCT/<wbr><i>CR_STRUCT</i>
+                     </a>
+         </a>
+         <ul>
+            <li><a href="#CREATE_STRUCT_fun">Description</a></li>
+                        <li><a href="#CREATE_STRUCT_funparams">Parameters</a></li>
+                                    <li><a href="#CREATE_STRUCT_funreturns">Returns</a></li>
+                                 </ul>
+         </li>
                </ul>
       </li>
             <li class="has-sub">
@@ -5579,6 +5590,35 @@
                <dd>if <i>struct</i> is not struct</dd>
             </dl>
                      </section>
+         
+      </article>
+            <article class="function sub-block" id="CREATE_STRUCT_fun">
+
+         <header>
+            <h3>CREATE_STRUCT
+                        / <i>CR_STRUCT</i>
+                        (&lt;id, val&gt;*)</h3>
+            <p class="description">Creates struct with given fields or empty one</p>
+         </header>
+
+                  <section class="parameters" id="CREATE_STRUCT_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>Struct field, can be nested field like a.b.c</dd>
+                              <dt><i>val</i> (<u>all</u>)</dt>
+               <dd>Value for this field</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="CREATE_STRUCT_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>struct</u>)</dt>
+               <dd>New struct with given fields and values</dd>
+            </dl>
+         </section>
+         
          
       </article>
          </section>

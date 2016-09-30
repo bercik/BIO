@@ -1,15 +1,5 @@
 def onSTART()
-   FOR
-   (
-      DN(),
-      true,
-      CALL
-      (
-         AS_LOC(a, TO_FLOAT(INPUT("Podaj liczbę (0 - wyjście):"))),
-         IF(IS_ERROR(a), CALL(PRINTLN("It's not a number!"), BREAK())),
-         IF(EQ(a, 0), BREAK()),
-         AS_LOC(a, POW(a, a)),
-         PRINTLN(a),
-      )
-   )
+   AS_LOC(vec, CR_STRUCT(x, 10, y, 20))
+   AS_LOC(dist, SQRT(ADD(POW(vec.x, 2), POW(vec.y, 2))))
+   PRINTLN(vec, dist)
 end

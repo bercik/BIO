@@ -185,10 +185,15 @@ public class Struct
         }
     }
     
-    private static Data createStructFromScratch(List<String> ids, Data data)
+    public static Struct createStructTreeFromScratch(Struct struct, String id, Data data)
     {
-        Struct struct = new Struct();
-        Data ds = Data.createStructData(struct);
+        String[] ids = id.split("\\.");
+        return createStructTreeFromScratch(struct, Arrays.asList(ids), data);
+    }
+    
+    private static Struct createStructTreeFromScratch(Struct struct, List<String> ids, Data data)
+    {
+        Struct toRet = struct;
         
         for (String id : ids)
         {
@@ -206,6 +211,12 @@ public class Struct
             }
         }
         
-        return ds;
+        return toRet;
+    }
+    
+    private static Data createStructFromScratch(List<String> ids, Data data)
+    {
+        Struct struct = new Struct();
+        return Data.createStructData(createStructTreeFromScratch(struct, ids, data));
     }
 }
