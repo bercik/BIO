@@ -203,8 +203,17 @@ public class CodeGenerator
                         Call call1 = (Call)call.getCallParams().get(0);
                         CallParam cp = call.getCallParams().get(1);
                         Call call2 = (Call)call.getCallParams().get(2);
-                        Call call3 = (Call)call.getCallParams().get(3);
-                        sfg.generateFor(call1, cp, call2, call3, call.getErrorInfo());
+                        // wersja z 4 parametrami (podano opcjonalny argument)
+                        if (call.getRepeatCycles() == 1)
+                        {
+                            Call call3 = (Call)call.getCallParams().get(3);
+                            sfg.generateFor(call1, cp, call2, call3, call.getErrorInfo());
+                        }
+                        // wersja z 3 parametrami
+                        else
+                        {
+                            sfg.generateFor(call1, cp, call2, call.getErrorInfo());
+                        }
                         break;
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);

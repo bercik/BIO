@@ -51,6 +51,6 @@
 !desc Exits from BIO
 
 !name onUNHANDLED_ERROR
-!desc Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function) <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited
-!param err (error) error returned from onSTART function or unhandled 
+!desc Event called when there is error value returned from onSTART function or unhandled error during program execution (unhandled that is not assigned to variable or passed to function). Also called when there is STACK_OVERFLOW or HEAP_OVERFLOW error. <b>Note:</b> if you don't assign any observer to this event than <i>err</i> would be printed on screen and program exited
+!param err (error) error returned from onSTART function, unhandled error, STACK_OVERFLOW error or HEAP_OVERFLOW error
 

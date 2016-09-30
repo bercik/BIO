@@ -49,6 +49,63 @@ public class SpecialFunctionsGenerator
         this.mockFile = cg.getFiles().getFileGeneratedByCompiler();
     }
 
+    // wersja z 3 parametrami
+    public void generateFor(Call call1, CallParam callParam, Call call2, ErrorInfo ei)
+    {
+        Label forStart = new Label();
+        Label forContinue = new Label();
+        Label forEnd = new Label();
+        
+        // call1
+        // popc, 1
+        // forStart:
+        // forContinue:
+        // callParam
+        // pop, 1
+        // jmp_if_false, forEnd
+        // call2
+        // popc, 1
+        // jmp, forStart
+        // forEnd:
+        // push, none:
+        
+        cg.eval(call1, forContinue, forEnd);
+        Line line = ifg.generatePopc(1);
+        ic.appendLine(line);
+
+        // dodajemy fałszywą linię, która posłuży nam jedynie do dodania etykiety
+        // potem ją usuniemy, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        Line fakeLine = new Line();
+        Integer fakeLineLine = ic.numberOfLines();
+        fakeLine.addLabel(forStart);
+        fakeLine.addLabel(forContinue);
+        ic.appendLine(fakeLine);
+
+        cg.eval(callParam, forContinue, forEnd);
+        line = ifg.generatePop(1);
+        ic.appendLine(line);
+
+        // usuwamy wcześniej dodaną fałszywą linię
+        ic.removeLine(fakeLineLine);
+
+        line = ifg.generateJmpIfFalse(forEnd, ei);
+        ic.appendLine(line);
+
+        cg.eval(call2, forContinue, forEnd);
+        line = ifg.generatePopc(1);
+        ic.appendLine(line);
+
+        line = ifg.generateJmp(forStart, ei);
+        ic.appendLine(line);
+
+        ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
+        line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
+                mockErrorInfo));
+        line.addLabel(forEnd);
+        ic.appendLine(line);
+    }
+    
+    // wersja z 4 parametrami
     public void generateFor(Call call1, CallParam callParam, Call call2, Call call3, ErrorInfo ei)
     {
         Label forStart = new Label();

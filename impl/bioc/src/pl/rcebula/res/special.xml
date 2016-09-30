@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 call
             </param>
-            <param>
+            <param optional="true">
                 call
             </param>
         </params>

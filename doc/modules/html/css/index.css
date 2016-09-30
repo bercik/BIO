@@ -89,6 +89,10 @@ body {
   margin: 0;
   background: #dbf1ff; }
 
+code {
+   white-space: nowrap;
+}
+
 button {
   border: none;
   background: #5CCCEB;

@@ -1,4 +1,15 @@
 def onSTART()
-   AS_LOC(_, 10)
-   PRINTLN(_)
+   FOR
+   (
+      DN(),
+      true,
+      CALL
+      (
+         AS_LOC(a, TO_FLOAT(INPUT("Podaj liczbę (0 - wyjście):"))),
+         IF(IS_ERROR(a), CALL(PRINTLN("It's not a number!"), BREAK())),
+         IF(EQ(a, 0), BREAK()),
+         AS_LOC(a, POW(a, a)),
+         PRINTLN(a),
+      )
+   )
 end
