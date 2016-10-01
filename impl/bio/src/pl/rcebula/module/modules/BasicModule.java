@@ -18,6 +18,7 @@ import pl.rcebula.module.IEvent;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
 import pl.rcebula.utils.Pair;
+import pl.rcebula.utils.Triple;
 
 /**
  *
@@ -160,8 +161,8 @@ public class BasicModule extends Module
             String id = (String)data.getValue();
             ErrorInfo ei = data.getErrorInfo();
             // pobierz zmienną lokalną
-            Pair<Data, String> p = Struct.get(id, interpreter.getCurrentFrame().getLocalVariables());
-            data = p.getLeft();
+            Triple<Data, String, MyError> triple = Struct.get(id, interpreter.getCurrentFrame().getLocalVariables());
+            data = triple.getFirst();
             // jeżeli istnieje to utwórz nową zmienną i ustaw jej linię i znak
             if (data != null)
             {
@@ -171,9 +172,10 @@ public class BasicModule extends Module
             // jeżeli nie istnieje to utwórz zmienną błędu zamiast niej
             else
             {
-                String message = "There is no local variable " + id + ". " + p.getRight();
+                String message = "There is no local variable " + id + ". " + triple.getSecond();
+                MyError cause = triple.getThird();
                 MyError myError = new MyError(message, ErrorCodes.NO_LOCAL_VARIABLE.getCode(),
-                        null, ei, interpreter);
+                        cause, ei, interpreter);
                 data = Data.createErrorData(myError);
             }
             
@@ -196,14 +198,15 @@ public class BasicModule extends Module
             Data did = params.get(0);
             String id = (String)did.getValue();
             // pobierz zmienną globalną
-            Pair<Data, String> p = Struct.get(id, interpreter.getGlobalVariables());
-            Data var = p.getLeft();
+            Triple<Data, String, MyError> triple = Struct.get(id, interpreter.getGlobalVariables());
+            Data var = triple.getFirst();
             // jeżeli nie istnieje
             if (var == null)
             {
-                String message = "there is no global variable " + id + ". " + p.getRight();
+                String message = "there is no global variable " + id + ". " + triple.getSecond();
+                MyError cause = triple.getThird();
                 MyError error = new MyError(getName(), message, ErrorCodes.NO_GLOBAL_VARIABLE.getCode(),
-                        null, did.getErrorInfo(), interpreter);
+                        cause, did.getErrorInfo(), interpreter);
                 return Data.createErrorData(error);
             }
             return new Data(var);

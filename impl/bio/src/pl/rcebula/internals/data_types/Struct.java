@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import pl.rcebula.utils.Pair;
+import pl.rcebula.utils.Triple;
 
 /**
  *
@@ -48,7 +49,7 @@ public class Struct
         return str;
     }
     
-    public static Pair<Data, String> get(String id, Map<String, Data> variables)
+    public static Triple<Data, String, MyError> get(String id, Map<String, Data> variables)
     {
         String errorMsg = "";
         Data toReturn = null;
@@ -62,7 +63,7 @@ public class Struct
         if (d == null)
         {
             errorMsg = "Variable " + id + " doesn't exist";
-            return new Pair<>(toReturn, errorMsg);
+            return new Triple<>(toReturn, errorMsg, null);
         }
         
         // iterujemy po wszystkich członach poza pierwszym
@@ -71,8 +72,16 @@ public class Struct
             // sprawdzamy czy struktura
             if (!d.getDataType().equals(DataType.STRUCT))
             {
+                // jeżeli error
+                if (d.getDataType().equals(DataType.ERROR))
+                {
+                    errorMsg = constructStructName(splited.subList(0, i)) + " is error";
+                    MyError cause = (MyError)d.getValue();
+                    return new Triple<>(toReturn, errorMsg, cause);
+                }
+                
                 errorMsg = constructStructName(splited.subList(0, i)) + " is not struct";
-                return new Pair<>(toReturn, errorMsg);
+                return new Triple<>(toReturn, errorMsg, null);
             }
             
             Struct struct = (Struct)d.getValue();
@@ -84,11 +93,11 @@ public class Struct
             if (d == null)
             {
                 errorMsg = "In " + constructStructName(splited.subList(0, i)) + " field " + id + " doens't exist";
-                return new Pair<>(toReturn, errorMsg);
+                return new Triple<>(toReturn, errorMsg, null);
             }
         }
         
-        return new Pair<>(d, "");
+        return new Triple<>(d, "", null);
     }
     
     public static boolean exists(String id, Map<String, Data> variables)

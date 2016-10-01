@@ -94,9 +94,14 @@ public class IterModule extends Module
                 currentFrame.setCallForeach(true);
                 currentFrame.setForeachInfo(foreachInfo);
 
-                // parametry: <all, id>
+                // parametry: <all, id, <addPar>?>
                 Data iterable = params.get(0);
                 Data did = params.get(1);
+                Data addPar = null;
+                if (params.size() > 2)
+                {
+                    addPar = params.get(2);
+                }
 
                 // sprawdź czy iterable jest typu array, dict lub tuple
                 TypeChecker tc = new TypeChecker(iterable, getName(), 0, iterable.getErrorInfo(), interpreter,
@@ -114,7 +119,14 @@ public class IterModule extends Module
                 foreachInfo.dFunName.setErrorInfo(did.getErrorInfo());
 
                 // stwórz strukturę przekazywaną pomiędzy kolejnymi wywołaniami funkcji
-                foreachInfo.obj = Data.createStructData(new Struct());
+                Struct objStruct = new Struct();
+                // dodaj pole addPar jeżeli to konieczne
+                if (addPar != null)
+                {
+                    objStruct.addField("addPar", addPar);
+                }
+                // utwórz Data struct
+                foreachInfo.obj = Data.createStructData(objStruct);
 
                 // jeżeli dict
                 if (iterable.getDataType().equals(DataType.DICT))
