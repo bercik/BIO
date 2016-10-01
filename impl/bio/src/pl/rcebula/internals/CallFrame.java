@@ -14,6 +14,7 @@ import java.util.Stack;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.module.modules.IterModule;
 
 /**
  *
@@ -26,6 +27,8 @@ public class CallFrame
     // flaga informująca o tym czy należy wywołać funkcję FOREACH w momencie kiedy
     // zostanie ściągnięta poprzednia ramka
     private boolean callForeach;
+    // struktura przechowująca informację dla funkcji FOREACH
+    private IterModule.ForeachFunction.ForeachInfo foreachInfo;
     // informacja o miejscu występowania w kodzie źródłowym
     private final ErrorInfo errorInfo;
     // instruction pointer, wskaźnik na linijkę w kodzie
@@ -65,6 +68,16 @@ public class CallFrame
             Data data = it.next();
             localVariables.put(param, data);
         }
+    }
+
+    public IterModule.ForeachFunction.ForeachInfo getForeachInfo()
+    {
+        return foreachInfo;
+    }
+
+    public void setForeachInfo(IterModule.ForeachFunction.ForeachInfo foreachInfo)
+    {
+        this.foreachInfo = foreachInfo;
     }
 
     public boolean isCallForeach()

@@ -4121,7 +4121,7 @@
          <header>
             <h3>FOREACH
                         (iterable, function)</h3>
-            <p class="description">Calls <i>function</i> for every element in given <i>iterable</i> (that is array, tuple or dict). <b>Note:</b> if <i>function</i> returns error then this error would be returned from FOREACH and it will stop working immediately. <b>Note:</b> when you passed iterable interpreter will make copy of it, so even if you changed it during <i>function</i> calls, it will iterate over this what you passed at the beginning. <b>Caution:</b> don't call FOREACH method inside <i>function</i>. This will cause interpreter crash</p>
+            <p class="description">Calls <i>function</i> for every element in given <i>iterable</i> (that is array, tuple or dict). <b>Note:</b> if <i>function</i> returns error then this error would be returned from FOREACH and it will stop working immediately. <b>Note:</b> when you passed iterable interpreter will make copy of it (but no deep copy!), so even if you changed it during <i>function</i> calls, it will iterate over this what you passed at the beginning</p>
          </header>
 
                   <section class="parameters" id="FOREACH_funparams">

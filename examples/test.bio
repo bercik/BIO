@@ -1,7 +1,28 @@
 def sumEACH(el, obj)
+   AS_LOC(tup, CR_TUP(1, 2, 4))
+   PRINTLN(FOREACH(tup, mulEACH))
+   
+   PRINTLN(foo2(el.val, el.val))
+
    IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
    AS_LOC(obj.sum, ADD(obj.sum, el.val))
-   RET(obj.sum)
+   RET(CR_ERR("my error", none, none))
+end
+
+def mulEACH(el, obj)
+   IF(NOT(HAS_FIELD(obj, prod)), AS_LOC(obj.prod, 1))
+   AS_LOC(obj.prod, MUL(obj.prod, el.val))
+   RET(obj.prod)
+end
+
+def printEACH(el, obj)
+   SET(GET_GLOB(arr), 1, -100)
+   PRINTLN(el)
+end
+
+def foo2(a, b)
+   AS_LOC(tmp, MUL(a, b))
+   RET(SQRT(tmp))
 end
 
 def foo()
@@ -11,6 +32,7 @@ end
 
 def onSTART()
    foo()
-   AS_LOC(a, 10)
-   PRINTLN(a)
+
+   AS_GLOB(arr, TO_ARR(CR_TUP(0, 200)))
+   FOREACH(GET_GLOB(arr), printEACH)
 end
