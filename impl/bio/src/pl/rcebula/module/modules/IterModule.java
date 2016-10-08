@@ -193,8 +193,16 @@ public class IterModule extends Module
 
                 // wywołaj funkcję CALL_BY_NAME, przekazując do niej 3 parametry: funName, el, obj
                 List<Data> pars = Arrays.asList(foreachInfo.dFunName, el, foreachInfo.obj);
-                interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
+                Data retData = interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
                         interpreter, new ErrorInfo(-1, -1, new MyFiles.File(-1, "")));
+                
+                // jeżeli funkcja CALL_BY_NAME zwróciła error to zwracamy
+                if (retData != null && retData.getDataType().equals(DataType.ERROR))
+                {
+                    currentFrame.setCallForeach(false);
+                    currentFrame.setForeachInfo(null);
+                    return retData;
+                }
             }
             // inaczej tuple lub array
             else
@@ -215,8 +223,16 @@ public class IterModule extends Module
 
                 // wywołaj funkcję CALL_BY_NAME, przekazując do niej 3 parametry: funName, el, obj
                 List<Data> pars = Arrays.asList(foreachInfo.dFunName, el, foreachInfo.obj);
-                interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
+                Data retData = interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
                         interpreter, new ErrorInfo(-1, -1, new MyFiles.File(-1, "")));
+                
+                // jeżeli funkcja CALL_BY_NAME zwróciła error to zwracamy
+                if (retData != null && retData.getDataType().equals(DataType.ERROR))
+                {
+                    currentFrame.setCallForeach(false);
+                    currentFrame.setForeachInfo(null);
+                    return retData;
+                }
             }
 
             // zwracamy nic

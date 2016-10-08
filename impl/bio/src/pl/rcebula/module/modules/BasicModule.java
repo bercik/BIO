@@ -224,8 +224,14 @@ public class BasicModule extends Module
         @Override
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
-            // parametr var
-            Data var = params.get(0);
+            // domyślnie none
+            Data var = Data.createNoneData();
+            // parametr: <var>?
+            if (params.size() > 0)
+            {
+                var = params.get(0);
+            }
+            
             CallFrame cf = interpreter.popFrame();
             // w przypadku gdy wartość zwracana nie ma zostać zapisana na stosie wartości ramki poprzedniej
             // zwracamy wartość null

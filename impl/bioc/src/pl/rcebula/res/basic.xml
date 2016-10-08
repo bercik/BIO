@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             RET
         </alias>
         <params>
-            <param>
+            <param optional="true">
                 all
             </param>
         </params>

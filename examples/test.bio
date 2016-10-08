@@ -1,8 +1,8 @@
-#INCLUDE("<stdlib/iter_functions.biom>")
+def foo(el, obj)
+   RET()
+end
 
 def onSTART()
-   AS_LOC(tup, CR_TUP("abc", "abba", "AbC", "def", "acbd", "a"))
-   AS_LOC(result, GET_ARRAY_LIST(FOREACH(tup, retListWithStringsStartsWith)))
-   PRINTLN(result)
-   PRINT_STACK_TRACE(result)
+   AS_LOC(tup, CR_TUP(1, 2, 3, 4))
+   PRINTLN(FOREACH(tup, foo))
 end

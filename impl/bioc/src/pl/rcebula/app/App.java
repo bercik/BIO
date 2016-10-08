@@ -17,6 +17,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import pl.rcebula.analysis.math_log_parser.MathLogParser;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
 import pl.rcebula.analysis.semantic.SemanticChecker;
@@ -84,7 +85,20 @@ public class App
             if (opts.isVerbose())
             {
                 // print
-                System.out.println("TOKENS");
+                System.out.println("TOKENS BEFORE MATH LOG PARSER");
+                System.out.println("-------------------------");
+                printTokens(tokens);
+            }
+            
+            // math log parser
+            timeProfiler.start("MathLogParser");
+            MathLogParser mathLogParser = new MathLogParser(tokens);
+            timeProfiler.stop();
+            tokens = mathLogParser.getTokens();
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("TOKENS AFTER MATH LOG PARSER");
                 System.out.println("-------------------------");
                 printTokens(tokens);
             }

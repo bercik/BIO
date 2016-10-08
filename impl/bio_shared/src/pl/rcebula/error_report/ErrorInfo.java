@@ -17,7 +17,6 @@
 package pl.rcebula.error_report;
 
 import java.util.List;
-import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.error_report.MyFiles.File;
 
 /**

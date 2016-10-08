@@ -1,0 +1,30 @@
+#INCLUDE("boreq_lib.biom")
+#INCLUDE("<stdlib/list.biom>")
+#INCLUDE("<stdlib/iter_functions.biom>")
+
+def onSTART()
+   splash(architectures=CREATE_TUPLE("x86"), program_name="Fizz Buzz")
+
+   FOR
+   (
+      ASSIGN_LOCAL(i, 0),
+      LS(i, 100),
+      fizz_buzz(i),
+      INC(i)
+   )
+
+   ASSIGN_LOCAL(l, CREATE_LIST(5))
+   APPEND_TO_LIST(l, "ap")
+   APPEND_TO_LIST(l, "pp")
+   APPEND_TO_LIST(l, "pe")
+   APPEND_TO_LIST(l, "pn")
+   APPEND_TO_LIST(l, "pi")
+   APPEND_TO_LIST(l, "ps")
+   PRINT_LIST(FOREACH(GET_ARRAY_LIST(l), retListWithStringsStartsWith, "p"))
+
+   ASSIGN_LOCAL(ź.a, "test")
+   PRINTLN(ź)
+   PRINTLN(ź.a)
+   ASSIGN_LOCAL(ź.a, ź)
+   PRINTLN(ź)
+end

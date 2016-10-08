@@ -1,0 +1,6 @@
+def onSTART()
+   AS_LOC(a, 10, b, 20)
+   PRINTLN( { a + b % suma
+              * b + a % iloczyn
+            } )
+end
