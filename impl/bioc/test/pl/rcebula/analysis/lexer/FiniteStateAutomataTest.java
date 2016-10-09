@@ -271,9 +271,9 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
-        testToken(fsa, "{num % 2 == 0}", TokenType.EXPRESSION, "num % 2 == 0", 1, 1, false);
+        testToken(fsa, "{num % 2 == 0}", TokenType.EXPRESSION, "num % 2 == 0", 2, 1, false);
         
-        testToken(fsa, "{ 1 + 2 + 3 }", TokenType.EXPRESSION, " 1 + 2 + 3 ", 1, 1, false);
+        testToken(fsa, "{ 1 + 2 + 3 }", TokenType.EXPRESSION, " 1 + 2 + 3 ", 2, 1, false);
     }
 
     @Test

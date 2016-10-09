@@ -92,7 +92,7 @@ public class App
             
             // math log parser
             timeProfiler.start("MathLogParser");
-            MathLogParser mathLogParser = new MathLogParser(tokens);
+            MathLogParser mathLogParser = new MathLogParser(tokens, preprocessor.getFiles());
             timeProfiler.stop();
             tokens = mathLogParser.getTokens();
             if (opts.isVerbose())

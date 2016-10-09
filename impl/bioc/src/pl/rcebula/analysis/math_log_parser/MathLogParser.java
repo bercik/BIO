@@ -21,6 +21,7 @@ import java.util.List;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.math_log_parser.javacc.*;
+import pl.rcebula.error_report.MyFiles;
 
 /**
  *
@@ -29,12 +30,14 @@ import pl.rcebula.analysis.math_log_parser.javacc.*;
 public class MathLogParser
 {
     private final List<Token<?>> tokens;
+    private final MyFiles files;
     private final List<Token<?>> newTokens = new ArrayList<>();
 
-    public MathLogParser(List<Token<?>> tokens)
+    public MathLogParser(List<Token<?>> tokens, MyFiles files)
             throws Exception
     {
         this.tokens = tokens;
+        this.files = files;
 
         process();
     }
@@ -47,7 +50,7 @@ public class MathLogParser
         {
             if (t.getTokenType().equals(TokenType.EXPRESSION))
             {
-                List<Token<?>> nTokens = Parser.process(t);
+                List<Token<?>> nTokens = Parser.process(t, files);
                 
                 newTokens.addAll(nTokens);
             }

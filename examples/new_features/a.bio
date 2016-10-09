@@ -5,5 +5,5 @@ end
 def onSTART()
    AS_LOC(family.sister_age, 10)
    AS_LOC(family.my_age, { family.sister_age * 2 })
-   foo(age=age, name="Robert")
+   foo(age=family.my_age, name="Robert")
 end

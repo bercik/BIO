@@ -114,10 +114,15 @@ public class FiniteStateAutomata
     
     private ErrorInfo generateErrorInfoWithCurrentToken()
     {
+        return generateErrorInfoWithCurrentToken(0);
+    }
+    
+    private ErrorInfo generateErrorInfoWithCurrentToken(int chNumOffset)
+    {
         File f = files.getFromLine(currentTokenLine - 1);
         int line = currentTokenLine - f.getStartOfInterval(currentTokenLine - 1) + 
                 f.getSumOfLinesBeforeInterval(currentTokenLine - 1);
-        return new ErrorInfo(line, currentTokenChNum, f);
+        return new ErrorInfo(line, currentTokenChNum + chNumOffset, f);
     }
 
     // podanie kolejnego znaku, zwraca parę token lub null i wartość bool
@@ -179,7 +184,7 @@ public class FiniteStateAutomata
                         case EXPRESSION:
                             // usuwamy pierwszy i ostatni znak (nawiasy wąsiaste)
                             String tokVal = tokenValue.substring(1, tokenValue.length() - 1);
-                            token = new Token(TokenType.EXPRESSION, tokVal, generateErrorInfoWithCurrentToken());
+                            token = new Token(TokenType.EXPRESSION, tokVal, generateErrorInfoWithCurrentToken(1));
                             break;
                         case STRING:
                             // usuwamy początkowy i końcowy cudzysłów i zamieniamy znaki specjalne

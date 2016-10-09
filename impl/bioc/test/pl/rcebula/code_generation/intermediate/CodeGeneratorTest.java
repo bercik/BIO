@@ -202,6 +202,7 @@ public class CodeGeneratorTest
                 DEC(p))
          */
         call = new Call("FOR", null, generateErrorInfo(5, 1));
+        call.setRepeatCycles(1);
 
         // ASSIGN_LOCAL(sum, 0)
         call2 = new Call("ASSIGN_LOCAL", call, generateErrorInfo(6, 1));
@@ -319,6 +320,7 @@ public class CodeGeneratorTest
 
         // FOR
         Call callFor = new Call("FOR", null, generateErrorInfo(2, 1));
+        callFor.setRepeatCycles(1);
         uf.addCall(callFor);
 
         // ASSIGN_LOCAL(i, 0),
@@ -341,6 +343,7 @@ public class CodeGeneratorTest
 
         // FOR(
         Call insideFor = new Call("FOR", call2, generateErrorInfo(6, 1));
+        insideFor.setRepeatCycles(1);
         call2.addCallParam(insideFor);
 
         // ASSIGN_LOCAL(j, 0),
@@ -477,6 +480,7 @@ public class CodeGeneratorTest
 
         // FOR(
         Call forCall = new Call("FOR", null, generateErrorInfo(3, 1));
+        forCall.setRepeatCycles(1);
         uf.addCall(forCall);
 
         // DN(),

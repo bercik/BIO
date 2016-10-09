@@ -25,25 +25,31 @@ public interface ParserConstants {
   /** RegularExpression Id. */
   int KEYWORDS = 11;
   /** RegularExpression Id. */
-  int INT = 12;
+  int NONE = 12;
   /** RegularExpression Id. */
-  int FLOAT = 13;
+  int TRUE = 13;
   /** RegularExpression Id. */
-  int DOT = 14;
+  int FALSE = 14;
   /** RegularExpression Id. */
-  int DIGIT_NON_ZERO = 15;
+  int INT = 15;
   /** RegularExpression Id. */
-  int DIGIT = 16;
+  int FLOAT = 16;
   /** RegularExpression Id. */
-  int ID = 17;
+  int DOT = 17;
   /** RegularExpression Id. */
-  int ID_ONCE = 18;
+  int DIGIT_NON_ZERO = 18;
   /** RegularExpression Id. */
-  int UNDERLINE = 19;
+  int DIGIT = 19;
   /** RegularExpression Id. */
-  int UTF_LETTER = 20;
+  int ID_STRUCT = 20;
   /** RegularExpression Id. */
-  int STRING = 21;
+  int ID = 21;
+  /** RegularExpression Id. */
+  int UNDERLINE = 22;
+  /** RegularExpression Id. */
+  int UTF_LETTER = 23;
+  /** RegularExpression Id. */
+  int STRING = 24;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -62,13 +68,16 @@ public interface ParserConstants {
     "\"(\"",
     "\")\"",
     "<KEYWORDS>",
+    "<NONE>",
+    "<TRUE>",
+    "<FALSE>",
     "<INT>",
     "<FLOAT>",
     "\".\"",
     "<DIGIT_NON_ZERO>",
     "<DIGIT>",
+    "<ID_STRUCT>",
     "<ID>",
-    "<ID_ONCE>",
     "<UNDERLINE>",
     "<UTF_LETTER>",
     "<STRING>",
