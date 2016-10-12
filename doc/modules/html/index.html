@@ -16,1576 +16,1453 @@
 <nav>
    <ul>
       <li class="has-sub">
-      <a href="javascript:void(0)">Basic informations</a>
-      <ul>
-         <li><a href="#basic-info-data-types">Data types</a></li>
-         <li><a href="#basic-info-errors">Errors</a></li>
-         <li><a href="#basic-info-conversions">Conversions</a></li>
-         <li><a href="#basic-info-aliases">Aliases</a></li>
-         <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
-      </ul>
+         <a href="javascript:void(0)">Basic informations</a>
+         <ul>
+            <li><a href="#basic-info-data-types">Data types</a></li>
+            <li><a href="#basic-info-errors">Errors</a></li>
+            <li><a href="#basic-info-conversions">Conversions</a></li>
+            <li><a href="#basic-info-aliases">Aliases</a></li>
+            <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
+         </ul>
       </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  arrays
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_ARRAY/<wbr><i>CR_ARR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_ARRAY_fun">Description</a></li>
-                        <li><a href="#CREATE_ARRAY_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_ARRAY_funreturns">Returns</a></li>
-                                    <li><a href="#CREATE_ARRAY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_DICT/<wbr><i>CR_DICT</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_DICT_fun">Description</a></li>
-                        <li><a href="#CREATE_DICT_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_DICT_funreturns">Returns</a></li>
-                                    <li><a href="#CREATE_DICT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_TUPLE/<wbr><i>CR_TUP</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_TUPLE_fun">Description</a></li>
-                        <li><a href="#CREATE_TUPLE_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_TUPLE_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_TUPLE_OF_ELEMENTS/<wbr><i>CR_TUP_OF_EL</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_TUPLE_OF_ELEMENTS_fun">Description</a></li>
-                        <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funreturns">Returns</a></li>
-                                    <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SET
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SET_fun">Description</a></li>
-                        <li><a href="#SET_funparams">Parameters</a></li>
-                                    <li><a href="#SET_funreturns">Returns</a></li>
-                                    <li><a href="#SET_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_fun">Description</a></li>
-                        <li><a href="#GET_funparams">Parameters</a></li>
-                                    <li><a href="#GET_funreturns">Returns</a></li>
-                                    <li><a href="#GET_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SIZE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SIZE_fun">Description</a></li>
-                        <li><a href="#SIZE_funparams">Parameters</a></li>
-                                    <li><a href="#SIZE_funreturns">Returns</a></li>
-                                    <li><a href="#SIZE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        RANGE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#RANGE_fun">Description</a></li>
-                        <li><a href="#RANGE_funparams">Parameters</a></li>
-                                    <li><a href="#RANGE_funreturns">Returns</a></li>
-                                    <li><a href="#RANGE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        COPY
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#COPY_fun">Description</a></li>
-                        <li><a href="#COPY_funparams">Parameters</a></li>
-                                    <li><a href="#COPY_funreturns">Returns</a></li>
-                                    <li><a href="#COPY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DEEP_COPY
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DEEP_COPY_fun">Description</a></li>
-                        <li><a href="#DEEP_COPY_funparams">Parameters</a></li>
-                                    <li><a href="#DEEP_COPY_funreturns">Returns</a></li>
-                                    <li><a href="#DEEP_COPY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SLICE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SLICE_fun">Description</a></li>
-                        <li><a href="#SLICE_funparams">Parameters</a></li>
-                                    <li><a href="#SLICE_funreturns">Returns</a></li>
-                                    <li><a href="#SLICE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        EXTEND_ARRAY/<wbr><i>EXT_ARR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#EXTEND_ARRAY_fun">Description</a></li>
-                        <li><a href="#EXTEND_ARRAY_funparams">Parameters</a></li>
-                                    <li><a href="#EXTEND_ARRAY_funreturns">Returns</a></li>
-                                    <li><a href="#EXTEND_ARRAY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        UNPACK
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#UNPACK_fun">Description</a></li>
-                        <li><a href="#UNPACK_funparams">Parameters</a></li>
-                                    <li><a href="#UNPACK_funreturns">Returns</a></li>
-                                    <li><a href="#UNPACK_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CONTAINS
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CONTAINS_fun">Description</a></li>
-                        <li><a href="#CONTAINS_funparams">Parameters</a></li>
-                                    <li><a href="#CONTAINS_funreturns">Returns</a></li>
-                                    <li><a href="#CONTAINS_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CONTAINS_KEY
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CONTAINS_KEY_fun">Description</a></li>
-                        <li><a href="#CONTAINS_KEY_funparams">Parameters</a></li>
-                                    <li><a href="#CONTAINS_KEY_funreturns">Returns</a></li>
-                                    <li><a href="#CONTAINS_KEY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CONTAINS_VALUE/<wbr><i>CONTAINS_VAL</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CONTAINS_VALUE_fun">Description</a></li>
-                        <li><a href="#CONTAINS_VALUE_funparams">Parameters</a></li>
-                                    <li><a href="#CONTAINS_VALUE_funreturns">Returns</a></li>
-                                    <li><a href="#CONTAINS_VALUE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_KEYS
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_KEYS_fun">Description</a></li>
-                        <li><a href="#GET_KEYS_funparams">Parameters</a></li>
-                                    <li><a href="#GET_KEYS_funreturns">Returns</a></li>
-                                    <li><a href="#GET_KEYS_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        REMOVE_KEY
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#REMOVE_KEY_fun">Description</a></li>
-                        <li><a href="#REMOVE_KEY_funparams">Parameters</a></li>
-                                    <li><a href="#REMOVE_KEY_funreturns">Returns</a></li>
-                                    <li><a href="#REMOVE_KEY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        COUNT_ELEMENTS/<wbr><i>COUNT_EL</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#COUNT_ELEMENTS_fun">Description</a></li>
-                        <li><a href="#COUNT_ELEMENTS_funparams">Parameters</a></li>
-                                    <li><a href="#COUNT_ELEMENTS_funreturns">Returns</a></li>
-                                    <li><a href="#COUNT_ELEMENTS_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SORT_ASC
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SORT_ASC_fun">Description</a></li>
-                        <li><a href="#SORT_ASC_funparams">Parameters</a></li>
-                                    <li><a href="#SORT_ASC_funreturns">Returns</a></li>
-                                    <li><a href="#SORT_ASC_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SORT_DESC
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SORT_DESC_fun">Description</a></li>
-                        <li><a href="#SORT_DESC_funparams">Parameters</a></li>
-                                    <li><a href="#SORT_DESC_funreturns">Returns</a></li>
-                                    <li><a href="#SORT_DESC_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  basic
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSIGN_LOCAL/<wbr><i>AS_LOC</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSIGN_LOCAL_fun">Description</a></li>
-                        <li><a href="#ASSIGN_LOCAL_funparams">Parameters</a></li>
-                                    <li><a href="#ASSIGN_LOCAL_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSIGN_GLOBAL/<wbr><i>AS_GLOB</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSIGN_GLOBAL_fun">Description</a></li>
-                        <li><a href="#ASSIGN_GLOBAL_funparams">Parameters</a></li>
-                                    <li><a href="#ASSIGN_GLOBAL_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_LOCAL/<wbr><i>IS_LOC</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_LOCAL_fun">Description</a></li>
-                        <li><a href="#IS_LOCAL_funparams">Parameters</a></li>
-                                    <li><a href="#IS_LOCAL_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_LOCAL/<wbr><i>GET_LOC</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_LOCAL_fun">Description</a></li>
-                        <li><a href="#GET_LOCAL_funparams">Parameters</a></li>
-                                    <li><a href="#GET_LOCAL_funreturns">Returns</a></li>
-                                    <li><a href="#GET_LOCAL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_GLOBAL/<wbr><i>IS_GLOB</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_GLOBAL_fun">Description</a></li>
-                        <li><a href="#IS_GLOBAL_funparams">Parameters</a></li>
-                                    <li><a href="#IS_GLOBAL_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_GLOBAL/<wbr><i>GET_GLOB</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_GLOBAL_fun">Description</a></li>
-                        <li><a href="#GET_GLOBAL_funparams">Parameters</a></li>
-                                    <li><a href="#GET_GLOBAL_funreturns">Returns</a></li>
-                                    <li><a href="#GET_GLOBAL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        RETURN/<wbr><i>RET</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#RETURN_fun">Description</a></li>
-                        <li><a href="#RETURN_funparams">Parameters</a></li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 arrays
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_ARRAY/<wbr><i>CR_ARR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_ARRAY_fun">Description</a></li>
+                                                   <li><a href="#CREATE_ARRAY_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_ARRAY_funreturns">Returns</a></li>
+                                                                           <li><a href="#CREATE_ARRAY_funerrors">Errors</a></li>
                                              </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        EXIT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#EXIT_fun">Description</a></li>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_DICT/<wbr><i>CR_DICT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_DICT_fun">Description</a></li>
+                                                   <li><a href="#CREATE_DICT_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_DICT_funreturns">Returns</a></li>
+                                                                           <li><a href="#CREATE_DICT_funerrors">Errors</a></li>
                                              </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        onUNHANDLED_ERROR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#onUNHANDLED_ERROR_fun">Description</a></li>
-                        <li><a href="#onUNHANDLED_ERROR_funparams">Parameters</a></li>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_TUPLE/<wbr><i>CR_TUP</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_TUPLE_fun">Description</a></li>
+                                                   <li><a href="#CREATE_TUPLE_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_TUPLE_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_TUPLE_OF_ELEMENTS/<wbr><i>CR_TUP_OF_EL</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_TUPLE_OF_ELEMENTS_fun">Description</a></li>
+                                                   <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funreturns">Returns</a></li>
+                                                                           <li><a href="#CREATE_TUPLE_OF_ELEMENTS_funerrors">Errors</a></li>
                                              </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SET
+                                             </a>
+                     <ul>
+                        <li><a href="#SET_fun">Description</a></li>
+                                                   <li><a href="#SET_funparams">Parameters</a></li>
+                                                                           <li><a href="#SET_funreturns">Returns</a></li>
+                                                                           <li><a href="#SET_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_fun">Description</a></li>
+                                                   <li><a href="#GET_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SIZE
+                                             </a>
+                     <ul>
+                        <li><a href="#SIZE_fun">Description</a></li>
+                                                   <li><a href="#SIZE_funparams">Parameters</a></li>
+                                                                           <li><a href="#SIZE_funreturns">Returns</a></li>
+                                                                           <li><a href="#SIZE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   RANGE
+                                             </a>
+                     <ul>
+                        <li><a href="#RANGE_fun">Description</a></li>
+                                                   <li><a href="#RANGE_funparams">Parameters</a></li>
+                                                                           <li><a href="#RANGE_funreturns">Returns</a></li>
+                                                                           <li><a href="#RANGE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   COPY
+                                             </a>
+                     <ul>
+                        <li><a href="#COPY_fun">Description</a></li>
+                                                   <li><a href="#COPY_funparams">Parameters</a></li>
+                                                                           <li><a href="#COPY_funreturns">Returns</a></li>
+                                                                           <li><a href="#COPY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DEEP_COPY
+                                             </a>
+                     <ul>
+                        <li><a href="#DEEP_COPY_fun">Description</a></li>
+                                                   <li><a href="#DEEP_COPY_funparams">Parameters</a></li>
+                                                                           <li><a href="#DEEP_COPY_funreturns">Returns</a></li>
+                                                                           <li><a href="#DEEP_COPY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SLICE
+                                             </a>
+                     <ul>
+                        <li><a href="#SLICE_fun">Description</a></li>
+                                                   <li><a href="#SLICE_funparams">Parameters</a></li>
+                                                                           <li><a href="#SLICE_funreturns">Returns</a></li>
+                                                                           <li><a href="#SLICE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   EXTEND_ARRAY/<wbr><i>EXT_ARR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#EXTEND_ARRAY_fun">Description</a></li>
+                                                   <li><a href="#EXTEND_ARRAY_funparams">Parameters</a></li>
+                                                                           <li><a href="#EXTEND_ARRAY_funreturns">Returns</a></li>
+                                                                           <li><a href="#EXTEND_ARRAY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   UNPACK
+                                             </a>
+                     <ul>
+                        <li><a href="#UNPACK_fun">Description</a></li>
+                                                   <li><a href="#UNPACK_funparams">Parameters</a></li>
+                                                                           <li><a href="#UNPACK_funreturns">Returns</a></li>
+                                                                           <li><a href="#UNPACK_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CONTAINS
+                                             </a>
+                     <ul>
+                        <li><a href="#CONTAINS_fun">Description</a></li>
+                                                   <li><a href="#CONTAINS_funparams">Parameters</a></li>
+                                                                           <li><a href="#CONTAINS_funreturns">Returns</a></li>
+                                                                           <li><a href="#CONTAINS_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CONTAINS_KEY
+                                             </a>
+                     <ul>
+                        <li><a href="#CONTAINS_KEY_fun">Description</a></li>
+                                                   <li><a href="#CONTAINS_KEY_funparams">Parameters</a></li>
+                                                                           <li><a href="#CONTAINS_KEY_funreturns">Returns</a></li>
+                                                                           <li><a href="#CONTAINS_KEY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CONTAINS_VALUE/<wbr><i>CONTAINS_VAL</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CONTAINS_VALUE_fun">Description</a></li>
+                                                   <li><a href="#CONTAINS_VALUE_funparams">Parameters</a></li>
+                                                                           <li><a href="#CONTAINS_VALUE_funreturns">Returns</a></li>
+                                                                           <li><a href="#CONTAINS_VALUE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_KEYS
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_KEYS_fun">Description</a></li>
+                                                   <li><a href="#GET_KEYS_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_KEYS_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_KEYS_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   REMOVE_KEY
+                                             </a>
+                     <ul>
+                        <li><a href="#REMOVE_KEY_fun">Description</a></li>
+                                                   <li><a href="#REMOVE_KEY_funparams">Parameters</a></li>
+                                                                           <li><a href="#REMOVE_KEY_funreturns">Returns</a></li>
+                                                                           <li><a href="#REMOVE_KEY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   COUNT_ELEMENTS/<wbr><i>COUNT_EL</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#COUNT_ELEMENTS_fun">Description</a></li>
+                                                   <li><a href="#COUNT_ELEMENTS_funparams">Parameters</a></li>
+                                                                           <li><a href="#COUNT_ELEMENTS_funreturns">Returns</a></li>
+                                                                           <li><a href="#COUNT_ELEMENTS_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SORT_ASC
+                                             </a>
+                     <ul>
+                        <li><a href="#SORT_ASC_fun">Description</a></li>
+                                                   <li><a href="#SORT_ASC_funparams">Parameters</a></li>
+                                                                           <li><a href="#SORT_ASC_funreturns">Returns</a></li>
+                                                                           <li><a href="#SORT_ASC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SORT_DESC
+                                             </a>
+                     <ul>
+                        <li><a href="#SORT_DESC_fun">Description</a></li>
+                                                   <li><a href="#SORT_DESC_funparams">Parameters</a></li>
+                                                                           <li><a href="#SORT_DESC_funreturns">Returns</a></li>
+                                                                           <li><a href="#SORT_DESC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 basic
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSIGN_LOCAL/<wbr><i>AS_LOC</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSIGN_LOCAL_fun">Description</a></li>
+                                                   <li><a href="#ASSIGN_LOCAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSIGN_LOCAL_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSIGN_GLOBAL/<wbr><i>AS_GLOB</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSIGN_GLOBAL_fun">Description</a></li>
+                                                   <li><a href="#ASSIGN_GLOBAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSIGN_GLOBAL_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_LOCAL/<wbr><i>IS_LOC</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_LOCAL_fun">Description</a></li>
+                                                   <li><a href="#IS_LOCAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_LOCAL_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_LOCAL/<wbr><i>GET_LOC</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_LOCAL_fun">Description</a></li>
+                                                   <li><a href="#GET_LOCAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_LOCAL_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_LOCAL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_GLOBAL/<wbr><i>IS_GLOB</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_GLOBAL_fun">Description</a></li>
+                                                   <li><a href="#IS_GLOBAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_GLOBAL_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_GLOBAL/<wbr><i>GET_GLOB</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_GLOBAL_fun">Description</a></li>
+                                                   <li><a href="#GET_GLOBAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_GLOBAL_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_GLOBAL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   RETURN/<wbr><i>RET</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#RETURN_fun">Description</a></li>
+                                                   <li><a href="#RETURN_funparams">Parameters</a></li>
+                                                                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   EXIT
+                                             </a>
+                     <ul>
+                        <li><a href="#EXIT_fun">Description</a></li>
+                                                                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   onUNHANDLED_ERROR
+                                             </a>
+                     <ul>
+                        <li><a href="#onUNHANDLED_ERROR_fun">Description</a></li>
+                                                   <li><a href="#onUNHANDLED_ERROR_funparams">Parameters</a></li>
+                                                                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 compare
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   LS
+                                             </a>
+                     <ul>
+                        <li><a href="#LS_fun">Description</a></li>
+                                                   <li><a href="#LS_funparams">Parameters</a></li>
+                                                                           <li><a href="#LS_funreturns">Returns</a></li>
+                                                                           <li><a href="#LS_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   LE
+                                             </a>
+                     <ul>
+                        <li><a href="#LE_fun">Description</a></li>
+                                                   <li><a href="#LE_funparams">Parameters</a></li>
+                                                                           <li><a href="#LE_funreturns">Returns</a></li>
+                                                                           <li><a href="#LE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GT
+                                             </a>
+                     <ul>
+                        <li><a href="#GT_fun">Description</a></li>
+                                                   <li><a href="#GT_funparams">Parameters</a></li>
+                                                                           <li><a href="#GT_funreturns">Returns</a></li>
+                                                                           <li><a href="#GT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GE
+                                             </a>
+                     <ul>
+                        <li><a href="#GE_fun">Description</a></li>
+                                                   <li><a href="#GE_funparams">Parameters</a></li>
+                                                                           <li><a href="#GE_funreturns">Returns</a></li>
+                                                                           <li><a href="#GE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   EQ
+                                             </a>
+                     <ul>
+                        <li><a href="#EQ_fun">Description</a></li>
+                                                   <li><a href="#EQ_funparams">Parameters</a></li>
+                                                                           <li><a href="#EQ_funreturns">Returns</a></li>
+                                                                           <li><a href="#EQ_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   NEQ
+                                             </a>
+                     <ul>
+                        <li><a href="#NEQ_fun">Description</a></li>
+                                                   <li><a href="#NEQ_funparams">Parameters</a></li>
+                                                                           <li><a href="#NEQ_funreturns">Returns</a></li>
+                                                                           <li><a href="#NEQ_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_IN_RANGE
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_IN_RANGE_fun">Description</a></li>
+                                                   <li><a href="#IS_IN_RANGE_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_IN_RANGE_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_IN_RANGE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 conversion
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_STRING/<wbr><i>TO_STR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_STRING_fun">Description</a></li>
+                                                   <li><a href="#TO_STRING_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_STRING_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_INT
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_INT_fun">Description</a></li>
+                                                   <li><a href="#TO_INT_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_INT_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_INT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_FLOAT
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_FLOAT_fun">Description</a></li>
+                                                   <li><a href="#TO_FLOAT_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_FLOAT_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_FLOAT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_BOOL
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_BOOL_fun">Description</a></li>
+                                                   <li><a href="#TO_BOOL_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_BOOL_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_BOOL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_ARRAY/<wbr><i>TO_ARR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_ARRAY_fun">Description</a></li>
+                                                   <li><a href="#TO_ARRAY_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_ARRAY_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_ARRAY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_TUPLE/<wbr><i>TO_TUP</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_TUPLE_fun">Description</a></li>
+                                                   <li><a href="#TO_TUPLE_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_TUPLE_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_TUPLE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 errors
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   PRINT_STACK_TRACE
+                                             </a>
+                     <ul>
+                        <li><a href="#PRINT_STACK_TRACE_fun">Description</a></li>
+                                                   <li><a href="#PRINT_STACK_TRACE_funparams">Parameters</a></li>
+                                                                           <li><a href="#PRINT_STACK_TRACE_funreturns">Returns</a></li>
+                                                                           <li><a href="#PRINT_STACK_TRACE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   PRINT_LAST_NTH_STACK_TRACE
+                                             </a>
+                     <ul>
+                        <li><a href="#PRINT_LAST_NTH_STACK_TRACE_fun">Description</a></li>
+                                                   <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funparams">Parameters</a></li>
+                                                                           <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funreturns">Returns</a></li>
+                                                                           <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_ERROR/<wbr><i>CR_ERR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_ERROR_fun">Description</a></li>
+                                                   <li><a href="#CREATE_ERROR_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_ERROR_funreturns">Returns</a></li>
+                                                                           <li><a href="#CREATE_ERROR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_ERROR_MESSAGE/<wbr><i>GET_ERR_MSG</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_ERROR_MESSAGE_fun">Description</a></li>
+                                                   <li><a href="#GET_ERROR_MESSAGE_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_ERROR_MESSAGE_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_ERROR_MESSAGE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_ERROR_OBJECT/<wbr><i>GET_ERR_OBJ</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_ERROR_OBJECT_fun">Description</a></li>
+                                                   <li><a href="#GET_ERROR_OBJECT_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_ERROR_OBJECT_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_ERROR_OBJECT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_ERROR_CAUSE/<wbr><i>GET_ERR_CAUSE</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_ERROR_CAUSE_fun">Description</a></li>
+                                                   <li><a href="#GET_ERROR_CAUSE_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_ERROR_CAUSE_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_ERROR_CAUSE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_ERROR_LINE/<wbr><i>GET_ERR_LINE</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_ERROR_LINE_fun">Description</a></li>
+                                                   <li><a href="#GET_ERROR_LINE_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_ERROR_LINE_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_ERROR_LINE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_ERROR_CH/<wbr><i>GET_ERR_CH</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_ERROR_CH_fun">Description</a></li>
+                                                   <li><a href="#GET_ERROR_CH_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_ERROR_CH_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_ERROR_CH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERTS_ON
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERTS_ON_fun">Description</a></li>
+                                                                           <li><a href="#ASSERTS_ON_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERTS_OFF
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERTS_OFF_fun">Description</a></li>
+                                                                           <li><a href="#ASSERTS_OFF_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERT_TRUE
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERT_TRUE_fun">Description</a></li>
+                                                   <li><a href="#ASSERT_TRUE_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSERT_TRUE_funreturns">Returns</a></li>
+                                                                           <li><a href="#ASSERT_TRUE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERT_FALSE
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERT_FALSE_fun">Description</a></li>
+                                                   <li><a href="#ASSERT_FALSE_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSERT_FALSE_funreturns">Returns</a></li>
+                                                                           <li><a href="#ASSERT_FALSE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERT_EQ
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERT_EQ_fun">Description</a></li>
+                                                   <li><a href="#ASSERT_EQ_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSERT_EQ_funreturns">Returns</a></li>
+                                                                           <li><a href="#ASSERT_EQ_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSERT_NEQ
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSERT_NEQ_fun">Description</a></li>
+                                                   <li><a href="#ASSERT_NEQ_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSERT_NEQ_funreturns">Returns</a></li>
+                                                                           <li><a href="#ASSERT_NEQ_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ASSIGN_LOCAL_RETURN_IF_ERROR/<wbr><i>AS_LOC_RET_IF_ERR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_fun">Description</a></li>
+                                                   <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 floats
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CEIL
+                                             </a>
+                     <ul>
+                        <li><a href="#CEIL_fun">Description</a></li>
+                                                   <li><a href="#CEIL_funparams">Parameters</a></li>
+                                                                           <li><a href="#CEIL_funreturns">Returns</a></li>
+                                                                           <li><a href="#CEIL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   FLOOR
+                                             </a>
+                     <ul>
+                        <li><a href="#FLOOR_fun">Description</a></li>
+                                                   <li><a href="#FLOOR_funparams">Parameters</a></li>
+                                                                           <li><a href="#FLOOR_funreturns">Returns</a></li>
+                                                                           <li><a href="#FLOOR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 ints
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   RSHIFT
+                                             </a>
+                     <ul>
+                        <li><a href="#RSHIFT_fun">Description</a></li>
+                                                   <li><a href="#RSHIFT_funparams">Parameters</a></li>
+                                                                           <li><a href="#RSHIFT_funreturns">Returns</a></li>
+                                                                           <li><a href="#RSHIFT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   LSHIFT
+                                             </a>
+                     <ul>
+                        <li><a href="#LSHIFT_fun">Description</a></li>
+                                                   <li><a href="#LSHIFT_funparams">Parameters</a></li>
+                                                                           <li><a href="#LSHIFT_funreturns">Returns</a></li>
+                                                                           <li><a href="#LSHIFT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   XOR
+                                             </a>
+                     <ul>
+                        <li><a href="#XOR_fun">Description</a></li>
+                                                   <li><a href="#XOR_funparams">Parameters</a></li>
+                                                                           <li><a href="#XOR_funreturns">Returns</a></li>
+                                                                           <li><a href="#XOR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 io
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   PRINT
+                                             </a>
+                     <ul>
+                        <li><a href="#PRINT_fun">Description</a></li>
+                                                   <li><a href="#PRINT_funparams">Parameters</a></li>
+                                                                           <li><a href="#PRINT_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   PRINTLN
+                                             </a>
+                     <ul>
+                        <li><a href="#PRINTLN_fun">Description</a></li>
+                                                   <li><a href="#PRINTLN_funparams">Parameters</a></li>
+                                                                           <li><a href="#PRINTLN_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   INPUT
+                                             </a>
+                     <ul>
+                        <li><a href="#INPUT_fun">Description</a></li>
+                                                   <li><a href="#INPUT_funparams">Parameters</a></li>
+                                                                           <li><a href="#INPUT_funreturns">Returns</a></li>
+                                                                           <li><a href="#INPUT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 iter
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   FOREACH
+                                             </a>
+                     <ul>
+                        <li><a href="#FOREACH_fun">Description</a></li>
+                                                   <li><a href="#FOREACH_funparams">Parameters</a></li>
+                                                                           <li><a href="#FOREACH_funreturns">Returns</a></li>
+                                                                           <li><a href="#FOREACH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 logic
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   NOT
+                                             </a>
+                     <ul>
+                        <li><a href="#NOT_fun">Description</a></li>
+                                                   <li><a href="#NOT_funparams">Parameters</a></li>
+                                                                           <li><a href="#NOT_funreturns">Returns</a></li>
+                                                                           <li><a href="#NOT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   AND
+                                             </a>
+                     <ul>
+                        <li><a href="#AND_fun">Description</a></li>
+                                                   <li><a href="#AND_funparams">Parameters</a></li>
+                                                                           <li><a href="#AND_funreturns">Returns</a></li>
+                                                                           <li><a href="#AND_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   OR
+                                             </a>
+                     <ul>
+                        <li><a href="#OR_fun">Description</a></li>
+                                                   <li><a href="#OR_funparams">Parameters</a></li>
+                                                                           <li><a href="#OR_funreturns">Returns</a></li>
+                                                                           <li><a href="#OR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 math
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SUM
+                                             </a>
+                     <ul>
+                        <li><a href="#SUM_fun">Description</a></li>
+                                                   <li><a href="#SUM_funparams">Parameters</a></li>
+                                                                           <li><a href="#SUM_funreturns">Returns</a></li>
+                                                                           <li><a href="#SUM_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ADD
+                                             </a>
+                     <ul>
+                        <li><a href="#ADD_fun">Description</a></li>
+                                                   <li><a href="#ADD_funparams">Parameters</a></li>
+                                                                           <li><a href="#ADD_funreturns">Returns</a></li>
+                                                                           <li><a href="#ADD_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DIFF
+                                             </a>
+                     <ul>
+                        <li><a href="#DIFF_fun">Description</a></li>
+                                                   <li><a href="#DIFF_funparams">Parameters</a></li>
+                                                                           <li><a href="#DIFF_funreturns">Returns</a></li>
+                                                                           <li><a href="#DIFF_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SUB
+                                             </a>
+                     <ul>
+                        <li><a href="#SUB_fun">Description</a></li>
+                                                   <li><a href="#SUB_funparams">Parameters</a></li>
+                                                                           <li><a href="#SUB_funreturns">Returns</a></li>
+                                                                           <li><a href="#SUB_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   PRODUCT
+                                             </a>
+                     <ul>
+                        <li><a href="#PRODUCT_fun">Description</a></li>
+                                                   <li><a href="#PRODUCT_funparams">Parameters</a></li>
+                                                                           <li><a href="#PRODUCT_funreturns">Returns</a></li>
+                                                                           <li><a href="#PRODUCT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   MUL
+                                             </a>
+                     <ul>
+                        <li><a href="#MUL_fun">Description</a></li>
+                                                   <li><a href="#MUL_funparams">Parameters</a></li>
+                                                                           <li><a href="#MUL_funreturns">Returns</a></li>
+                                                                           <li><a href="#MUL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   QUOTIENT
+                                             </a>
+                     <ul>
+                        <li><a href="#QUOTIENT_fun">Description</a></li>
+                                                   <li><a href="#QUOTIENT_funparams">Parameters</a></li>
+                                                                           <li><a href="#QUOTIENT_funreturns">Returns</a></li>
+                                                                           <li><a href="#QUOTIENT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DIV
+                                             </a>
+                     <ul>
+                        <li><a href="#DIV_fun">Description</a></li>
+                                                   <li><a href="#DIV_funparams">Parameters</a></li>
+                                                                           <li><a href="#DIV_funreturns">Returns</a></li>
+                                                                           <li><a href="#DIV_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SQRT
+                                             </a>
+                     <ul>
+                        <li><a href="#SQRT_fun">Description</a></li>
+                                                   <li><a href="#SQRT_funparams">Parameters</a></li>
+                                                                           <li><a href="#SQRT_funreturns">Returns</a></li>
+                                                                           <li><a href="#SQRT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   POW
+                                             </a>
+                     <ul>
+                        <li><a href="#POW_fun">Description</a></li>
+                                                   <li><a href="#POW_funparams">Parameters</a></li>
+                                                                           <li><a href="#POW_funreturns">Returns</a></li>
+                                                                           <li><a href="#POW_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   MOD
+                                             </a>
+                     <ul>
+                        <li><a href="#MOD_fun">Description</a></li>
+                                                   <li><a href="#MOD_funparams">Parameters</a></li>
+                                                                           <li><a href="#MOD_funreturns">Returns</a></li>
+                                                                           <li><a href="#MOD_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   INC
+                                             </a>
+                     <ul>
+                        <li><a href="#INC_fun">Description</a></li>
+                                                   <li><a href="#INC_funparams">Parameters</a></li>
+                                                                           <li><a href="#INC_funreturns">Returns</a></li>
+                                                                           <li><a href="#INC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DEC
+                                             </a>
+                     <ul>
+                        <li><a href="#DEC_fun">Description</a></li>
+                                                   <li><a href="#DEC_funparams">Parameters</a></li>
+                                                                           <li><a href="#DEC_funreturns">Returns</a></li>
+                                                                           <li><a href="#DEC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   NEGATE
+                                             </a>
+                     <ul>
+                        <li><a href="#NEGATE_fun">Description</a></li>
+                                                   <li><a href="#NEGATE_funparams">Parameters</a></li>
+                                                                           <li><a href="#NEGATE_funreturns">Returns</a></li>
+                                                                           <li><a href="#NEGATE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   RAND
+                                             </a>
+                     <ul>
+                        <li><a href="#RAND_fun">Description</a></li>
+                                                                           <li><a href="#RAND_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 observer
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ATTACH_TO_EVENT
+                                             </a>
+                     <ul>
+                        <li><a href="#ATTACH_TO_EVENT_fun">Description</a></li>
+                                                   <li><a href="#ATTACH_TO_EVENT_funparams">Parameters</a></li>
+                                                                           <li><a href="#ATTACH_TO_EVENT_funreturns">Returns</a></li>
+                                                                           <li><a href="#ATTACH_TO_EVENT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_ATTACHED
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_ATTACHED_fun">Description</a></li>
+                                                   <li><a href="#IS_ATTACHED_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_ATTACHED_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_ATTACHED_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DETACH_FROM_EVENT
+                                             </a>
+                     <ul>
+                        <li><a href="#DETACH_FROM_EVENT_fun">Description</a></li>
+                                                   <li><a href="#DETACH_FROM_EVENT_funparams">Parameters</a></li>
+                                                                           <li><a href="#DETACH_FROM_EVENT_funreturns">Returns</a></li>
+                                                                           <li><a href="#DETACH_FROM_EVENT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 reflections
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CALL_BY_NAME
+                                             </a>
+                     <ul>
+                        <li><a href="#CALL_BY_NAME_fun">Description</a></li>
+                                                   <li><a href="#CALL_BY_NAME_funparams">Parameters</a></li>
+                                                                           <li><a href="#CALL_BY_NAME_funreturns">Returns</a></li>
+                                                                           <li><a href="#CALL_BY_NAME_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_USER_FUNCTIONS_NAMES
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_USER_FUNCTIONS_NAMES_fun">Description</a></li>
+                                                                           <li><a href="#GET_USER_FUNCTIONS_NAMES_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 special
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IF
+                                             </a>
+                     <ul>
+                        <li><a href="#IF_fun">Description</a></li>
+                                                   <li><a href="#IF_funparams">Parameters</a></li>
+                                                                           <li><a href="#IF_funreturns">Returns</a></li>
+                                                                           <li><a href="#IF_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   FOR
+                                             </a>
+                     <ul>
+                        <li><a href="#FOR_fun">Description</a></li>
+                                                   <li><a href="#FOR_funparams">Parameters</a></li>
+                                                                                                   <li><a href="#FOR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   BREAK
+                                             </a>
+                     <ul>
+                        <li><a href="#BREAK_fun">Description</a></li>
+                                                                           <li><a href="#BREAK_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CONTINUE/<wbr><i>CONT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CONTINUE_fun">Description</a></li>
+                                                                           <li><a href="#CONTINUE_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CALL
+                                             </a>
+                     <ul>
+                        <li><a href="#CALL_fun">Description</a></li>
+                                                   <li><a href="#CALL_funparams">Parameters</a></li>
+                                                                           <li><a href="#CALL_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DN
+                                             </a>
+                     <ul>
+                        <li><a href="#DN_fun">Description</a></li>
+                                                                           <li><a href="#DN_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 strings
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SUBSTR
+                                             </a>
+                     <ul>
+                        <li><a href="#SUBSTR_fun">Description</a></li>
+                                                   <li><a href="#SUBSTR_funparams">Parameters</a></li>
+                                                                           <li><a href="#SUBSTR_funreturns">Returns</a></li>
+                                                                           <li><a href="#SUBSTR_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   LENGTH
+                                             </a>
+                     <ul>
+                        <li><a href="#LENGTH_fun">Description</a></li>
+                                                   <li><a href="#LENGTH_funparams">Parameters</a></li>
+                                                                           <li><a href="#LENGTH_funreturns">Returns</a></li>
+                                                                           <li><a href="#LENGTH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_LOWERCASE
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_LOWERCASE_fun">Description</a></li>
+                                                   <li><a href="#TO_LOWERCASE_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_LOWERCASE_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_LOWERCASE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TO_UPPERCASE
+                                             </a>
+                     <ul>
+                        <li><a href="#TO_UPPERCASE_fun">Description</a></li>
+                                                   <li><a href="#TO_UPPERCASE_funparams">Parameters</a></li>
+                                                                           <li><a href="#TO_UPPERCASE_funreturns">Returns</a></li>
+                                                                           <li><a href="#TO_UPPERCASE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   INSERT
+                                             </a>
+                     <ul>
+                        <li><a href="#INSERT_fun">Description</a></li>
+                                                   <li><a href="#INSERT_funparams">Parameters</a></li>
+                                                                           <li><a href="#INSERT_funreturns">Returns</a></li>
+                                                                           <li><a href="#INSERT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   STARTS_WITH
+                                             </a>
+                     <ul>
+                        <li><a href="#STARTS_WITH_fun">Description</a></li>
+                                                   <li><a href="#STARTS_WITH_funparams">Parameters</a></li>
+                                                                           <li><a href="#STARTS_WITH_funreturns">Returns</a></li>
+                                                                           <li><a href="#STARTS_WITH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ENDS_WITH
+                                             </a>
+                     <ul>
+                        <li><a href="#ENDS_WITH_fun">Description</a></li>
+                                                   <li><a href="#ENDS_WITH_funparams">Parameters</a></li>
+                                                                           <li><a href="#ENDS_WITH_funreturns">Returns</a></li>
+                                                                           <li><a href="#ENDS_WITH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   REPLACE
+                                             </a>
+                     <ul>
+                        <li><a href="#REPLACE_fun">Description</a></li>
+                                                   <li><a href="#REPLACE_funparams">Parameters</a></li>
+                                                                           <li><a href="#REPLACE_funreturns">Returns</a></li>
+                                                                           <li><a href="#REPLACE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   INDEX_OF
+                                             </a>
+                     <ul>
+                        <li><a href="#INDEX_OF_fun">Description</a></li>
+                                                   <li><a href="#INDEX_OF_funparams">Parameters</a></li>
+                                                                           <li><a href="#INDEX_OF_funreturns">Returns</a></li>
+                                                                           <li><a href="#INDEX_OF_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   LAST_INDEX_OF
+                                             </a>
+                     <ul>
+                        <li><a href="#LAST_INDEX_OF_fun">Description</a></li>
+                                                   <li><a href="#LAST_INDEX_OF_funparams">Parameters</a></li>
+                                                                           <li><a href="#LAST_INDEX_OF_funreturns">Returns</a></li>
+                                                                           <li><a href="#LAST_INDEX_OF_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SPLIT
+                                             </a>
+                     <ul>
+                        <li><a href="#SPLIT_fun">Description</a></li>
+                                                   <li><a href="#SPLIT_funparams">Parameters</a></li>
+                                                                           <li><a href="#SPLIT_funreturns">Returns</a></li>
+                                                                           <li><a href="#SPLIT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TRIM
+                                             </a>
+                     <ul>
+                        <li><a href="#TRIM_fun">Description</a></li>
+                                                   <li><a href="#TRIM_funparams">Parameters</a></li>
+                                                                           <li><a href="#TRIM_funreturns">Returns</a></li>
+                                                                           <li><a href="#TRIM_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 structs
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   HAS_FIELD
+                                             </a>
+                     <ul>
+                        <li><a href="#HAS_FIELD_fun">Description</a></li>
+                                                   <li><a href="#HAS_FIELD_funparams">Parameters</a></li>
+                                                                           <li><a href="#HAS_FIELD_funreturns">Returns</a></li>
+                                                                           <li><a href="#HAS_FIELD_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CREATE_STRUCT/<wbr><i>CR_STRUCT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CREATE_STRUCT_fun">Description</a></li>
+                                                   <li><a href="#CREATE_STRUCT_funparams">Parameters</a></li>
+                                                                           <li><a href="#CREATE_STRUCT_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
+                                 type_check
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_ERROR/<wbr><i>IS_ERR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_ERROR_fun">Description</a></li>
+                                                   <li><a href="#IS_ERROR_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_ERROR_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_INT
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_INT_fun">Description</a></li>
+                                                   <li><a href="#IS_INT_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_INT_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_INT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_FLOAT
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_FLOAT_fun">Description</a></li>
+                                                   <li><a href="#IS_FLOAT_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_FLOAT_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_FLOAT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_BOOL
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_BOOL_fun">Description</a></li>
+                                                   <li><a href="#IS_BOOL_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_BOOL_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_BOOL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_STRING/<wbr><i>IS_STR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_STRING_fun">Description</a></li>
+                                                   <li><a href="#IS_STRING_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_STRING_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_STRING_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_NONE
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_NONE_fun">Description</a></li>
+                                                   <li><a href="#IS_NONE_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_NONE_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_NONE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_STRUCT
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_STRUCT_fun">Description</a></li>
+                                                   <li><a href="#IS_STRUCT_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_STRUCT_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_STRUCT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_ARRAY/<wbr><i>IS_ARR</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_ARRAY_fun">Description</a></li>
+                                                   <li><a href="#IS_ARRAY_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_ARRAY_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_ARRAY_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_DICT
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_DICT_fun">Description</a></li>
+                                                   <li><a href="#IS_DICT_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_DICT_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_DICT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_TUPLE/<wbr><i>IS_TUP</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_TUPLE_fun">Description</a></li>
+                                                   <li><a href="#IS_TUPLE_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_TUPLE_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_TUPLE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_NUMBER/<wbr><i>IS_NUM</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_NUMBER_fun">Description</a></li>
+                                                   <li><a href="#IS_NUMBER_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_NUMBER_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_NUMBER_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_COLLECTION/<wbr><i>IS_COL</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_COLLECTION_fun">Description</a></li>
+                                                   <li><a href="#IS_COLLECTION_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_COLLECTION_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_COLLECTION_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   ARE_SAME_TYPE
+                                             </a>
+                     <ul>
+                        <li><a href="#ARE_SAME_TYPE_fun">Description</a></li>
+                                                   <li><a href="#ARE_SAME_TYPE_funparams">Parameters</a></li>
+                                                                           <li><a href="#ARE_SAME_TYPE_funreturns">Returns</a></li>
+                                                                           <li><a href="#ARE_SAME_TYPE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
          </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  compare
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        LS
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#LS_fun">Description</a></li>
-                        <li><a href="#LS_funparams">Parameters</a></li>
-                                    <li><a href="#LS_funreturns">Returns</a></li>
-                                    <li><a href="#LS_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        LE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#LE_fun">Description</a></li>
-                        <li><a href="#LE_funparams">Parameters</a></li>
-                                    <li><a href="#LE_funreturns">Returns</a></li>
-                                    <li><a href="#LE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GT_fun">Description</a></li>
-                        <li><a href="#GT_funparams">Parameters</a></li>
-                                    <li><a href="#GT_funreturns">Returns</a></li>
-                                    <li><a href="#GT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GE_fun">Description</a></li>
-                        <li><a href="#GE_funparams">Parameters</a></li>
-                                    <li><a href="#GE_funreturns">Returns</a></li>
-                                    <li><a href="#GE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        EQ
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#EQ_fun">Description</a></li>
-                        <li><a href="#EQ_funparams">Parameters</a></li>
-                                    <li><a href="#EQ_funreturns">Returns</a></li>
-                                    <li><a href="#EQ_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        NEQ
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#NEQ_fun">Description</a></li>
-                        <li><a href="#NEQ_funparams">Parameters</a></li>
-                                    <li><a href="#NEQ_funreturns">Returns</a></li>
-                                    <li><a href="#NEQ_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_IN_RANGE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_IN_RANGE_fun">Description</a></li>
-                        <li><a href="#IS_IN_RANGE_funparams">Parameters</a></li>
-                                    <li><a href="#IS_IN_RANGE_funreturns">Returns</a></li>
-                                    <li><a href="#IS_IN_RANGE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  conversion
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_STRING/<wbr><i>TO_STR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_STRING_fun">Description</a></li>
-                        <li><a href="#TO_STRING_funparams">Parameters</a></li>
-                                    <li><a href="#TO_STRING_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_INT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_INT_fun">Description</a></li>
-                        <li><a href="#TO_INT_funparams">Parameters</a></li>
-                                    <li><a href="#TO_INT_funreturns">Returns</a></li>
-                                    <li><a href="#TO_INT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_FLOAT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_FLOAT_fun">Description</a></li>
-                        <li><a href="#TO_FLOAT_funparams">Parameters</a></li>
-                                    <li><a href="#TO_FLOAT_funreturns">Returns</a></li>
-                                    <li><a href="#TO_FLOAT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_BOOL
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_BOOL_fun">Description</a></li>
-                        <li><a href="#TO_BOOL_funparams">Parameters</a></li>
-                                    <li><a href="#TO_BOOL_funreturns">Returns</a></li>
-                                    <li><a href="#TO_BOOL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_ARRAY/<wbr><i>TO_ARR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_ARRAY_fun">Description</a></li>
-                        <li><a href="#TO_ARRAY_funparams">Parameters</a></li>
-                                    <li><a href="#TO_ARRAY_funreturns">Returns</a></li>
-                                    <li><a href="#TO_ARRAY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_TUPLE/<wbr><i>TO_TUP</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_TUPLE_fun">Description</a></li>
-                        <li><a href="#TO_TUPLE_funparams">Parameters</a></li>
-                                    <li><a href="#TO_TUPLE_funreturns">Returns</a></li>
-                                    <li><a href="#TO_TUPLE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  errors
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        PRINT_STACK_TRACE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#PRINT_STACK_TRACE_fun">Description</a></li>
-                        <li><a href="#PRINT_STACK_TRACE_funparams">Parameters</a></li>
-                                    <li><a href="#PRINT_STACK_TRACE_funreturns">Returns</a></li>
-                                    <li><a href="#PRINT_STACK_TRACE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        PRINT_LAST_NTH_STACK_TRACE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#PRINT_LAST_NTH_STACK_TRACE_fun">Description</a></li>
-                        <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funparams">Parameters</a></li>
-                                    <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funreturns">Returns</a></li>
-                                    <li><a href="#PRINT_LAST_NTH_STACK_TRACE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_ERROR/<wbr><i>CR_ERR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_ERROR_fun">Description</a></li>
-                        <li><a href="#CREATE_ERROR_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_ERROR_funreturns">Returns</a></li>
-                                    <li><a href="#CREATE_ERROR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_ERROR_MESSAGE/<wbr><i>GET_ERR_MSG</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_ERROR_MESSAGE_fun">Description</a></li>
-                        <li><a href="#GET_ERROR_MESSAGE_funparams">Parameters</a></li>
-                                    <li><a href="#GET_ERROR_MESSAGE_funreturns">Returns</a></li>
-                                    <li><a href="#GET_ERROR_MESSAGE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_ERROR_OBJECT/<wbr><i>GET_ERR_OBJ</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_ERROR_OBJECT_fun">Description</a></li>
-                        <li><a href="#GET_ERROR_OBJECT_funparams">Parameters</a></li>
-                                    <li><a href="#GET_ERROR_OBJECT_funreturns">Returns</a></li>
-                                    <li><a href="#GET_ERROR_OBJECT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_ERROR_CAUSE/<wbr><i>GET_ERR_CAUSE</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_ERROR_CAUSE_fun">Description</a></li>
-                        <li><a href="#GET_ERROR_CAUSE_funparams">Parameters</a></li>
-                                    <li><a href="#GET_ERROR_CAUSE_funreturns">Returns</a></li>
-                                    <li><a href="#GET_ERROR_CAUSE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_ERROR_LINE/<wbr><i>GET_ERR_LINE</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_ERROR_LINE_fun">Description</a></li>
-                        <li><a href="#GET_ERROR_LINE_funparams">Parameters</a></li>
-                                    <li><a href="#GET_ERROR_LINE_funreturns">Returns</a></li>
-                                    <li><a href="#GET_ERROR_LINE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_ERROR_CH/<wbr><i>GET_ERR_CH</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_ERROR_CH_fun">Description</a></li>
-                        <li><a href="#GET_ERROR_CH_funparams">Parameters</a></li>
-                                    <li><a href="#GET_ERROR_CH_funreturns">Returns</a></li>
-                                    <li><a href="#GET_ERROR_CH_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERTS_ON
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERTS_ON_fun">Description</a></li>
-                                    <li><a href="#ASSERTS_ON_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERTS_OFF
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERTS_OFF_fun">Description</a></li>
-                                    <li><a href="#ASSERTS_OFF_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERT_TRUE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERT_TRUE_fun">Description</a></li>
-                        <li><a href="#ASSERT_TRUE_funparams">Parameters</a></li>
-                                    <li><a href="#ASSERT_TRUE_funreturns">Returns</a></li>
-                                    <li><a href="#ASSERT_TRUE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERT_FALSE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERT_FALSE_fun">Description</a></li>
-                        <li><a href="#ASSERT_FALSE_funparams">Parameters</a></li>
-                                    <li><a href="#ASSERT_FALSE_funreturns">Returns</a></li>
-                                    <li><a href="#ASSERT_FALSE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERT_EQ
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERT_EQ_fun">Description</a></li>
-                        <li><a href="#ASSERT_EQ_funparams">Parameters</a></li>
-                                    <li><a href="#ASSERT_EQ_funreturns">Returns</a></li>
-                                    <li><a href="#ASSERT_EQ_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSERT_NEQ
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSERT_NEQ_fun">Description</a></li>
-                        <li><a href="#ASSERT_NEQ_funparams">Parameters</a></li>
-                                    <li><a href="#ASSERT_NEQ_funreturns">Returns</a></li>
-                                    <li><a href="#ASSERT_NEQ_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ASSIGN_LOCAL_RETURN_IF_ERROR/<wbr><i>AS_LOC_RET_IF_ERR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_fun">Description</a></li>
-                        <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funparams">Parameters</a></li>
-                                    <li><a href="#ASSIGN_LOCAL_RETURN_IF_ERROR_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  floats
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CEIL
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CEIL_fun">Description</a></li>
-                        <li><a href="#CEIL_funparams">Parameters</a></li>
-                                    <li><a href="#CEIL_funreturns">Returns</a></li>
-                                    <li><a href="#CEIL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        FLOOR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#FLOOR_fun">Description</a></li>
-                        <li><a href="#FLOOR_funparams">Parameters</a></li>
-                                    <li><a href="#FLOOR_funreturns">Returns</a></li>
-                                    <li><a href="#FLOOR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  ints
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        RSHIFT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#RSHIFT_fun">Description</a></li>
-                        <li><a href="#RSHIFT_funparams">Parameters</a></li>
-                                    <li><a href="#RSHIFT_funreturns">Returns</a></li>
-                                    <li><a href="#RSHIFT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        LSHIFT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#LSHIFT_fun">Description</a></li>
-                        <li><a href="#LSHIFT_funparams">Parameters</a></li>
-                                    <li><a href="#LSHIFT_funreturns">Returns</a></li>
-                                    <li><a href="#LSHIFT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        XOR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#XOR_fun">Description</a></li>
-                        <li><a href="#XOR_funparams">Parameters</a></li>
-                                    <li><a href="#XOR_funreturns">Returns</a></li>
-                                    <li><a href="#XOR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  io
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        PRINT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#PRINT_fun">Description</a></li>
-                        <li><a href="#PRINT_funparams">Parameters</a></li>
-                                    <li><a href="#PRINT_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        PRINTLN
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#PRINTLN_fun">Description</a></li>
-                        <li><a href="#PRINTLN_funparams">Parameters</a></li>
-                                    <li><a href="#PRINTLN_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        INPUT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#INPUT_fun">Description</a></li>
-                        <li><a href="#INPUT_funparams">Parameters</a></li>
-                                    <li><a href="#INPUT_funreturns">Returns</a></li>
-                                    <li><a href="#INPUT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  iter
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        FOREACH
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#FOREACH_fun">Description</a></li>
-                        <li><a href="#FOREACH_funparams">Parameters</a></li>
-                                    <li><a href="#FOREACH_funreturns">Returns</a></li>
-                                    <li><a href="#FOREACH_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  logic
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        NOT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#NOT_fun">Description</a></li>
-                        <li><a href="#NOT_funparams">Parameters</a></li>
-                                    <li><a href="#NOT_funreturns">Returns</a></li>
-                                    <li><a href="#NOT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        AND
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#AND_fun">Description</a></li>
-                        <li><a href="#AND_funparams">Parameters</a></li>
-                                    <li><a href="#AND_funreturns">Returns</a></li>
-                                    <li><a href="#AND_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        OR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#OR_fun">Description</a></li>
-                        <li><a href="#OR_funparams">Parameters</a></li>
-                                    <li><a href="#OR_funreturns">Returns</a></li>
-                                    <li><a href="#OR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  math
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SUM
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SUM_fun">Description</a></li>
-                        <li><a href="#SUM_funparams">Parameters</a></li>
-                                    <li><a href="#SUM_funreturns">Returns</a></li>
-                                    <li><a href="#SUM_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ADD
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ADD_fun">Description</a></li>
-                        <li><a href="#ADD_funparams">Parameters</a></li>
-                                    <li><a href="#ADD_funreturns">Returns</a></li>
-                                    <li><a href="#ADD_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DIFF
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DIFF_fun">Description</a></li>
-                        <li><a href="#DIFF_funparams">Parameters</a></li>
-                                    <li><a href="#DIFF_funreturns">Returns</a></li>
-                                    <li><a href="#DIFF_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SUB
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SUB_fun">Description</a></li>
-                        <li><a href="#SUB_funparams">Parameters</a></li>
-                                    <li><a href="#SUB_funreturns">Returns</a></li>
-                                    <li><a href="#SUB_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        PRODUCT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#PRODUCT_fun">Description</a></li>
-                        <li><a href="#PRODUCT_funparams">Parameters</a></li>
-                                    <li><a href="#PRODUCT_funreturns">Returns</a></li>
-                                    <li><a href="#PRODUCT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        MUL
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#MUL_fun">Description</a></li>
-                        <li><a href="#MUL_funparams">Parameters</a></li>
-                                    <li><a href="#MUL_funreturns">Returns</a></li>
-                                    <li><a href="#MUL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        QUOTIENT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#QUOTIENT_fun">Description</a></li>
-                        <li><a href="#QUOTIENT_funparams">Parameters</a></li>
-                                    <li><a href="#QUOTIENT_funreturns">Returns</a></li>
-                                    <li><a href="#QUOTIENT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DIV
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DIV_fun">Description</a></li>
-                        <li><a href="#DIV_funparams">Parameters</a></li>
-                                    <li><a href="#DIV_funreturns">Returns</a></li>
-                                    <li><a href="#DIV_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SQRT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SQRT_fun">Description</a></li>
-                        <li><a href="#SQRT_funparams">Parameters</a></li>
-                                    <li><a href="#SQRT_funreturns">Returns</a></li>
-                                    <li><a href="#SQRT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        POW
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#POW_fun">Description</a></li>
-                        <li><a href="#POW_funparams">Parameters</a></li>
-                                    <li><a href="#POW_funreturns">Returns</a></li>
-                                    <li><a href="#POW_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        MOD
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#MOD_fun">Description</a></li>
-                        <li><a href="#MOD_funparams">Parameters</a></li>
-                                    <li><a href="#MOD_funreturns">Returns</a></li>
-                                    <li><a href="#MOD_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        INC
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#INC_fun">Description</a></li>
-                        <li><a href="#INC_funparams">Parameters</a></li>
-                                    <li><a href="#INC_funreturns">Returns</a></li>
-                                    <li><a href="#INC_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DEC
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DEC_fun">Description</a></li>
-                        <li><a href="#DEC_funparams">Parameters</a></li>
-                                    <li><a href="#DEC_funreturns">Returns</a></li>
-                                    <li><a href="#DEC_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        NEGATE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#NEGATE_fun">Description</a></li>
-                        <li><a href="#NEGATE_funparams">Parameters</a></li>
-                                    <li><a href="#NEGATE_funreturns">Returns</a></li>
-                                    <li><a href="#NEGATE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        RAND
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#RAND_fun">Description</a></li>
-                                    <li><a href="#RAND_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  observer
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ATTACH_TO_EVENT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ATTACH_TO_EVENT_fun">Description</a></li>
-                        <li><a href="#ATTACH_TO_EVENT_funparams">Parameters</a></li>
-                                    <li><a href="#ATTACH_TO_EVENT_funreturns">Returns</a></li>
-                                    <li><a href="#ATTACH_TO_EVENT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_ATTACHED
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_ATTACHED_fun">Description</a></li>
-                        <li><a href="#IS_ATTACHED_funparams">Parameters</a></li>
-                                    <li><a href="#IS_ATTACHED_funreturns">Returns</a></li>
-                                    <li><a href="#IS_ATTACHED_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DETACH_FROM_EVENT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DETACH_FROM_EVENT_fun">Description</a></li>
-                        <li><a href="#DETACH_FROM_EVENT_funparams">Parameters</a></li>
-                                    <li><a href="#DETACH_FROM_EVENT_funreturns">Returns</a></li>
-                                    <li><a href="#DETACH_FROM_EVENT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  reflections
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CALL_BY_NAME
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CALL_BY_NAME_fun">Description</a></li>
-                        <li><a href="#CALL_BY_NAME_funparams">Parameters</a></li>
-                                    <li><a href="#CALL_BY_NAME_funreturns">Returns</a></li>
-                                    <li><a href="#CALL_BY_NAME_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        GET_USER_FUNCTIONS_NAMES
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#GET_USER_FUNCTIONS_NAMES_fun">Description</a></li>
-                                    <li><a href="#GET_USER_FUNCTIONS_NAMES_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  special
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IF
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IF_fun">Description</a></li>
-                        <li><a href="#IF_funparams">Parameters</a></li>
-                                    <li><a href="#IF_funreturns">Returns</a></li>
-                                    <li><a href="#IF_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        FOR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#FOR_fun">Description</a></li>
-                        <li><a href="#FOR_funparams">Parameters</a></li>
-                                                <li><a href="#FOR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        BREAK
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#BREAK_fun">Description</a></li>
-                                    <li><a href="#BREAK_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CONTINUE/<wbr><i>CONT</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CONTINUE_fun">Description</a></li>
-                                    <li><a href="#CONTINUE_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CALL
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CALL_fun">Description</a></li>
-                        <li><a href="#CALL_funparams">Parameters</a></li>
-                                    <li><a href="#CALL_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        DN
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#DN_fun">Description</a></li>
-                                    <li><a href="#DN_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  strings
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SUBSTR
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SUBSTR_fun">Description</a></li>
-                        <li><a href="#SUBSTR_funparams">Parameters</a></li>
-                                    <li><a href="#SUBSTR_funreturns">Returns</a></li>
-                                    <li><a href="#SUBSTR_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        LENGTH
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#LENGTH_fun">Description</a></li>
-                        <li><a href="#LENGTH_funparams">Parameters</a></li>
-                                    <li><a href="#LENGTH_funreturns">Returns</a></li>
-                                    <li><a href="#LENGTH_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_LOWERCASE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_LOWERCASE_fun">Description</a></li>
-                        <li><a href="#TO_LOWERCASE_funparams">Parameters</a></li>
-                                    <li><a href="#TO_LOWERCASE_funreturns">Returns</a></li>
-                                    <li><a href="#TO_LOWERCASE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TO_UPPERCASE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TO_UPPERCASE_fun">Description</a></li>
-                        <li><a href="#TO_UPPERCASE_funparams">Parameters</a></li>
-                                    <li><a href="#TO_UPPERCASE_funreturns">Returns</a></li>
-                                    <li><a href="#TO_UPPERCASE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        INSERT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#INSERT_fun">Description</a></li>
-                        <li><a href="#INSERT_funparams">Parameters</a></li>
-                                    <li><a href="#INSERT_funreturns">Returns</a></li>
-                                    <li><a href="#INSERT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        STARTS_WITH
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#STARTS_WITH_fun">Description</a></li>
-                        <li><a href="#STARTS_WITH_funparams">Parameters</a></li>
-                                    <li><a href="#STARTS_WITH_funreturns">Returns</a></li>
-                                    <li><a href="#STARTS_WITH_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ENDS_WITH
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ENDS_WITH_fun">Description</a></li>
-                        <li><a href="#ENDS_WITH_funparams">Parameters</a></li>
-                                    <li><a href="#ENDS_WITH_funreturns">Returns</a></li>
-                                    <li><a href="#ENDS_WITH_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        REPLACE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#REPLACE_fun">Description</a></li>
-                        <li><a href="#REPLACE_funparams">Parameters</a></li>
-                                    <li><a href="#REPLACE_funreturns">Returns</a></li>
-                                    <li><a href="#REPLACE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        INDEX_OF
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#INDEX_OF_fun">Description</a></li>
-                        <li><a href="#INDEX_OF_funparams">Parameters</a></li>
-                                    <li><a href="#INDEX_OF_funreturns">Returns</a></li>
-                                    <li><a href="#INDEX_OF_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        LAST_INDEX_OF
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#LAST_INDEX_OF_fun">Description</a></li>
-                        <li><a href="#LAST_INDEX_OF_funparams">Parameters</a></li>
-                                    <li><a href="#LAST_INDEX_OF_funreturns">Returns</a></li>
-                                    <li><a href="#LAST_INDEX_OF_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        SPLIT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#SPLIT_fun">Description</a></li>
-                        <li><a href="#SPLIT_funparams">Parameters</a></li>
-                                    <li><a href="#SPLIT_funreturns">Returns</a></li>
-                                    <li><a href="#SPLIT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        TRIM
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#TRIM_fun">Description</a></li>
-                        <li><a href="#TRIM_funparams">Parameters</a></li>
-                                    <li><a href="#TRIM_funreturns">Returns</a></li>
-                                    <li><a href="#TRIM_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  structs
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        HAS_FIELD
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#HAS_FIELD_fun">Description</a></li>
-                        <li><a href="#HAS_FIELD_funparams">Parameters</a></li>
-                                    <li><a href="#HAS_FIELD_funreturns">Returns</a></li>
-                                    <li><a href="#HAS_FIELD_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        CREATE_STRUCT/<wbr><i>CR_STRUCT</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#CREATE_STRUCT_fun">Description</a></li>
-                        <li><a href="#CREATE_STRUCT_funparams">Parameters</a></li>
-                                    <li><a href="#CREATE_STRUCT_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-               </ul>
-      </li>
-            <li class="has-sub">
-      <a href="javascript:void(0)">
-                  type_check
-               </a>
-      <ul>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_ERROR/<wbr><i>IS_ERR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_ERROR_fun">Description</a></li>
-                        <li><a href="#IS_ERROR_funparams">Parameters</a></li>
-                                    <li><a href="#IS_ERROR_funreturns">Returns</a></li>
-                                 </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_INT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_INT_fun">Description</a></li>
-                        <li><a href="#IS_INT_funparams">Parameters</a></li>
-                                    <li><a href="#IS_INT_funreturns">Returns</a></li>
-                                    <li><a href="#IS_INT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_FLOAT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_FLOAT_fun">Description</a></li>
-                        <li><a href="#IS_FLOAT_funparams">Parameters</a></li>
-                                    <li><a href="#IS_FLOAT_funreturns">Returns</a></li>
-                                    <li><a href="#IS_FLOAT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_BOOL
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_BOOL_fun">Description</a></li>
-                        <li><a href="#IS_BOOL_funparams">Parameters</a></li>
-                                    <li><a href="#IS_BOOL_funreturns">Returns</a></li>
-                                    <li><a href="#IS_BOOL_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_STRING/<wbr><i>IS_STR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_STRING_fun">Description</a></li>
-                        <li><a href="#IS_STRING_funparams">Parameters</a></li>
-                                    <li><a href="#IS_STRING_funreturns">Returns</a></li>
-                                    <li><a href="#IS_STRING_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_NONE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_NONE_fun">Description</a></li>
-                        <li><a href="#IS_NONE_funparams">Parameters</a></li>
-                                    <li><a href="#IS_NONE_funreturns">Returns</a></li>
-                                    <li><a href="#IS_NONE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_STRUCT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_STRUCT_fun">Description</a></li>
-                        <li><a href="#IS_STRUCT_funparams">Parameters</a></li>
-                                    <li><a href="#IS_STRUCT_funreturns">Returns</a></li>
-                                    <li><a href="#IS_STRUCT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_ARRAY/<wbr><i>IS_ARR</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_ARRAY_fun">Description</a></li>
-                        <li><a href="#IS_ARRAY_funparams">Parameters</a></li>
-                                    <li><a href="#IS_ARRAY_funreturns">Returns</a></li>
-                                    <li><a href="#IS_ARRAY_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_DICT
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_DICT_fun">Description</a></li>
-                        <li><a href="#IS_DICT_funparams">Parameters</a></li>
-                                    <li><a href="#IS_DICT_funreturns">Returns</a></li>
-                                    <li><a href="#IS_DICT_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_TUPLE/<wbr><i>IS_TUP</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_TUPLE_fun">Description</a></li>
-                        <li><a href="#IS_TUPLE_funparams">Parameters</a></li>
-                                    <li><a href="#IS_TUPLE_funreturns">Returns</a></li>
-                                    <li><a href="#IS_TUPLE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_NUMBER/<wbr><i>IS_NUM</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_NUMBER_fun">Description</a></li>
-                        <li><a href="#IS_NUMBER_funparams">Parameters</a></li>
-                                    <li><a href="#IS_NUMBER_funreturns">Returns</a></li>
-                                    <li><a href="#IS_NUMBER_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        IS_COLLECTION/<wbr><i>IS_COL</i>
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#IS_COLLECTION_fun">Description</a></li>
-                        <li><a href="#IS_COLLECTION_funparams">Parameters</a></li>
-                                    <li><a href="#IS_COLLECTION_funreturns">Returns</a></li>
-                                    <li><a href="#IS_COLLECTION_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-                  <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-                        ARE_SAME_TYPE
-                     </a>
-         </a>
-         <ul>
-            <li><a href="#ARE_SAME_TYPE_fun">Description</a></li>
-                        <li><a href="#ARE_SAME_TYPE_funparams">Parameters</a></li>
-                                    <li><a href="#ARE_SAME_TYPE_funreturns">Returns</a></li>
-                                    <li><a href="#ARE_SAME_TYPE_funerrors">Errors</a></li>
-                     </ul>
-         </li>
-               </ul>
-      </li>
          </ul>
 </nav>
 
