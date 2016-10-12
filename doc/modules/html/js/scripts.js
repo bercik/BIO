@@ -54,8 +54,13 @@ $(document).ready(function() {
         $(this).parent().toggleClass('showed');
     });
 
-    var hashLink = $('a[href="' + $(location).attr('hash') + '"');
-    hashLink.click();
-    hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
+    var hash;
+    if (hash = ($(location).attr('hash'))) {
+        var hashLink = $('a[href="' + hash + '"');
+        var hashBlock = $(hash);
+        hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
+        hashBlock.parentsUntil(main, '.block, .sub-block').addClass('showed');
+        $(main).scrollTop(hashBlock.offset().top);
+    }
 
 });
