@@ -19,9 +19,14 @@ $(document).ready(function() {
     main.on('scroll resize', function() {
         var i = 0;
         while (i < sections.length) {
-            var offset = sections[i].main.offset().top;
-            if (offset >= 0)
+            var elem = sections[i].main;
+            while (!elem.is(':visible')) {
+                elem = elem.parent();
+            }
+            var offset = elem.offset().top;
+            if (offset >= 0) {
                 break;
+            }
             ++i;
         }
         links_all.removeClass('current');
@@ -48,5 +53,9 @@ $(document).ready(function() {
     block_headers.on('click', function() {
         $(this).parent().toggleClass('showed');
     });
+
+    var hashLink = $('a[href="' + $(location).attr('hash') + '"');
+    hashLink.click();
+    hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
 
 });

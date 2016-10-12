@@ -16,51 +16,50 @@
 <nav>
    <ul>
       <li class="has-sub">
-      <a href="javascript:void(0)">Basic informations</a>
-      <ul>
-         <li><a href="#basic-info-data-types">Data types</a></li>
-         <li><a href="#basic-info-errors">Errors</a></li>
-         <li><a href="#basic-info-conversions">Conversions</a></li>
-         <li><a href="#basic-info-aliases">Aliases</a></li>
-         <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
-      </ul>
+         <a href="javascript:void(0)">Basic informations</a>
+         <ul>
+            <li><a href="#basic-info-data-types">Data types</a></li>
+            <li><a href="#basic-info-errors">Errors</a></li>
+            <li><a href="#basic-info-conversions">Conversions</a></li>
+            <li><a href="#basic-info-aliases">Aliases</a></li>
+            <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
+         </ul>
       </li>
       {% for m in modules %}
-      <li class="has-sub">
-      <a href="javascript:void(0)">
-         {% if m.optional %}
-         {{m.mod_name}} <i>(optional)</i>
-         {% else %}
-         {{m.mod_name}}
-         {% endif %}
-      </a>
-      <ul>
-         {% for f in m.functions %}
          <li class="has-sub">
-         <a class="function" href="javascript:void(0)">
-            {% if f.alias %}
-            {{f.name}}/<wbr><i>{{f.alias}}</i>
-            {% else %}
-            {{f.name}}
-            {% endif %}
-         </a>
-         </a>
-         <ul>
-            <li><a href="#{{f.name}}_fun">Description</a></li>
-            {% if f.params %}
-            <li><a href="#{{f.name}}_funparams">Parameters</a></li>
-            {% endif %}
-            {% if f.ret %}
-            <li><a href="#{{f.name}}_funreturns">Returns</a></li>
-            {% endif %}
-            {% if f.errors %}
-            <li><a href="#{{f.name}}_funerrors">Errors</a></li>
-            {% endif %}
-         </ul>
+            <a href="javascript:void(0)">
+               {% if m.optional %}
+                  {{m.mod_name}} <i>(optional)</i>
+               {% else %}
+                  {{m.mod_name}}
+               {% endif %}
+            </a>
+            <ul>
+               {% for f in m.functions %}
+                  <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                        {% if f.alias %}
+                           {{f.name}}/<wbr><i>{{f.alias}}</i>
+                        {% else %}
+                           {{f.name}}
+                        {% endif %}
+                     </a>
+                     <ul>
+                        <li><a href="#{{f.name}}_fun">Description</a></li>
+                        {% if f.params %}
+                           <li><a href="#{{f.name}}_funparams">Parameters</a></li>
+                        {% endif %}
+                        {% if f.ret %}
+                           <li><a href="#{{f.name}}_funreturns">Returns</a></li>
+                        {% endif %}
+                        {% if f.errors %}
+                           <li><a href="#{{f.name}}_funerrors">Errors</a></li>
+                        {% endif %}
+                     </ul>
+                  </li>
+               {% endfor %}
+            </ul>
          </li>
-         {% endfor %}
-      </ul>
-      </li>
       {% endfor %}
    </ul>
 </nav>
