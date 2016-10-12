@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
@@ -81,18 +83,22 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         ei = expression.getErrorInfo();
         String input = (String)expression.getValue();
 
-        //System.out.println("\nMATH_LOG_PARSER:");
-        //System.out.println(input);
+        // TODELETE
+        System.out.println("\u005cnMATH_LOG_PARSER:");
+        System.out.println(input);
 
         InputStream stream = new ByteArrayInputStream(input.getBytes("UTF-8"));
 
-            Parser parser = new Parser(stream);
-        SimpleNode root = parser.Start();
+        Parser parser = new Parser(stream);
+        SimpleNode root = parser.Expression();
 
-        // traverse(root, "");
+        // TODELETE
+        //traverse(root, "");
+        //System.out.println("\n");
 
         List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
-        //printTokens(tokens);
+        // TODELETE
+        printTokens(tokens);
 
         return tokens;
     }
@@ -113,6 +119,130 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node,
         List<pl.rcebula.analysis.lexer.Token<?>> prevTokens)
     {
+        if (node.jjtGetNumChildren() == 0)
+        {
+            // jeżeli nie null to znaczy, że node jest typu PRIM
+            if (node.value != null)
+            {
+                return Arrays.asList((pl.rcebula.analysis.lexer.Token)node.value);
+            }
+            else
+            {
+                return prevTokens;
+            }
+        }
+        else if (node.jjtGetNumChildren() == 1)
+        {
+            SimpleNode center = (SimpleNode)node.jjtGetChild(0);
+            // Primary nawiasy
+            if (node.value == null)
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // Primary znak minus
+            else if (node.value.equals("-"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("NEGATE", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // Primary znak plus
+            else if (node.value.equals("+"))
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // Factor potęga
+            else if (node.value.equals("^"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("POW", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // nieobsługiwany znak
+            else
+            {
+                throw new RuntimeException("Can't handle " + node.toString());
+            }
+        }
+        else if (node.jjtGetNumChildren() == 2)
+        {
+            SimpleNode left = (SimpleNode)node.jjtGetChild(0);
+            SimpleNode right = (SimpleNode)node.jjtGetChild(1);
+
+            // jeżeli nie ma wartości
+            if (node.value == null)
+            {
+                return generateCode(right, generateCode(left, prevTokens));
+            }
+            else
+            {
+                pl.rcebula.analysis.lexer.Token funTok = null;
+                // inaczej typu ValueErrorInfo, możemy użyć metody equals(Object obj)
+                if (node.value.equals("+"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("ADD", vei.errorInfo);
+                }
+                else if (node.value.equals("-"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("SUB", vei.errorInfo);
+                }
+                else if (node.value.equals("*"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("MUL", vei.errorInfo);
+                }
+                else if (node.value.equals("/"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("DIV", vei.errorInfo);
+                }
+                else
+                {
+                    throw new RuntimeException("Uknown node value: " + node.value.toString());
+                }
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return generateCode(right, newTokens);
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Can't handle " + node.jjtGetNumChildren()
+                + " node childrens");
+        }
+
+        /*
         switch (node.toString())
         {
             case "START":
@@ -144,10 +274,10 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                     T = (SimpleNode)node.jjtGetChild(1);
                     E = (SimpleNode)node.jjtGetChild(2);
 
-                    List<pl.rcebula.analysis.lexer.Token<?>> pGen = generateCode(P,
+                    List<pl.rcebula.analysis.lexer.Token<?>> pGen = generateCode(P, 
                         new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
 
-                    List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                    List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
                         new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
                     newTokens.add(funTok);
@@ -191,8 +321,8 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
                     P = (SimpleNode)node.jjtGetChild(0);
                     T = (SimpleNode)node.jjtGetChild(1);
-
-                    List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                    
+                    List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
                         new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
                     newTokens.add(funTok);
@@ -228,7 +358,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                         pl.rcebula.analysis.lexer.Token funTok =
                             getFunToken("NEGATE", vei.errorInfo);
 
-                        List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                        List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
                             new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
                         newTokens.add(funTok);
@@ -240,24 +370,24 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                     }
                     else
                     {
-                        List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
+                        List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
                             new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
                         newTokens.addAll(prevTokens);
                         newTokens.add((pl.rcebula.analysis.lexer.Token)node.value);
-
+                        
                         return newTokens;
                     }
                 }
                 // nawiasy
-                else
+                else 
                 {
                     SimpleNode S = (SimpleNode)node.jjtGetChild(0);
                     return generateCode(S, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
                 }
             default:
                 throw new RuntimeException("unknown node type: " + node.toString());
-        }
+        }*/
     }
 
     private static void traverse(SimpleNode node, String prefix)
@@ -278,15 +408,14 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         }
     }
 
-  final public SimpleNode Start() throws ParseException {
- /*@bgen(jjtree) START */
-  SimpleNode jjtn000 = new SimpleNode(JJTSTART);
+  final public SimpleNode Expression() throws ParseException {
+ /*@bgen(jjtree) EXPR */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXPR);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      Primary();
       Term();
-      Expression();
+      Expression_1();
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
       {if (true) return jjtn000;}
@@ -312,9 +441,9 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     throw new Error("Missing return statement in function");
   }
 
-  final public void Expression() throws ParseException {
- /*@bgen(jjtree) EXPR */
-    SimpleNode jjtn000 = new SimpleNode(JJTEXPR);
+  final public void Expression_1() throws ParseException {
+ /*@bgen(jjtree) EXPR_1 */
+    SimpleNode jjtn000 = new SimpleNode(JJTEXPR_1);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);Token t;
     try {
@@ -324,9 +453,8 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
           t = jj_consume_token(PLUS);
-          Primary();
           Term();
-          Expression();
+          Expression_1();
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;
             if (t.beginLine == 1)
@@ -341,9 +469,8 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
           break;
         case MINUS:
           t = jj_consume_token(MINUS);
-          Primary();
           Term();
-          Expression();
+          Expression_1();
             newLine = t.beginLine + ei.getLineNum() - 1;
             if (t.beginLine == 1)
             {
@@ -389,7 +516,36 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
   final public void Term() throws ParseException {
  /*@bgen(jjtree) TERM */
-    SimpleNode jjtn000 = new SimpleNode(JJTTERM);
+  SimpleNode jjtn000 = new SimpleNode(JJTTERM);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      Factor();
+      Term_1();
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  final public void Term_1() throws ParseException {
+ /*@bgen(jjtree) TERM_1 */
+    SimpleNode jjtn000 = new SimpleNode(JJTTERM_1);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);Token t;
     try {
@@ -399,8 +555,8 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case TIMES:
           t = jj_consume_token(TIMES);
-          Primary();
-          Term();
+          Factor();
+          Term_1();
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;
             if (t.beginLine == 1)
@@ -415,8 +571,8 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
           break;
         case DIVIDE:
           t = jj_consume_token(DIVIDE);
-          Primary();
-          Term();
+          Factor();
+          Term_1();
             newLine = t.beginLine + ei.getLineNum() - 1;
             if (t.beginLine == 1)
             {
@@ -436,6 +592,82 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         break;
       default:
         jj_la1[3] = jj_gen;
+        ;
+      }
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  final public void Factor() throws ParseException {
+ /*@bgen(jjtree) FACT */
+  SimpleNode jjtn000 = new SimpleNode(JJTFACT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+    try {
+      Primary();
+      Factor_1();
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  final public void Factor_1() throws ParseException {
+ /*@bgen(jjtree) FACT_1 */
+    SimpleNode jjtn000 = new SimpleNode(JJTFACT_1);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);Token t;
+    try {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case POWER:
+        t = jj_consume_token(POWER);
+        Factor();
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtn000.value = new ValueErrorInfo("^", new ErrorInfo(newLine, newCh, ei.getFile()));
+        break;
+      default:
+        jj_la1[4] = jj_gen;
         ;
       }
     } catch (Throwable jjte000) {
@@ -637,11 +869,11 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         break;
       case OPEN_PAR:
         jj_consume_token(OPEN_PAR);
-        Start();
+        Expression();
         jj_consume_token(CLOSE_PAR);
         break;
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[5] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -675,13 +907,13 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[5];
+  final private int[] jj_la1 = new int[6];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x60,0x60,0x180,0x180,0x131f260,};
+      jj_la1_0 = new int[] {0x60,0x60,0x180,0x180,0x200,0x263e460,};
    }
 
   /** Constructor with InputStream. */
@@ -695,7 +927,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -710,7 +942,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -720,7 +952,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -731,7 +963,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -740,7 +972,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -750,7 +982,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -801,12 +1033,12 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[25];
+    boolean[] la1tokens = new boolean[26];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -815,7 +1047,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         }
       }
     }
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 26; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -855,4 +1087,10 @@ class ValueErrorInfo
 
     public String value;
     public ErrorInfo errorInfo;
+
+    @Override
+    public String toString()
+    {
+        return value;
+    }
 }

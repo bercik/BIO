@@ -13,6 +13,8 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
@@ -89,18 +91,22 @@ public class Parser
         ei = expression.getErrorInfo();
         String input = (String)expression.getValue();
 
-        //System.out.println("\nMATH_LOG_PARSER:");
-        //System.out.println(input);
+        // TODELETE
+        System.out.println("\nMATH_LOG_PARSER:");
+        System.out.println(input);
 
         InputStream stream = new ByteArrayInputStream(input.getBytes("UTF-8"));
 
-	    Parser parser = new Parser(stream);
-        SimpleNode root = parser.Start();
+        Parser parser = new Parser(stream);
+        SimpleNode root = parser.Expression();
 
-        // traverse(root, "");
+        // TODELETE
+        //traverse(root, "");
+        //System.out.println("\n");
 
         List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
-        //printTokens(tokens);
+        // TODELETE
+        printTokens(tokens);
 
         return tokens;
     }
@@ -121,6 +127,130 @@ public class Parser
     private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node, 
         List<pl.rcebula.analysis.lexer.Token<?>> prevTokens)
     {
+        if (node.jjtGetNumChildren() == 0)
+        {
+            // jeżeli nie null to znaczy, że node jest typu PRIM
+            if (node.value != null)
+            {
+                return Arrays.asList((pl.rcebula.analysis.lexer.Token)node.value);
+            }
+            else
+            {
+                return prevTokens;
+            }
+        }
+        else if (node.jjtGetNumChildren() == 1)
+        {
+            SimpleNode center = (SimpleNode)node.jjtGetChild(0);
+            // Primary nawiasy
+            if (node.value == null)
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // Primary znak minus
+            else if (node.value.equals("-"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("NEGATE", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // Primary znak plus
+            else if (node.value.equals("+"))
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // Factor potęga
+            else if (node.value.equals("^"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("POW", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // nieobsługiwany znak
+            else
+            {
+                throw new RuntimeException("Can't handle " + node.toString());
+            }
+        }
+        else if (node.jjtGetNumChildren() == 2)
+        {
+            SimpleNode left = (SimpleNode)node.jjtGetChild(0);
+            SimpleNode right = (SimpleNode)node.jjtGetChild(1);
+
+            // jeżeli nie ma wartości
+            if (node.value == null)
+            {
+                return generateCode(right, generateCode(left, prevTokens));
+            }
+            else
+            {
+                pl.rcebula.analysis.lexer.Token funTok = null;
+                // inaczej typu ValueErrorInfo, możemy użyć metody equals(Object obj)
+                if (node.value.equals("+"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("ADD", vei.errorInfo);
+                }
+                else if (node.value.equals("-"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("SUB", vei.errorInfo);
+                }
+                else if (node.value.equals("*"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("MUL", vei.errorInfo);
+                }
+                else if (node.value.equals("/"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("DIV", vei.errorInfo);
+                }
+                else
+                {
+                    throw new RuntimeException("Uknown node value: " + node.value.toString());
+                }
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return generateCode(right, newTokens);
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Can't handle " + node.jjtGetNumChildren()
+                + " node childrens");
+        }
+
+        /*
         switch (node.toString())
         {
             case "START":
@@ -265,7 +395,7 @@ public class Parser
                 }
             default:
                 throw new RuntimeException("unknown node type: " + node.toString());
-        }
+        }*/
     }
 
     private static void traverse(SimpleNode node, String prefix)
@@ -303,6 +433,12 @@ class ValueErrorInfo
 
     public String value;
     public ErrorInfo errorInfo;
+    
+    @Override
+    public String toString()
+    {
+        return value;
+    }
 }
 PARSER_END(Parser)
 
@@ -313,6 +449,7 @@ TOKEN : { < PLUS : "+" > }
 TOKEN : { < MINUS : "-" > }
 TOKEN : { < TIMES : "*" > }
 TOKEN : { < DIVIDE : "/" > }
+TOKEN : { < POWER: "^" > }
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 
@@ -764,27 +901,25 @@ TOKEN: {
     "\"" > 
 }
 
-SimpleNode Start() #START :
+SimpleNode Expression() #EXPR :
 {
 }
 {
-    Primary()
     Term()
-    Expression()
+    Expression_1()
     
     { return jjtThis; }
 }
 
-void Expression() #EXPR :
+void Expression_1() #EXPR_1 :
 {
     Token t;
 }
 {
     (
         t = <PLUS>
-        Primary()
         Term()
-        Expression()
+        Expression_1()
         { 
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;
@@ -800,9 +935,8 @@ void Expression() #EXPR :
         }
     |
         t = <MINUS>
-        Primary()
         Term()
-        Expression()
+        Expression_1()
         { 
             newLine = t.beginLine + ei.getLineNum() - 1;
             if (t.beginLine == 1)
@@ -821,13 +955,21 @@ void Expression() #EXPR :
 
 void Term() #TERM :
 {
+}
+{
+    Factor()
+    Term_1()
+}
+
+void Term_1() #TERM_1 :
+{
     Token t;
 }
 {
     (
         t = <TIMES>
-        Primary()
-        Term()
+        Factor()
+        Term_1()
         { 
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;
@@ -843,8 +985,8 @@ void Term() #TERM :
         }
     |
         t = <DIVIDE>
-        Primary()
-        Term()
+        Factor()
+        Term_1()
         { 
             newLine = t.beginLine + ei.getLineNum() - 1;
             if (t.beginLine == 1)
@@ -856,6 +998,38 @@ void Term() #TERM :
                 newCh = t.beginColumn;
             }
             jjtThis.value = new ValueErrorInfo("/", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void Factor() #FACT :
+{
+}
+{
+    Primary()
+    Factor_1()
+}
+
+void Factor_1() #FACT_1 :
+{
+    Token t;
+}
+{
+    (
+        t = <POWER>
+        Factor()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("^", new ErrorInfo(newLine, newCh, ei.getFile()));
         }
     )?
 }
@@ -1025,6 +1199,6 @@ void Primary() #PRIM :
     }
 |
     <OPEN_PAR>
-    Start()
+    Expression()
     <CLOSE_PAR>
 }

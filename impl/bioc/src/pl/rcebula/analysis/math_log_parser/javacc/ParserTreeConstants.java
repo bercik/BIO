@@ -3,17 +3,23 @@ package pl.rcebula.analysis.math_log_parser.javacc;
 
 public interface ParserTreeConstants
 {
-  public int JJTSTART = 0;
-  public int JJTEXPR = 1;
+  public int JJTEXPR = 0;
+  public int JJTEXPR_1 = 1;
   public int JJTTERM = 2;
-  public int JJTPRIM = 3;
+  public int JJTTERM_1 = 3;
+  public int JJTFACT = 4;
+  public int JJTFACT_1 = 5;
+  public int JJTPRIM = 6;
 
 
   public String[] jjtNodeName = {
-    "START",
     "EXPR",
+    "EXPR_1",
     "TERM",
+    "TERM_1",
+    "FACT",
+    "FACT_1",
     "PRIM",
   };
 }
-/* JavaCC - OriginalChecksum=9d7a0449ac3828b6e7d4fef92207f2da (do not edit this line) */
+/* JavaCC - OriginalChecksum=c095e109945baae16c72d8a330743c47 (do not edit this line) */

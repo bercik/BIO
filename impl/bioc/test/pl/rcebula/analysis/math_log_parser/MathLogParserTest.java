@@ -61,11 +61,8 @@ public class MathLogParserTest
     {
     }
 
-    /**
-     * Test of getTokens method, of class MathLogParser.
-     */
     @Test
-    public void test()
+    public void testLeftAssociative()
             throws Exception
     {
         MyFiles files = new MyFiles(true);
@@ -90,6 +87,36 @@ public class MathLogParserTest
         expected.add(new Token(TokenType.INT, 3, genErrorInfo(9, 0, files)));
         expected.add(new Token(TokenType.CLOSE_BRACKET, null, ei));
         expected.add(new Token(TokenType.ID, "END", ei));
+        
+        MathLogParser instance = new MathLogParser(tokens, files);
+        List<Token<?>> result = instance.getTokens();
+        
+        assertThat(result, is(expected));
+    }
+    
+    @Test
+    public void testRightAssociative()
+            throws Exception
+    {
+        MyFiles files = new MyFiles(true);
+        List<Token<?>> tokens = new ArrayList<>();
+        ErrorInfo ei = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+        
+        tokens.add(new Token(TokenType.EXPRESSION, " 1 ^ 2 ^ 3 ", genErrorInfo(0, 0, files)));
+        
+        List<Token> expected = new ArrayList<>();
+        // POW(1, POW(2, 3))
+        expected.add(new Token(TokenType.ID, "POW", genErrorInfo(3, 0, files)));
+        expected.add(new Token(TokenType.OPEN_BRACKET, null, ei));
+        expected.add(new Token(TokenType.INT, 1, genErrorInfo(1, 0, files)));
+        expected.add(new Token(TokenType.COMMA, null, ei));
+        expected.add(new Token(TokenType.ID, "POW", genErrorInfo(7, 0, files)));
+        expected.add(new Token(TokenType.OPEN_BRACKET, null, ei));
+        expected.add(new Token(TokenType.INT, 2, genErrorInfo(5, 0, files)));
+        expected.add(new Token(TokenType.COMMA, null, ei));
+        expected.add(new Token(TokenType.INT, 3, genErrorInfo(9, 0, files)));
+        expected.add(new Token(TokenType.CLOSE_BRACKET, null, ei));
+        expected.add(new Token(TokenType.CLOSE_BRACKET, null, ei));
         
         MathLogParser instance = new MathLogParser(tokens, files);
         List<Token<?>> result = instance.getTokens();
