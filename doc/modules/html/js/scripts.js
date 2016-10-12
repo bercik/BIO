@@ -25,7 +25,6 @@ $(document).ready(function() {
             }
             var offset = elem.offset().top;
             if (offset >= 0) {
-                console.log('break on offset', offset);
                 break;
             }
             ++i;
@@ -54,5 +53,9 @@ $(document).ready(function() {
     block_headers.on('click', function() {
         $(this).parent().toggleClass('showed');
     });
+
+    var hashLink = $('a[href="' + $(location).attr('hash') + '"');
+    hashLink.click();
+    hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
 
 });
