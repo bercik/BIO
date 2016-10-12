@@ -19,9 +19,15 @@ $(document).ready(function() {
     main.on('scroll resize', function() {
         var i = 0;
         while (i < sections.length) {
-            var offset = sections[i].main.offset().top;
-            if (offset >= 0)
+            var elem = sections[i].main;
+            while (!elem.is(':visible')) {
+                elem = elem.parent();
+            }
+            var offset = elem.offset().top;
+            if (offset >= 0) {
+                console.log('break on offset', offset);
                 break;
+            }
             ++i;
         }
         links_all.removeClass('current');
