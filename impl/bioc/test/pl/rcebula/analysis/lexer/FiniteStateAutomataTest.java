@@ -297,7 +297,7 @@ public class FiniteStateAutomataTest
 
         FiniteStateAutomata fsa = new FiniteStateAutomata(files);
 
-        testComment(fsa, "_NUM1(l1, l2) % jakiś komentarz żśą \n");
+        testComment(fsa, "_NUM1(l1, l2) @ jakiś komentarz żśą \n");
     }
 
     private void testComment(FiniteStateAutomata fsa, String input) throws Exception
