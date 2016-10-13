@@ -1,35 +1,35 @@
-% creates list with given capacity
-% returns error if capacity is less than zero
+@ creates list with given capacity
+@ returns error if capacity is less than zero
 def CREATE_LIST(capacity=10)
    IF(LS(capacity, 0), RET(CR_ERR("Capacity less than zero!", none, none)))
    AS_LOC(list.count, 0, list.arr, CR_ARR(capacity))
    RET(list)
 end
 
-% append item to list, extend it if needed
+@ append item to list, extend it if needed
 def APPEND_TO_LIST(list, item)
    _EXTEND_LIST_IF_NEEDED(list)
    SET(list.arr, list.count, item)
    INC(list.count)
 end
 
-% inserts item into list at index, extend it if needed
-% If index is less than zero or greater than count returns error
+@ inserts item into list at index, extend it if needed
+@ If index is less than zero or greater than count returns error
 def INSERT_INTO_LIST(list, index, item)
    _EXTEND_LIST_IF_NEEDED(list)
-   % sprawdzamy czy index zawiera się w granicach
+   @ sprawdzamy czy index zawiera się w granicach
    IF
    (
       OR(LS(index, 0), GT(index, list.count)),
       RET(CR_ERR("Index out of bounds", none, none))
    )
-   % pętla od count-1 do -1 co -1
+   @ pętla od count-1 do -1 co -1
    FOR
    (
       AS_LOC(i, SUB(list.count, 1)),
       GE(i, -1),
-      % jeżeli i == index-1 to wstaw w miejsce o jeden w prawo item i zatrzymaj
-      % inaczej przenieś element z arr[i] do arr[i+1]
+      @ jeżeli i == index-1 to wstaw w miejsce o jeden w prawo item i zatrzymaj
+      @ inaczej przenieś element z arr[i] do arr[i+1]
       IF
       (
          EQ(i, SUB(index, 1)),
@@ -45,17 +45,17 @@ def INSERT_INTO_LIST(list, index, item)
    INC(list.count)
 end
 
-% Remove item at index from list. Returns none
-% If index is less than zero or greater or equals than count returns error
+@ Remove item at index from list. Returns none
+@ If index is less than zero or greater or equals than count returns error
 def REMOVE_FROM_LIST(list, index)
-   % sprawdzamy czy index zawiera się w granicach
+   @ sprawdzamy czy index zawiera się w granicach
    IF
    (
       OR(LS(index, 0), GE(index, list.count)),
       RET(CR_ERR("Index out of bounds", none, none))
    )
-   % iterujemy od index do count-2 co +1
-   % przesuwając element z arr[i+1] do arr[i]
+   @ iterujemy od index do count-2 co +1
+   @ przesuwając element z arr[i+1] do arr[i]
    FOR
    (
       AS_LOC(i, index),
@@ -66,7 +66,7 @@ def REMOVE_FROM_LIST(list, index)
    DEC(list.count)
 end
 
-% return index of item in list or none it there is no one
+@ return index of item in list or none it there is no one
 def INDEX_OF_ITEM_LIST(list, item)
    FOR
    (
@@ -82,9 +82,9 @@ def INDEX_OF_ITEM_LIST(list, item)
    RET(none)
 end
 
-% return element at index from list
+@ return element at index from list
 def GET_ITEM_FROM_LIST(list, index)
-   % sprawdzamy czy index zawiera się w granicach
+   @ sprawdzamy czy index zawiera się w granicach
    IF
    (
       OR(LS(index, 0), GT(index, list.count)),
@@ -123,15 +123,15 @@ end
 
 def _EXTEND_LIST_IF_NEEDED(list)
    AS_LOC(arr_size, SIZE(list.arr))
-   % jeżeli nie ma już miejsca w tablicy
+   @ jeżeli nie ma już miejsca w tablicy
    IF
    (
       GE(list.count, arr_size), 
       CALL
       (
-         % nowy rozmiar jest dwa razy większy niż obecny
+         @ nowy rozmiar jest dwa razy większy niż obecny
          AS_LOC(new_size, MUL(arr_size, 2)),
-         % rozszerzamy listę
+         @ rozszerzamy listę
          AS_LOC(list.arr, EXT_ARR(list.arr, new_size))
       )
    )

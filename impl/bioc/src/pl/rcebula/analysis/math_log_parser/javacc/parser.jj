@@ -447,7 +447,7 @@ class ValueErrorInfo
 PARSER_END(Parser)
 
 SKIP : { "\n" | "\t" | " " }
-SKIP : { < "%" (~["\n"])* > }
+SKIP : { < "@" (~["\n"])* > }
 
 TOKEN : { < PLUS : "+" > }
 TOKEN : { < MINUS : "-" > }

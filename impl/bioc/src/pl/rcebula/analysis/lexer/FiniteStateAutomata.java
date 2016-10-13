@@ -392,7 +392,7 @@ public class FiniteStateAutomata
         transitionsTable[0][getCharCol('<')] = 16; // znak mniejszości
         transitionsTable[0][getCharCol('"')] = 5; // cudzysłów
         transitionsTable[0][getCharCol(',')] = 13; // przecinek
-        transitionsTable[0][getCharCol('%')] = 8; // procent
+        transitionsTable[0][getCharCol('@')] = 8; // procent
         transitionsTable[0][getCharCol('E')] = 3; // litera E
         transitionsTable[0][getCharCol('O')] = 3; // litera O
         transitionsTable[0][getCharCol('F')] = 3; // litera F
@@ -541,7 +541,7 @@ public class FiniteStateAutomata
         {
             return 12;
         }
-        if (ch == '%')
+        if (ch == '@')
         {
             return 13;
         }

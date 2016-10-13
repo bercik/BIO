@@ -1,11 +1,11 @@
 #INCLUDE("list.biom")
 
 def retListOfStringsStartsWithTest(el, obj)
-   % inicjalizacja pola list obiektu obj
+   @ inicjalizacja pola list obiektu obj
    IF(NOT(HAS_FIELD(obj, list)), AS_LOC(obj.list, CREATE_LIST()))
-   % sprawdzamy czy zaczyna się od test, jeżeli tak to dodajemy do listy
+   @ sprawdzamy czy zaczyna się od test, jeżeli tak to dodajemy do listy
    IF(STARTS_WITH(TO_LOWERCASE(el.val), "test"), APPEND_TO_LIST(obj.list, el.val))
-   % zwracamy listę
+   @ zwracamy listę
    RET(obj.list)
 end
 
@@ -22,27 +22,27 @@ def printErrorsSummary(el, obj)
 end
 
 def onSTART()
-   % słownik przechowujący liczbę errorów dla każdej funkcji
+   @ słownik przechowujący liczbę errorów dla każdej funkcji
    AS_GLOB(bt_errors_dict, CREATE_DICT())
-   % pobieramy tablicę nazw funkcji użytkownika
+   @ pobieramy tablicę nazw funkcji użytkownika
    AS_LOC(funNames, GET_USER_FUNCTIONS_NAMES())
-   % tworzymy listę z nazwami funkcji zaczynającymi się od test
+   @ tworzymy listę z nazwami funkcji zaczynającymi się od test
    AS_LOC(list, FOREACH(funNames, retListOfStringsStartsWithTest))
 
-   % wywołujemy wszystkie funkcje
+   @ wywołujemy wszystkie funkcje
    FOREACH(GET_ARRAY_LIST(list), callEachFunction)
 
-   % wyświetlamy podsumowanie
+   @ wyświetlamy podsumowanie
    AS_LOC(errors_dict, GET_GLOB(bt_errors_dict))
-   % podliczamy ilość zer
+   @ podliczamy ilość zer
    AS_LOC(zeros, COUNT_EL(errors_dict, 0))
 
    PRINTLN()
    PRINTLN("SUMMARY")
    PRINTLN("--------------")
 
-   % jeżeli ilość zer jest równa ilości funkcji to znaczy
-   % że żaden test nie zawiódł
+   @ jeżeli ilość zer jest równa ilości funkcji to znaczy
+   @ że żaden test nie zawiódł
    IF
    (
       EQ(zeros, SIZE_OF_LIST(list)),
@@ -115,15 +115,15 @@ def _error(funName, msg)
 end
 
 def _init_errors_dict(funName)
-   % przypisujemy globalny słownik do zmiennej lokalnej
+   @ przypisujemy globalny słownik do zmiennej lokalnej
    AS_LOC(dict, GET_GLOB(bt_errors_dict))
-   % jeżeli klucz funName nie jest ustawiony to ustawiamy na 0
+   @ jeżeli klucz funName nie jest ustawiony to ustawiamy na 0
    IF(NOT(CONTAINS_KEY(dict, funName)), SET(dict, funName, 0)) 
 end
 
 def _add_error(funName)
-   % przypisujemy globalny słownik do zmiennej lokalnej
+   @ przypisujemy globalny słownik do zmiennej lokalnej
    AS_LOC(dict, GET_GLOB(bt_errors_dict))
-   % dodajemy jeden do klucza funName
+   @ dodajemy jeden do klucza funName
    SET(dict, funName, ADD(GET(dict, funName), 1))
 end

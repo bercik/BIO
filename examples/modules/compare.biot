@@ -1,5 +1,6 @@
 #INCLUDE("<stdlib/biotest.biom>")
 
+s
 def test()
    ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, 5, -10, 20.0, 3, 2))
    ASSIGN_LOCAL(tup2, CREATE_TUPLE(2, 4, -10, 20.0, 3, -2.0))
@@ -8,44 +9,44 @@ def test()
    BT_ASSERT_TRUE(LS(1, 2), "")
    BT_ASSERT_FALSE(LS(2.0, 2), "")
    BT_ASSERT_FALSE(LS(2.0001, 1.9999), "")
-   BT_ASSERT_ERROR(LS(none, true), "") % error
+   BT_ASSERT_ERROR(LS(none, true), "") @ error
    BT_ASSERT_EQ(LS(tup1, tup2), CREATE_TUPLE(true, false, false, false, false, false), "")
-   BT_ASSERT_ERROR(LS(tup1, tup3), "") % error
-   BT_ASSERT_ERROR(LS(tup1, tup4), "") % error
+   BT_ASSERT_ERROR(LS(tup1, tup3), "") @ error
+   BT_ASSERT_ERROR(LS(tup1, tup4), "") @ error
 
    PRINT("LE\n")
-   BT_ASSERT_TRUE(LE(1, 2), "") % true
-   BT_ASSERT_TRUE(LE(2.0, 2), "") % true
-   BT_ASSERT_FALSE(LE(2.0001, 1.9999), "") % false
+   BT_ASSERT_TRUE(LE(1, 2), "") @ true
+   BT_ASSERT_TRUE(LE(2.0, 2), "") @ true
+   BT_ASSERT_FALSE(LE(2.0001, 1.9999), "") @ false
    BT_ASSERT_EQ(LE(tup1, tup2), CREATE_TUPLE(true, false, true, true, true, false), "")
 
    PRINT("GT\n")
-   BT_ASSERT_FALSE(GT(1, 2), "") % false
-   BT_ASSERT_FALSE(GT(2.0, 2), "") % false
-   BT_ASSERT_TRUE(GT(2.0001, 1.9999), "") % true
+   BT_ASSERT_FALSE(GT(1, 2), "") @ false
+   BT_ASSERT_FALSE(GT(2.0, 2), "") @ false
+   BT_ASSERT_TRUE(GT(2.0001, 1.9999), "") @ true
    BT_ASSERT_EQ(GT(tup1, tup2), CREATE_TUPLE(false, true, false, false, false, true), "")
 
    PRINT("GE\n")
-   BT_ASSERT_FALSE(GE(1, 2), "") % false
-   BT_ASSERT_TRUE(GE(2.0, 2), "") % true
-   BT_ASSERT_TRUE(GE(2.0001, 1.9999), "") % true
+   BT_ASSERT_FALSE(GE(1, 2), "") @ false
+   BT_ASSERT_TRUE(GE(2.0, 2), "") @ true
+   BT_ASSERT_TRUE(GE(2.0001, 1.9999), "") @ true
    BT_ASSERT_EQ(GE(tup1, tup2), CREATE_TUPLE(false, true, true, true, true, true), "") 
 
    PRINT("EQ\n")
    ASSIGN_LOCAL(i, 0)
    ASSIGN_LOCAL(j, i)
-   BT_ASSERT_TRUE(EQ(i, j), "") % true
+   BT_ASSERT_TRUE(EQ(i, j), "") @ true
    ASSIGN_LOCAL(tup4, CREATE_TUPLE(2.0))
    ASSIGN_LOCAL(tup5, CREATE_TUPLE(2, 4, -10, 20.0, "a", -2.0))
    ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, "a", true, none, tup4))
    ASSIGN_LOCAL(tup2, CREATE_TUPLE(1, "a", true, none, tup4))
    ASSIGN_LOCAL(tup3, CREATE_TUPLE(1, "a", true, none, tup5))
-   BT_ASSERT_TRUE(EQ(tup1, tup2), "\n") % true
-   BT_ASSERT_FALSE(EQ(tup1, tup3), "\n") % false
-   BT_ASSERT_FALSE(EQ("string", true), "\n") % false
-   BT_ASSERT_TRUE(EQ(1, 1.0), "\n") % true
-   BT_ASSERT_TRUE(EQ(true, true), "\n") % true
-   BT_ASSERT_TRUE(EQ("abcd", "abcd"), "\n") % true
+   BT_ASSERT_TRUE(EQ(tup1, tup2), "\n") @ true
+   BT_ASSERT_FALSE(EQ(tup1, tup3), "\n") @ false
+   BT_ASSERT_FALSE(EQ("string", true), "\n") @ false
+   BT_ASSERT_TRUE(EQ(1, 1.0), "\n") @ true
+   BT_ASSERT_TRUE(EQ(true, true), "\n") @ true
+   BT_ASSERT_TRUE(EQ("abcd", "abcd"), "\n") @ true
 
    ASSIGN_LOCAL(struct.x, 10)
    ASSIGN_LOCAL(struct2.x, 10)
@@ -60,15 +61,15 @@ def test()
    BT_ASSERT_FALSE(EQ(struct, struct2))
 
    PRINT("NEQ\n")
-   BT_ASSERT_FALSE(NEQ(1, 1.0), "\n") % false
-   BT_ASSERT_TRUE(NEQ("string", true), "\n") % true
+   BT_ASSERT_FALSE(NEQ(1, 1.0), "\n") @ false
+   BT_ASSERT_TRUE(NEQ("string", true), "\n") @ true
 
    PRINT("IS_IN_RANGE\n")
-   BT_ASSERT_TRUE(IS_IN_RANGE(1, 1, 1), "\n") % true
-   BT_ASSERT_TRUE(IS_IN_RANGE(1, 0, 2), "\n") % true
-   BT_ASSERT_TRUE(IS_IN_RANGE(-1.5, -2, -1), "\n") % true
-   BT_ASSERT_FALSE(IS_IN_RANGE(-1.5, -1, 1), "\n") % false
-   BT_ASSERT_FALSE(IS_IN_RANGE(0, 0.5, 1.0), "\n") % false
-   BT_ASSERT_ERROR(IS_IN_RANGE(0, 1.5, 1.0), "\n") % error
-   BT_ASSERT_ERROR(IS_IN_RANGE("true", 1.5, 1.0), "\n") % error
+   BT_ASSERT_TRUE(IS_IN_RANGE(1, 1, 1), "\n") @ true
+   BT_ASSERT_TRUE(IS_IN_RANGE(1, 0, 2), "\n") @ true
+   BT_ASSERT_TRUE(IS_IN_RANGE(-1.5, -2, -1), "\n") @ true
+   BT_ASSERT_FALSE(IS_IN_RANGE(-1.5, -1, 1), "\n") @ false
+   BT_ASSERT_FALSE(IS_IN_RANGE(0, 0.5, 1.0), "\n") @ false
+   BT_ASSERT_ERROR(IS_IN_RANGE(0, 1.5, 1.0), "\n") @ error
+   BT_ASSERT_ERROR(IS_IN_RANGE("true", 1.5, 1.0), "\n") @ error
 end
