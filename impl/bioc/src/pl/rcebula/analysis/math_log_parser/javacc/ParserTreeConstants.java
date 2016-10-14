@@ -4,22 +4,46 @@ package pl.rcebula.analysis.math_log_parser.javacc;
 public interface ParserTreeConstants
 {
   public int JJTEXPR = 0;
-  public int JJTEXPR_1 = 1;
-  public int JJTTERM = 2;
-  public int JJTTERM_1 = 3;
-  public int JJTFACT = 4;
-  public int JJTFACT_1 = 5;
-  public int JJTPRIM = 6;
+  public int JJTOR_EX = 1;
+  public int JJTOR_EX_1 = 2;
+  public int JJTAND_EX = 3;
+  public int JJTAND_EX_1 = 4;
+  public int JJTEQ_EX = 5;
+  public int JJTEQ_EX_1 = 6;
+  public int JJTCMP_EX = 7;
+  public int JJTCMP_EX_1 = 8;
+  public int JJTADD_EX = 9;
+  public int JJTADD_EX_1 = 10;
+  public int JJTMUL_EX = 11;
+  public int JJTMUL_EX_1 = 12;
+  public int JJTPOW_EX = 13;
+  public int JJTPOW_EX_1 = 14;
+  public int JJTNEG_EX = 15;
+  public int JJTINDX_EX = 16;
+  public int JJTINDX_EX_1 = 17;
+  public int JJTPRIM = 18;
 
 
   public String[] jjtNodeName = {
     "EXPR",
-    "EXPR_1",
-    "TERM",
-    "TERM_1",
-    "FACT",
-    "FACT_1",
+    "OR_EX",
+    "OR_EX_1",
+    "AND_EX",
+    "AND_EX_1",
+    "EQ_EX",
+    "EQ_EX_1",
+    "CMP_EX",
+    "CMP_EX_1",
+    "ADD_EX",
+    "ADD_EX_1",
+    "MUL_EX",
+    "MUL_EX_1",
+    "POW_EX",
+    "POW_EX_1",
+    "NEG_EX",
+    "INDX_EX",
+    "INDX_EX_1",
     "PRIM",
   };
 }
-/* JavaCC - OriginalChecksum=c095e109945baae16c72d8a330743c47 (do not edit this line) */
+/* JavaCC - OriginalChecksum=55b0e113e3bedd4b83bf23fe805dc4b8 (do not edit this line) */

@@ -1,11 +1,4 @@
-@ komentarz
-
-def foo(el, obj)
-   RET()
-end
-
 def onSTART()
-   AS_LOC(tup, CR_TUP(1, 2, 3, 4))
-   PRINTLN(FOREACH(tup, foo))
-   PRINTLN( { tup * 2 @ komentarz } )
+   PRINTLN({ 3 - 2 - 1 }) @ 0
+   PRINTLN({ 4 ^ 3 ^ 2 }) @ 262144
 end

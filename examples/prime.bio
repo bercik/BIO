@@ -1,0 +1,35 @@
+def isPrime(num)
+   FOR
+   (
+      AS_LOC(i, 2),
+      LE(i, SQRT(num)),
+      IF
+      (
+         { num % i == 0 },
+         RETURN(FALSE)
+      ),
+      INC(i)
+   )
+   RETURN(TRUE)
+end
+
+def onEachIsPrime(el, obj)
+   PRINT(el.val)
+   IF
+   (
+      isPrime(el.val),
+      PRINTLN(" jest liczbą pierwszą"),
+      PRINTLN(" nie jest liczbą pierwszą")
+   )
+end
+
+def onSTART()
+   AS_LOC(min, TO_INT(INPUT("Podaj dolny zakres: ")))
+   IF(IS_ERR(min), CALL(PRINTLN("Podaj liczbę!"), EXIT()))
+   IF({ min < 2 }, CALL(PRINTLN("Dolny zakres musi być większy od 1!"), EXIT()))
+   AS_LOC(max, TO_INT(INPUT("Podaj górny zakres: ")))
+   IF(IS_ERR(max), CALL(PRINTLN("Podaj liczbę!"), EXIT()))
+   IF({ min >= max }, CALL(PRINTLN("Górny zakres musi być większy od dolnego!"), EXIT()))
+
+   FOREACH(RANGE(min, max), onEachIsPrime)
+end

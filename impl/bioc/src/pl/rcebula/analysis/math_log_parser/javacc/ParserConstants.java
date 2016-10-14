@@ -11,47 +11,71 @@ public interface ParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int PLUS = 5;
+  int OR = 5;
   /** RegularExpression Id. */
-  int MINUS = 6;
+  int AND = 6;
   /** RegularExpression Id. */
-  int TIMES = 7;
+  int EQ = 7;
   /** RegularExpression Id. */
-  int DIVIDE = 8;
+  int NEQ = 8;
   /** RegularExpression Id. */
-  int POWER = 9;
+  int LS = 9;
   /** RegularExpression Id. */
-  int OPEN_PAR = 10;
+  int LE = 10;
   /** RegularExpression Id. */
-  int CLOSE_PAR = 11;
+  int GT = 11;
   /** RegularExpression Id. */
-  int KEYWORDS = 12;
+  int GE = 12;
   /** RegularExpression Id. */
-  int NONE = 13;
+  int PLUS = 13;
   /** RegularExpression Id. */
-  int TRUE = 14;
+  int MINUS = 14;
   /** RegularExpression Id. */
-  int FALSE = 15;
+  int TIMES = 15;
   /** RegularExpression Id. */
-  int INT = 16;
+  int DIVIDE = 16;
   /** RegularExpression Id. */
-  int FLOAT = 17;
+  int MODULO = 17;
   /** RegularExpression Id. */
-  int DOT = 18;
+  int POWER = 18;
   /** RegularExpression Id. */
-  int DIGIT_NON_ZERO = 19;
+  int EXCL_MARK = 19;
   /** RegularExpression Id. */
-  int DIGIT = 20;
+  int OPEN_INDX = 20;
   /** RegularExpression Id. */
-  int ID_STRUCT = 21;
+  int CLOSE_INDX = 21;
   /** RegularExpression Id. */
-  int ID = 22;
+  int OPEN_PAR = 22;
   /** RegularExpression Id. */
-  int UNDERLINE = 23;
+  int CLOSE_PAR = 23;
   /** RegularExpression Id. */
-  int UTF_LETTER = 24;
+  int KEYWORDS = 24;
   /** RegularExpression Id. */
-  int STRING = 25;
+  int NONE = 25;
+  /** RegularExpression Id. */
+  int TRUE = 26;
+  /** RegularExpression Id. */
+  int FALSE = 27;
+  /** RegularExpression Id. */
+  int INT = 28;
+  /** RegularExpression Id. */
+  int FLOAT = 29;
+  /** RegularExpression Id. */
+  int DOT = 30;
+  /** RegularExpression Id. */
+  int DIGIT_NON_ZERO = 31;
+  /** RegularExpression Id. */
+  int DIGIT = 32;
+  /** RegularExpression Id. */
+  int ID_STRUCT = 33;
+  /** RegularExpression Id. */
+  int ID = 34;
+  /** RegularExpression Id. */
+  int UNDERLINE = 35;
+  /** RegularExpression Id. */
+  int UTF_LETTER = 36;
+  /** RegularExpression Id. */
+  int STRING = 37;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -63,11 +87,23 @@ public interface ParserConstants {
     "\"\\t\"",
     "\" \"",
     "<token of kind 4>",
+    "\"||\"",
+    "\"&&\"",
+    "\"==\"",
+    "\"!=\"",
+    "\"<\"",
+    "\"<=\"",
+    "\">\"",
+    "\">=\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
     "\"/\"",
+    "\"%\"",
     "\"^\"",
+    "\"!\"",
+    "\"[\"",
+    "\"]\"",
     "\"(\"",
     "\")\"",
     "<KEYWORDS>",
