@@ -11,6 +11,8 @@ import java.util.Arrays;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.utils.StringUtils;
+import pl.rcebula.analysis.lexer.LexerError;
 
 
 public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConstants {/*@bgen(jjtree)*/
@@ -40,7 +42,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
     public static List<pl.rcebula.analysis.lexer.Token<?>> process(pl.rcebula.analysis.lexer.Token<?> expression,
         MyFiles files)
-            throws ParseException, TokenMgrError, UnsupportedEncodingException
+            throws ParseException, LexerError, UnsupportedEncodingException
     {
         defaultErrorInfo = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
 
@@ -54,7 +56,20 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         InputStream stream = new ByteArrayInputStream(input.getBytes("UTF-8"));
 
         Parser parser = new Parser(stream);
-        SimpleNode root = parser.Start();
+        SimpleNode root = null;
+        try
+        {
+            root = parser.Start();
+        }
+        catch (TokenMgrError err)
+        {
+            int lineNum = err.errorLine;
+            int chNum = err.errorColumn;
+            String msg = "Unexpected character \u005c"" + err.curChar + "\u005c" in token \u005c"" +
+                err.errorAfter + "\u005c"";
+
+            throw new LexerError(generateErrorInfo(lineNum, chNum), msg);
+        }
 
         // TODELETE
         //traverse(root, "");
@@ -65,6 +80,60 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         //printTokens(tokens);
 
         return tokens;
+    }
+
+    private static ErrorInfo generateErrorInfo(int lineNum, int chNum)
+    {
+        lineNum = lineNum + ei.getLineNum() - 1;
+        chNum = chNum + ei.getChNum() - 1;
+
+        return new ErrorInfo(lineNum, chNum, ei.getFile());
+    }
+
+    private String parseString(String str, int line, int chNum)
+            throws LexerError
+    {
+        // usuwamy początkowy i końcowy cudzysłów
+        str = str.substring(1, str.length() - 1);
+
+        String newStr = "";
+
+        // przechodzimy po całym napisie i szukamy znaków specjalnych
+        boolean specChar = false;
+        for (int i = 0; i < str.length(); ++i)
+        {
+            Character ch = str.charAt(i);
+
+            if (specChar)
+            {
+                if (!StringUtils.specialCharacters.containsKey(ch))
+                {
+                    throw new LexerError(generateErrorInfo(line, chNum),
+                            "Illegal special character \u005c\u005c" + ch
+                            + " in string \u005c"" + str + "\u005c"");
+                }
+
+                newStr += StringUtils.specialCharacters.get(ch);
+                specChar = false;
+            }
+            else if (ch.equals('\u005c\u005c'))
+            {
+                specChar = true;
+            }
+            else
+            {
+                newStr += ch;
+            }
+        }
+
+        if (specChar)
+        {
+            throw new LexerError(generateErrorInfo(line, chNum),
+                    "Not completed special character in string \u005c""
+                    + str + "\u005c"");
+        }
+
+        return newStr;
     }
 
     private static void printTokens(List<pl.rcebula.analysis.lexer.Token<?>> tokens)
@@ -1391,8 +1460,9 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         {
             newCh = t.beginColumn;
         }
+        String str = parseString(t.image, t.beginLine, t.beginColumn);
         jjtn000.value =
-            new pl.rcebula.analysis.lexer.Token<String>(TokenType.STRING, t.image,
+            new pl.rcebula.analysis.lexer.Token<String>(TokenType.STRING, str,
                 new ErrorInfo(newLine, newCh, ei.getFile()));
         break;
       case OPEN_PAR:

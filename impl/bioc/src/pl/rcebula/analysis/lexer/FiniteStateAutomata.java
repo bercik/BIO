@@ -288,7 +288,7 @@ public class FiniteStateAutomata
             else
             {
                 throw new LexerError(generateErrorInfo(),
-                        "Unexpected character " + ch + " in token \""
+                        "Unexpected character \"" + ch + "\" in token \""
                         + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
             }
         }

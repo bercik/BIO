@@ -9,6 +9,8 @@ import java.util.Arrays;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.utils.StringUtils;
+import pl.rcebula.analysis.lexer.LexerError;
 
 /** Token Manager. */
 public class ParserTokenManager implements ParserConstants

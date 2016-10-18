@@ -1,29 +1,3 @@
 def onSTART()
-   AS_LOC(arr_size, 5)
-   AS_LOC(arr, CR_ARR(arr_size))
-
-   FOR
-   (
-      AS_LOC(i, 0),
-      LS(i, SIZE(arr)),
-      SET(arr, i, CR_ARR(arr_size)),
-      INC(i)
-   )
-
-   FOR
-   (
-      AS_LOC(i, 0),
-      LS(i, SIZE(arr)),
-      FOR
-      (
-         AS_LOC(j, 0),
-         LS(j, arr_size),
-         SET(GET(arr, i), j, { i * j }),
-         INC(j)
-      ),
-      INC(i)
-   )
-
-   @ PRINTLN({ arr[3][2] + arr[2][1] })
-   PRINTLN({ arr[3][2] + arr[1][2] })
+   PRINT({ a * * b & c })
 end
