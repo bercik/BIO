@@ -54,55 +54,19 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         MyFiles files)
             throws ParseException, TokenMgrError, UnsupportedEncodingException
     {
-        // SUB(ADD(SUB(1,2),3),4) O.K.
-        //String input = "1 -2 + 3 - 4";
-
-        // SUB(SUB(1, MUL(2, 3)), 4) O.K.
-        //String input = "1 - 2 * 3 - 4";
-
-        // SUB(ADD(MUL(1, 2), DIV(3, 4)), 5) O.K.
-        //String input = "1 * 2 + 3 / 4 - 5";
-
-        // MUL(2, SUB(SUB(3, 1), ADD(5, 2))) O.K.
-        //String input = "2 * [3 - 1 - [5 + 2]]";
-
-        // ADD(ADD(SUB(ADD(ADD(1, 2), 2), 4), DIV(ADD(10, DIV(MUL(5, 4), 2)), 5)), MUL(2, 2)) O.K.
-        //String input = "1 + 2 % suma\n + 2 - 4 % r\u00f3\u017cnica\n + (10 + 5 * 4 / 2) / 5 % iloraz\n + 2 * 2 % iloczyn\n";
-
-        // ADD(MUL(3,4), MUL(2, SUB(4, DIV(10, 5)))) O.K.
-        //String input = "3 * 4 + 2 * (4 - 10 / 5)";
-
-        // SUB(MUL(NEGATE(NEGATE(3)), NEGATE(2)), NEGATE(ADD(10, 5)))
-        //String input = "--3 * -2 - -(10 + 5)";
-
-        // MUL(DIV(MUL(NEGATE(0), 0.0), 2.5), 0.3)
-        //String input = "-0 * +0.0 / 2.5 * 0.3";
-
-        // ADD(MUL(a, 2), DIV(MUL(DIV(NEGATE(3.5), d.z), true), def))
-        //String input = "a * 2 + -3.5 / d.z * true / def";
-
-        // MUL(2, ADD("abc	", "def"))
-        //String input = "2 * (\"abc\t\" + \"def\")";
-        
-        // znaki specjalne (np. \n)
-        //String input = " \"abc\" + \" \\\"def\\\" \" + \"hello\\nworld\" ";
-
-        // litery UTF-8
-        //String input = "\"\u017c\u00f3\u0142\u0107\" + \"\u0105\u015b\u017a\u00df\u00fe\u0153\u015b\u00f0\"";
-
         defaultErrorInfo = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
 
         ei = expression.getErrorInfo();
         String input = (String)expression.getValue();
 
         // TODELETE
-        System.out.println("\nMATH_LOG_PARSER:");
-        System.out.println(input);
+        //System.out.println("\nMATH_LOG_PARSER:");
+        //System.out.println(input);
 
         InputStream stream = new ByteArrayInputStream(input.getBytes("UTF-8"));
 
         Parser parser = new Parser(stream);
-        SimpleNode root = parser.Expression();
+        SimpleNode root = parser.Start();
 
         // TODELETE
         //traverse(root, "");
@@ -110,7 +74,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
 
         List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
         // TODELETE
-        printTokens(tokens);
+        //printTokens(tokens);
 
         return tokens;
     }
@@ -178,24 +142,6 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         
                 newTokens.add(funTok);
                 newTokens.add(getOpenParToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
-                newTokens.add(getCloseParToken());
-
-                return newTokens;
-            }
-            // indx_ex znaki []
-            else if (node.value.equals("[]"))
-            {
-                ValueErrorInfo vei = (ValueErrorInfo)node.value;
-                pl.rcebula.analysis.lexer.Token funTok = getFunToken("GET", vei.errorInfo);
-
-                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
-                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
-        
-                newTokens.add(funTok);
-                newTokens.add(getOpenParToken());
-                newTokens.addAll(prevTokens);
-                newTokens.add(getCommaToken());
                 newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
                 newTokens.add(getCloseParToken());
 
@@ -308,6 +254,11 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
                 {
                     ValueErrorInfo vei = (ValueErrorInfo)node.value;
                     funTok = getFunToken("LE", vei.errorInfo);
+                }
+                else if (node.value.equals("[]"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("GET", vei.errorInfo);
                 }
                 else
                 {
@@ -857,7 +808,48 @@ TOKEN: {
     "\"" > 
 }
 
-SimpleNode Expression()       :
+SimpleNode Start()        :
+{/*@bgen(jjtree) START */
+  SimpleNode jjtn000 = new SimpleNode(JJTSTART);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/
+}
+{/*@bgen(jjtree) START */
+    try {
+/*@egen*/
+    Expression()
+    <EOF>/*@bgen(jjtree)*/
+    {
+      jjtree.closeNodeScope(jjtn000, true);
+      jjtc000 = false;
+    }
+/*@egen*/
+
+    { return jjtn000; }/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+}
+
+void Expression()       :
 {/*@bgen(jjtree) EXPR */
   SimpleNode jjtn000 = new SimpleNode(JJTEXPR);
   boolean jjtc000 = true;
@@ -868,13 +860,6 @@ SimpleNode Expression()       :
     try {
 /*@egen*/
     or_ex()/*@bgen(jjtree)*/
-    {
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-    }
-/*@egen*/
-    
-    { return jjtn000; }/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -1782,6 +1767,7 @@ void indx_ex_1()            :
         t = <OPEN_INDX>
         Expression()
         <CLOSE_INDX>
+	    indx_ex_1()
         {
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;

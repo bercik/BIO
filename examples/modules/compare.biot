@@ -1,6 +1,5 @@
 #INCLUDE("<stdlib/biotest.biom>")
 
-s
 def test()
    ASSIGN_LOCAL(tup1, CREATE_TUPLE(1, 5, -10, 20.0, 3, 2))
    ASSIGN_LOCAL(tup2, CREATE_TUPLE(2, 4, -10, 20.0, 3, -2.0))

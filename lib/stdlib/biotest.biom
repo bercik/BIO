@@ -57,7 +57,7 @@ def onSTART()
    FOREACH(errors_dict, printErrorsSummary)
 end
 
-def BT_ASSERT_TRUE(bval, msg="")
+def BT_ASSERT_TRUE(bval, msg=none)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -67,7 +67,7 @@ def BT_ASSERT_TRUE(bval, msg="")
    )
 end
 
-def BT_ASSERT_FALSE(bval, msg="")
+def BT_ASSERT_FALSE(bval, msg=none)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -77,27 +77,27 @@ def BT_ASSERT_FALSE(bval, msg="")
    )
 end
 
-def BT_ASSERT_EQ(val1, val2, msg="")
+def BT_ASSERT_EQ(actual, expected, msg=none)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
    (
-      NEQ(val1, val2),
-      _error(funName, msg)
+      NEQ(actual, expected),
+      _error(funName, msg, expVal=expected, actVal=actual)
    )
 end
 
-def BT_ASSERT_NEQ(val1, val2, msg="")
+def BT_ASSERT_NEQ(actual, expected, msg=none)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
    (
-      EQ(val1, val2),
-      _error(funName, msg)
+      EQ(actual, expected),
+      _error(funName, msg, expVal=expected, actVal=actual)
    )
 end
 
-def BT_ASSERT_ERROR(val, msg="")
+def BT_ASSERT_ERROR(val, msg=none)
    AS_LOC(funName, GET_GLOB(bt_fun_name))
    _init_errors_dict(funName)
    IF
@@ -107,10 +107,15 @@ def BT_ASSERT_ERROR(val, msg="")
    )
 end
 
-def _error(funName, msg)
+def _error(funName, msg, expVal=none, actVal=none)
    _add_error(funName)
    PRINT_NTH_LAST_STACK_TRACE(CREATE_ERROR("", none, none), 1)
    PRINT(" failed")
+   IF
+   (
+      AND(NOT(IS_NONE(expVal)), NOT(IS_NONE(actVal))),
+      PRINT(". Expected", expVal, "got", actVal)
+   )
    IF(NOT(IS_NONE(msg)), PRINTLN(ADD(": \"", msg, "\"")), PRINTLN())
 end
 
