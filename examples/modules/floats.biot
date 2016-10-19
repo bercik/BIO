@@ -2,12 +2,12 @@
 
 def test()
    PRINTLN("CEIL")
-   BT_ASSERT_EQ(CEIL(10.5), 11, "") % 11
-   BT_ASSERT_EQ(CEIL(10), 10, "") % 10
-   BT_ASSERT_EQ(CEIL(-10.999), -10, "") % -10
+   BT_ASSERT_EQ(CEIL(10.5), 11, "") @ 11
+   BT_ASSERT_EQ(CEIL(10), 10, "") @ 10
+   BT_ASSERT_EQ(CEIL(-10.999), -10, "") @ -10
 
    PRINTLN("FLOOR")
-   BT_ASSERT_EQ(FLOOR(10.5), 10, "") % 10
-   BT_ASSERT_EQ(FLOOR(10), 10, "") % 10
-   BT_ASSERT_EQ(FLOOR(-10.999), -11, "") % -11
+   BT_ASSERT_EQ(FLOOR(10.5), 10, "") @ 10
+   BT_ASSERT_EQ(FLOOR(10), 10, "") @ 10
+   BT_ASSERT_EQ(FLOOR(-10.999), -11, "") @ -11
 end

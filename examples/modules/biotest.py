@@ -40,6 +40,8 @@ if __name__ == "__main__":
                 else:
                     print("compilation failed:")
                     print(addIndent(err_out))
+                    failed = True
+                    failList.append(fpath)
                 
                 print("-----------")
 

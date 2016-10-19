@@ -114,10 +114,15 @@ public class FiniteStateAutomata
     
     private ErrorInfo generateErrorInfoWithCurrentToken()
     {
+        return generateErrorInfoWithCurrentToken(0);
+    }
+    
+    private ErrorInfo generateErrorInfoWithCurrentToken(int chNumOffset)
+    {
         File f = files.getFromLine(currentTokenLine - 1);
         int line = currentTokenLine - f.getStartOfInterval(currentTokenLine - 1) + 
                 f.getSumOfLinesBeforeInterval(currentTokenLine - 1);
-        return new ErrorInfo(line, currentTokenChNum, f);
+        return new ErrorInfo(line, currentTokenChNum + chNumOffset, f);
     }
 
     // podanie kolejnego znaku, zwraca parę token lub null i wartość bool
@@ -179,7 +184,7 @@ public class FiniteStateAutomata
                         case EXPRESSION:
                             // usuwamy pierwszy i ostatni znak (nawiasy wąsiaste)
                             String tokVal = tokenValue.substring(1, tokenValue.length() - 1);
-                            token = new Token(TokenType.EXPRESSION, tokVal, generateErrorInfoWithCurrentToken());
+                            token = new Token(TokenType.EXPRESSION, tokVal, generateErrorInfoWithCurrentToken(1));
                             break;
                         case STRING:
                             // usuwamy początkowy i końcowy cudzysłów i zamieniamy znaki specjalne
@@ -238,7 +243,8 @@ public class FiniteStateAutomata
                             }
                             catch (NumberFormatException ex)
                             {
-                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                                String msg = "Integer constant " + tokenValue + " is too large or too small";
+                                throw new LexerError(generateErrorInfoWithCurrentToken(), msg);
                             }
                             break;
                         case FLOAT:
@@ -249,7 +255,8 @@ public class FiniteStateAutomata
                             }
                             catch (NumberFormatException ex)
                             {
-                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                                // shouldn't happend
+                                throw new LexerError(generateErrorInfoWithCurrentToken(), ex.getMessage());
                             }
                             break;
                         case ID:
@@ -283,7 +290,7 @@ public class FiniteStateAutomata
             else
             {
                 throw new LexerError(generateErrorInfo(),
-                        "Unexpected character " + ch + " in token \""
+                        "Unexpected character \"" + ch + "\" in token \""
                         + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
             }
         }
@@ -309,7 +316,7 @@ public class FiniteStateAutomata
             {
                 if (!StringUtils.specialCharacters.containsKey(ch))
                 {
-                    throw new LexerError(generateErrorInfo(),
+                    throw new LexerError(generateErrorInfoWithCurrentToken(),
                             "Illegal special character \\" + ch
                             + " in string \"" + str + "\"");
                 }
@@ -329,7 +336,7 @@ public class FiniteStateAutomata
 
         if (specChar)
         {
-            throw new LexerError(generateErrorInfo(),
+            throw new LexerError(generateErrorInfoWithCurrentToken(),
                     "Not completed special character in string \""
                     + str + "\"");
         }
@@ -387,7 +394,7 @@ public class FiniteStateAutomata
         transitionsTable[0][getCharCol('<')] = 16; // znak mniejszości
         transitionsTable[0][getCharCol('"')] = 5; // cudzysłów
         transitionsTable[0][getCharCol(',')] = 13; // przecinek
-        transitionsTable[0][getCharCol('%')] = 8; // procent
+        transitionsTable[0][getCharCol('@')] = 8; // procent
         transitionsTable[0][getCharCol('E')] = 3; // litera E
         transitionsTable[0][getCharCol('O')] = 3; // litera O
         transitionsTable[0][getCharCol('F')] = 3; // litera F
@@ -536,7 +543,7 @@ public class FiniteStateAutomata
         {
             return 12;
         }
-        if (ch == '%')
+        if (ch == '@')
         {
             return 13;
         }

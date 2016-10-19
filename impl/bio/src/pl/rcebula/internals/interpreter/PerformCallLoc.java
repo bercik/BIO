@@ -6,7 +6,6 @@
 package pl.rcebula.internals.interpreter;
 
 import java.util.List;
-import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.CallLine;
 import pl.rcebula.intermediate_code.line.Line;

@@ -1,0 +1,7 @@
+#INCLUDE("list.biom")
+
+def retListWithStringsStartsWith(el, obj)
+   IF(NOT(HAS_FIELD(obj, list)), AS_LOC(obj.list, CREATE_LIST()))
+   IF(STARTS_WITH(el.val, obj.addPar), APPEND_TO_LIST(obj.list, el.val))
+   RET(obj.list)
+end

@@ -22,7 +22,7 @@ import pl.rcebula.error_report.ErrorInfo;
  *
  * @author robert
  */
-public class LexerError extends Exception
+public class LexerError extends Error
 {
     public LexerError(String message)
     {

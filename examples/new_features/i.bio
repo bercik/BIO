@@ -1,0 +1,7 @@
+def foo(arg={1+2*3})
+   PRINTLN(arg)
+end
+
+def onSTART()
+   foo()
+end

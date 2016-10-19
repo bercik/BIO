@@ -129,7 +129,7 @@ public class LexerTest
                                "end\n" + 
                                "def onSTART()\n" + 
                                "    ATTACH_TO_EVENT(SOME_EVENT, FOO)\n" + 
-                               "    SOME_EVENT(\"test\") % zostanie wypisane na ekran \"test\"\n" +
+                               "    SOME_EVENT(\"test\") @ zostanie wypisane na ekran \"test\"\n" +
                                "end\n" + 
                                "<EOF>\n";
         

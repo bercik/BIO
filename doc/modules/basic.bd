@@ -44,8 +44,8 @@
 
 !name RETURN
 !alias RET
-!desc Returnes value <i>val</i> from function
-!param val (all) value to be returned
+!desc Returnes value <i>val</i> from function. If <i>val</i> is not given returns none
+!optional val (all) value to be returned
 
 !name EXIT
 !desc Exits from BIO

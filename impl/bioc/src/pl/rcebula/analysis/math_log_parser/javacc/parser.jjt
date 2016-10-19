@@ -1,0 +1,1513 @@
+/* parser.jjt parsing expressions to BIO code */
+options 
+{
+    STATIC = false;
+    UNICODE_INPUT = true;
+}
+PARSER_BEGIN(Parser)
+
+package pl.rcebula.analysis.math_log_parser.javacc;
+
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.analysis.lexer.TokenType;
+import pl.rcebula.error_report.MyFiles;
+import pl.rcebula.utils.StringUtils;
+import pl.rcebula.analysis.lexer.LexerError;
+import pl.rcebula.analysis.parser.ParserError;
+import pl.rcebula.analysis.math_log_parser.MyNumberFormatException;
+
+
+public class Parser 
+{
+    private static ErrorInfo ei;
+    private static ErrorInfo defaultErrorInfo;
+    
+    // często używane tokeny
+    private static pl.rcebula.analysis.lexer.Token getCommaToken()
+    {
+        return new pl.rcebula.analysis.lexer.Token(TokenType.COMMA, null, defaultErrorInfo);
+    }
+
+    private static pl.rcebula.analysis.lexer.Token getOpenParToken()
+    {
+        return new pl.rcebula.analysis.lexer.Token(TokenType.OPEN_BRACKET, null, defaultErrorInfo);
+    }
+
+    private static pl.rcebula.analysis.lexer.Token getCloseParToken()
+    {
+        return new pl.rcebula.analysis.lexer.Token(TokenType.CLOSE_BRACKET, null, defaultErrorInfo);
+    }
+
+    private static pl.rcebula.analysis.lexer.Token getFunToken(String funName, ErrorInfo ei)
+    {
+        return new pl.rcebula.analysis.lexer.Token(TokenType.ID, funName, ei);
+    }
+
+    public static List<pl.rcebula.analysis.lexer.Token<?>> process(pl.rcebula.analysis.lexer.Token<?> expression,
+        MyFiles files)
+            throws ParserError, LexerError, UnsupportedEncodingException
+    {
+        defaultErrorInfo = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+
+        ei = expression.getErrorInfo();
+        String input = (String)expression.getValue();
+
+        // TODELETE
+        //System.out.println("\nMATH_LOG_PARSER:");
+        //System.out.println(input);
+
+        InputStream stream = new ByteArrayInputStream(input.getBytes("UTF-8"));
+
+        Parser parser = new Parser(stream);
+        SimpleNode root = null;
+        try
+        {
+            root = parser.Start();
+        }
+        catch (TokenMgrError err)
+        {
+            int lineNum = err.errorLine;
+            int chNum = err.errorColumn;
+            String msg = "Unexpected character \"" + err.curChar + "\" in token \"" + 
+                err.errorAfter + "\"";
+
+            throw new LexerError(generateErrorInfo(lineNum, chNum), msg);
+        }
+        catch (ParseException err)
+        {
+            String msg = "Expected: (";
+            for (String s : err.expectedTokens)
+            {   
+                msg += s + ", ";
+            }
+            msg = msg.substring(0, msg.length() - 2);
+            msg += ") got " + err.currentTokenName;
+
+            int lineNum = err.currentToken.next.beginLine;
+            int chNum = err.currentToken.next.beginColumn;
+
+            throw new ParserError(generateErrorInfo(lineNum, chNum), msg);
+        }
+        catch (MyNumberFormatException err)
+        {
+            Token t = err.getToken();
+            int lineNum = t.beginLine;
+            int chNum = t.beginColumn;
+            
+            String msg = "Integer constant " + t.image + " is too large or too small";
+
+            throw new LexerError(generateErrorInfo(lineNum, chNum), msg);
+        }
+
+        // TODELETE
+        //traverse(root, "");
+        //System.out.println("\n");
+
+        List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
+        // TODELETE
+        //printTokens(tokens);
+
+        return tokens;
+    }
+
+    private static ErrorInfo generateErrorInfo(int lineNum, int chNum)
+    {
+        lineNum = lineNum + ei.getLineNum() - 1;
+        chNum = chNum + ei.getChNum() - 1;
+        
+        return new ErrorInfo(lineNum, chNum, ei.getFile());
+    }
+
+    private String parseString(String str, int line, int chNum)
+            throws LexerError
+    {
+        // usuwamy początkowy i końcowy cudzysłów
+        str = str.substring(1, str.length() - 1);
+
+        String newStr = "";
+
+        // przechodzimy po całym napisie i szukamy znaków specjalnych
+        boolean specChar = false;
+        for (int i = 0; i < str.length(); ++i)
+        {
+            Character ch = str.charAt(i);
+
+            if (specChar)
+            {
+                if (!StringUtils.specialCharacters.containsKey(ch))
+                {
+                    throw new LexerError(generateErrorInfo(line, chNum),
+                            "Illegal special character \\" + ch
+                            + " in string \"" + str + "\"");
+                }
+
+                newStr += StringUtils.specialCharacters.get(ch);
+                specChar = false;
+            }
+            else if (ch.equals('\\'))
+            {
+                specChar = true;
+            }
+            else
+            {
+                newStr += ch;
+            }
+        }
+
+        if (specChar)
+        {
+            throw new LexerError(generateErrorInfo(line, chNum),
+                    "Not completed special character in string \""
+                    + str + "\"");
+        }
+
+        return newStr;
+    }
+
+    private static void printTokens(List<pl.rcebula.analysis.lexer.Token<?>> tokens)
+    {
+        for (pl.rcebula.analysis.lexer.Token<?> t : tokens)
+        {
+            System.out.println(t);
+        }
+    }
+
+    private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node)
+    {
+        return generateCode(node, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+    }
+
+    private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node, 
+        List<pl.rcebula.analysis.lexer.Token<?>> prevTokens)
+    {
+        if (node.jjtGetNumChildren() == 0)
+        {
+            // jeżeli nie null to znaczy, że node jest typu PRIM
+            if (node.value != null)
+            {
+                return Arrays.asList((pl.rcebula.analysis.lexer.Token)node.value);
+            }
+            else
+            {
+                return prevTokens;
+            }
+        }
+        else if (node.jjtGetNumChildren() == 1)
+        {
+            SimpleNode center = (SimpleNode)node.jjtGetChild(0);
+            // primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
+            if (node.value == null)
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // neg_ex znak minus
+            else if (node.value.equals("-"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("NEGATE", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // not_ex znak wykrzyknika
+            else if (node.value.equals("!"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("NOT", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // neg_ex znak plus
+            else if (node.value.equals("+"))
+            {
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+            }
+            // pow_ex potęga
+            else if (node.value.equals("^"))
+            {
+                ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                pl.rcebula.analysis.lexer.Token funTok = getFunToken("POW", vei.errorInfo);
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // nieobsługiwany znak
+            else
+            {
+                throw new RuntimeException("Can't handle " + node.toString());
+            }
+        }
+        else if (node.jjtGetNumChildren() == 2)
+        {
+            SimpleNode left = (SimpleNode)node.jjtGetChild(0);
+            SimpleNode right = (SimpleNode)node.jjtGetChild(1);
+
+            // jeżeli nie ma wartości
+            if (node.value == null)
+            {
+                return generateCode(right, generateCode(left, prevTokens));
+            }
+            else
+            {
+                pl.rcebula.analysis.lexer.Token funTok = null;
+                // inaczej typu ValueErrorInfo, możemy użyć metody equals(Object obj)
+                if (node.value.equals("+"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("ADD", vei.errorInfo);
+                }
+                else if (node.value.equals("-"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("SUB", vei.errorInfo);
+                }
+                else if (node.value.equals("*"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("MUL", vei.errorInfo);
+                }
+                else if (node.value.equals("/"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("DIV", vei.errorInfo);
+                }
+                else if (node.value.equals("%"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("MOD", vei.errorInfo);
+                }
+                else if (node.value.equals("||"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("OR", vei.errorInfo);
+                }
+                else if (node.value.equals("&&"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("AND", vei.errorInfo);
+                }
+                else if (node.value.equals("=="))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("EQ", vei.errorInfo);
+                }
+                else if (node.value.equals("!="))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("NEQ", vei.errorInfo);
+                }
+                else if (node.value.equals(">"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("GT", vei.errorInfo);
+                }
+                else if (node.value.equals(">="))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("GE", vei.errorInfo);
+                }
+                else if (node.value.equals("<"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("LS", vei.errorInfo);
+                }
+                else if (node.value.equals("<="))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("LE", vei.errorInfo);
+                }
+                else if (node.value.equals("[]"))
+                {
+                    ValueErrorInfo vei = (ValueErrorInfo)node.value;
+                    funTok = getFunToken("GET", vei.errorInfo);
+                }
+                else
+                {
+                    throw new RuntimeException("Uknown node value: " + node.value.toString());
+                }
+
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+
+                newTokens.add(funTok);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(prevTokens);
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return generateCode(right, newTokens);
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Can't handle " + node.jjtGetNumChildren()
+                + " node childrens");
+        }
+    }
+
+    private static void traverse(SimpleNode node, String prefix)
+    {
+        if (node.jjtGetValue() != null)
+        {
+            System.out.println(node.toString(prefix) + ": " + node.jjtGetValue());
+        }
+        else
+        {
+            System.out.println(node.toString(prefix));
+        }
+
+        for (int i = 0; i < node.jjtGetNumChildren(); ++i)
+        {
+            SimpleNode n = (SimpleNode)node.jjtGetChild(i);
+            traverse(n, prefix + "-");
+        }
+    }
+}
+
+class ValueErrorInfo
+{
+    public ValueErrorInfo(String value, ErrorInfo errorInfo)
+    {
+        this.value = value;
+        this.errorInfo = errorInfo;
+    }
+
+    public boolean equals(Object obj)
+    {
+        String s = (String)obj;
+        return value.equals(s);
+    }
+
+    public String value;
+    public ErrorInfo errorInfo;
+    
+    @Override
+    public String toString()
+    {
+        return value;
+    }
+}
+PARSER_END(Parser)
+
+SKIP : { "\n" | "\t" | " " }
+SKIP : { < "@" (~["\n"])* > }
+
+TOKEN : { < OR : "||" > }
+TOKEN : { < AND : "&&" > }
+
+TOKEN : { < EQ : "==" > }
+TOKEN : { < NEQ : "!=" > }
+
+TOKEN : { < LS : "<" > }
+TOKEN : { < LE : "<=" > }
+TOKEN : { < GT : ">" > }
+TOKEN : { < GE : ">=" > }
+
+TOKEN : { < PLUS : "+" > }
+TOKEN : { < MINUS : "-" > }
+
+TOKEN : { < TIMES : "*" > }
+TOKEN : { < DIVIDE : "/" > }
+TOKEN : { < MODULO : "%" > }
+
+TOKEN : { < POWER: "^" > }
+
+TOKEN : { < EXCL_MARK : "!" > }
+
+TOKEN : { < OPEN_INDX : "[" > }
+TOKEN : { < CLOSE_INDX : "]" > }
+
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+
+TOKEN : { < KEYWORDS : "def" | "end" > }
+TOKEN : { < NONE : "none" | "None" | "NONE" > }
+TOKEN : { < TRUE : "true" | "True" | "TRUE" > }
+TOKEN : { < FALSE : "false" | "False" | "FALSE" > }
+
+TOKEN : { < INT : "0" | <DIGIT_NON_ZERO> (<DIGIT>)* > }
+TOKEN : { < FLOAT : "0" <DOT> (<DIGIT>)+ | <DIGIT_NON_ZERO> (<DIGIT>)* <DOT> (<DIGIT>)+ > }
+
+TOKEN : { < #DOT : "." > }
+TOKEN : { < #DIGIT_NON_ZERO : ["1"-"9"] > }
+TOKEN : { < #DIGIT : ["0"-"9"] > }
+
+TOKEN : { < ID_STRUCT : <ID> (<DOT> <ID>)+ > }
+TOKEN : { < ID : (<UTF_LETTER> | <UNDERLINE>) (<UTF_LETTER> | <UNDERLINE> | <DIGIT>)* > }
+
+TOKEN : { < #UNDERLINE : ["_"] > }
+TOKEN : { < #UTF_LETTER : [
+"a"-"z", 
+"A"-"Z", 
+"\u00AA",
+"\u00B5",
+"\u00BA",
+"\u00C0"-"\u00D6",
+"\u00D8"-"\u00F6",
+"\u00F8"-"\u02C1",
+"\u02C6"-"\u02D1",
+"\u02E0"-"\u02E4",
+"\u02EC",
+"\u02EE",
+"\u0370"-"\u0374",
+"\u0376",
+"\u0377",
+"\u037A"-"\u037D",
+"\u037F",
+"\u0386",
+"\u0388"-"\u038A",
+"\u038C",
+"\u038E"-"\u03A1",
+"\u03A3"-"\u03F5",
+"\u03F7"-"\u0481",
+"\u048A"-"\u052F",
+"\u0531"-"\u0556",
+"\u0559",
+"\u0561"-"\u0587",
+"\u05D0"-"\u05EA",
+"\u05F0"-"\u05F2",
+"\u0620"-"\u064A",
+"\u066E",
+"\u066F",
+"\u0671"-"\u06D3",
+"\u06D5",
+"\u06E5",
+"\u06E6",
+"\u06EE",
+"\u06EF",
+"\u06FA"-"\u06FC",
+"\u06FF",
+"\u0710",
+"\u0712"-"\u072F",
+"\u074D"-"\u07A5",
+"\u07B1",
+"\u07CA"-"\u07EA",
+"\u07F4",
+"\u07F5",
+"\u07FA",
+"\u0800"-"\u0815",
+"\u081A",
+"\u0824",
+"\u0828",
+"\u0840"-"\u0858",
+"\u08A0"-"\u08B2",
+"\u0904"-"\u0939",
+"\u093D",
+"\u0950",
+"\u0958"-"\u0961",
+"\u0971"-"\u0980",
+"\u0985"-"\u098C",
+"\u098F",
+"\u0990",
+"\u0993"-"\u09A8",
+"\u09AA"-"\u09B0",
+"\u09B2",
+"\u09B6"-"\u09B9",
+"\u09BD",
+"\u09CE",
+"\u09DC",
+"\u09DD",
+"\u09DF"-"\u09E1",
+"\u09F0",
+"\u09F1",
+"\u0A05"-"\u0A0A",
+"\u0A0F",
+"\u0A10",
+"\u0A13"-"\u0A28",
+"\u0A2A"-"\u0A30",
+"\u0A32",
+"\u0A33",
+"\u0A35",
+"\u0A36",
+"\u0A38",
+"\u0A39",
+"\u0A59"-"\u0A5C",
+"\u0A5E",
+"\u0A72"-"\u0A74",
+"\u0A85"-"\u0A8D",
+"\u0A8F"-"\u0A91",
+"\u0A93"-"\u0AA8",
+"\u0AAA"-"\u0AB0",
+"\u0AB2",
+"\u0AB3",
+"\u0AB5"-"\u0AB9",
+"\u0ABD",
+"\u0AD0",
+"\u0AE0",
+"\u0AE1",
+"\u0B05"-"\u0B0C",
+"\u0B0F",
+"\u0B10",
+"\u0B13"-"\u0B28",
+"\u0B2A"-"\u0B30",
+"\u0B32",
+"\u0B33",
+"\u0B35"-"\u0B39",
+"\u0B3D",
+"\u0B5C",
+"\u0B5D",
+"\u0B5F"-"\u0B61",
+"\u0B71",
+"\u0B83",
+"\u0B85"-"\u0B8A",
+"\u0B8E"-"\u0B90",
+"\u0B92"-"\u0B95",
+"\u0B99",
+"\u0B9A",
+"\u0B9C",
+"\u0B9E",
+"\u0B9F",
+"\u0BA3",
+"\u0BA4",
+"\u0BA8"-"\u0BAA",
+"\u0BAE"-"\u0BB9",
+"\u0BD0",
+"\u0C05"-"\u0C0C",
+"\u0C0E"-"\u0C10",
+"\u0C12"-"\u0C28",
+"\u0C2A"-"\u0C39",
+"\u0C3D",
+"\u0C58",
+"\u0C59",
+"\u0C60",
+"\u0C61",
+"\u0C85"-"\u0C8C",
+"\u0C8E"-"\u0C90",
+"\u0C92"-"\u0CA8",
+"\u0CAA"-"\u0CB3",
+"\u0CB5"-"\u0CB9",
+"\u0CBD",
+"\u0CDE",
+"\u0CE0",
+"\u0CE1",
+"\u0CF1",
+"\u0CF2",
+"\u0D05"-"\u0D0C",
+"\u0D0E"-"\u0D10",
+"\u0D12"-"\u0D3A",
+"\u0D3D",
+"\u0D4E",
+"\u0D60",
+"\u0D61",
+"\u0D7A"-"\u0D7F",
+"\u0D85"-"\u0D96",
+"\u0D9A"-"\u0DB1",
+"\u0DB3"-"\u0DBB",
+"\u0DBD",
+"\u0DC0"-"\u0DC6",
+"\u0E01"-"\u0E30",
+"\u0E32",
+"\u0E33",
+"\u0E40"-"\u0E46",
+"\u0E81",
+"\u0E82",
+"\u0E84",
+"\u0E87",
+"\u0E88",
+"\u0E8A",
+"\u0E8D",
+"\u0E94"-"\u0E97",
+"\u0E99"-"\u0E9F",
+"\u0EA1"-"\u0EA3",
+"\u0EA5",
+"\u0EA7",
+"\u0EAA",
+"\u0EAB",
+"\u0EAD"-"\u0EB0",
+"\u0EB2",
+"\u0EB3",
+"\u0EBD",
+"\u0EC0"-"\u0EC4",
+"\u0EC6",
+"\u0EDC"-"\u0EDF",
+"\u0F00",
+"\u0F40"-"\u0F47",
+"\u0F49"-"\u0F6C",
+"\u0F88"-"\u0F8C",
+"\u1000"-"\u102A",
+"\u103F",
+"\u1050"-"\u1055",
+"\u105A"-"\u105D",
+"\u1061",
+"\u1065",
+"\u1066",
+"\u106E"-"\u1070",
+"\u1075"-"\u1081",
+"\u108E",
+"\u10A0"-"\u10C5",
+"\u10C7",
+"\u10CD",
+"\u10D0"-"\u10FA",
+"\u10FC"-"\u1248",
+"\u124A"-"\u124D",
+"\u1250"-"\u1256",
+"\u1258",
+"\u125A"-"\u125D",
+"\u1260"-"\u1288",
+"\u128A"-"\u128D",
+"\u1290"-"\u12B0",
+"\u12B2"-"\u12B5",
+"\u12B8"-"\u12BE",
+"\u12C0",
+"\u12C2"-"\u12C5",
+"\u12C8"-"\u12D6",
+"\u12D8"-"\u1310",
+"\u1312"-"\u1315",
+"\u1318"-"\u135A",
+"\u1380"-"\u138F",
+"\u13A0"-"\u13F4",
+"\u1401"-"\u166C",
+"\u166F"-"\u167F",
+"\u1681"-"\u169A",
+"\u16A0"-"\u16EA",
+"\u16F1"-"\u16F8",
+"\u1700"-"\u170C",
+"\u170E"-"\u1711",
+"\u1720"-"\u1731",
+"\u1740"-"\u1751",
+"\u1760"-"\u176C",
+"\u176E"-"\u1770",
+"\u1780"-"\u17B3",
+"\u17D7",
+"\u17DC",
+"\u1820"-"\u1877",
+"\u1880"-"\u18A8",
+"\u18AA",
+"\u18B0"-"\u18F5",
+"\u1900"-"\u191E",
+"\u1950"-"\u196D",
+"\u1970"-"\u1974",
+"\u1980"-"\u19AB",
+"\u19C1"-"\u19C7",
+"\u1A00"-"\u1A16",
+"\u1A20"-"\u1A54",
+"\u1AA7",
+"\u1B05"-"\u1B33",
+"\u1B45"-"\u1B4B",
+"\u1B83"-"\u1BA0",
+"\u1BAE",
+"\u1BAF",
+"\u1BBA"-"\u1BE5",
+"\u1C00"-"\u1C23",
+"\u1C4D"-"\u1C4F",
+"\u1C5A"-"\u1C7D",
+"\u1CE9"-"\u1CEC",
+"\u1CEE"-"\u1CF1",
+"\u1CF5",
+"\u1CF6",
+"\u1D00"-"\u1DBF",
+"\u1E00"-"\u1F15",
+"\u1F18"-"\u1F1D",
+"\u1F20"-"\u1F45",
+"\u1F48"-"\u1F4D",
+"\u1F50"-"\u1F57",
+"\u1F59",
+"\u1F5B",
+"\u1F5D",
+"\u1F5F"-"\u1F7D",
+"\u1F80"-"\u1FB4",
+"\u1FB6"-"\u1FBC",
+"\u1FBE",
+"\u1FC2"-"\u1FC4",
+"\u1FC6"-"\u1FCC",
+"\u1FD0"-"\u1FD3",
+"\u1FD6"-"\u1FDB",
+"\u1FE0"-"\u1FEC",
+"\u1FF2"-"\u1FF4",
+"\u1FF6"-"\u1FFC",
+"\u2071",
+"\u207F",
+"\u2090"-"\u209C",
+"\u2102",
+"\u2107",
+"\u210A"-"\u2113",
+"\u2115",
+"\u2119"-"\u211D",
+"\u2124",
+"\u2126",
+"\u2128",
+"\u212A"-"\u212D",
+"\u212F"-"\u2139",
+"\u213C"-"\u213F",
+"\u2145"-"\u2149",
+"\u214E",
+"\u2183",
+"\u2184",
+"\u2C00"-"\u2C2E",
+"\u2C30"-"\u2C5E",
+"\u2C60"-"\u2CE4",
+"\u2CEB"-"\u2CEE",
+"\u2CF2",
+"\u2CF3",
+"\u2D00"-"\u2D25",
+"\u2D27",
+"\u2D2D",
+"\u2D30"-"\u2D67",
+"\u2D6F",
+"\u2D80"-"\u2D96",
+"\u2DA0"-"\u2DA6",
+"\u2DA8"-"\u2DAE",
+"\u2DB0"-"\u2DB6",
+"\u2DB8"-"\u2DBE",
+"\u2DC0"-"\u2DC6",
+"\u2DC8"-"\u2DCE",
+"\u2DD0"-"\u2DD6",
+"\u2DD8"-"\u2DDE",
+"\u2E2F",
+"\u3005",
+"\u3006",
+"\u3031"-"\u3035",
+"\u303B",
+"\u303C",
+"\u3041"-"\u3096",
+"\u309D"-"\u309F",
+"\u30A1"-"\u30FA",
+"\u30FC"-"\u30FF",
+"\u3105"-"\u312D",
+"\u3131"-"\u318E",
+"\u31A0"-"\u31BA",
+"\u31F0"-"\u31FF",
+"\u3400"-"\u4DB5",
+"\u4E00"-"\u9FCC",
+"\uA000"-"\uA48C",
+"\uA4D0"-"\uA4FD",
+"\uA500"-"\uA60C",
+"\uA610"-"\uA61F",
+"\uA62A",
+"\uA62B",
+"\uA640"-"\uA66E",
+"\uA67F"-"\uA69D",
+"\uA6A0"-"\uA6E5",
+"\uA717"-"\uA71F",
+"\uA722"-"\uA788",
+"\uA78B"-"\uA78E",
+"\uA790"-"\uA7AD",
+"\uA7B0",
+"\uA7B1",
+"\uA7F7"-"\uA801",
+"\uA803"-"\uA805",
+"\uA807"-"\uA80A",
+"\uA80C"-"\uA822",
+"\uA840"-"\uA873",
+"\uA882"-"\uA8B3",
+"\uA8F2"-"\uA8F7",
+"\uA8FB",
+"\uA90A"-"\uA925",
+"\uA930"-"\uA946",
+"\uA960"-"\uA97C",
+"\uA984"-"\uA9B2",
+"\uA9CF",
+"\uA9E0"-"\uA9E4",
+"\uA9E6"-"\uA9EF",
+"\uA9FA"-"\uA9FE",
+"\uAA00"-"\uAA28",
+"\uAA40"-"\uAA42",
+"\uAA44"-"\uAA4B",
+"\uAA60"-"\uAA76",
+"\uAA7A",
+"\uAA7E"-"\uAAAF",
+"\uAAB1",
+"\uAAB5",
+"\uAAB6",
+"\uAAB9"-"\uAABD",
+"\uAAC0",
+"\uAAC2",
+"\uAADB"-"\uAADD",
+"\uAAE0"-"\uAAEA",
+"\uAAF2"-"\uAAF4",
+"\uAB01"-"\uAB06",
+"\uAB09"-"\uAB0E",
+"\uAB11"-"\uAB16",
+"\uAB20"-"\uAB26",
+"\uAB28"-"\uAB2E",
+"\uAB30"-"\uAB5A",
+"\uAB5C"-"\uAB5F",
+"\uAB64",
+"\uAB65",
+"\uABC0"-"\uABE2",
+"\uAC00"-"\uD7A3",
+"\uD7B0"-"\uD7C6",
+"\uD7CB"-"\uD7FB",
+"\uF900"-"\uFA6D",
+"\uFA70"-"\uFAD9",
+"\uFB00"-"\uFB06",
+"\uFB13"-"\uFB17",
+"\uFB1D",
+"\uFB1F"-"\uFB28",
+"\uFB2A"-"\uFB36",
+"\uFB38"-"\uFB3C",
+"\uFB3E",
+"\uFB40",
+"\uFB41",
+"\uFB43",
+"\uFB44",
+"\uFB46"-"\uFBB1",
+"\uFBD3"-"\uFD3D",
+"\uFD50"-"\uFD8F",
+"\uFD92"-"\uFDC7",
+"\uFDF0"-"\uFDFB",
+"\uFE70"-"\uFE74",
+"\uFE76"-"\uFEFC",
+"\uFF21"-"\uFF3A",
+"\uFF41"-"\uFF5A",
+"\uFF66"-"\uFFBE",
+"\uFFC2"-"\uFFC7",
+"\uFFCA"-"\uFFCF",
+"\uFFD2"-"\uFFD7",
+"\uFFDA"-"\uFFDC"
+] > }
+
+TOKEN: {
+<STRING: 
+    "\"" 
+    (
+         "\\" ~[]     //any escaped character
+    |                 //or
+        ~["\"","\\"]  //any character except quote or backslash
+    )* 
+    "\"" > 
+}
+
+SimpleNode Start() #START :
+{
+}
+{
+    Expression()
+    <EOF>
+
+    { return jjtThis; }
+}
+
+void Expression() #EXPR :
+{
+}
+{
+    or_ex()
+}
+
+void or_ex() #OR_EX :
+{
+}
+{
+    and_ex()
+    or_ex_1()
+}
+
+void or_ex_1() #OR_EX_1 :
+{
+    Token t;
+}
+{
+    (
+        t = <OR>
+        and_ex()
+        or_ex_1()
+        { 
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("||", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void and_ex() #AND_EX : 
+{
+}
+{
+    eq_ex()
+    and_ex_1()
+}
+
+void and_ex_1() #AND_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <AND>
+        eq_ex()
+        and_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("&&", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void eq_ex() #EQ_EX : 
+{
+}
+{
+    cmp_ex()
+    eq_ex_1()
+}
+
+void eq_ex_1() #EQ_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <EQ>
+        cmp_ex()
+        eq_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("==", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <NEQ>
+        cmp_ex()
+        eq_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("!=", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void cmp_ex() #CMP_EX : 
+{
+}
+{
+    add_ex()
+    cmp_ex_1()
+}
+
+void cmp_ex_1() #CMP_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <LS>
+        add_ex()
+        cmp_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("<", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <LE>
+        add_ex()
+        cmp_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("<=", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <GT>
+        add_ex()
+        cmp_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo(">", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <GE>
+        add_ex()
+        cmp_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo(">=", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void add_ex() #ADD_EX : 
+{
+}
+{
+    mul_ex()
+    add_ex_1()
+}
+
+void add_ex_1() #ADD_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <PLUS>
+        mul_ex()
+        add_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("+", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <MINUS>
+        mul_ex()
+        add_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("-", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void mul_ex() #MUL_EX : 
+{
+}
+{
+    pow_ex()
+    mul_ex_1()
+}
+
+void mul_ex_1() #MUL_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <TIMES>
+        pow_ex()
+        mul_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("*", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <DIVIDE>
+        pow_ex()
+        mul_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("/", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    |
+        t = <MODULO>
+        pow_ex()
+        mul_ex_1()
+        {
+            newLine = t.beginLine + ei.getLineNum() - 1;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("%", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void pow_ex() #POW_EX :
+{
+}
+{
+    neg_ex()
+    pow_ex_1()
+}
+
+void pow_ex_1() #POW_EX_1 :
+{
+    Token t;
+}
+{
+    (
+        t = <POWER>
+        pow_ex()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("^", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+void neg_ex() #NEG_EX :
+{
+    Token t;
+}
+{
+    t = <MINUS>
+    neg_ex()
+    {
+        int newLine = t.beginLine + ei.getLineNum() - 1;
+        int newCh;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = new ValueErrorInfo("-", new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <PLUS>
+    neg_ex()
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = new ValueErrorInfo("+", new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    not_ex()
+}
+
+void not_ex() #NEG_EX :
+{
+    Token t;
+}
+{
+    t = <EXCL_MARK>
+    indx_ex()
+    {
+        int newLine = t.beginLine + ei.getLineNum() - 1;
+        int newCh;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = new ValueErrorInfo("!", new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    indx_ex()
+}
+
+void indx_ex() #INDX_EX : 
+{
+}
+{
+    primary()
+    indx_ex_1()
+}
+
+void indx_ex_1() #INDX_EX_1 : 
+{
+    Token t;
+}
+{
+    (
+        t = <OPEN_INDX>
+        Expression()
+        <CLOSE_INDX>
+	    indx_ex_1()
+        {
+            int newLine = t.beginLine + ei.getLineNum() - 1;
+            int newCh;
+            if (t.beginLine == 1)
+            {
+                newCh = t.beginColumn + ei.getChNum() - 1;
+            }
+            else
+            {
+                newCh = t.beginColumn;
+            }
+            jjtThis.value = new ValueErrorInfo("[]", new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+    )?
+}
+
+
+
+void primary() #PRIM :
+{
+    Token t;
+}
+{
+    t = <INT> 
+    { 
+        int newLine = t.beginLine + ei.getLineNum() - 1;
+        int newCh;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        try
+        {
+            jjtThis.value = 
+                new pl.rcebula.analysis.lexer.Token(TokenType.INT, Integer.parseInt(t.image),
+                    new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+        catch (NumberFormatException ex)
+        {
+            throw new MyNumberFormatException(t);
+        }
+    }
+|
+    t = <FLOAT>
+    { 
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        try
+        {
+            jjtThis.value = 
+                new pl.rcebula.analysis.lexer.Token(TokenType.FLOAT, Float.parseFloat(t.image),
+                    new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+        catch (NumberFormatException ex)
+        {
+            throw new MyNumberFormatException(t);
+        }
+    }
+|
+    t = <ID>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token(TokenType.ID, t.image,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <ID_STRUCT>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token(TokenType.ID_STRUCT, t.image,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <TRUE>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token(TokenType.BOOL, true,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <FALSE>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token(TokenType.BOOL, false,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <NONE>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token(TokenType.NONE, null,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    t = <STRING>
+    {
+        newLine = t.beginLine + ei.getLineNum() - 1;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        String str = parseString(t.image, t.beginLine, t.beginColumn);
+        jjtThis.value = 
+            new pl.rcebula.analysis.lexer.Token<String>(TokenType.STRING, str,
+                new ErrorInfo(newLine, newCh, ei.getFile()));
+    }
+|
+    <OPEN_PAR>
+    Expression()
+    <CLOSE_PAR>
+}
