@@ -56,13 +56,20 @@ public class BuiltinFunctionsParser
     private static final String specialModule = "special";
 
     public BuiltinFunctionsParser(Modules modules)
-            throws IOException, SAXException, ParserConfigurationException, PreprocessorError,
-            URISyntaxException
+            throws IOException, PreprocessorError, BuiltinFunctionsParserError
     {
         // jeżeli #IMPORT("all") to wczytujemy wszystkie pliki xml z folderu
         if (modules.getModules().contains(new Module(allModule)))
         {
-            URI uri = getClass().getResource(Modules.modulesPath).toURI();
+            URI uri;
+            try
+            {
+                uri = getClass().getResource(Modules.modulesPath).toURI();
+            }
+            catch (URISyntaxException ex)
+            {
+                throw new BuiltinFunctionsParserError(ex.getMessage(), ex);
+            }
             Path myPath;
             if (uri.getScheme().equals("jar"))
             {
@@ -88,7 +95,14 @@ public class BuiltinFunctionsParser
                         modulesName.add(moduleName);
                     }
 
-                    readXMLFile(is);
+                    try
+                    {
+                        readXMLFile(is);
+                    }
+                    catch (SAXException | ParserConfigurationException ex)
+                    {
+                        throw new BuiltinFunctionsParserError(ex.getMessage(), ex);
+                    }
                 }
             }
         }
@@ -112,7 +126,14 @@ public class BuiltinFunctionsParser
                     modulesName.add(module.getName());
                 }
 
-                readXMLFile(is);
+                try
+                {
+                    readXMLFile(is);
+                }
+                catch (SAXException | ParserConfigurationException ex)
+                {
+                    throw new BuiltinFunctionsParserError(ex.getMessage(), ex);
+                }
             }
         }
     }
@@ -133,7 +154,7 @@ public class BuiltinFunctionsParser
             {
                 is = readExternalFile(path);
             }
-
+            
             readXMLFile(is);
         }
     }

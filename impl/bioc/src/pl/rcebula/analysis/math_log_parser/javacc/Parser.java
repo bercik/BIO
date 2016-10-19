@@ -13,6 +13,8 @@ import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.utils.StringUtils;
 import pl.rcebula.analysis.lexer.LexerError;
+import pl.rcebula.analysis.parser.ParserError;
+import pl.rcebula.analysis.math_log_parser.MyNumberFormatException;
 
 
 public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConstants {/*@bgen(jjtree)*/
@@ -42,7 +44,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
     public static List<pl.rcebula.analysis.lexer.Token<?>> process(pl.rcebula.analysis.lexer.Token<?> expression,
         MyFiles files)
-            throws ParseException, LexerError, UnsupportedEncodingException
+            throws ParserError, LexerError, UnsupportedEncodingException
     {
         defaultErrorInfo = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
 
@@ -67,6 +69,31 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             int chNum = err.errorColumn;
             String msg = "Unexpected character \u005c"" + err.curChar + "\u005c" in token \u005c"" +
                 err.errorAfter + "\u005c"";
+
+            throw new LexerError(generateErrorInfo(lineNum, chNum), msg);
+        }
+        catch (ParseException err)
+        {
+            String msg = "Expected: (";
+            for (String s : err.expectedTokens)
+            {
+                msg += s + ", ";
+            }
+            msg = msg.substring(0, msg.length() - 2);
+            msg += ") got " + err.currentTokenName;
+
+            int lineNum = err.currentToken.next.beginLine;
+            int chNum = err.currentToken.next.beginColumn;
+
+            throw new ParserError(generateErrorInfo(lineNum, chNum), msg);
+        }
+        catch (MyNumberFormatException err)
+        {
+            Token t = err.getToken();
+            int lineNum = t.beginLine;
+            int chNum = t.beginColumn;
+
+            String msg = "Integer constant " + t.image + " is too large or too small";
 
             throw new LexerError(generateErrorInfo(lineNum, chNum), msg);
         }
@@ -1341,9 +1368,16 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         {
             newCh = t.beginColumn;
         }
-        jjtn000.value =
-            new pl.rcebula.analysis.lexer.Token(TokenType.INT, Integer.parseInt(t.image),
-                new ErrorInfo(newLine, newCh, ei.getFile()));
+        try
+        {
+            jjtn000.value =
+                new pl.rcebula.analysis.lexer.Token(TokenType.INT, Integer.parseInt(t.image),
+                    new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+        catch (NumberFormatException ex)
+        {
+            {if (true) throw new MyNumberFormatException(t);}
+        }
         break;
       case FLOAT:
         t = jj_consume_token(FLOAT);
@@ -1358,9 +1392,16 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         {
             newCh = t.beginColumn;
         }
-        jjtn000.value =
-            new pl.rcebula.analysis.lexer.Token(TokenType.FLOAT, Float.parseFloat(t.image),
-                new ErrorInfo(newLine, newCh, ei.getFile()));
+        try
+        {
+            jjtn000.value =
+                new pl.rcebula.analysis.lexer.Token(TokenType.FLOAT, Float.parseFloat(t.image),
+                    new ErrorInfo(newLine, newCh, ei.getFile()));
+        }
+        catch (NumberFormatException ex)
+        {
+            {if (true) throw new MyNumberFormatException(t);}
+        }
         break;
       case ID:
         t = jj_consume_token(ID);

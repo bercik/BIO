@@ -243,7 +243,8 @@ public class FiniteStateAutomata
                             }
                             catch (NumberFormatException ex)
                             {
-                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                                String msg = "Integer constant " + tokenValue + " is too large or too small";
+                                throw new LexerError(generateErrorInfoWithCurrentToken(), msg);
                             }
                             break;
                         case FLOAT:
@@ -254,7 +255,8 @@ public class FiniteStateAutomata
                             }
                             catch (NumberFormatException ex)
                             {
-                                throw new LexerError(generateErrorInfo(), ex.getMessage());
+                                // shouldn't happend
+                                throw new LexerError(generateErrorInfoWithCurrentToken(), ex.getMessage());
                             }
                             break;
                         case ID:
@@ -314,7 +316,7 @@ public class FiniteStateAutomata
             {
                 if (!StringUtils.specialCharacters.containsKey(ch))
                 {
-                    throw new LexerError(generateErrorInfo(),
+                    throw new LexerError(generateErrorInfoWithCurrentToken(),
                             "Illegal special character \\" + ch
                             + " in string \"" + str + "\"");
                 }
@@ -334,7 +336,7 @@ public class FiniteStateAutomata
 
         if (specChar)
         {
-            throw new LexerError(generateErrorInfo(),
+            throw new LexerError(generateErrorInfoWithCurrentToken(),
                     "Not completed special character in string \""
                     + str + "\"");
         }

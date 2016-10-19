@@ -11,6 +11,8 @@ import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.utils.StringUtils;
 import pl.rcebula.analysis.lexer.LexerError;
+import pl.rcebula.analysis.parser.ParserError;
+import pl.rcebula.analysis.math_log_parser.MyNumberFormatException;
 
 /** Token Manager. */
 public class ParserTokenManager implements ParserConstants

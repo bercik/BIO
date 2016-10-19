@@ -1,3 +1,5 @@
+#INCLUDE("test2.bio")
+
 def onSTART()
-   PRINT({ a * * b & c })
+   foo()
 end

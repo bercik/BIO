@@ -2,6 +2,9 @@
 /* JavaCCOptions:KEEP_LINE_COL=null */
 package pl.rcebula.analysis.math_log_parser.javacc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This exception is thrown when parse errors are encountered.
  * You can explicitly create objects of this exception type by
@@ -31,7 +34,8 @@ public class ParseException extends Exception {
                         String[] tokenImageVal
                        )
   {
-    super(initialise(currentTokenVal, expectedTokenSequencesVal, tokenImageVal));
+    super("");
+    initialise(currentTokenVal, expectedTokenSequencesVal, tokenImageVal);
     currentToken = currentTokenVal;
     expectedTokenSequences = expectedTokenSequencesVal;
     tokenImage = tokenImageVal;
@@ -55,6 +59,9 @@ public class ParseException extends Exception {
   public ParseException(String message) {
     super(message);
   }
+
+    public String currentTokenName;
+    public List<String> expectedTokens = new ArrayList<>();
 
 
   /**
@@ -85,7 +92,7 @@ public class ParseException extends Exception {
    * from the parser) the correct error message
    * gets displayed.
    */
-  private static String initialise(Token currentToken,
+  private void initialise(Token currentToken,
                            int[][] expectedTokenSequences,
                            String[] tokenImage) {
     String eol = System.getProperty("line.separator", "\n");
@@ -97,6 +104,7 @@ public class ParseException extends Exception {
       }
       for (int j = 0; j < expectedTokenSequences[i].length; j++) {
         expected.append(tokenImage[expectedTokenSequences[i][j]]).append(' ');
+        expectedTokens.add(tokenImage[expectedTokenSequences[i][j]]);
       }
       if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {
         expected.append("...");
@@ -105,6 +113,7 @@ public class ParseException extends Exception {
     }
     String retval = "Encountered \"";
     Token tok = currentToken.next;
+    currentTokenName = tokenImage[tok.kind];
     for (int i = 0; i < maxSize; i++) {
       if (i != 0) retval += " ";
       if (tok.kind == 0) {
@@ -125,7 +134,7 @@ public class ParseException extends Exception {
       retval += "Was expecting one of:" + eol + "    ";
     }
     retval += expected.toString();
-    return retval;
+    //return retval;
   }
 
   /**

@@ -16,11 +16,14 @@
  */
 package pl.rcebula.analysis.math_log_parser;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import pl.rcebula.analysis.lexer.LexerError;
 import pl.rcebula.analysis.lexer.Token;
 import pl.rcebula.analysis.lexer.TokenType;
 import pl.rcebula.analysis.math_log_parser.javacc.*;
+import pl.rcebula.analysis.parser.ParserError;
 import pl.rcebula.error_report.MyFiles;
 
 /**
@@ -34,7 +37,7 @@ public class MathLogParser
     private final List<Token<?>> newTokens = new ArrayList<>();
 
     public MathLogParser(List<Token<?>> tokens, MyFiles files)
-            throws Exception
+            throws ParserError, LexerError, UnsupportedEncodingException
     {
         this.tokens = tokens;
         this.files = files;
@@ -42,16 +45,15 @@ public class MathLogParser
         process();
     }
 
-    // TODO change throws Exception
-    private void process()
-            throws Exception
+    private void process() 
+            throws ParserError, LexerError, UnsupportedEncodingException
     {
         for (Token t : tokens)
         {
             if (t.getTokenType().equals(TokenType.EXPRESSION))
             {
                 List<Token<?>> nTokens = Parser.process(t, files);
-                
+
                 newTokens.addAll(nTokens);
             }
             else

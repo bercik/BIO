@@ -17,9 +17,11 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.xml.sax.SAXException;
 import pl.rcebula.analysis.math_log_parser.MathLogParser;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
+import pl.rcebula.analysis.semantic.BuiltinFunctionsParserError;
 import pl.rcebula.analysis.semantic.SemanticChecker;
 import pl.rcebula.analysis.semantic.SemanticError;
 import pl.rcebula.code_generation.final_steps.AddInformationsAboutFiles;
@@ -46,7 +48,6 @@ public class App
      * @param args the command line arguments
      */
     public static void main(String[] args)
-            throws Exception
     {
         try
         {
@@ -237,6 +238,10 @@ public class App
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
+        }
+        catch (BuiltinFunctionsParserError ex)
+        {
+            System.err.println("Builtin functions parser error: " + ex.getMessage());
         }
     }
 
