@@ -23,11 +23,12 @@
             <li><a href="#basic-info-conversions">Conversions</a></li>
             <li><a href="#basic-info-aliases">Aliases</a></li>
             <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
+            <li><a href="#basic-info-math-log-parser">Math-log parser</a></li>
          </ul>
       </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 arrays
+                arrays
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -264,7 +265,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 basic
+                basic
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -359,7 +360,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 compare
+                compare
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -443,7 +444,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 conversion
+                conversion
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -515,7 +516,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 errors
+                errors
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -682,7 +683,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 floats
+                floats
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -711,7 +712,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 ints
+                ints
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -751,7 +752,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 io
+                io
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -789,7 +790,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 iter
+                iter
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -807,7 +808,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 logic
+                logic
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -847,7 +848,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 math
+                math
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1017,7 +1018,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 observer
+                observer
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1057,7 +1058,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 reflections
+                reflections
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1084,7 +1085,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 special
+                special
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1149,7 +1150,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 strings
+                strings
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1288,7 +1289,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 structs
+                structs
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1316,7 +1317,7 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
-                                 type_check
+                type_check
                            </a>
             <ul>
                                  <li class="has-sub">
@@ -1523,7 +1524,7 @@
       disappearing</p>
       <p>Here are all errors with their codes, which you can access by GET_OBJECT function:</p>
       <div class="scrollable">
-         <table>
+         <table class="enhance_table">
             <thead>
                <tr>
                   <th>code</th>
@@ -1566,7 +1567,7 @@
       documentation for details)</p>
       <p>Here is conversion table that tells you which type you can convert to which:</p>
       <div class="scrollable">
-         <table>
+         <table class="enhance_table">
             <thead>
                <tr>
                   <th></th>
@@ -1699,6 +1700,205 @@
       <p>#IMPORT directive is used when you want to use some module which is marked as optional (you can find this in documentation after module name). Than you need to type <code>#IMPORT("mod_name")</code> somewhere in your source file. <b>Note: </b> you can type <code>#IMPORT("all")</code> to import all optional modules available.</p>
       <h4>#INCLUDE</h4>
       <p>#INCLUDE directive is used when you want to include code from other file into yours. It will literally paste it in place where #INCLUDE directive was. It will also resolve #INCLUDE directives in this included file. Preprocessor take care of not including same file twice. Syntax is: <code>#IMPORT("path_to_file")</code>. You can also type: <code>#IMPORT("&lt;path_to_file&gt;")</code>. It will search for file in lib directory which contains for example stdlib directory with some standard librarys and modules (like list.biom)</p>
+   </section>
+
+   <section id="basic-info-math-log-parser">
+      <header>
+         <h3>Math-log parser</h3>
+      </header>
+
+      <p>Because writing and reading more complicated mathematical and logical expressions can be hard, there is built-in mathematical and logical parser (later called as math-log parser) into BIO compiler. You can enter it by writing expression inside "{}" (similarly to bash mathematical expressions inside "()"). So for example if you want to check if number is even (that is divisible by 2), instead of writing:
+      <p><code>IF(EQ(MOD(num, 2), 0), PRINT("even"), PRINT("odd"))</code></p>
+      <p>You can write:</p>
+      <p><code>IF({ num % 2 == 0 }, PRINT("even"), PRINT("odd"))</code></p>
+      <p>It's obvious that second version is easier to write and read.</p>
+      <br/>
+      <p>You can use math-log parser in any place in your code (except preprocessor directives). So for example you can write something like this:</p>
+      <p><code>def foo(arg={2^4})</code></p>
+      <p>and function foo will have got default argument <code>arg</code> with value <code>POW(2, 4)</code> (it's important to notice, that compiler <b>would not</b> evaluate result of expression <i>2^4</i>, but instead translate it to BIO code which is <i>POW(2, 4)</i>. This is true for all math-log expressions)</p>
+      <br/>
+      <p>So as we saw, math-log parser translates expressions that are inside "{}" to BIO code, which are than parse by main BIO parser. As a result if you write something like this:</p>
+      <p><code>{ 10 + "a" }</code></p>
+      <p>Compile and execute, you will get runtime error: "In function <b>ADD</b> expected 1 parameter to be int or float got string". So "+" sign was replace by compiler with ADD function. Below you can see all operators with precedence from highest to lowest and their associativity:</p>
+
+<div class="scrollable">
+<table class="prec_table">
+<tr>
+   <th style="text-align: left"> Precedence
+   </th>
+   <th style="text-align: left"> Operator
+   </th>
+   <th style="text-align: left"> BIO function
+   </th>
+   <th style="text-align: left"> Associativity
+   </th>
+</tr>
+
+<tr>
+   <th> 1
+   </th>
+
+   <td> <code>(expression)</code>
+   </td>
+   <td> </td>
+   <td style="vertical-align: top" rowspan="1">
+   </td>
+</tr>
+<tr>
+   <th> 2
+   </th>
+   <td style=""> <code>arr[indx]</code>
+   </td>
+   <td style=""> GET(arr, indx) </a>
+   </td>
+   <td style="vertical-align: top" rowspan="1"> Left-to-right
+   </td>
+</tr>
+<tr>
+   <th rowspan="2"> 3
+   </th>
+   <td style="border-bottom-style: none; border-top-style: none"> <code>!a</code>
+   </td>
+   <td style="border-bottom-style: none; border-top-style: none"> NOT(a)</a>
+   </td>
+   <td style="vertical-align: top" rowspan="3"> Right-to-left
+   </td>
+</tr>
+
+<tr>
+   <td style=""> <code>-a</code>
+   </td>
+   <td style=""> NEGATE(a)</a>
+   </td>
+</tr>
+
+<tr>
+   <th> 4
+   </th>
+   <td style="border-bottom-style: none; border-top-style: none"> <code>a^b</code>
+   </td>
+   <td style="border-bottom-style: none; border-top-style: none"> POW(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="3"> 5
+   </th>
+   <td> <code>a*b</code>
+   </td>
+   <td> MUL(a, b)</a>
+   </td>
+   <td style="vertical-align: top" rowspan="16"> Left-to-right
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a/b</code>
+   </td>
+   <td> DIV(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a%b</code>
+   </td>
+   <td> MOD(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="2"> 6
+   </th>
+   <td> <code>a+b</code>
+   </td>
+   <td> ADD(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a-b</code>
+   </td>
+   <td> SUB(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="4"> 7
+   </th>
+   <td> <code>a&lt;b</code>
+   </td>
+   <td> LS(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a&lt;=b</code>
+   </td>
+   <td> LE(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a&gt;b</code>
+   </td>
+   <td> GT(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a&gt;=b</code>
+   </td>
+   <td> GE(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="2"> 8
+   </th>
+   <td> <code>a==b</code>
+   </td>
+   <td> EQ(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <td> <code>a!=b</code>
+   </td>
+   <td> NEQ(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="1"> 9
+   </th>
+   <td> <code>a&amp;&amp;b</code>
+   </td>
+   <td> AND(a, b)</a>
+   </td>
+</tr>
+
+<tr>
+   <th rowspan="2"> 10
+   </th>
+   <td> <code>a||b</code>
+   </td>
+   <td> OR(a, b)</a>
+   </td>
+</tr>
+
+</table>
+</div>
+
+<p><b>Note: </b> that if you use <span style="font-family: monospace">&amp;&amp;</span> or 
+<span style="font-family: monospace">||</span> operator for two expressions for example expr1 and expr2 like this:</p>
+<p><code>{ expr1 &amp;&amp; expr2 }</code></p>
+<p>Than math-log parser would change this into:</p>
+<p><code>AND(expr1, expr2)</code></p>
+<p>So as result, first <b>both</b> expressions will be evaluated, and than used in AND function. This behavior differs from this known from other languages like c++ or python, where first expr1 is evaluated and then if needed expr2.</p>
+
+
+      <br/>
+      <p>One more thing to notice is what types you can use inside expressions. You can use all types that are presented in BIO language, that is: ints (10), floats (10.5), strings ("10"), bools (true), nones (none), ids (x) and struct ids (a.x). One thing you cannot do is calling functions.</p>
    </section>
 
 </section>

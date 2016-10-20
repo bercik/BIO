@@ -1,5 +1,3 @@
-#INCLUDE("test2.bio")
-
 def onSTART()
-   foo()
+   PRINTLN({ 10 + "a" })
 end

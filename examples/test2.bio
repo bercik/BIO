@@ -1,4 +1,0 @@
-def foo()
-   PRINT("test")
-   PRINT(999999999999999999999999999)
-end

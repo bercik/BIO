@@ -125,17 +125,39 @@ h5 {
 dt {
   color: #0062ae; }
 
-table {
+table.prec_table {
+   margin: 1em 0;
+   background-color: #f9f9f9;
+   border: 1px #aaa solid;
+   border-collapse: collapse;
+   color: black;
+}
+
+table.prec_table th {
+   border: 1px #aaa solid;
+   background-color: #f4f4f4;
+}
+
+table.prec_table td {
+   border: 1px #aaa solid;
+   background-color: white;
+   padding-right: 20px;
+   padding-top: 2px;
+   padding-bottom: 2px;
+   padding-left: 5px;
+}
+
+table.enhance_table {
   border-collapse: collapse; }
 
-tr > * {
+table.enhance_table tr > * {
   border-bottom: solid 1px #5CCCEB;
   padding: 0.25em 0.5em; }
 
-tr > *:nth-child(even) {
+table.enhance_table tr > *:nth-child(even) {
   background: #f4f4f4; }
 
-tr:hover > * {
+table.enhance_table tr:hover > * {
   background: #b5f7ff; }
 
 .scrollable {
