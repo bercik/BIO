@@ -1716,7 +1716,6 @@
       <p>You can use math-log parser in any place in your code (except preprocessor directives). So for example you can write something like this:</p>
       <p><code>def foo(arg={2^4})</code></p>
       <p>and function foo will have got default argument <code>arg</code> with value <code>POW(2, 4)</code> (it's important to notice, that compiler <b>would not</b> evaluate result of expression <i>2^4</i>, but instead translate it to BIO code which is <i>POW(2, 4)</i>. This is true for all math-log expressions)</p>
-      <br/>
       <p>So as we saw, math-log parser translates expressions that are inside "{}" to BIO code, which are than parse by main BIO parser. As a result if you write something like this:</p>
       <p><code>{ 10 + "a" }</code></p>
       <p>Compile and execute, you will get runtime error: "In function <b>ADD</b> expected 1 parameter to be int or float got string". So "+" sign was replace by compiler with ADD function. Below you can see all operators with precedence from highest to lowest and their associativity:</p>
@@ -1749,7 +1748,7 @@
    </th>
    <td style=""> <code>arr[indx]</code>
    </td>
-   <td style=""> GET(arr, indx) </a>
+   <td style=""> GET(arr, indx)
    </td>
    <td style="vertical-align: top" rowspan="1"> Left-to-right
    </td>
@@ -1759,7 +1758,7 @@
    </th>
    <td style="border-bottom-style: none; border-top-style: none"> <code>!a</code>
    </td>
-   <td style="border-bottom-style: none; border-top-style: none"> NOT(a)</a>
+   <td style="border-bottom-style: none; border-top-style: none"> NOT(a)
    </td>
    <td style="vertical-align: top" rowspan="3"> Right-to-left
    </td>
@@ -1768,7 +1767,7 @@
 <tr>
    <td style=""> <code>-a</code>
    </td>
-   <td style=""> NEGATE(a)</a>
+   <td style=""> NEGATE(a)
    </td>
 </tr>
 
@@ -1777,7 +1776,7 @@
    </th>
    <td style="border-bottom-style: none; border-top-style: none"> <code>a^b</code>
    </td>
-   <td style="border-bottom-style: none; border-top-style: none"> POW(a, b)</a>
+   <td style="border-bottom-style: none; border-top-style: none"> POW(a, b)
    </td>
 </tr>
 
@@ -1786,23 +1785,23 @@
    </th>
    <td> <code>a*b</code>
    </td>
-   <td> MUL(a, b)</a>
+   <td> MUL(a, b)
    </td>
-   <td style="vertical-align: top" rowspan="16"> Left-to-right
+   <td style="vertical-align: top" rowspan="13"> Left-to-right
    </td>
 </tr>
 
 <tr>
    <td> <code>a/b</code>
    </td>
-   <td> DIV(a, b)</a>
+   <td> DIV(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a%b</code>
    </td>
-   <td> MOD(a, b)</a>
+   <td> MOD(a, b)
    </td>
 </tr>
 
@@ -1811,14 +1810,14 @@
    </th>
    <td> <code>a+b</code>
    </td>
-   <td> ADD(a, b)</a>
+   <td> ADD(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a-b</code>
    </td>
-   <td> SUB(a, b)</a>
+   <td> SUB(a, b)
    </td>
 </tr>
 
@@ -1827,28 +1826,28 @@
    </th>
    <td> <code>a&lt;b</code>
    </td>
-   <td> LS(a, b)</a>
+   <td> LS(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a&lt;=b</code>
    </td>
-   <td> LE(a, b)</a>
+   <td> LE(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a&gt;b</code>
    </td>
-   <td> GT(a, b)</a>
+   <td> GT(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a&gt;=b</code>
    </td>
-   <td> GE(a, b)</a>
+   <td> GE(a, b)
    </td>
 </tr>
 
@@ -1857,14 +1856,14 @@
    </th>
    <td> <code>a==b</code>
    </td>
-   <td> EQ(a, b)</a>
+   <td> EQ(a, b)
    </td>
 </tr>
 
 <tr>
    <td> <code>a!=b</code>
    </td>
-   <td> NEQ(a, b)</a>
+   <td> NEQ(a, b)
    </td>
 </tr>
 
@@ -1873,16 +1872,16 @@
    </th>
    <td> <code>a&amp;&amp;b</code>
    </td>
-   <td> AND(a, b)</a>
+   <td> AND(a, b)
    </td>
 </tr>
 
 <tr>
-   <th rowspan="2"> 10
+   <th rowspan="1"> 10
    </th>
    <td> <code>a||b</code>
    </td>
-   <td> OR(a, b)</a>
+   <td> OR(a, b)
    </td>
 </tr>
 
