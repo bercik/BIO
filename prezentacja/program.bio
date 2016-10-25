@@ -1,0 +1,41 @@
+#INCLUDE("<stdlib/list.biom>")
+
+#INCLUDE("./vect.biom")
+
+def onSTART(args)
+   @ sprawdzamy czy podano dobrą ilość argumentów (nieparzystą)
+   AS_LOC(args_size, SIZE(args))
+   IF
+   (
+      { args_size % 2 == 0 }, 
+      CALL
+      (
+         PRINTLN({ "Usage: " + args[0] + " x1 y1 ... xn yn" }),
+         EXIT()
+      )
+   )
+
+   @ tworzymy listę wektorów
+   AS_LOC(vects, CREATE_LIST())
+   @ iterujemy po przekazanych argumentach od 1 co 2
+   FOR
+   (
+      AS_LOC(i, 1),
+      LS(i, args_size),
+      CALL
+      (
+         @ pobierz współrzędna x, zamień na float i sprawdź czy nie error
+         AS_LOC_RET_IF_ERR(x, TO_FLOAT({ args[i] })),
+         @ pobierz współrzędna y, zamień na float i sprawdź czy nie error
+         AS_LOC(y, TO_FLOAT({ args[i+1] })),
+         IF(IS_ERROR(y), RET(y)),
+         @ stwórz wektor i dodaj do listy
+         APPEND_TO_LIST(vects, create_vect(y=y, x=x))
+      ),
+      AS_LOC(i, { i + 2 })
+   )
+
+   @ dodaj wszystkie wektory w liście
+   AS_LOC(new_vect, FOREACH(GET_ARRAY_LIST(vects), onEACH_vect_op, 1))
+   PRINT("After addition: ", new_vect, "\n")
+end

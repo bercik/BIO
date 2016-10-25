@@ -1,0 +1,20 @@
+- parametry domyślne
+- parametry nazywane
+- struktrury
+- FOREACH
+- parser matematyczno-logiczny
+- raportowanie błędów (znak, linia, plik)
+- parametry cykliczne i opcjonalne (AS_LOC, UNPACK, IF, FOR)
+- aliasy (ASSIGN_LOCAL -> AS_LOC)
+- refleksje (CALL_BY_NAME, GET_USER_FUNCTIONS_NAMES)
+- błędy to wartości, obsługa błędów (nieobsłużony błąd zdarzenie onUNHANDLED_ERROR)
+- preprocesor (INCLUDE, IMPORT)
+- domyślny katalog z plikami ( #INCLUDE("<a.biom>") )
+- moduły (IMPORT)
+- moduł do testów
+
+- optymalizacje kodu przez kompilator
+- deasemblacja kodu
+- profiler
+
+- dokumentacja (css kolegi?)
