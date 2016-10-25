@@ -2,7 +2,18 @@
 
 #INCLUDE("./vect.biom")
 
+def error_handler_1(err)
+   PRINTLN("error_handler_1", err)
+end
+
+def error_handler_2(err)
+   PRINTLN("error_handler_2", err)
+end
+
 def onSTART(args)
+   ATTACH_TO_EVENT(onUNHANDLED_ERROR, error_handler_1)
+   ATTACH_TO_EVENT(error_handler_1, error_handler_2)
+
    @ sprawdzamy czy podano dobrą ilość argumentów (nieparzystą)
    AS_LOC(args_size, SIZE(args))
    IF
