@@ -6,11 +6,11 @@
    xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
    <info>
       <appname>BIO</appname>
-      <appversion>0.1.0</appversion>
+      <appversion>1.0.0</appversion>
       <authors>
          <author name="bercik" email="robert.cebula1@gmail.com" />
       </authors>
-      <url>http://www.rcebula.pl/static/bio</url>
+      <url>http://www.rcebula.ovh/bio</url>
       <javaversion>1.8</javaversion>
       <uninstaller name="bio_uninstaller.jar" path="${INSTALL_PATH}/uninstaller" write="yes"/>
       <run-privileged condition="izpack.linuxinstall"/>
@@ -88,6 +88,12 @@
          <fileset dir="./res/lib" targetdir="$INSTALL_PATH/lib">
             <include  name="**" />
          </fileset>
+
+         <file os="windows" src="./scripts/bio.bat" targetdir="$INSTALL_PATH/bin">
+         </file>
+
+         <file os="windows" src="./scripts/bioc.bat" targetdir="$INSTALL_PATH/bin">
+         </file>
 
          <file os="unix" src="./scripts/unix.sh" targetdir="$INSTALL_PATH/bin">
          </file>
