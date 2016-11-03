@@ -332,6 +332,8 @@ public class Preprocessor
         {
             result += str + "\n";
         }
+        // usuwamy ostatni znak nowej lini
+        result = result.substring(0, result.length() - 1);
 
         return result;
     }

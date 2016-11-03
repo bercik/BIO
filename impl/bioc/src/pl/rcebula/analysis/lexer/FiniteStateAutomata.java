@@ -112,9 +112,19 @@ public class FiniteStateAutomata
         return new ErrorInfo(lineFromBeginningOfFile, chNum, currentErrorFile);
     }
     
-    private ErrorInfo generateErrorInfoWithCurrentToken()
+    private ErrorInfo generateErrorInfo(int chNumOffset)
+    {
+        return new ErrorInfo(lineFromBeginningOfFile, chNum + chNumOffset, currentErrorFile);
+    }
+    
+    public ErrorInfo generateErrorInfoWithCurrentToken()
     {
         return generateErrorInfoWithCurrentToken(0);
+    }
+
+    public String getTokenValue()
+    {
+        return tokenValue;
     }
     
     private ErrorInfo generateErrorInfoWithCurrentToken(int chNumOffset)
@@ -148,7 +158,14 @@ public class FiniteStateAutomata
         Token token;
         Boolean retCh;
 
-        if (newState != -1)
+        // stan zabroniony
+        if (newState == -2)
+        {
+            throw new LexerError(generateErrorInfo(-1),
+                        "Unexpected character \"" + ch + "\" in token \""
+                        + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
+        }
+        else if (newState != -1)
         {
             retCh = false;
             state = newState;
@@ -289,7 +306,7 @@ public class FiniteStateAutomata
             }
             else
             {
-                throw new LexerError(generateErrorInfo(),
+                throw new LexerError(generateErrorInfo(-1),
                         "Unexpected character \"" + ch + "\" in token \""
                         + tokenValue.substring(0, tokenValue.length() - 1) + "\"");
             }
@@ -394,7 +411,7 @@ public class FiniteStateAutomata
         transitionsTable[0][getCharCol('<')] = 16; // znak mniejszości
         transitionsTable[0][getCharCol('"')] = 5; // cudzysłów
         transitionsTable[0][getCharCol(',')] = 13; // przecinek
-        transitionsTable[0][getCharCol('@')] = 8; // procent
+        transitionsTable[0][getCharCol('@')] = 8; // at
         transitionsTable[0][getCharCol('E')] = 3; // litera E
         transitionsTable[0][getCharCol('O')] = 3; // litera O
         transitionsTable[0][getCharCol('F')] = 3; // litera F
@@ -468,6 +485,7 @@ public class FiniteStateAutomata
         
         // stan 23
         transitionsTable[23][getCharCol('}')] = 24; // nawias wąsiasty zamykający
+        transitionsTable[23][getCharCol('{')] = -2; // nawias wąsiasty otwierający
         transitionsTable[23][getEveryCharCol()] = 23; // wszystko inne
         
         // stan 25

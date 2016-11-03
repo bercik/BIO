@@ -17,7 +17,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.xml.sax.SAXException;
 import pl.rcebula.analysis.math_log_parser.MathLogParser;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
