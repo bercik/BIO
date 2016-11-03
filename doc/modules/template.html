@@ -24,6 +24,7 @@
             <li><a href="#basic-info-aliases">Aliases</a></li>
             <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
             <li><a href="#basic-info-math-log-parser">Math-log parser</a></li>
+            <li><a href="#basic-info-structs">Structures</a></li>
          </ul>
       </li>
       {% for m in modules %}
@@ -495,6 +496,35 @@
 
       <br/>
       <p>One more thing to notice is what types you can use inside expressions. You can use all types that are presented in BIO language, that is: ints (10), floats (10.5), strings ("10"), bools (true), nones (none), ids (x) and struct ids (a.x). One thing you cannot do is calling functions.</p>
+   </section>
+
+   <section id="basic-info-structs">
+      <header>
+         <h3>Structures</h3>
+      </header>
+
+      <p>In BIO you can create structures on run. There are two ways to do that. One is by just writing 
+      <b>&lt;struct_name&gt;.&lt;field_name&gt;</b>. Second is by calling function 
+      <a href="#CREATE_STRUCT_fun">CREATE_STRUCT</a>.</p>
+      <p>Example of first way:</p>
+      <p><code>AS_LOC(a.b, 10)</code></p>
+      <p>This will create structure a with field b which value is 10.</p>
+      <p><code>AS_LOC(a.b.c, 10)</code></p>
+      <p>This will create structure a with field b which is also structure with field c which value is 10. 
+      So as you see you can automatically create nested structures. Remember that previous value of a and a.b will be
+      overwritten.</p>
+      <p>To get value from structure field also all you need is type it like that:</p>
+      <p><code>PRINTLN(a.b.c)</code></p>
+      <p><b>Note:</b> that you can assign many fields to structure in one AS_LOC call:</p>
+      <p><code>AS_LOC(vec.x, 10, vec.y, 20)</code></p>
+      <br/>
+      <p>Another option to create structure is to use <code>CREATE_STRUCT</code> function. 
+      Example of creating vector as in example above:</p>
+      <p><code>AS_LOC(vec, CREATE_STRUCT(x, 10, y, 20))</code></p>
+      <p>You can also create nested structures like that:</p>
+      <p><code>AS_LOC(a, CREATE_STRUCT(b.c, 10))</code></p>
+      <p><b>Note:</b> using CREATE_STRUCT you can create empty structure by calling it without parameters:</p>
+      <p><code>AS_LOC(empty_struct, CREATE_STRUCT())</code></p>
    </section>
 
 </section>

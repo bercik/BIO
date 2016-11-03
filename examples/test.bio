@@ -1,3 +1,4 @@
 def onSTART()
-   PRINTLN({  10 + "a" })
+   AS_LOC(empty_struct, CREATE_STRUCT())
+   PRINTLN(empty_struct)
 end
