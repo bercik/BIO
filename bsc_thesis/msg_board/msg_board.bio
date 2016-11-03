@@ -1,0 +1,84 @@
+@ serwis informacyjny, zawierający różne kategorie i podkategorie:
+@ - wszystko
+@ -- sport
+@ --- piłka nożna
+@ --- golf
+@ -- sztuka
+@ --- film
+@ --- muzyka
+
+@ newsy dodane do niższej kategorii należą także do kategorii powyżej
+def add_msg(list_name, msg)
+   AS_LOC(msgs, GET_GLOB(msgs))
+   AS_LOC(msg_list, { msgs[list_name] })
+   APPEND_TO_LIST(msg_list, msg)
+end
+
+def all(msg)
+   add_msg("all", msg)
+end
+
+def sport(msg)
+   add_msg("sport", msg)
+end
+
+def football(msg)
+   add_msg("football", msg)
+end
+
+def golf(msg)
+   add_msg("golf", msg)
+end
+
+def art(msg)
+   add_msg("art", msg)
+end
+
+def film(msg)
+   add_msg("film", msg)
+end
+
+def music(msg)
+   add_msg("music", msg)
+end
+
+def onEach_print_msgs(el, obj)
+   PRINT({ el.key + ": "})
+   PRINT_LIST(el.val)
+end
+
+#INCLUDE("<stdlib/list.biom>")
+
+def onSTART()
+   @ stwórz globalny słownik zawierający listy
+   @ wiadomości dla różnych kategorii
+   AS_GLOB
+   (
+      msgs,
+      CR_DICT
+      (
+         "all", CREATE_LIST(),
+         "sport", CREATE_LIST(),
+         "art", CREATE_LIST(),
+         "football", CREATE_LIST(),
+         "golf", CREATE_LIST(),
+         "film", CREATE_LIST(),
+         "music", CREATE_LIST()
+      )
+   )
+
+   @ ustaw obserwatorów
+   ATTACH_TO_EVENT(football, sport, golf, sport)
+   ATTACH_TO_EVENT(music, art, film, art)
+   ATTACH_TO_EVENT(sport, all, art, all)
+
+   @ dodaj przykładowe wiadomości
+   music("Nowy album zespołu happysad już w styczniu!")
+   art("Książka \"Programowanie w BIO\" osiąga rekordy sprzedaży!")
+   football("Lewandowski znów strzela 2 bramki!")
+   sport("Polscy saneczkarze zdobywają medal na MŚ!")
+   all("WFiIS najlepszym wydziałem na AGH!")
+
+   @ wypisz wiadomości pod różnymi kategoriami
+   FOREACH(GET_GLOB(msgs), onEach_print_msgs)
+end
