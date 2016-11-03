@@ -1,4 +1,19 @@
+def some_event(data, data2)
+   PRINT("some_event", TO_STR(data), TO_STR(data2), "\n")
+end
+
+def foo(data, data2)
+   PRINT("foo", TO_STR(data), TO_STR(data2), "\n")
+end
+
+def foo2(data, data2)
+   PRINT("foo2", TO_STR(data), "\n")
+end
+
 def onSTART()
-   AS_LOC(empty_struct, CREATE_STRUCT())
-   PRINTLN(empty_struct)
+   ATTACH_TO_EVENT(some_event, foo)
+   ATTACH_TO_EVENT(some_event, foo2)
+   some_event("test", "wiadomość")
+   DETACH_FROM_EVENT(some_event, foo)
+   some_event("test", "wiadomość")
 end
