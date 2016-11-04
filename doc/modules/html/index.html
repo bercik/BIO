@@ -19,6 +19,7 @@
          <a href="javascript:void(0)">Basic informations</a>
          <ul>
             <li><a href="#basic-info-data-types">Data types</a></li>
+            <li><a href="#basic-info-naming-conventions">Naming conventions</a></li>
             <li><a href="#basic-info-errors">Errors</a></li>
             <li><a href="#basic-info-conversions">Conversions</a></li>
             <li><a href="#basic-info-aliases">Aliases</a></li>
@@ -1509,6 +1510,62 @@
          <dt>tuple</dt>
          <dd>series of elements of any type. Immutable</dd>
       </dl>
+   </section>
+
+   <section id="basic-info-naming-conventions">
+      <header>
+         <h3>Naming conventions</h3>
+      </header>
+
+      <p>Below are naming conventions for functions and variables in BIO:</p>
+      <div class="scrollable">
+         <table class="enhance_table">
+            <thead>
+               <tr>
+                  <th>what</th>
+                  <th>example</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr><td>variable name (local and global)</td><td>var_name</td></tr>
+               <tr><td>user function name</td><td>fun_name</td></tr>
+               <tr><td>private user function name</td><td>_fun_name</td></tr>
+               <tr><td>built-in function name</td><td>FUN_NAME</td></tr>
+               <tr><td>user event name</td><td>on_event_name</td></tr>
+               <tr><td>built-in event name</td><td>onEVENT_NAME</td></tr>
+               <tr><td>FOREACH function name</td><td>onEACH_function_name</td></tr>
+            </tbody>
+         </table>
+      </div>
+      <p>And for module names:</p>
+      <div class="scrollable">
+         <table class="enhance_table">
+            <thead>
+               <tr>
+                  <th>what</th>
+                  <th>example</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr><td>source code file with onSTART function</td><td>file_name.bio</td></tr>
+               <tr><td>module name</td><td>module_name.biom</td></tr>
+               <tr><td>library name</td><td>library_name.biol</td></tr>
+               <tr><td>test module name</td><td>test_module_name.biot</td></tr>
+            </tbody>
+         </table>
+      </div>
+
+      <h4>About modules</h4>
+      <p>When you are creating module, name functions that are private to this module (that is shouldn't be used from outside this module)
+      with preceding underscore, for example: <code>def _private_function()</code>.</p>
+      <p>Also list all public functions at the top of the module in comment, for example:</p>
+      <p><code>@ public_function1(arg1, arg2) <br/>@ public_function2(arg1)</code></p>
+      <p>It will help someone who wants to use this module or even yourself.</p>
+      <h4>About librarys</h4>
+      <p>Library should contain only <code>#INCLUDE</code> and <code>#IMPORT</code> preprocessor statements.</p>
+      <h4>About test modules</h4>
+      <p>Test module is one that contains include of test.biom module.</p>
+
    </section>
 
    <section id="basic-info-errors">
