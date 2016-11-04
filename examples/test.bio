@@ -1,19 +1,17 @@
-def some_event(data, data2)
-   PRINT("some_event", TO_STR(data), TO_STR(data2), "\n")
+def my_function(arg_one, arg_two)
+   PRINTLN(arg_one, arg_two)
 end
 
-def foo(data, data2)
-   PRINT("foo", TO_STR(data), TO_STR(data2), "\n")
+def onEACH_print(el, obj)
+   PRINTLN(el.val)
 end
 
-def foo2(data, data2)
-   PRINT("foo2", TO_STR(data), "\n")
+def error_handler(err)
+   PRINTLN(err)
 end
 
 def onSTART()
-   ATTACH_TO_EVENT(some_event, foo)
-   ATTACH_TO_EVENT(some_event, foo2)
-   some_event("test", "wiadomość")
-   DETACH_FROM_EVENT(some_event, foo)
-   some_event("test", "wiadomość")
+   ATTACH_TO_EVENT(onUNHANDLED_ERROR, error_handler)
+
+   FOREACH(RANGE(1, 10), onEACH_print)
 end

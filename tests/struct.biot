@@ -1,0 +1,55 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test_creation()
+   AS_LOC(a.b, 10)
+   bt_assert_true(IS_LOCAL(a))
+   bt_assert_true(IS_LOCAL(a.b))
+   bt_assert_false(IS_LOCAL(a.c))
+
+   AS_LOC(a.b.c, "a.b.c")
+   bt_assert_true(IS_LOCAL(a))
+   bt_assert_true(IS_LOCAL(a.b))
+   bt_assert_true(IS_LOCAL(a.b.c))
+   bt_assert_false(IS_LOCAL(a.b.c.d))
+   bt_assert_false(IS_LOCAL(a.c))
+
+   AS_LOC(a, 20)
+   bt_assert_true(IS_LOCAL(a))
+   bt_assert_false(IS_LOCAL(a.b))
+
+   AS_LOC(a.b.c, "a.b.c")
+   AS_LOC(a.b.cc, "a.b.cc")
+   bt_assert_true(IS_LOCAL(a))
+   bt_assert_true(IS_LOCAL(a.b))
+   bt_assert_true(IS_LOCAL(a.b.c))
+   bt_assert_true(IS_LOCAL(a.b.cc))
+   bt_assert_false(IS_LOCAL(a.c))
+
+   bt_assert_eq(a.b.c, "a.b.c")
+   bt_assert_eq(a.b.cc, "a.b.cc")
+end
+
+def test_has_field()
+   AS_LOC(a.b.c, 10)
+   AS_LOC(a.b.d, "test")
+
+   bt_assert_true(HAS_FIELD(a, b))
+   bt_assert_true(HAS_FIELD(a, b.c))
+   bt_assert_true(HAS_FIELD(a, b.d))
+   bt_assert_true(HAS_FIELD(a.b, c))
+
+   bt_assert_false(HAS_FIELD(a, c))
+   bt_assert_false(HAS_FIELD(a, b.c.d))
+
+   bt_assert_error(HAS_FIELD(x, a.b.c.d.e))
+end
+
+def test_create_struct()
+   AS_LOC(struct, CR_STRUCT())
+   bt_assert_true(IS_STRUCT(struct))
+   AS_LOC(struct.x, 10)
+   AS_LOC(struct.y, 20)
+   AS_LOC(struct.x.a, "text")
+   AS_LOC(struct2, CR_STRUCT(x, 10, y, 20, x.a, "text"))
+   bt_assert_eq(struct, struct2)
+end

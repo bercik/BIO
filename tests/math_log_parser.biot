@@ -1,13 +1,13 @@
-#INCLUDE("<stdlib/biotest.biom>")
+#INCLUDE("<stdlib/test.biom>")
 
 def test()
    AS_LOC(a, 10)
    AS_LOC(b, -2.5)
    AS_LOC(tup, CR_TUP(1, 2, 3, 4))
 
-   BT_ASSERT_EQ({ a^2+b^3*tup[1] }, 68.75)
+   bt_assert_eq({ a^2+b^3*tup[1] }, 68.75)
 
-   BT_ASSERT_EQ({ a % 2 - -5 * 15.0 / tup[3] }, 18.75)
+   bt_assert_eq({ a % 2 - -5 * 15.0 / tup[3] }, 18.75)
 
    AS_LOC(arr_size, 5)
    AS_LOC(arr, CR_ARR(arr_size))
@@ -35,5 +35,5 @@ def test()
    )
 
    @ 2 - 4 - 12 * 4^3^2
-   BT_ASSERT_EQ({ arr[1][2] - arr[2][2] - arr[3][4] * 4^3^arr[1][2] }, -3145730)
+   bt_assert_eq({ arr[1][2] - arr[2][2] - arr[3][4] * 4^3^arr[1][2] }, -3145730)
 end

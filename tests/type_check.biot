@@ -1,0 +1,57 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   PRINT("IS_ERROR\n")
+   bt_assert_true(IS_ERROR(GET_GLOBAL(x))) @ true
+   bt_assert_false(IS_ERROR(10)) @ false
+
+   PRINT("IS_INT\n")
+   bt_assert_error(IS_INT(x)) @ error
+   bt_assert_false(IS_INT("abc")) @ false
+   bt_assert_true(IS_INT(10)) @ true
+
+   PRINT("IS_FLOAT\n")
+   bt_assert_false(IS_FLOAT(true)) @ false
+   bt_assert_true(IS_FLOAT(10.0)) @ true
+   bt_assert_false(IS_FLOAT(10)) @ false
+
+   PRINT("IS_BOOL\n")
+   bt_assert_false(IS_BOOL("abc")) @ false
+   bt_assert_true(IS_BOOL(true)) @ true
+
+   PRINT("IS_NONE\n")
+   bt_assert_false(IS_NONE("abc")) @ false
+   bt_assert_true(IS_NONE(none)) @ true
+
+   PRINT("IS_STRING\n")
+   bt_assert_true(IS_STRING("abc")) @ true
+   bt_assert_false(IS_STRING(none)) @ false
+
+   PRINT("IS_ARRAY\n")
+   bt_assert_true(IS_ARRAY(CREATE_ARRAY(1))) @ true
+   bt_assert_false(IS_ARRAY(CREATE_TUPLE())) @ false
+
+   PRINT("IS_TUPLE\n")
+   bt_assert_false(IS_TUPLE(CREATE_ARRAY(1))) @ false
+   bt_assert_true(IS_TUPLE(CREATE_TUPLE())) @ true
+
+   PRINT("IS_DICT\n")
+   bt_assert_false(IS_DICT(CREATE_ARRAY(1))) @ false
+   bt_assert_true(IS_DICT(CREATE_DICT())) @ true
+
+   PRINT("IS_NUMBER\n")
+   bt_assert_false(IS_NUMBER(true)) @ false
+   bt_assert_true(IS_NUMBER(10.0)) @ true
+   bt_assert_true(IS_NUMBER(10)) @ true
+
+   PRINT("IS_COLLECTION\n")
+   bt_assert_true(IS_COLLECTION(CREATE_ARRAY(1))) @ true
+   bt_assert_true(IS_COLLECTION(CREATE_TUPLE())) @ true
+   bt_assert_false(IS_COLLECTION(CREATE_DICT())) @ false
+
+   PRINT("ARE_SAME_TYPE\n")
+   bt_assert_true(ARE_SAME_TYPE(10, 20, 30)) @ true
+   bt_assert_false(ARE_SAME_TYPE(10, 20.0, 30)) @ false
+   bt_assert_error(ARE_SAME_TYPE(10, x, 30)) @ error
+   bt_assert_error(ARE_SAME_TYPE(10, 10.0, x)) @ error
+end

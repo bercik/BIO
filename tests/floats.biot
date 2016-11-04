@@ -1,0 +1,13 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   PRINTLN("CEIL")
+   bt_assert_eq(CEIL(10.5), 11, "") @ 11
+   bt_assert_eq(CEIL(10), 10, "") @ 10
+   bt_assert_eq(CEIL(-10.999), -10, "") @ -10
+
+   PRINTLN("FLOOR")
+   bt_assert_eq(FLOOR(10.5), 10, "") @ 10
+   bt_assert_eq(FLOOR(10), 10, "") @ 10
+   bt_assert_eq(FLOOR(-10.999), -11, "") @ -11
+end
