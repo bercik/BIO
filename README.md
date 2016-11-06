@@ -11,5 +11,5 @@ Programming language, name is acronym of words: built in observer.
 
 ## Read:
 
-1. [tutorial](http://rcebula.pl/bio/tutorial/ "tutorial")
-2. [documentation](http://rcebula.pl/bio/doc/ "documentation")
+1. [tutorial](http://rcebula.ovh/bio/tutorial/ "tutorial")
+2. [documentation](http://rcebula.ovh/bio/doc/ "documentation")
