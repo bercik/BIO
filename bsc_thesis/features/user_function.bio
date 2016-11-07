@@ -1,0 +1,8 @@
+
+def foo(arg1, arg2)
+   PRINTLN(arg1, arg2)
+end
+
+def onSTART()
+   foo(1, "text")
+end

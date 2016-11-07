@@ -1,0 +1,9 @@
+def onSTART()
+
+   AS_LOC(vect.x, 10, vect.y, 20)
+
+   AS_LOC(dist, SQRT({ vect.x ^ 2 + vect.y ^ 2 }))
+
+   PRINTLN(dist)
+
+end

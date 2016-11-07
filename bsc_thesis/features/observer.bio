@@ -1,0 +1,15 @@
+def some_event()
+   DN()
+end
+
+def on_some_event()
+   DN()
+end
+
+def onSTART()
+
+   ATTACH_TO_EVENT(some_event, on_some_event)
+   IS_ATTACHED(some_event, on_some_event)
+   DETACH_FROM_EVENT(some_event, on_some_event)
+
+end

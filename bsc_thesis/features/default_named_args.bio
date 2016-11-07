@@ -1,0 +1,9 @@
+def onSTART()
+
+   foo(arg2="text", arg1=true)
+
+end
+
+def foo(arg1, arg2=10, arg3=CREATE_STRUCT())
+   PRINTLN(arg1, arg2, arg3)
+end

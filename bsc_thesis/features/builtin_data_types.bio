@@ -1,0 +1,14 @@
+def onSTART()
+
+   AS_LOC(arr, CREATE_ARRAY(10))
+   AS_LOC(flag, true)
+   AS_LOC(dict, CREATE_DICT("Jan", 1, "Feb", 2))
+   AS_LOC(err, CREATE_ERROR("Error message", none, none))
+   AS_LOC(float, 10.5)
+   AS_LOC(int, -25)
+   AS_LOC(none_val, none)
+   AS_LOC(string, "some text")
+   AS_LOC(person, CREATE_STRUCT(name, "Bob", age, 22))
+   AS_LOC(tuple, CREATE_TUPLE(10, "text", true))
+
+end

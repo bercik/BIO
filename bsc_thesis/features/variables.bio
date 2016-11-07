@@ -1,0 +1,6 @@
+def onSTART()
+   
+   AS_LOC(local_var, 10)
+   AS_GLOB(global_var, 10)
+
+end

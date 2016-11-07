@@ -1,0 +1,6 @@
+def onSTART()
+
+   AS_LOC(a, 10)
+   ASSIGN_LOCAL(a, 10)
+
+end

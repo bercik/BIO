@@ -1,0 +1,10 @@
+
+#INCLUDE("<stdlib/test.biom>")
+
+def test1()
+   bt_assert_eq(10, 20)
+end
+
+def test2()
+   bt_assert_true(false, "some message")
+end

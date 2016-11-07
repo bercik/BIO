@@ -1,0 +1,6 @@
+def onSTART()
+
+   AS_LOC(żółć, 10)
+   AS_LOC(æąœßż, "text")
+
+end
