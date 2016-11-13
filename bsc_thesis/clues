@@ -1,8 +1,12 @@
-1. motywacja (dlaczego)
-2. funkcjonalność języka (co się udało zrobić)
-3. semantyka
-4. realizacja (elementy: procesor, obsługa błędów, interpreter, lekser, parser)
-5. przykłady funkcjonalności, przykład instalacji, uruchomienia
-6. podsumowanie (co bym zmienił, co się nie udało, plany na przyszłość)
+1. motywacja-wstęp (dlaczego)
+2. funkcjonalność języka (co planuję zrobić, w punktach krótko)
+3. semantyka (kluczowe elementy, przypisanie, pętla FOR, definicja funkcji)
+4. realizacja (elementy: preprocesor, obsługa błędów, interpreter, lekser, parser, 
+		kod pośredni)
+5. funkcjonalność zrealizowana (aktualny rozdział 3.)
+6. 2-3 przykłady funkcjonalności, przykład instalacji, uruchomienia
+7. podsumowanie (co bym zmienił, co się nie udało, plany na przyszłość)
 
 załączniki: dokumentacja
+
+- przerobić kawałki kodu na białym tle
