@@ -1,0 +1,7 @@
+def onSTART()
+   
+   AS_LOC(flag, true)
+
+   IF(flag, PRINTLN("true"), PRINTLN("false"))
+
+end

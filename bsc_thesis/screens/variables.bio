@@ -1,0 +1,8 @@
+def onSTART()
+
+   AS_LOC(a, 10)
+   AS_GLOB(a, "text")
+   PRINTLN(a)
+   PRINTLN(GET_GLOB(a))
+
+end

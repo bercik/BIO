@@ -1,0 +1,10 @@
+def onSTART()
+
+   fun_name("sum: ", arg3=10, arg2=-20.5)
+
+end
+
+def fun_name(arg1, arg2, arg3=10)
+   PRINTLN(arg1)
+   PRINTLN(ADD(arg2, arg3))
+end
