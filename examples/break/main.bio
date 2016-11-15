@@ -1,0 +1,5 @@
+def onSTART()
+   AS_LOC(a, 10, b, "text")
+   PRINTLN({ a + 
+#INCLUDE("add.bio")
+end
