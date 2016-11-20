@@ -27,6 +27,7 @@
             <li><a href="#basic-info-preprocessor">Preprocessor</a></li>
             <li><a href="#basic-info-math-log-parser">Math-log parser</a></li>
             <li><a href="#basic-info-structs">Structures</a></li>
+            <li><a href="#basic-info-def-named-params">Default and named parameters</a></li>
          </ul>
       </li>
       {% for m in modules %}
@@ -583,6 +584,34 @@
       <p><code>AS_LOC(a, CREATE_STRUCT(b.c, 10))</code></p>
       <p><b>Note:</b> using CREATE_STRUCT you can create empty structure by calling it without parameters:</p>
       <p><code>AS_LOC(empty_struct, CREATE_STRUCT())</code></p>
+   </section>
+
+   <section id="basic-info-def-named-params">
+      <header>
+         <h3>Default and named parameters</h3>
+      </header>
+      <h4>Default parameters</h4>
+      <p>When you are declaring function you can specify its default parameters. Default parameters must occur after non-default parameters. 
+      Value of default parameter could be any of following: int, float, string, none, bool, function call. If you want for example array 
+      as default parameter you need to use CREATE_ARRAY function to achive this. <b>Note:</b> that you can't use identifiers in default parameter.
+      So for example this is invalid:</p>
+      <p><code>def foo(arg=AS_LOC(a, 10))</code></p>
+      <p>Because you are using <i>a</i> identifier.</p>
+      <p>Example of valid function declaration with few default parameters:</p>
+      <p><code>def foo(arg1, arg2, arg3=10, arg4=CREATE_ARRAY(10), arg5=CREATE_STRUCT(x, 0, y, 0))</code></p>
+      <p>When someone call function <i>foo</i> they can ommit default parameters that is arg3, arg4 and arg5.</p>
+      <h4>Named parameters</h4>
+      <p>When you are calling user function, you can specify for which parameter you want to pass value by naming it. Named parameters must occur after
+      not-named parameters. So for example for function <i>foo</i> that are declared above you can call it like this:</p>
+      <p><code>foo(20, arg5="text", arg2=SQRT(SUM(arr)))</code></p>
+      <p>Then values of arguments passed to function will be:</p>
+      <ol>
+         <li>arg1 - 20</li>
+         <li>arg2 - SQRT(SUM(arr))</li>
+         <li>arg3 - 10</li>
+         <li>arg4 - CREATE_ARRAY(10)</li>
+         <li>arg5 - "text"</li>
+      </ol>
    </section>
 
 </section>

@@ -1,34 +1,6 @@
-def my_function(arg_one, arg_two)
-   PRINTLN(arg_one, arg_two)
-end
-
-def onEACH_print2(el, obj)
-   PRINTLN(el.val)
-end
-
-def onEACH_print(el, obj)
-   FOREACH(MUL(RANGE(1, 10), CR_TUP_OF_EL(10, 2)), onEACH_print2)
-
-   PRINTLN(el.val)
-end
-
-def error_handler(err)
-   PRINTLN(err)
-end
-
-def on_some_event()
-   DN()
-end
-
-def some_event_observer()
-   PRINT("observer\n")
-end
-
 def onSTART()
-   ATTACH_TO_EVENT(onUNHANDLED_ERROR, error_handler)
-   ATTACH_TO_EVENT(on_some_event, some_event_observer)
-
-   on_some_event()
-
-   FOREACH(RANGE(1, 10), onEACH_print)
+   AS_LOC(a, 0)
+   AS_LOC(b, a)
+   INC(a)
+   PRINTLN(a, b)
 end
