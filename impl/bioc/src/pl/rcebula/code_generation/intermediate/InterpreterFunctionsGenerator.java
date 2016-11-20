@@ -164,8 +164,8 @@ public class InterpreterFunctionsGenerator
         {
             fields.add(new IntStringField(i));
         }
-        // dodajemy 0 na końcu
-        fields.add(new IntStringField(0));
+        // dodajemy 0 na końcu, ale takie które nie będzie wyświetlane
+        fields.add(new IntStringField(0, ""));
 
         return new Line(fields);
     }
