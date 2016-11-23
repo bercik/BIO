@@ -1,6 +1,8 @@
+def add(arg1, arg2)
+   RETURN({ arg1 + arg2 })
+end
+
 def onSTART()
-   AS_LOC(a, 0)
-   AS_LOC(b, a)
-   INC(a)
-   PRINTLN(a, b)
+   AS_LOC(sum, add(arg2=10, arg1=20))
+   PRINTLN(sum)
 end
