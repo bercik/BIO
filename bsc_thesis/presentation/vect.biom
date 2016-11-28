@@ -1,4 +1,9 @@
+
+@ tworzy wektor (struktura z polami x i y)
+@ domyślne wartości parametrów x i y to 0.0
 def create_vect(x=0.0, y=0.0)
+   @ stwórz strukturę v z polami x i y
+   @ przypisz im wartości x i y
    AS_LOC(v.x, x, v.y, y)
    RET(v)
 end
@@ -7,6 +12,9 @@ end
 def dist_vect(vec1, vec2)
    RET
    (
+      @ przykład użycia parsera matematyczno-logicznego
+      @ odpowiednikiem poniższego kodu bez użycia parsera byłoby:
+      @ SQRT( ADD ( POW ( SUB ( vec1.x, vec2.x ), 2 ), POW ( SUB ( vec1.y, vec2.y ), 2 ) ) )
       SQRT ( { (vec1.x - vec2.x)^2 + (vec1.y - vec2.y)^2 } )
    )
 end
@@ -27,6 +35,8 @@ end
 
 @ wykonuje funkcję podaną jako parametr na dwóch wektorach
 def perform_op(vec1, vec2, op)
+   @ przykład użycia mechanizmu refleksji
+   @ wywołanie funkcji na podstawie jej nazwy przekazanej w zmiennej typu string
    RET(CALL_BY_NAME(op, vec1, vec2))
 end
 
@@ -38,9 +48,10 @@ def onEACH_vect_op(el, obj)
    @ inicjalizacja
    IF(NOT(HAS_FIELD(obj, new_vect)), AS_LOC(obj.new_vect, create_vect()))
    @ sprawdzenie jaką funkcję mamy wywołać
-   IF({ obj.addPar == 1}, AS_LOC(op, "add_vector"), AS_LOC(op, "sub_vector")) 
+   IF({ obj.add_par == 1}, AS_LOC(op, "add_vector"), AS_LOC(op, "sub_vector")) 
    @ wywołanie funkcji
    AS_LOC(obj.new_vect, perform_op(obj.new_vect, el.val, op))
    @ zwrócenie nowego wektora
    RET(obj.new_vect)
 end
+

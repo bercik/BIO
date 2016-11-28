@@ -1,17 +1,26 @@
+
+@ załączenie pliku list.biom z standardowej lokalizacji
+@ zawiera funkcje do operacji na listach (create_list, append_to_list, ...)
 #INCLUDE("<stdlib/list.biom>")
 
+@ załączenie pliku vect.biom
+@ zawiera funkcje do operacji na wektorach (create_vect, add_vector, ...)
 #INCLUDE("./vect.biom")
 
+@ przykładowa funkcja-obserwator dla zdarzenia onUNHANDLED_ERROR
 def error_handler_1(err)
    PRINTLN("error_handler_1", err)
 end
 
+@ przykładowa funkcja-obserwator dla zdarzenia onUNHANDLED_ERROR
 def error_handler_2(err)
    PRINTLN("error_handler_2", err)
 end
 
 def onSTART(args)
+   @ przypisanie obserwatora error_handler_1 do zdarzenia onUNHANDLED_ERROR
    ATTACH_TO_EVENT(onUNHANDLED_ERROR, error_handler_1)
+   @ przypisanie obserwatora error_handler_2 do zdarzenia error_handler_1
    ATTACH_TO_EVENT(error_handler_1, error_handler_2)
 
    @ sprawdzamy czy podano dobrą ilość argumentów (nieparzystą)
@@ -19,6 +28,8 @@ def onSTART(args)
    IF
    (
       { args_size % 2 == 0 }, 
+      @ CALL to funkcja specjalna, która umożliwia nam na wykonanie więcej
+      @ niż jednej funkcji w danym miejscu
       CALL
       (
          PRINTLN({ "Usage: " + args[0] + " x1 y1 ... xn yn" }),
@@ -27,7 +38,7 @@ def onSTART(args)
    )
 
    @ tworzymy listę wektorów
-   AS_LOC(vects, CREATE_LIST())
+   AS_LOC(vects, create_list())
    @ iterujemy po przekazanych argumentach od 1 co 2
    FOR
    (
@@ -38,15 +49,21 @@ def onSTART(args)
          @ pobierz współrzędna x, zamień na float i sprawdź czy nie error
          AS_LOC_RET_IF_ERR(x, TO_FLOAT({ args[i] })),
          @ pobierz współrzędna y, zamień na float i sprawdź czy nie error
+         @ równoważne z kodem powyżej
          AS_LOC(y, TO_FLOAT({ args[i+1] })),
          IF(IS_ERROR(y), RET(y)),
          @ stwórz wektor i dodaj do listy
-         APPEND_TO_LIST(vects, create_vect(y=y, x=x))
+         @ przykład użycia nazywanych argumentów funkcji
+         append_to_list(vects, create_vect(y=y, x=x))
       ),
+      @ inkrementacja zmiennej i o 2
       AS_LOC(i, { i + 2 })
    )
 
    @ dodaj wszystkie wektory w liście
-   AS_LOC(new_vect, FOREACH(GET_ARRAY_LIST(vects), onEACH_vect_op, 1))
-   PRINT("After addition: ", new_vect, "\n")
+   @ przykład użycia funkcji FOREACH
+   AS_LOC(new_vect, FOREACH(get_array_list(vects), onEACH_vect_op, 1))
+   @ wypisanie wartości zsumowanych wektorów
+   PRINT("Vector sum:", new_vect, "\n")
 end
+
