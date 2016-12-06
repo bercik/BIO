@@ -1,3 +1,5 @@
+
+
 def attach_to_event(subject, observer):
     subject.observers.append(observer)
 

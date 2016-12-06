@@ -1,4 +1,5 @@
 
+
 def onEACH_sum(el, obj)
    IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
    AS_LOC(obj.sum, { obj.sum + el.val })

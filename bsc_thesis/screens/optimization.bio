@@ -1,0 +1,21 @@
+def onSTART()
+   ASSIGN_LOCAL(i, TO_INT(INPUT("Podaj liczbę całkowitą: ")))
+   IF(IS_ERROR(i), CALL(PRINTLN("To nie liczba całkowita!"), EXIT()))
+
+   FOR
+   (
+      DN(),
+      true,
+      CALL
+      (
+         IF(EQ(i, 1), CALL(PRINTLN("jeden"), BREAK())),
+         IF(EQ(i, 2), CALL(PRINTLN("dwa"), BREAK())),
+         IF(EQ(i, 3), CALL(PRINTLN("trzy"), BREAK())),
+         IF(EQ(i, 4), CALL(PRINTLN("cztery"), BREAK())),
+         IF(EQ(i, 5), CALL(PRINTLN("pięć"), BREAK())),
+         PRINTLN("Umiem wypisać tylko dla liczb od jeden do pięć"),
+         BREAK()
+      ),
+      DN()
+   )
+end
