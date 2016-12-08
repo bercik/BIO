@@ -1,6 +1,5 @@
-@ #IMPORT("tcp")
-
-#INCLUDE("tcp_mock.biom")
+#IMPORT("tcp")
+@ #INCLUDE("tcp_mock.biom")
 
 def convert_answer_based_on_answer_type(answer, answer_type)
    IF({ answer_type == "int" }, AS_LOC(answer, TO_INT(answer)))

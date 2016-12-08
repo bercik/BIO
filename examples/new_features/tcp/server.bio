@@ -1,8 +1,8 @@
-@ #IMPORT("tcp")
+#IMPORT("tcp")
+@ #INCLUDE("tcp_mock.biom")
 
 #INCLUDE("<stdlib/list.biom>")
 
-#INCLUDE("tcp_mock.biom")
 
 @ server listens for connection, and then sends to client questions 
 @ and recives answers.
