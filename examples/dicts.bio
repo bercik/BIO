@@ -1,10 +1,10 @@
-% używamy słownika jak struktury, definiując metody tworzące
-% i operujące na nim
+@ używamy słownika jak struktury, definiując metody tworzące
+@ i operujące na nim
 
 def onSTART()
-   % tworzymy wektor
+   @ tworzymy wektor
    ASSIGN_LOCAL(vect, create_vect(2, 3))
-   % wypisujemy jego długość
+   @ wypisujemy jego długość
    PRINT(dist(vect), "\n")
 end
 

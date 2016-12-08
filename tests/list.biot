@@ -1,0 +1,28 @@
+#INCLUDE("<stdlib/test.biom>")
+#INCLUDE("<stdlib/list.biom>")
+
+def test()
+   ASSIGN_LOCAL(list, create_list(1)) @ <>
+   bt_assert_eq(get_array_list(list), CR_TUP())
+
+   append_to_list(list, 1) @ <1>
+   bt_assert_eq(get_array_list(list), CR_TUP(1))
+
+   append_to_list(list, 3) @ extend list, new_size = 2 <1, 3>
+   bt_assert_eq(get_array_list(list), CR_TUP(1, 3))
+
+   append_to_list(list, 4) @ extend list, new_size = 4 <1, 3, 4>
+   bt_assert_eq(get_array_list(list), CR_TUP(1, 3, 4))
+
+   insert_into_list(list, 1, 2) @ <1, 2, 3, 4>
+   bt_assert_eq(get_array_list(list), CR_TUP(1, 2, 3, 4))
+
+   remove_from_list(list, index_of_item_list(list, 2)) @ <1, 3, 4>
+   bt_assert_eq(get_array_list(list), CR_TUP(1, 3, 4))
+
+   insert_into_list(list, 0, 2) @ <2, 1, 3, 4>
+   bt_assert_eq(get_array_list(list), CR_TUP(2, 1, 3, 4))
+
+   insert_into_list(list, 3, 10) @ extend list, new_size = 8 <2, 1, 3, 10, 4>
+   bt_assert_eq(get_array_list(list), CR_TUP(2, 1, 3, 10, 4))
+end

@@ -120,10 +120,10 @@ public class IterModule extends Module
 
                 // stwórz strukturę przekazywaną pomiędzy kolejnymi wywołaniami funkcji
                 Struct objStruct = new Struct();
-                // dodaj pole addPar jeżeli to konieczne
+                // dodaj pole add_par jeżeli to konieczne
                 if (addPar != null)
                 {
-                    objStruct.addField("addPar", addPar);
+                    objStruct.addField("add_par", addPar);
                 }
                 // utwórz Data struct
                 foreachInfo.obj = Data.createStructData(objStruct);

@@ -1,0 +1,7 @@
+
+@ program wypisze na ekran tekst "Hello world!"
+def onSTART()
+   PRINTLN("Hello World!")
+end
+
+

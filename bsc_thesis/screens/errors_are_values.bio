@@ -1,0 +1,7 @@
+def onSTART()
+
+   AS_LOC(a, TO_INT(true))
+   IF(IS_ERROR(a), PRINTLN("conversion error"))
+   PRINTLN(a)
+
+end

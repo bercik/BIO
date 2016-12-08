@@ -1,0 +1,185 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test_tuple()
+   @ tworzymy tuplę
+   ASSIGN_LOCAL(tup, CREATE_TUPLE(1, 5.3, -1.4))
+   @ spodziewana tupla
+   ASSIGN_LOCAL(expected_tup, CREATE_TUPLE(-1, -5.3, 1.4))
+   @ negujemy wszystkie liczby
+   ASSIGN_LOCAL(tup, MUL(tup, CREATE_TUPLE_OF_ELEMENTS(SIZE(tup), -1)))
+   @ sprawdzamy
+   bt_assert_eq(tup, expected_tup, "")
+end
+
+def test_range()
+   bt_assert_eq(RANGE(1, 5), CREATE_TUPLE(1, 2, 3, 4, 5), "")
+   bt_assert_true(IS_ERROR(RANGE(1.0, 10)), "") @ error
+   bt_assert_true(IS_ERROR(RANGE(10, 1)), "") @ error
+end
+
+def test_array()
+   @ tworzymy tablicę
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(2))
+   bt_assert_eq(arr, CREATE_TUPLE(none, none), "")
+   bt_assert_true(IS_ERROR(CREATE_ARRAY(-2)), "") @ error
+end
+
+def test_dict()
+   bt_assert_true(IS_ERROR(CREATE_DICT(true, "asd")), "") @ error
+end
+
+def test_set()
+   AS_LOC(arr, CREATE_ARRAY(2))
+   AS_LOC(dict, CREATE_DICT("el1", 10, "el2", none))
+   bt_assert_true(IS_ERROR(SET(arr, 10, "siema")), "") @ error
+   bt_assert_true(IS_ERROR(SET(dict, 10, "siema")), "") @ error
+   SET(dict, "el1", arr)
+   SET(arr, 0, "siema")
+   bt_assert_eq(arr, CREATE_TUPLE("siema", none), "")
+   bt_assert_eq(GET(dict, "el1"), CREATE_TUPLE("siema", none), "")
+end
+
+def test_get()
+   AS_LOC(tup, CREATE_TUPLE("siema", none))
+   AS_LOC(dict, CREATE_DICT("el1", 10, "el2", none))
+   bt_assert_error(GET(tup, 10), "") @ error
+   bt_assert_error(GET(dict, "el3"), "") @ error
+   bt_assert_eq(GET(tup, 0), "siema", "")
+   bt_assert_eq(GET(dict, "el1"), 10, "")
+end
+
+def test_size()
+   bt_assert_eq(SIZE(CREATE_ARRAY(3)), 3, "")
+end
+
+def test_copy()
+   AS_LOC(arr, TO_ARR(CR_TUP("siema", none)))
+   ASSIGN_LOCAL(arr2, arr)
+   SET(arr2, 1, 10)
+   bt_assert_eq(arr, CREATE_TUPLE("siema", 10), "")
+   bt_assert_eq(arr2, CREATE_TUPLE("siema", 10), "")
+   ASSIGN_LOCAL(arr2, COPY(arr))
+   SET(arr2, 1, 20)
+   bt_assert_eq(arr, CREATE_TUPLE("siema", 10), "")
+   bt_assert_eq(arr2, CREATE_TUPLE("siema", 20), "")
+   AS_LOC(dict, CREATE_DICT("el1", arr, "el2", true))
+   ASSIGN_LOCAL(dict2, COPY(dict))
+   SET(dict2, "el1", -2.5)
+   bt_assert_eq(dict, CREATE_DICT("el1", arr, "el2", true), "")
+   bt_assert_eq(dict2, CREATE_DICT("el1", -2.5, "el2", true), "")
+
+   ASSIGN_LOCAL(struct.x, 10)
+   ASSIGN_LOCAL(struct2, struct)
+   ASSIGN_LOCAL(struct2.y, 20)
+   bt_assert_eq(struct, struct2)
+
+   @ clear structure struct and struct2
+   ASSIGN_LOCAL(struct, none, struct2, none)
+   ASSIGN_LOCAL(struct.x, 10)
+   ASSIGN_LOCAL(struct2, COPY(struct))
+   ASSIGN_LOCAL(struct2.y, 20)
+   bt_assert_neq(struct, struct2)
+
+   @ clear structure struct and struct2
+   ASSIGN_LOCAL(struct, none, struct2, none)
+   ASSIGN_LOCAL(struct.x.y, 10)
+   ASSIGN_LOCAL(struct2, COPY(struct))
+   ASSIGN_LOCAL(struct2.x.z, 20)
+   bt_assert_neq(struct, struct2)
+end
+
+def test_deep_copy()
+   AS_LOC(arr, TO_ARR(CR_TUP("siema", none)))
+   AS_LOC(dict, CREATE_DICT("el1", arr, "el2", true))
+   ASSIGN_LOCAL(dict3, DEEP_COPY(dict))
+   SET(GET(dict3, "el1"), 1, true)
+   bt_assert_eq(dict, CREATE_DICT("el1", CREATE_TUPLE("siema", none), "el2", true), "")
+   bt_assert_eq(dict3, CREATE_DICT("el1", CREATE_TUPLE("siema", true), "el2", true), "")
+
+   AS_LOC(a.b.c, CR_DICT("el1", 10, "el2", 20))
+   AS_LOC(b, DEEP_COPY(a))
+   SET(b.b.c, "el1", 20)
+   bt_assert_neq(a, b)
+end
+
+def test_extend_array()
+   ASSIGN_LOCAL(arr, CREATE_ARRAY(2))
+   SET(arr, 0, 10)
+   SET(arr, 1, 20)
+   ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, 4))
+   SET(arr, 2, 30)
+   bt_assert_eq(arr, CREATE_TUPLE(10, 20, 30, none), "")
+   ASSIGN_LOCAL(arr, EXTEND_ARRAY(arr, 1))
+   bt_assert_eq(arr, CREATE_TUPLE(10), "")
+end
+
+def test_unpack()
+   UNPACK(x, y, z, RANGE(1, 5))
+   bt_assert_eq(x, 1, "")
+   bt_assert_eq(y, 2, "")
+   bt_assert_eq(z, CREATE_TUPLE(3, 4, 5), "")
+   UNPACK(x, y, z, RANGE(1, 3))
+   bt_assert_eq(x, 1, "")
+   bt_assert_eq(y, 2, "")
+   bt_assert_eq(z, 3, "")
+   bt_assert_error(UNPACK(x, y, z, k, RANGE(1, 3)), "") @ error
+end
+
+def test_contains()
+   AS_LOC(arr, TO_ARR(CR_TUP(10, 15, "abc")))
+   bt_assert_true(CONTAINS(arr, 10), "")
+   bt_assert_false(CONTAINS(arr, "siema"), "")
+end
+
+def test_contains_key()
+   AS_LOC(dict, CREATE_DICT("el1", none, "el2", true))
+   bt_assert_true(CONTAINS_KEY(dict, "el1"), "") @ true
+   bt_assert_false(CONTAINS_KEY(dict, "el4"), "") @ false
+end
+
+def test_contains_value()
+   AS_LOC(dict, CREATE_DICT("el1", none, "el2", true))
+   bt_assert_true(CONTAINS_VALUE(dict, true), "")
+   bt_assert_false(CONTAINS_VALUE(dict, "cos"), "")
+end
+
+def test_count_elements()
+   ASSIGN_LOCAL(tup, CREATE_TUPLE(10, true, none, 10, -10, "10"))
+   bt_assert_eq(COUNT_ELEMENTS(tup, 10), 2, "")
+   ASSIGN_LOCAL(dict, CREATE_DICT("el1", 10, "el2", true, "el3", none, "el4", "siema", "el5", 10, "el6", "10"))
+   bt_assert_eq(COUNT_ELEMENTS(dict, 10), 2, "")
+end
+
+def test_sort()
+   bt_assert_eq(SORT_ASC(CREATE_TUPLE(1, 0.5, 1.5, 2.5, -2.0, 3.5)), 
+      CREATE_TUPLE(-2.0, 0.5, 1, 1.5, 2.5, 3.5), "")
+   bt_assert_eq(SORT_ASC(CREATE_TUPLE("b", "a", "ab", "ba", "c", "xyz", "adsd")), 
+      CREATE_TUPLE("a", "ab", "adsd", "b", "ba", "c", "xyz"), "")
+   bt_assert_error(SORT_ASC(CREATE_TUPLE("b", 1)), "")
+   bt_assert_error(SORT_ASC(CREATE_TUPLE(true, 1)), "")
+
+   bt_assert_eq(SORT_DESC(CREATE_TUPLE(1, 0.5, 1.5, 2.5, -2.0, 3.5)),
+      CREATE_TUPLE(3.5, 2.5, 1.5, 1, 0.5, -2.0), "")
+   bt_assert_eq(SORT_DESC(CREATE_TUPLE("b", "a", "ab", "ba", "c", "xyz", "adsd")),
+      CREATE_TUPLE("xyz", "c", "ba", "b", "adsd", "ab", "a"), "")
+end
+
+def test_get_keys()
+   AS_LOC(dict, CREATE_DICT("el1", none, "el2", true))
+   bt_assert_eq(GET_KEYS(dict), CREATE_TUPLE("el2", "el1"), "")
+end
+
+def test_remove_key()
+   AS_LOC(dict, CREATE_DICT("el1", none, "el2", true))
+   REMOVE_KEY(dict, "el1")
+   bt_assert_eq(GET_KEYS(dict), CREATE_TUPLE("el2"), "")
+   bt_assert_error(REMOVE_KEY(dict, "el1"), "") @ error
+end
+
+def test_slice()
+   ASSIGN_LOCAL(arr, RANGE(1, 4))
+   bt_assert_eq(SLICE(arr, 0, SIZE(arr)), CREATE_TUPLE(1, 2, 3, 4), "")
+   bt_assert_eq(SLICE(arr, 1, 2), CREATE_TUPLE(2), "")
+   bt_assert_eq(SLICE(arr, 1, 3), CREATE_TUPLE(2, 3), "")
+   bt_assert_error(SLICE(arr, 0, 5), "") @ error
+end

@@ -1,0 +1,39 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   AS_LOC(a, 10)
+   AS_LOC(b, -2.5)
+   AS_LOC(tup, CR_TUP(1, 2, 3, 4))
+
+   bt_assert_eq({ a^2+b^3*tup[1] }, 68.75)
+
+   bt_assert_eq({ a % 2 - -5 * 15.0 / tup[3] }, 18.75)
+
+   AS_LOC(arr_size, 5)
+   AS_LOC(arr, CR_ARR(arr_size))
+
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, SIZE(arr)),
+      SET(arr, i, CR_ARR(arr_size)),
+      INC(i)
+   )
+
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, SIZE(arr)),
+      FOR
+      (
+         AS_LOC(j, 0),
+         LS(j, arr_size),
+         SET(GET(arr, i), j, { i * j }),
+         INC(j)
+      ),
+      INC(i)
+   )
+
+   @ 2 - 4 - 12 * 4^3^2
+   bt_assert_eq({ arr[1][2] - arr[2][2] - arr[3][4] * 4^3^arr[1][2] }, -3145730)
+end

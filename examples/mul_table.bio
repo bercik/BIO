@@ -1,6 +1,6 @@
 def onSTART()
-   % konstruujemy tablicę dwuwymiarową, która zawiera tabliczkę mnożenia
-   % następnie wypisujemy na ekran
+   @ konstruujemy tablicę dwuwymiarową, która zawiera tabliczkę mnożenia
+   @ następnie wypisujemy na ekran
    ASSIGN_LOCAL(tab, construct_tab(4, 5))
    print_tab(tab)
 end

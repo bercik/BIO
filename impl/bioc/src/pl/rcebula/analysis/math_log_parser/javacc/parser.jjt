@@ -1339,7 +1339,7 @@ void indx_ex_1() #INDX_EX_1 :
         t = <OPEN_INDX>
         Expression()
         <CLOSE_INDX>
-	    indx_ex_1()
+	indx_ex_1()
         {
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;

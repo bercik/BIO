@@ -1,0 +1,11 @@
+def onSTART()
+
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, 10),
+      PRINTLN(i),
+      INC(i)
+   )
+
+end

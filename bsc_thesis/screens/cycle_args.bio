@@ -1,0 +1,8 @@
+def onSTART()
+
+   UNPACK(a, b, c, RANGE(1, 3))
+   UNPACK(d, e, RANGE(0, 3))
+   AS_LOC(a, 1, b, 2, c, 3)
+   AS_LOC(d, 0, e, CR_TUP(1, 2, 3))
+
+end

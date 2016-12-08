@@ -1,7 +1,21 @@
 #INCLUDE("list.biom")
 
-def retListWithStringsStartsWith(el, obj)
-   IF(NOT(HAS_FIELD(obj, list)), AS_LOC(obj.list, CREATE_LIST()))
-   IF(STARTS_WITH(el.val, obj.addPar), APPEND_TO_LIST(obj.list, el.val))
+def onEACH_ret_list_with_strings_starts_with_case_sensitive(el, obj)
+   IF(NOT(HAS_FIELD(obj, list)), AS_LOC(obj.list, create_list()))
+   IF(STARTS_WITH(el.val, obj.add_par), append_to_list(obj.list, el.val))
    RET(obj.list)
+end
+
+def onEACH_ret_list_with_strings_starts_with_case_insensitive(el, obj)
+   IF(NOT(HAS_FIELD(obj, list)), AS_LOC(obj.list, create_list()))
+   IF(STARTS_WITH(TO_LOWERCASE(el.val), obj.add_par), append_to_list(obj.list, el.val))
+   RET(obj.list)
+end
+
+def onEACH_println_val(el, obj)
+   PRINTLN(el.val)
+end
+
+def onEACH_println_key_val(el, obj)
+   PRINTLN({ el.key + ": " + el.val })
 end

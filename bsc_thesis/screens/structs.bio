@@ -1,0 +1,5 @@
+def onSTART()
+
+   AS_LOC(vect.x, 10, vect.y, 20)
+
+end

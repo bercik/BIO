@@ -1,0 +1,11 @@
+
+
+def onEACH_sum(el, obj)
+   IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
+   AS_LOC(obj.sum, { obj.sum + el.val })
+   RET(obj.sum)
+end
+
+def onSTART()
+   PRINTLN(FOREACH(RANGE(1, 10), onEACH_sum))
+end

@@ -1,0 +1,12 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def onEACH_sum_with_multiplier(el, obj)
+   IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
+   AS_LOC(obj.sum, { obj.sum + 2 * el.val })
+   RET(obj.sum)
+end
+
+def test_foreach()
+   AS_LOC(dict, CR_DICT("el1", 1, "el2", 2, "el3", 10))
+   bt_assert_eq(FOREACH(dict, onEACH_sum_with_multiplier, 2), 26)
+end

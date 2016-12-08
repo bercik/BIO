@@ -1,0 +1,17 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   AS_LOC(x, "test local x")
+   AS_GLOB(x, "test global x")
+   bt_assert_eq(GET_GLOB(x), "test global x", "")
+   foo()
+   bt_assert_eq(x, "test local x", "")
+   bt_assert_eq(GET_GLOB(x), "foo global x", "")
+   bt_assert_error(GET_GLOB(z), "")
+end
+
+def foo()
+   AS_LOC(x, "local x")
+   bt_assert_eq(x, GET_LOC(x), "")
+   AS_GLOB(x, "foo global x")
+end

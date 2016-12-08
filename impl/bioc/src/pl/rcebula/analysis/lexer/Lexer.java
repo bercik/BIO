@@ -3,6 +3,7 @@ import pl.rcebula.utils.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.error_report.MyFiles;
 
 /**
@@ -70,7 +71,7 @@ public class Lexer
         boolean endWithEndToken = false;
 
         for (int i = 0; i < input.length(); ++i)
-        {
+        {            
             Pair<Token<?>, Boolean> pair = fsa.putChar(input.charAt(i));
 
             /// sprawdzamy czy nie zwrócono nam znaku
@@ -95,8 +96,10 @@ public class Lexer
 
         if (!endWithEndToken)
         {
-            throw new LexerError("Unexpected end of file. "
-                    + "Possibly missed string closing quotation mark");
+            ErrorInfo ei = fsa.generateErrorInfoWithCurrentToken();
+            String s = fsa.getTokenValue().substring(0, 1);
+            throw new LexerError(ei, "Unexpected end of file. "
+                    + "Unclosed " + s);
         }
         
         return tokens;

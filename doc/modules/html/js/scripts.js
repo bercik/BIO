@@ -8,6 +8,28 @@ $(document).ready(function() {
     var main = $('main');
     var block_headers = main.find('.block > header, .sub-block > header');
 
+    function scrollToId(e) {
+        var hash;
+        if (e === undefined)
+            hash = $(location).attr('hash');
+        else {
+            hash = $(this).attr('href');
+        }
+        if (hash) {
+            var hashLink = links_all.filter(function() {
+                return $(this).attr('href') === hash;
+            });
+            var hashBlock = $(hash);
+            nav.removeClass('showed');
+            hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
+            hashBlock.addClass('showed').parentsUntil(main, '.block, .sub-block').addClass('showed');
+            $.smoothScroll({
+                scrollElement: main,
+                scrollTarget: hashBlock
+            });
+        }
+    }
+
     links.each(function() {
         var link = $(this);
         sections.push({
@@ -37,11 +59,6 @@ $(document).ready(function() {
         nav.toggleClass('showed');
     });
 
-    links.on('click', function() {
-        nav.removeClass('showed');
-        $($(this).attr('href')).parentsUntil(main, '.block, .sub-block').addClass('showed');
-    });
-
     have_subs.on('click', function() {
         $(this).parent().toggleClass('showed');
     });
@@ -54,13 +71,10 @@ $(document).ready(function() {
         $(this).parent().toggleClass('showed');
     });
 
-    var hash;
-    if (hash = ($(location).attr('hash'))) {
-        var hashLink = $('a[href="' + hash + '"');
-        var hashBlock = $(hash);
-        hashLink.parentsUntil(nav, 'li.has-sub').addClass('showed');
-        hashBlock.parentsUntil(main, '.block, .sub-block').addClass('showed');
-        $(main).scrollTop(hashBlock.offset().top);
-    }
+    $('a').filter(function() {
+        return $(this).attr('href').indexOf('#') !== -1;
+    }).on('click', scrollToId);
+
+    scrollToId();
 
 });

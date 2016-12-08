@@ -1,4 +1,4 @@
-#INCLUDE("biotest.biom")
+#INCLUDE("<stdlib/test.biom>")
 
 def TEST_ONE()
    PRINTLN("test one")
