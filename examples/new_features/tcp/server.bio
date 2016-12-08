@@ -1,0 +1,61 @@
+@ #IMPORT("tcp")
+
+#INCLUDE("<stdlib/list.biom>")
+
+#INCLUDE("tcp_mock.biom")
+
+@ server listens for connection, and then sends to client questions 
+@ and recives answers.
+@ send format is: [string:question][string:answer_type]
+@ if question is "END" that means this is end of questions
+@ answer_type could be:
+@ int
+@ float
+@ string
+@ bool
+
+def create_question(question_str, answer_type)
+   AS_LOC(question.str, question_str, question.answer_type, answer_type)
+   RET(question)
+end
+
+def onEACH_send_question_recive_answer(el, obj)
+   IF(NOT(HAS_FIELD(obj, answers)), AS_LOC(obj.answers, create_list()))
+
+   AS_LOC(client, obj.add_par)
+   AS_LOC(answer_type, el.val.answer_type)
+
+   TCP_SEND(client, el.val.str)
+   TCP_SEND(client, answer_type)
+
+   AS_LOC(recv_fun_name, ADD("TCP_RECV_", TO_UPPERCASE(answer_type)))
+   PRINTLN(recv_fun_name)
+   AS_LOC(answer, CALL_BY_NAME(recv_fun_name, client))
+   append_to_list(obj.answers, answer)
+
+   RET(obj.answers)
+end
+
+def onSTART()
+   AS_LOC(questions, CR_TUP
+                     (
+                        create_question("Podaj swój wiek:", "int"),
+                        create_question("Podaj swoje imię:", "string"),
+                        create_question("Czy jesteś mężczyzną:", "bool"),
+                        create_question("Podaj swoją wagę:", "float")
+                     )
+         )
+
+   PRINTLN(questions)
+
+   @ listens for client on port 5700, returns client id
+   AS_LOC(client, TCP_LISTEN(5700))
+   @ send each question to client and wait for response
+   AS_LOC(answers, FOREACH(questions, onEACH_send_question_recive_answer, client))
+   @ send END string
+   TCP_SEND(client, "END")
+   @ close tcp connection
+   TCP_CLOSE(client)
+   @ print list of answers
+   print_list(answers)
+end
