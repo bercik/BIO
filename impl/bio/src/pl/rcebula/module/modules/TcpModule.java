@@ -122,24 +122,21 @@ public class TcpModule extends Module
         putFunction(new TcpCloseFunction());
         putFunction(new TcpSendFunction());
         putFunction(new TcpRecvStringFunction());
+        putFunction(new TcpRecvIntFunction());
+        putFunction(new TcpRecvFloatFunction());
+        putFunction(new TcpRecvBoolFunction());
     }
 
-    private class TcpRecvStringFunction implements IFunction
+    private class TcpRecvFunction
     {
-        @Override
-        public String getName()
-        {
-            return "TCP_RECV_STRING";
-        }
-
-        @Override
-        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        public Data perform(List<Data> params, CallFrame currentFrame, Interpreter interpreter,
+                ErrorInfo callErrorInfo, String funName, DataType dataType)
         {
             // parametr: <all>
             Data dConnId = params.get(0);
 
             // sprawdź czy typu int
-            TypeChecker tc = new TypeChecker(dConnId, getName(), 0, dConnId.getErrorInfo(), interpreter,
+            TypeChecker tc = new TypeChecker(dConnId, funName, 0, dConnId.getErrorInfo(), interpreter,
                     DataType.INT);
             if (tc.isError())
             {
@@ -153,21 +150,99 @@ public class TcpModule extends Module
             // sprawdź czy istnieje
             if (socket == null)
             {
-                return ErrorConstruct.TCP_CONNECTION_DOESNT_EXIST(getName(), dConnId.getErrorInfo(),
+                return ErrorConstruct.TCP_CONNECTION_DOESNT_EXIST(funName, dConnId.getErrorInfo(),
                         interpreter, connId);
             }
 
             try
             {
-                // odbierz stringa
-                String str = socket.readString();
-                // zwróc
-                return Data.createStringData(str);
+                // odbierz wartość w zależności od typu różna metoda
+                switch (dataType)
+                {
+                    case STRING:
+                        String str = socket.readString();
+                        return Data.createStringData(str);
+                    case INT:
+                        int iNum = socket.readInt();
+                        return Data.createIntData(iNum);
+                    case FLOAT:
+                        float fNum = socket.readFloat();
+                        return Data.createFloatData(fNum);
+                    case BOOL:
+                        boolean bool = socket.readBool();
+                        return Data.createBoolData(bool);
+                    default: 
+                        throw new RuntimeException("Unknown data type: " + dataType.toString());
+                }
             }
             catch (IOException ex)
             {
-                return ErrorConstruct.TCP_CONNECTION_ERROR(getName(), callErrorInfo, interpreter);
+                return ErrorConstruct.TCP_CONNECTION_ERROR(funName, callErrorInfo, interpreter);
             }
+        }
+    }
+    
+    private class TcpRecvStringFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "TCP_RECV_STRING";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            return new TcpRecvFunction().perform(params, currentFrame, interpreter, callErrorInfo, 
+                    getName(), DataType.STRING);
+        }
+    }
+    
+    private class TcpRecvIntFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "TCP_RECV_INT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            return new TcpRecvFunction().perform(params, currentFrame, interpreter, callErrorInfo, 
+                    getName(), DataType.INT);
+        }
+    }
+    
+    private class TcpRecvFloatFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "TCP_RECV_FLOAT";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            return new TcpRecvFunction().perform(params, currentFrame, interpreter, callErrorInfo, 
+                    getName(), DataType.FLOAT);
+        }
+    }
+    
+    private class TcpRecvBoolFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "TCP_RECV_BOOL";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            return new TcpRecvFunction().perform(params, currentFrame, interpreter, callErrorInfo, 
+                    getName(), DataType.BOOL);
         }
     }
 
@@ -220,12 +295,24 @@ public class TcpModule extends Module
                 try
                 {
                     // w zależności od typu
-                    // TODO inne typy
                     switch (p.getDataType())
                     {
                         case STRING:
                             String str = (String)p.getValue();
                             socket.sendString(str);
+                            break;
+                        case INT:
+                            int iNum = (int)p.getValue();
+                            socket.sendInt(iNum);
+                            break;
+                        case FLOAT:
+                            float fNum = (float)p.getValue();
+                            socket.sendFloat(fNum);
+                            break;
+                        case BOOL:
+                            boolean bool = (boolean)p.getValue();
+                            socket.sendBool(bool);
+                            break;
                     }
                 }
                 catch (IOException ex)

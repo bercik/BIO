@@ -1379,6 +1379,39 @@
                                                                            <li><a href="#TCP_RECV_STRING_funerrors">Errors</a></li>
                                              </ul>
                   </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_RECV_INT
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_RECV_INT_fun">Description</a></li>
+                                                   <li><a href="#TCP_RECV_INT_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_RECV_INT_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_RECV_INT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_RECV_FLOAT
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_RECV_FLOAT_fun">Description</a></li>
+                                                   <li><a href="#TCP_RECV_FLOAT_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_RECV_FLOAT_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_RECV_FLOAT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_RECV_BOOL
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_RECV_BOOL_fun">Description</a></li>
+                                                   <li><a href="#TCP_RECV_BOOL_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_RECV_BOOL_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_RECV_BOOL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
                            </ul>
          </li>
                <li class="has-sub">
@@ -6150,6 +6183,129 @@
          </section>
          
                   <section class="errors" id="TCP_RECV_STRING_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_DOESNT_EXIST</dt>
+               <dd>If connection with <i>conn_id</i> id doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_RECV_INT_fun">
+
+         <header>
+            <h3>TCP_RECV_INT
+                        (conn_id)</h3>
+            <p class="description">Receives int value from connection with given <i>conn_id</i> id.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_RECV_INT_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_RECV_INT_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int</u>)</dt>
+               <dd>received int value</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_RECV_INT_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_DOESNT_EXIST</dt>
+               <dd>If connection with <i>conn_id</i> id doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_RECV_FLOAT_fun">
+
+         <header>
+            <h3>TCP_RECV_FLOAT
+                        (conn_id)</h3>
+            <p class="description">Receives float value from connection with given <i>conn_id</i> id.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_RECV_FLOAT_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_RECV_FLOAT_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>float</u>)</dt>
+               <dd>received float value</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_RECV_FLOAT_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_DOESNT_EXIST</dt>
+               <dd>If connection with <i>conn_id</i> id doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_RECV_BOOL_fun">
+
+         <header>
+            <h3>TCP_RECV_BOOL
+                        (conn_id)</h3>
+            <p class="description">Receives bool value from connection with given <i>conn_id</i> id.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_RECV_BOOL_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_RECV_BOOL_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>received bool value</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_RECV_BOOL_funerrors">
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>

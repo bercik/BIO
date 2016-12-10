@@ -42,3 +42,27 @@
 !error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
 !error (TCP_CONNECTION_ERROR) If tcp connection failed
 
+!name TCP_RECV_INT
+!desc Receives int value from connection with given <i>conn_id</i> id.
+!param conn_id (int) 
+!return (int) received int value
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int
+!error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+
+!name TCP_RECV_FLOAT
+!desc Receives float value from connection with given <i>conn_id</i> id.
+!param conn_id (int) 
+!return (float) received float value
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int
+!error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+
+!name TCP_RECV_BOOL
+!desc Receives bool value from connection with given <i>conn_id</i> id.
+!param conn_id (int) 
+!return (bool) received bool value
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int
+!error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+

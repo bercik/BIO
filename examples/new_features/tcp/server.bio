@@ -42,10 +42,10 @@ end
 def onSTART()
    AS_LOC(questions, CR_TUP
                      (
-                        @ create_question("Podaj swój wiek:", "int"),
-                        create_question("Podaj swoje imię:", "string")
-                        @ create_question("Czy jesteś mężczyzną:", "bool"),
-                        @ create_question("Podaj swoją wagę:", "float")
+                        create_question("Podaj swój wiek:", "int"),
+                        create_question("Podaj swoje imię:", "string"),
+                        create_question("Czy jesteś mężczyzną:", "bool"),
+                        create_question("Podaj swoją wagę:", "float")
                      )
          )
 
