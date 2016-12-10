@@ -1,0 +1,16 @@
+#IMPORT("tcp")
+
+@ wait for two clients, than exchange some data
+def onSTART()
+   AS_LOC(client1, TCP_LISTEN(5000))
+   AS_LOC(client2, TCP_LISTEN(5001))
+
+   TCP_SEND(client1, 10)
+   ASSERT_EQ(TCP_RECV_BOOL(client2), true)
+   TCP_SEND(client2, "test żółć")
+   TCP_SEND(client1, 0.55)
+   ASSERT_EQ(TCP_RECV_INT(client1), 20)
+
+   TCP_CLOSE(client1)
+   TCP_CLOSE(client2)
+end

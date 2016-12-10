@@ -1,0 +1,28 @@
+#IMPORT("tcp")
+
+@ connect twice to server, than exchange some data
+def onSTART()
+   AS_LOC(server1, TCP_CONNECT("localhost", 5000))
+   @ try connect for some time
+   AS_LOC(server2, none)
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, 1000),
+      CALL
+      (
+         AS_LOC(server2, TCP_CONNECT("localhost", 5001)),
+         IF(IS_INT(server2), BREAK())
+      ),
+      INC(i)
+   )
+
+   ASSERT_EQ(TCP_RECV_INT(server1), 10)
+   TCP_SEND(server2, true)
+   ASSERT_EQ(TCP_RECV_STRING(server2), "test żółć")
+   ASSERT_EQ(TCP_RECV_FLOAT(server1), 0.55)
+   TCP_SEND(server1, 20)
+
+   TCP_CLOSE(server1)
+   TCP_CLOSE(server2)
+end
