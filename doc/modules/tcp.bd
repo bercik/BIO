@@ -1,0 +1,44 @@
+!optional
+
+!name TCP_LISTEN
+!desc Listens on given <i>port</i> for tcp connection.
+!param port (int) 
+!return (int) connection id
+!error (BAD_PARAMETER_TYPE) If <i>port</i> isn't int
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+!error (TCP_PORT_OUT_OF_RANGE) If <i>port</i> is outside the specified range of valid port values, which is between 0 and 65535, inclusive
+
+!name TCP_CONNECT
+!desc Connects via tcp to machine on given <i>ip_addr</i> on given <i>port</i>.
+!param ip_addr (string) 
+!param port (int) 
+!return (int) connection id
+!error (BAD_PARAMETER_TYPE) If <i>ip_addr</i> isn't string or <i>port</i> isn't int
+!error (TCP_BAD_IP_ADDRESS) If <i>ip_addr</i> of the host could not be determined
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+!error (TCP_PORT_OUT_OF_RANGE) If <i>port</i> is outside the specified range of valid port values, which is between 0 and 65535, inclusive
+
+!name TCP_CLOSE
+!desc Closes connection with given <i>conn_id</i>. If connection is already closed or do not exist then this function do nothing.
+!param conn_id (int) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int
+
+!name TCP_SEND
+!desc Sends <i>values</i> via connection with given <i>conn_id</i>. Automatically determines value type and send with proper method.
+!param conn_id (int) 
+!param value (int, float, string, bool) 
+!repeat value (int, float, string, bool) 
+!return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int or any of <i>value</i> isn't int, float, string or bool
+!error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+
+!name TCP_RECV_STRING
+!desc Receives string value from connection with given <i>conn_id</i> id.
+!param conn_id (int) 
+!return (string) received string value
+!error (BAD_PARAMETER_TYPE) If <i>conn_id</i> isn't int
+!error (TCP_CONNECTION_DOESNT_EXIST) If connection with <i>conn_id</i> id doesn't exist
+!error (TCP_CONNECTION_ERROR) If tcp connection failed
+

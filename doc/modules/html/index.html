@@ -1321,6 +1321,68 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
+                                 tcp <i>(optional)</i>
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_LISTEN
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_LISTEN_fun">Description</a></li>
+                                                   <li><a href="#TCP_LISTEN_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_LISTEN_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_LISTEN_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_CONNECT
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_CONNECT_fun">Description</a></li>
+                                                   <li><a href="#TCP_CONNECT_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_CONNECT_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_CONNECT_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_CLOSE
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_CLOSE_fun">Description</a></li>
+                                                   <li><a href="#TCP_CLOSE_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_CLOSE_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_CLOSE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_SEND
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_SEND_fun">Description</a></li>
+                                                   <li><a href="#TCP_SEND_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_SEND_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_SEND_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TCP_RECV_STRING
+                                             </a>
+                     <ul>
+                        <li><a href="#TCP_RECV_STRING_fun">Description</a></li>
+                                                   <li><a href="#TCP_RECV_STRING_funparams">Parameters</a></li>
+                                                                           <li><a href="#TCP_RECV_STRING_funreturns">Returns</a></li>
+                                                                           <li><a href="#TCP_RECV_STRING_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
                 type_check
                            </a>
             <ul>
@@ -1593,28 +1655,31 @@
             </thead>
             <tbody>
             <tr><td>1</td><td>NO_GLOBAL_VARIABLE </td></tr>
-            <tr><td>2</td><td>NO_LOCAL_VARIABLE </td></tr>
-            <tr><td>3</td><td>BAD_PARAMETER_TYPE </td></tr>
-            <tr><td>4</td><td>COLLECTIONS_DIFFRENT_SIZES </td></tr>
-            <tr><td>5</td><td>BUILTIN_FUNCTION_NOT_IMPLEMENTED </td></tr>
-            <tr><td>6</td><td>CALLBACK_ALREADY_ATTACHED </td></tr>
-            <tr><td>7</td><td>CALLBACK_NOT_ATTACHED </td></tr>
-            <tr><td>8</td><td>INDEX_OUT_OF_BOUNDS </td></tr>
-            <tr><td>9</td><td>DIVISION_BY_ZERO </td></tr>
-            <tr><td>10</td><td>SIZE_LESS_THAN_ZERO </td></tr>
-            <tr><td>11</td><td>MIN_GREATER_THAN_MAX </td></tr>
-            <tr><td>12</td><td>KEY_DOESNT_EXIST </td></tr>
-            <tr><td>13</td><td>NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE </td></tr>
-            <tr><td>14</td><td>START_GREATER_THAN_END </td></tr>
-            <tr><td>15</td><td>CONVERSION_ERROR </td></tr>
-            <tr><td>16</td><td>REGEX_ERROR </td></tr>
-            <tr><td>17</td><td>USER_FUNCTION_DOESNT_EXIST </td></tr>
-            <tr><td>18</td><td>CALLBACK_PARAMS_GREATER_THAN_EVENT </td></tr>
-            <tr><td>19</td><td>TOO_LITTLE_PARAMETERS </td></tr>
-            <tr><td>20</td><td>NO_STACK_TRACE </td></tr>
-            <tr><td>21</td><td>STACK_OVERFLOW </td></tr>
-            <tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
-            </tbody>
+<tr><td>2</td><td>NO_LOCAL_VARIABLE </td></tr>
+<tr><td>3</td><td>BAD_PARAMETER_TYPE </td></tr>
+<tr><td>4</td><td>COLLECTIONS_DIFFRENT_SIZES </td></tr>
+<tr><td>5</td><td>BUILTIN_FUNCTION_NOT_IMPLEMENTED </td></tr>
+<tr><td>6</td><td>CALLBACK_ALREADY_ATTACHED </td></tr>
+<tr><td>7</td><td>CALLBACK_NOT_ATTACHED </td></tr>
+<tr><td>8</td><td>INDEX_OUT_OF_BOUNDS </td></tr>
+<tr><td>9</td><td>DIVISION_BY_ZERO </td></tr>
+<tr><td>10</td><td>SIZE_LESS_THAN_ZERO </td></tr>
+<tr><td>11</td><td>MIN_GREATER_THAN_MAX </td></tr>
+<tr><td>12</td><td>KEY_DOESNT_EXIST </td></tr>
+<tr><td>13</td><td>NUMBER_OF_VARIABLES_GREATER_THAN_COLLECTION_SIZE </td></tr>
+<tr><td>14</td><td>START_GREATER_THAN_END </td></tr>
+<tr><td>15</td><td>CONVERSION_ERROR </td></tr>
+<tr><td>16</td><td>REGEX_ERROR </td></tr>
+<tr><td>17</td><td>USER_FUNCTION_DOESNT_EXIST </td></tr>
+<tr><td>18</td><td>CALLBACK_PARAMS_GREATER_THAN_EVENT </td></tr>
+<tr><td>19</td><td>TOO_LITTLE_PARAMETERS </td></tr>
+<tr><td>20</td><td>NO_STACK_TRACE </td></tr>
+<tr><td>21</td><td>STACK_OVERFLOW </td></tr>
+<tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
+<tr><td>100</td><td>TCP_CONNECTION_ERROR</td></tr>
+<tr><td>101</td><td>TCP_PORT_OUT_OF_RANGE</td></tr>
+<tr><td>102</td><td>TCP_BAD_IP_ADDRESS</td></tr>
+<tr><td>103</td><td>TCP_CONNECTION_DOESNT_EXIST</td></tr>            </tbody>
          </table>
       </div>
    </section>
@@ -5885,6 +5950,220 @@
             </dl>
          </section>
          
+         
+      </article>
+         </section>
+</section>
+<section class="module block" id="tcp">
+   <header>
+      <h2>
+                  tcp <i>(optional)</i>
+               </h2>
+   </header>
+   <section class="functions">
+            <article class="function sub-block" id="TCP_LISTEN_fun">
+
+         <header>
+            <h3>TCP_LISTEN
+                        (port)</h3>
+            <p class="description">Listens on given <i>port</i> for tcp connection.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_LISTEN_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>port</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_LISTEN_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int</u>)</dt>
+               <dd>connection id</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_LISTEN_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>port</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_PORT_OUT_OF_RANGE</dt>
+               <dd>If <i>port</i> is outside the specified range of valid port values, which is between 0 and 65535, inclusive</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_CONNECT_fun">
+
+         <header>
+            <h3>TCP_CONNECT
+                        (ip_addr, port)</h3>
+            <p class="description">Connects via tcp to machine on given <i>ip_addr</i> on given <i>port</i>.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_CONNECT_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>ip_addr</i> (<u>string</u>)</dt>
+               <dd></dd>
+                              <dt><i>port</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_CONNECT_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int</u>)</dt>
+               <dd>connection id</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_CONNECT_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>ip_addr</i> isn't string or <i>port</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_BAD_IP_ADDRESS</dt>
+               <dd>If <i>ip_addr</i> of the host could not be determined</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_PORT_OUT_OF_RANGE</dt>
+               <dd>If <i>port</i> is outside the specified range of valid port values, which is between 0 and 65535, inclusive</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_CLOSE_fun">
+
+         <header>
+            <h3>TCP_CLOSE
+                        (conn_id)</h3>
+            <p class="description">Closes connection with given <i>conn_id</i>. If connection is already closed or do not exist then this function do nothing.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_CLOSE_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_CLOSE_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_CLOSE_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_SEND_fun">
+
+         <header>
+            <h3>TCP_SEND
+                        (conn_id, value, &lt;value&gt;*)</h3>
+            <p class="description">Sends <i>values</i> via connection with given <i>conn_id</i>. Automatically determines value type and send with proper method.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_SEND_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                              <dt><i>value</i> (<u>int, float, string, bool</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_SEND_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_SEND_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int or any of <i>value</i> isn't int, float, string or bool</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_DOESNT_EXIST</dt>
+               <dd>If connection with <i>conn_id</i> id doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TCP_RECV_STRING_fun">
+
+         <header>
+            <h3>TCP_RECV_STRING
+                        (conn_id)</h3>
+            <p class="description">Receives string value from connection with given <i>conn_id</i> id.</p>
+         </header>
+
+                  <section class="parameters" id="TCP_RECV_STRING_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>conn_id</i> (<u>int</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="TCP_RECV_STRING_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>string</u>)</dt>
+               <dd>received string value</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="TCP_RECV_STRING_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>conn_id</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_DOESNT_EXIST</dt>
+               <dd>If connection with <i>conn_id</i> id doesn't exist</dd>
+            </dl>
+                        <dl>
+               <dt>TCP_CONNECTION_ERROR</dt>
+               <dd>If tcp connection failed</dd>
+            </dl>
+                     </section>
          
       </article>
          </section>

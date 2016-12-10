@@ -157,7 +157,7 @@ public class BuiltinFunctions
         IFunction fun = functions.get(name);
         if (fun != null)
         {
-            return fun.call(params, currentFrame, interpreter);
+            return fun.call(params, currentFrame, interpreter, ei);
         }
         else
         {

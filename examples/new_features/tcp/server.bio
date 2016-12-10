@@ -28,9 +28,12 @@ def onEACH_send_question_recive_answer(el, obj)
    TCP_SEND(client, el.val.str)
    TCP_SEND(client, answer_type)
 
-   AS_LOC(recv_fun_name, ADD("TCP_RECV_", TO_UPPERCASE(answer_type)))
-   PRINTLN(recv_fun_name)
-   AS_LOC(answer, CALL_BY_NAME(recv_fun_name, client))
+   @ w zależności od answer_type różne metody
+   IF({ answer_type == "string" }, AS_LOC(answer, TCP_RECV_STRING(client)))
+   IF({ answer_type == "int" }, AS_LOC(answer, TCP_RECV_INT(client)))
+   IF({ answer_type == "float" }, AS_LOC(answer, TCP_RECV_FLOAT(client)))
+   IF({ answer_type == "bool" }, AS_LOC(answer, TCP_RECV_BOOL(client)))
+
    append_to_list(obj.answers, answer)
 
    RET(obj.answers)
@@ -39,10 +42,10 @@ end
 def onSTART()
    AS_LOC(questions, CR_TUP
                      (
-                        create_question("Podaj swój wiek:", "int"),
-                        create_question("Podaj swoje imię:", "string"),
-                        create_question("Czy jesteś mężczyzną:", "bool"),
-                        create_question("Podaj swoją wagę:", "float")
+                        @ create_question("Podaj swój wiek:", "int"),
+                        create_question("Podaj swoje imię:", "string")
+                        @ create_question("Czy jesteś mężczyzną:", "bool"),
+                        @ create_question("Podaj swoją wagę:", "float")
                      )
          )
 

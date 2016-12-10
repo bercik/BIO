@@ -17,7 +17,7 @@ def onSTART()
       IS_ERROR(server), 
       CALL
       (
-         PRINTLN("Unable to connect to the server"),
+         PRINTLN("Unable to connect to the server", server),
          EXIT()
       )
    )
@@ -38,5 +38,6 @@ def onSTART()
       )
    )
 
+   TCP_CLOSE(server)
    PRINTLN("Thanks for your responses")
 end

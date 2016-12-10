@@ -17,6 +17,49 @@ import pl.rcebula.internals.interpreter.Interpreter;
  */
 public class ErrorConstruct
 {
+    public static Data TCP_CONNECTION_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter,
+            int connId)
+    {
+        String message = "tcp connection with " + connId + " id doesn't exist";
+
+        MyError myError = new MyError(funName, message, 
+                ErrorCodes.TCP_CONNECTION_DOESNT_EXIST.getCode(), null, ei, interpreter);
+
+        return Data.createErrorData(myError);
+    }
+
+    public static Data TCP_BAD_IP_ADDRESS(String funName, ErrorInfo ei, Interpreter interpreter,
+            String ipAddr)
+    {
+        String message = "tcp ip address " + ipAddr + " is bad";
+
+        MyError myError = new MyError(funName, message, ErrorCodes.TCP_BAD_IP_ADDRESS.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(myError);
+    }
+
+    public static Data TCP_PORT_OUT_OF_RANGE(String funName, ErrorInfo ei, Interpreter interpreter,
+            int port)
+    {
+        String message = "tcp port " + port + " out of range";
+
+        MyError myError = new MyError(funName, message, ErrorCodes.TCP_PORT_OUT_OF_RANGE.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(myError);
+    }
+
+    public static Data TCP_CONNECTION_ERROR(String funName, ErrorInfo ei, Interpreter interpreter)
+    {
+        String message = "tcp connection error";
+
+        MyError myError = new MyError(funName, message, ErrorCodes.TCP_CONNECTION_ERROR.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(myError);
+    }
+
     public static Data COLLECTIONS_DIFFRENT_SIZES(String funName, ErrorInfo ei, Interpreter interpreter,
             int param)
     {
@@ -149,32 +192,32 @@ public class ErrorConstruct
         String message = "callback " + callbackName + " takes " + callbackParams + " parameters which is "
                 + "greater than event " + eventName + " " + eventParams + " parameters";
 
-        MyError error = new MyError(funName, message, 
+        MyError error = new MyError(funName, message,
                 ErrorCodes.CALLBACK_PARAMS_GREATER_THAN_EVENT.getCode(), null, ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
-    public static Data TOO_LITTLE_PARAMETERS(String funName, ErrorInfo ei, Interpreter interpreter, 
+
+    public static Data TOO_LITTLE_PARAMETERS(String funName, ErrorInfo ei, Interpreter interpreter,
             String callFunName, int callFunNameParams, int passedParams)
     {
-        String message = "function " + callFunName + " takes " + callFunNameParams + " parameters, got " +
-                passedParams;
-        
-        MyError error = new MyError(funName, message, ErrorCodes.TOO_LITTLE_PARAMETERS.getCode(), 
+        String message = "function " + callFunName + " takes " + callFunNameParams + " parameters, got "
+                + passedParams;
+
+        MyError error = new MyError(funName, message, ErrorCodes.TOO_LITTLE_PARAMETERS.getCode(),
                 null, ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
-    public static Data NO_STACK_TRACE(String funName, ErrorInfo ei, Interpreter interpreter, 
+
+    public static Data NO_STACK_TRACE(String funName, ErrorInfo ei, Interpreter interpreter,
             int nthStackTrace)
     {
         String message = "there is no " + nthStackTrace + " stack trace";
-        
-        MyError error = new MyError(funName, message, ErrorCodes.NO_STACK_TRACE.getCode(), null, ei, 
+
+        MyError error = new MyError(funName, message, ErrorCodes.NO_STACK_TRACE.getCode(), null, ei,
                 interpreter);
-        
+
         return Data.createErrorData(error);
     }
 }
