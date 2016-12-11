@@ -409,6 +409,7 @@ public class MathModule extends Module
                     return Data.createIntData(isum);
                 }
             }
+            // inaczej dodawanie kolekcji
             // inaczej tworzymy tablicę 2D i sumujemy każdą
             else
             {

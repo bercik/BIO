@@ -41,6 +41,7 @@ public class TypeChecker implements ITypeChecker
     }
 
     // zwraca false jeżeli błąd, true jeżeli nie ma błędu
+    // !!! paramNum jest zwiększane o jeden !!!
     private boolean check(Data actual, String funName, int paramNum, ErrorInfo ei,
             Interpreter interpreter, DataType... expected)
     {
@@ -49,7 +50,7 @@ public class TypeChecker implements ITypeChecker
 
         if (isError)
         {
-            String message = "expected " + paramNum + " parameter to be ";
+            String message = "expected " + (paramNum + 1) + " parameter to be ";
             for (DataType dt : expected)
             {
                 message += dt.toString() + ", ";

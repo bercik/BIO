@@ -8,6 +8,7 @@ package pl.rcebula.intermediate_code;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,14 +43,19 @@ public class IntermediateCode
     public IntermediateCode(String path)
             throws IOException
     {
+        // TODELETE
         logger.info("IntermediateCode");
         logger.fine("path: " + path);
         
-        DataInputStream dis = new DataInputStream(new FileInputStream(path));
-        
         try
         {
+            DataInputStream dis = new DataInputStream(new FileInputStream(path));
+            
             read(dis);
+        }
+        catch (FileNotFoundException ex)
+        {
+            throw new IOException("File \"" + path + "\" doesn't exist", ex);
         }
         catch (EOFException ex)
         {

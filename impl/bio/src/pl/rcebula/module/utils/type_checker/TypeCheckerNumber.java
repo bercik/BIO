@@ -22,6 +22,7 @@ public class TypeCheckerNumber implements ITypeCheckerNumber
     private final boolean isError;
     private final boolean isFloat;
     
+    // !!! paramNum jest zwiększane o jeden !!!
     public TypeCheckerNumber(Data actual, String funName, int paramNum, ErrorInfo ei, 
             Interpreter interpreter)
     {
@@ -47,7 +48,7 @@ public class TypeCheckerNumber implements ITypeCheckerNumber
             isError = true;
             isFloat = false;
             
-            String message = "expected " + paramNum + " parameter to be " + 
+            String message = "expected " + (paramNum + 1) + " parameter to be " + 
                     DataType.INT.toString() + " or " + DataType.FLOAT.toString();
             message += " got " + actualDataType.toString();
             

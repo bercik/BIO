@@ -1,9 +1,0 @@
-@ #IMPORT("tcp")
-
-def TCP_LISTEN(a, b)
-   PRINTLN(a, b)
-end
-
-def onSTART()
-   TCP_LISTEN(10, 20)
-end
