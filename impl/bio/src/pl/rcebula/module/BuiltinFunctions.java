@@ -150,6 +150,14 @@ public class BuiltinFunctions
             events.putAll(m.getEvents());
         }
     }
+    
+    public void exit()
+    {
+        for (IModule module : modules.values())
+        {
+            module.exit();
+        }
+    }
 
     public Data callFunction(String name, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
             ErrorInfo ei)

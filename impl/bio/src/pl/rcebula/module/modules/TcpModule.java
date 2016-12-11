@@ -127,6 +127,33 @@ public class TcpModule extends Module
         putFunction(new TcpRecvBoolFunction());
     }
 
+    @Override
+    public void exit()
+    {
+        // zamknij wszystkie serwer sockety i sockety
+        for (ServerSocket ss : serverSockets.values())
+        {
+            try
+            {
+                ss.close();
+            }
+            catch (IOException ex)
+            {
+            }
+        }
+        
+        for (MySocket socket : sockets.values())
+        {
+            try
+            {
+                socket.close();
+            }
+            catch (IOException ex)
+            {
+            }
+        }
+    }
+
     private class TcpRecvFunction
     {
         public Data perform(List<Data> params, CallFrame currentFrame, Interpreter interpreter,

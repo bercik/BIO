@@ -1,3 +1,9 @@
+@ #IMPORT("tcp")
+
+def TCP_LISTEN(a, b)
+   PRINTLN(a, b)
+end
+
 def onSTART()
-   CREATE_ARRAY("text")
+   TCP_LISTEN(10, 20)
 end
