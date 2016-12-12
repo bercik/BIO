@@ -4980,8 +4980,8 @@
 
          <header>
             <h3>INC
-                        (id)</h3>
-            <p class="description">Increments local number with given id</p>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Increments local number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.</p>
          </header>
 
                   <section class="parameters" id="INC_funparams">
@@ -4989,6 +4989,8 @@
             <dl>
                               <dt><i>id</i> (<u>id</u>)</dt>
                <dd>local number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be incremented</dd>
                            </dl>
          </section>
          
@@ -5004,7 +5006,7 @@
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
-               <dd>if variable under <i>id</i> identifier is not int or float</dd>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
             </dl>
                         <dl>
                <dt>NO_LOCAL_VARIABLE</dt>
@@ -5017,8 +5019,8 @@
 
          <header>
             <h3>DEC
-                        (id)</h3>
-            <p class="description">Decrements local number with given id</p>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Decrements local number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.</p>
          </header>
 
                   <section class="parameters" id="DEC_funparams">
@@ -5026,6 +5028,8 @@
             <dl>
                               <dt><i>id</i> (<u>id</u>)</dt>
                <dd>local number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be decremented</dd>
                            </dl>
          </section>
          
@@ -5041,7 +5045,7 @@
             <h5>Errors</h5>
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
-               <dd>if variable under <i>id</i> identifier is not int or float</dd>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
             </dl>
                         <dl>
                <dt>NO_LOCAL_VARIABLE</dt>
