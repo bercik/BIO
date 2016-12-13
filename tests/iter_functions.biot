@@ -1,0 +1,10 @@
+#INCLUDE("<stdlib/iter_functions.biom>")
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   AS_LOC(tup, CR_TUP("abc", "abba", "AbC", "def", "acbd", "a"))
+   AS_LOC(expected, CR_TUP("abc", "abba"))
+   AS_LOC(result, get_array_list(FOREACH(tup, 
+            onEACH_ret_list_with_strings_starts_with_case_sensitive, "ab")))
+   bt_assert_eq(expected, result)
+end

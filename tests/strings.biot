@@ -1,0 +1,79 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test_substr()
+   bt_assert_eq(SUBSTR("abcdef", 1, 3), "bc")
+   bt_assert_eq(SUBSTR("abcdef", 1, 1), "")
+end
+
+
+def test_length()
+   bt_assert_eq(LENGTH("abc"), 3)
+   bt_assert_eq(LENGTH(""), 0)
+   bt_assert_eq(LENGTH(CREATE_TUPLE("", "a", "ab", "abc")), CR_TUP( 0, 1, 2, 3 ))
+end
+
+def test_to_lowercase()
+   bt_assert_eq(TO_LOWERCASE("AbCĆł"), "abcćł")
+   bt_assert_eq(TO_LOWERCASE(CREATE_TUPLE("A", "Bb", "ćĆ")), CR_TUP( "a", "bb", "ćć" ))
+end
+
+def test_to_uppercase()
+   bt_assert_eq(TO_UPPERCASE("AbCĆł"), "ABCĆŁ")
+   bt_assert_eq(TO_UPPERCASE(CREATE_TUPLE("r", "Bb", "ćĆ")), CR_TUP( "R", "BB", "ĆĆ" ))
+end
+
+
+def test_insert()
+   bt_assert_eq(INSERT("ad", 1, "bc"), "abcd")
+   bt_assert_eq(INSERT("bc", 0, "a"), "abc")
+   bt_assert_eq(INSERT("abc", 0, ""), "abc")
+   bt_assert_eq(INSERT("ab", 2, "cd"), "abcd")
+end
+
+
+def test_starts_with()
+   bt_assert_true(STARTS_WITH("abcd", "ab"))
+   bt_assert_false(STARTS_WITH("abcd", "bc"))
+   bt_assert_true(STARTS_WITH("abcd", ""))
+end
+
+
+def test_ends_with()
+   bt_assert_true(ENDS_WITH("abcd", ""))
+   bt_assert_true(ENDS_WITH("abcd", "cd"))
+   bt_assert_false(ENDS_WITH("abcd", "bc"))
+end
+
+
+def test_replace()
+   bt_assert_eq(REPLACE("adda", "d", "b"), "abba")
+   bt_assert_eq(REPLACE("ababcb", "ab", ""), "cb")
+   bt_assert_eq(REPLACE("ab(ab)cd(d)()", "\\(\\w+\\)", "(0)"), "ab(0)cd(0)()")
+   bt_assert_eq(REPLACE("adda", 1, "bb"), "abba")
+   bt_assert_eq(REPLACE("abab", 4, "cd"), "ababcd")
+end
+
+
+def test_index_of()
+   bt_assert_eq(INDEX_OF("abcdb", "b"), 1)
+   bt_assert_eq(INDEX_OF("abcdb", "e"), -1)
+end
+
+
+def test_last_index_of()
+   bt_assert_eq(LAST_INDEX_OF("abcdb", "b"), 4)
+   bt_assert_eq(LAST_INDEX_OF("abcdb", "e"), -1)
+end
+
+
+def test_split()
+   bt_assert_eq(SPLIT("a:b:cd:e:f", ":"), CR_TUP( "a", "b", "cd", "e", "f" ))
+   bt_assert_eq(SPLIT(" a,.b,cd,.e:f", ",\\."), CR_TUP( " a", "b,cd", "e:f" ))
+end
+
+
+def test_trim()
+   bt_assert_eq(TRIM("\t  abc \t  "), "abc")
+   bt_assert_eq(TRIM(CREATE_TUPLE("  a  ", "  b", "c  ")), CR_TUP( "a", "b", "c" ))
+end
+

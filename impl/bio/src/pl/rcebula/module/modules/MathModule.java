@@ -1091,7 +1091,7 @@ public class MathModule extends Module
                 {
                     int val1 = Numbers.getInt(par1);
                     int val2 = Numbers.getInt(par2);
-
+                    
                     return perform(val1, val2);
                 }
             }
