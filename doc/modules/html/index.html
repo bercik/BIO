@@ -1416,6 +1416,33 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
+                time
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SLEEP
+                                             </a>
+                     <ul>
+                        <li><a href="#SLEEP_fun">Description</a></li>
+                                                   <li><a href="#SLEEP_funparams">Parameters</a></li>
+                                                                           <li><a href="#SLEEP_funreturns">Returns</a></li>
+                                                                           <li><a href="#SLEEP_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TIME
+                                             </a>
+                     <ul>
+                        <li><a href="#TIME_fun">Description</a></li>
+                                                                           <li><a href="#TIME_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
                 type_check
                            </a>
             <ul>
@@ -1709,6 +1736,7 @@
 <tr><td>20</td><td>NO_STACK_TRACE </td></tr>
 <tr><td>21</td><td>STACK_OVERFLOW </td></tr>
 <tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
+<tr><td>23</td><td>INTERVAL_LESS_THAN_ZERO</td></tr>
 <tr><td>100</td><td>TCP_CONNECTION_ERROR</td></tr>
 <tr><td>101</td><td>TCP_PORT_OUT_OF_RANGE</td></tr>
 <tr><td>102</td><td>TCP_BAD_IP_ADDRESS</td></tr>
@@ -6324,6 +6352,71 @@
                <dd>If tcp connection failed</dd>
             </dl>
                      </section>
+         
+      </article>
+         </section>
+</section>
+<section class="module block" id="time">
+   <header>
+      <h2>
+                  time
+               </h2>
+   </header>
+   <section class="functions">
+            <article class="function sub-block" id="SLEEP_fun">
+
+         <header>
+            <h3>SLEEP
+                        (interval)</h3>
+            <p class="description">Causes program to sleep for the <i>interval</i> number of miliseconds.</p>
+         </header>
+
+                  <section class="parameters" id="SLEEP_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>interval</i> (<u>int</u>)</dt>
+               <dd>length of time to sleep in miliseconds</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="SLEEP_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="SLEEP_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if <i>interval</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>INTERVAL_LESS_THAN_ZERO</dt>
+               <dd>if <i>interval</i> is less than zero</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TIME_fun">
+
+         <header>
+            <h3>TIME
+                        ()</h3>
+            <p class="description">Returns time in miliseconds from first call of this function. <b>Note:</b> because return value is int, after approximately 24 days, 20 hours and 31 minutes this value would overflow.</p>
+         </header>
+
+         
+                  <section class="returns" id="TIME_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int</u>)</dt>
+               <dd>time in miliseconds from first call of this function</dd>
+            </dl>
+         </section>
+         
          
       </article>
          </section>

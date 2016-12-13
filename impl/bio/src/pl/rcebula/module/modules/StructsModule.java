@@ -5,7 +5,6 @@
  */
 package pl.rcebula.module.modules;
 
-import java.util.ArrayList;
 import java.util.List;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;

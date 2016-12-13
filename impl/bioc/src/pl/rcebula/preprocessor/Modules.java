@@ -32,6 +32,7 @@ public class Modules
     private final Set<Module> defaultModules = new HashSet<Module>()
     {
         {
+            // !!! here add module if you want it to be default !!!
             add(new Module("arrays"));
             add(new Module("basic"));
             add(new Module("compare"));
@@ -48,7 +49,9 @@ public class Modules
             add(new Module("special"));
             add(new Module("strings"));
             add(new Module("structs"));
+            add(new Module("time"));
             add(new Module("type_check"));
+            // !!! end !!!
         }
     };
     
