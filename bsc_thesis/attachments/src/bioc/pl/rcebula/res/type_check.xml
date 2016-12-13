@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<functions>
+    <!-- sprawdzanie typów zmiennych -->
+    <!-- sprawdza czy zmienna jest tego konkretnego typu (nie czy można ją na ten typ zamienić! -->
+    <function>
+        <name>
+            IS_ERROR
+        </name>
+        <alias>
+            IS_ERR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_INT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_FLOAT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_BOOL
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_STRING
+        </name>
+        <alias>
+            IS_STR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_NONE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_ARRAY
+        </name>
+        <alias>
+            IS_ARR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_DICT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_TUPLE
+        </name>
+        <alias>
+            IS_TUP
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_NUMBER
+        </name>
+        <alias>
+            IS_NUM
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_COLLECTION
+        </name>
+        <alias>
+            IS_COL
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_STRUCT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ARE_SAME_TYPE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+</functions>

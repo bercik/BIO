@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<functions>
+    <!-- operacje na tablicach -->
+    <!-- tworzą tablice, słowniki, tuple -->
+    <!-- kopiowanie tablicy, słownika -->
+    <!-- pozwalają rozszerzyć tablice -->
+    <!-- pobierają element, ustawiają element, pobierają rozmiar -->
+    <!-- pozwalają spakować i rozpakować tuple i tablice -->
+    <!-- sprawdzają czy element znajduje się w słowniku(klucz), tablicy, tupli -->
+    <!-- sortowanie tablicy -->
+    <function>
+        <name>
+            CREATE_ARRAY
+        </name>
+        <alias>
+            CR_ARR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CREATE_DICT
+        </name>
+        <alias>
+            CR_DICT
+        </alias>
+        <params>
+            <param repeat="true">
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CREATE_TUPLE
+        </name>
+        <alias>
+            CR_TUP
+        </alias>
+        <params>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CREATE_TUPLE_OF_ELEMENTS
+        </name>
+        <alias>
+            CR_TUP_OF_EL
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            RANGE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            COPY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEEP_COPY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SLICE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            EXTEND_ARRAY
+        </name>
+        <alias>
+            EXT_ARR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            UNPACK
+        </name>
+        <params>
+            <param>
+                id
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CONTAINS
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CONTAINS_KEY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CONTAINS_VALUE
+        </name>
+        <alias>
+            CONTAINS_VAL
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_KEYS
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            REMOVE_KEY
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            COUNT_ELEMENTS
+        </name>
+        <alias>
+            COUNT_EL
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SET
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SIZE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SORT_ASC
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SORT_DESC
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+</functions>

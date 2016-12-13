@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<functions>
+    <!-- funkcje do obsługi błędów (tworzenie obiektu błędu, pobieranie pól obiektu -->
+    <!-- "makra" ułatwiające obsługę błędów -->
+    <function>
+        <name>
+            CREATE_ERROR
+        </name>
+        <alias>
+            CR_ERR
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_ERROR_MESSAGE
+        </name>
+        <alias>
+            GET_ERR_MSG
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_ERROR_OBJECT
+        </name>
+        <alias>
+            GET_ERR_OBJ
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_ERROR_CAUSE
+        </name>
+        <alias>
+            GET_ERR_CAUSE
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_ERROR_LINE
+        </name>
+        <alias>
+            GET_ERR_LINE
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_ERROR_CH
+        </name>
+        <alias>
+            GET_ERR_CH
+        </alias>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            PRINT_STACK_TRACE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            PRINT_NTH_LAST_STACK_TRACE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERTS_ON
+        </name>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERTS_OFF
+        </name>
+        <params>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_TRUE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_FALSE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_EQ
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSERT_NEQ
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSIGN_LOCAL_RETURN_IF_ERROR
+        </name>
+        <alias>
+            AS_LOC_RET_IF_ERR
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+</functions>

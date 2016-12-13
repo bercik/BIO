@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<functions>
+    <!-- funkcje podstawowe -->
+    <!-- przypisywanie zmiennych, zwracanie z funkcji, sprawdzenie czy zmienna jest lokalna czy globalna -->
+    <!-- pobranie globalnej zmiennej -->
+    <function>
+        <name>
+            ASSIGN_LOCAL
+        </name>
+        <alias>
+            AS_LOC
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            ASSIGN_GLOBAL
+        </name>
+        <alias>
+            AS_GLOB
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_LOCAL
+        </name>
+        <alias>
+            IS_LOC
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_LOCAL
+        </name>
+        <alias>
+            GET_LOC
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_GLOBAL
+        </name>
+        <alias>
+            IS_GLOB
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_GLOBAL
+        </name>
+        <alias>
+            GET_GLOB
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            RETURN
+        </name>
+        <alias>
+            RET
+        </alias>
+        <params>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            EXIT
+        </name>
+        <params>
+        </params>
+    </function>
+    
+    <event>
+        <name>
+            onUNHANDLED_ERROR
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </event>
+</functions>
