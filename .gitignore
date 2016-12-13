@@ -17,3 +17,5 @@ __pycache__/
 
 installer/res
 installer/bio_installer.jar
+
+examples/test.bio
