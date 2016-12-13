@@ -57,7 +57,7 @@ public class MathModule extends Module
         putFunction(new NegateFunction());
         putFunction(new RandFunction());
     }
-    
+
     private class RandFunction implements IFunction
     {
         @Override
@@ -409,6 +409,7 @@ public class MathModule extends Module
                     return Data.createIntData(isum);
                 }
             }
+            // inaczej dodawanie kolekcji
             // inaczej tworzymy tablicę 2D i sumujemy każdą
             else
             {
@@ -552,7 +553,8 @@ public class MathModule extends Module
                     }
                 }
                 else // wykonujemy operację na liczbie
-                 if (!isFloat)
+                {
+                    if (!isFloat)
                     {
                         int val = (int)d.getValue();
                         switch (operation)
@@ -605,6 +607,7 @@ public class MathModule extends Module
                                 throw new RuntimeException("Unknown " + operation.toString() + " operation");
                         }
                     }
+                }
             }
 
             // zwracamy float lub int
@@ -676,8 +679,7 @@ public class MathModule extends Module
                         }
                     }
                     else // wykonujemy operację
-                    {
-                        if (!isFloat)
+                     if (!isFloat)
                         {
                             int val = (int)d.getValue();
                             switch (operation)
@@ -729,7 +731,6 @@ public class MathModule extends Module
                                     throw new RuntimeException("Unknown operation " + operation.toString());
                             }
                         }
-                    }
                 }
 
                 // zwracamy float lub int
@@ -1103,18 +1104,18 @@ public class MathModule extends Module
         }
     }
 
-    private class IncFunction implements IFunction
+    private static class IncDecFunction
     {
-        @Override
-        public String getName()
+        private enum FUN
         {
-            return "INC";
+            INC,
+            DEC;
         }
 
-        @Override
-        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        private static Data perform(List<Data> params, CallFrame currentFrame, Interpreter interpreter, FUN fun,
+                String funName)
         {
-            // parametr: <id>
+            // parametr: <id>, <val>?
             Data idData = params.get(0);
             Data data = interpreter.getBuiltinFunctions().callFunction("GET_LOCAL", params, currentFrame,
                     interpreter, idData.getErrorInfo());
@@ -1126,31 +1127,132 @@ public class MathModule extends Module
             }
 
             // sprawdź czy liczba
-            TypeCheckerNumber tcn = new TypeCheckerNumber(data, getName(), 0, data.getErrorInfo(),
+            TypeCheckerNumber tcn = new TypeCheckerNumber(data, funName, 0, data.getErrorInfo(),
                     interpreter);
             if (tcn.isError())
             {
                 return tcn.getError();
             }
 
+            Integer iinc = null;
+            Float finc = null;
+            // sprawdź czy drugi parametr istnieje,
+            // jeżeli tak to
+            if (params.size() > 1)
+            {
+                // pobierz
+                Data dVal = params.get(1);
+
+                // jeżeli data jest typu float
+                if (tcn.isFloat())
+                {
+                    // sprawdź czy dVal jest liczbą
+                    TypeCheckerNumber valTcn = new TypeCheckerNumber(dVal, funName, 1, dVal.getErrorInfo(),
+                            interpreter);
+
+                    if (valTcn.isError())
+                    {
+                        return valTcn.getError();
+                    }
+
+                    // pobierz wartość
+                    finc = Numbers.getFloat(dVal);
+                }
+                // inaczej data to int
+                else
+                {
+                    // sprawdź czy dVal jest intem
+                    TypeChecker tc = new TypeChecker(dVal, funName, 1, dVal.getErrorInfo(), interpreter,
+                            DataType.INT);
+
+                    if (tc.isError())
+                    {
+                        return tc.getError();
+                    }
+
+                    // pobierz wartość
+                    iinc = (int)dVal.getValue();
+                }
+            }
+
             if (tcn.isFloat())
             {
-                float val = (float)data.getValue();
-                ++val;
-                Data newData = Data.createFloatData(val);
+                float dataVal = (float)data.getValue();
+                // jeżeli podano wartość do inkrementowania
+                if (finc != null)
+                {
+                    if (fun.equals(FUN.INC))
+                    {
+                        dataVal += finc;
+                    }
+                    else
+                    {
+                        dataVal -= finc;
+                    }
+                }
+                else
+                {
+                    if (fun.equals(FUN.INC))
+                    {
+                        ++dataVal;
+                    }
+                    else
+                    {
+                        --dataVal;
+                    }
+                }
+                Data newData = Data.createFloatData(dataVal);
                 interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
                         currentFrame, interpreter, idData.getErrorInfo());
                 return newData;
             }
             else
             {
-                int val = Numbers.getInt(data);
-                ++val;
-                Data newData = Data.createIntData(val);
+                int dataVal = Numbers.getInt(data);
+                // jeżeli podano wartość do inkrementowania
+                if (iinc != null)
+                {
+                    if (fun.equals(FUN.INC))
+                    {
+                        dataVal += iinc;
+                    }
+                    else
+                    {
+                        dataVal -= iinc;
+                    }
+                }
+                else
+                {
+                    if (fun.equals(FUN.INC))
+                    {
+                        ++dataVal;
+                    }
+                    else
+                    {
+                        --dataVal;
+                    }
+                }
+                Data newData = Data.createIntData(dataVal);
                 interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
                         currentFrame, interpreter, idData.getErrorInfo());
                 return newData;
             }
+        }
+    }
+
+    private class IncFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return IncDecFunction.perform(params, currentFrame, interpreter, 
+                    IncDecFunction.FUN.INC, getName());
         }
     }
 
@@ -1165,43 +1267,8 @@ public class MathModule extends Module
         @Override
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
-            // parametr: <id>
-            Data idData = params.get(0);
-            Data data = interpreter.getBuiltinFunctions().callFunction("GET_LOCAL", params, currentFrame,
-                    interpreter, idData.getErrorInfo());
-
-            // jeżeli error to zwróć
-            if (data.getDataType().equals(DataType.ERROR))
-            {
-                return data;
-            }
-
-            // sprawdź czy liczba
-            TypeCheckerNumber tcn = new TypeCheckerNumber(data, getName(), 0, data.getErrorInfo(),
-                    interpreter);
-            if (tcn.isError())
-            {
-                return tcn.getError();
-            }
-
-            if (tcn.isFloat())
-            {
-                float val = (float)data.getValue();
-                --val;
-                Data newData = Data.createFloatData(val);
-                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
-                        currentFrame, interpreter, idData.getErrorInfo());
-                return newData;
-            }
-            else
-            {
-                int val = Numbers.getInt(data);
-                --val;
-                Data newData = Data.createIntData(val);
-                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
-                        currentFrame, interpreter, idData.getErrorInfo());
-                return newData;
-            }
+            return IncDecFunction.perform(params, currentFrame, interpreter, 
+                    IncDecFunction.FUN.DEC, getName());
         }
     }
 

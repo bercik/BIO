@@ -22,6 +22,8 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
     private final boolean isError;
     private final boolean isFloat;
     
+    // !!! paramNum jest zwiększane o jeden !!!
+    // !!! elementNum zwiększane o jeden !!!
     public TypeCheckerNumberCollection(Data actual, String funName, int paramNum, int elementNum, 
             ErrorInfo ei, Interpreter interpreter)
     {
@@ -47,8 +49,8 @@ public class TypeCheckerNumberCollection implements ITypeCheckerNumber
             isError = true;
             isFloat = false;
             
-            String message = "in passed parameter " + paramNum + " collection, "
-                    + "expected " + elementNum + " element to be " + DataType.INT.toString() + " or " + 
+            String message = "in passed parameter " + (paramNum + 1) + " collection, "
+                    + "expected " + (elementNum + 1) + " element to be " + DataType.INT.toString() + " or " + 
                     DataType.FLOAT.toString();
             message += " got " + actualDataType.toString();
             

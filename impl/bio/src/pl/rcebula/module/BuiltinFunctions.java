@@ -41,6 +41,7 @@ import pl.rcebula.module.modules.IterModule;
 import pl.rcebula.module.modules.ReflectionsModule;
 import pl.rcebula.module.modules.StringsModule;
 import pl.rcebula.module.modules.StructsModule;
+import pl.rcebula.module.modules.TcpModule;
 
 /**
  *
@@ -72,6 +73,7 @@ public class BuiltinFunctions
         putModule(new ReflectionsModule());
         putModule(new StructsModule());
         putModule(new IterModule());
+        putModule(new TcpModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);
@@ -148,6 +150,14 @@ public class BuiltinFunctions
             events.putAll(m.getEvents());
         }
     }
+    
+    public void exit()
+    {
+        for (IModule module : modules.values())
+        {
+            module.exit();
+        }
+    }
 
     public Data callFunction(String name, List<Data> params, CallFrame currentFrame, Interpreter interpreter,
             ErrorInfo ei)
@@ -155,7 +165,7 @@ public class BuiltinFunctions
         IFunction fun = functions.get(name);
         if (fun != null)
         {
-            return fun.call(params, currentFrame, interpreter);
+            return fun.call(params, currentFrame, interpreter, ei);
         }
         else
         {

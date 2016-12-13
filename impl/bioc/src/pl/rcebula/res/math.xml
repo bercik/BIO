@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <!-- funkcje matematyczne -->
     <!-- działa na liczbach całkowitych i zmiennoprzecinkowych z wyjątkami -->
     <!-- sumowanie elementów tablicy, dodawanie (także dla stringów), odejmowanie, mnożenie (także dla stringów),
-           dzielenie, reszta z dzielenia, potęgowanie, pierwiastek kwadratowy, inkrementacja, dekrementacja,
-           zmiana znaku liczby -->
+    dzielenie, reszta z dzielenia, potęgowanie, pierwiastek kwadratowy, inkrementacja, dekrementacja,
+    zmiana znaku liczby -->
     <function>
         <name>
             SUM
@@ -182,6 +182,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <param>
                 id
             </param>
+            <param optional="true">
+                all
+            </param>
         </params>
     </function>
     
@@ -192,6 +195,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <params>
             <param>
                 id
+            </param>
+            <param optional="true">
+                all
             </param>
         </params>
     </function>

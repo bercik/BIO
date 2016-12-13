@@ -6,6 +6,7 @@
 package pl.rcebula.module;
 
 import java.util.List;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.internals.data_types.Data;
@@ -20,5 +21,14 @@ public interface IFunction
     public String getName();
     
     // wywołanie funkcji, zwracana wartość jest odkładana na stos wartości aktualnej ramki
-    public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter);
+    default public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+    {
+        return call(params, currentFrame, interpreter, null);
+    }
+    
+    default public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, 
+            ErrorInfo callErrorInfo)
+    {
+        return call(params, currentFrame, interpreter);
+    }
 }

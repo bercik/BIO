@@ -35,7 +35,11 @@ public enum ErrorCodes
     TOO_LITTLE_PARAMETERS(19),
     NO_STACK_TRACE(20),
     STACK_OVERFLOW(21),
-    HEAP_OVERFLOW(22);
+    HEAP_OVERFLOW(22),
+    TCP_CONNECTION_ERROR(100),
+    TCP_PORT_OUT_OF_RANGE(101),
+    TCP_BAD_IP_ADDRESS(102),
+    TCP_CONNECTION_DOESNT_EXIST(103);
     
     private final Data code;
             

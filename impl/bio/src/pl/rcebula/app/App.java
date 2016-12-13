@@ -130,7 +130,6 @@ public class App
         catch (IOException ex)
         {
             System.err.println("IOException: " + ex.getMessage());
-            ex.printStackTrace();
         }
     }
 

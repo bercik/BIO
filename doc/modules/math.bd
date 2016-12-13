@@ -83,17 +83,19 @@
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections have got diffrent sizes
 
 !name INC
-!desc Increments local number with given id
+!desc Increments local number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.
 !param id (id) local number identifier
+!optional val (int, float) number by which will be incremented
 !return (int, float) return incremented value. If variable was of type int then it will return int, otherwise float
-!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
 !error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
 
 !name DEC
-!desc Decrements local number with given id
+!desc Decrements local number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.
 !param id (id) local number identifier
+!optional val (int, float) number by which will be decremented
 !return (int, float) return decremented value. If variable was of type int then it will return int, otherwise float
-!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
 !error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
 
 !name NEGATE

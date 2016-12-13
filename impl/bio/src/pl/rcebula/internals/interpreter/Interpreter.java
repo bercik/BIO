@@ -207,6 +207,9 @@ public final class Interpreter
         }
 
         run();
+        
+        // wywołaj metodę umożliwiającą czynności czyszczące każdemu modułowi
+        builtinFunctions.exit();
     }
 
     CallFrame createMainFrame(String[] args)

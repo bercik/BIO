@@ -21,6 +21,8 @@ public class TypeCheckerCollection implements ITypeChecker
     private final Data error;
     private final boolean isError;
     
+    // !!! paramNum jest zwiększane o jeden !!!
+    // !!! argNum jest zwiększane o jeden !!!
     public TypeCheckerCollection(Data actual, String funName, int paramNum, int argNum, ErrorInfo ei, 
             Interpreter interpreter, DataType... expected)
     {
@@ -29,8 +31,8 @@ public class TypeCheckerCollection implements ITypeChecker
         
         if (isError)
         {
-            String message = "in passed parameter " + paramNum + " collection, "
-                    + "expected " + argNum + " element to be ";
+            String message = "in passed parameter " + (paramNum + 1) + " collection, "
+                    + "expected " + (argNum + 1) + " element to be ";
             for (DataType dt : expected)
             {
                 message += dt.toString() + ", ";

@@ -1,0 +1,43 @@
+#IMPORT("tcp")
+@ #INCLUDE("tcp_mock.biom")
+
+def convert_answer_based_on_answer_type(answer, answer_type)
+   IF({ answer_type == "int" }, AS_LOC(answer, TO_INT(answer)))
+   IF({ answer_type == "float" }, AS_LOC(answer, TO_FLOAT(answer)))
+   IF({ answer_type == "bool" }, AS_LOC(answer, TO_BOOL(answer)))
+
+   RET(answer)
+end
+
+def onSTART()
+   @ connect to server
+   AS_LOC(server, TCP_CONNECT("127.0.0.1", 5700))
+   IF
+   (
+      IS_ERROR(server), 
+      CALL
+      (
+         PRINTLN("Unable to connect to the server", server),
+         EXIT()
+      )
+   )
+
+   @ recive data from server and response to it
+   FOR
+   (
+      DN(),
+      true,
+      CALL
+      (
+         AS_LOC(question, TCP_RECV_STRING(server)),
+         IF({ question == "END" }, BREAK()),
+         AS_LOC(answer_type, TCP_RECV_STRING(server)),
+         AS_LOC(answer, INPUT(question)),
+         AS_LOC(answer, convert_answer_based_on_answer_type(answer, answer_type)),
+         TCP_SEND(server, answer)
+      )
+   )
+
+   TCP_CLOSE(server)
+   PRINTLN("Thanks for your responses")
+end
