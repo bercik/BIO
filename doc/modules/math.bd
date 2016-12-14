@@ -81,6 +81,7 @@
 !return (int, float, array) if one number is float then returns float, if both are ints then returns int, if you pass collections then result will be array
 !error (BAD_PARAMETER_TYPE) if <i>a</i> is not int, float, array or tuple or if you mixed numbers and collections or if elements in collections aren't numbers.
 !error (COLLECTIONS_DIFFRENT_SIZES) if given collections have got diffrent sizes
+!error (DIVISION_BY_ZERO) if <i>b</i> is number and have value of zero. If <i>b</i> is collection and any of it's element is zero than in returned array at this index will be this error.
 
 !name INC
 !desc Increments local number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.
