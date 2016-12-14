@@ -33,6 +33,38 @@ public class FloatsModule extends Module
     {
         putFunction(new CeilFunction());
         putFunction(new FloorFunction());
+        putFunction(new IsNanFunctions());
+    }
+    
+    private class IsNanFunctions implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "IS_NAN";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            // parametr: <all>
+            Data dVal = params.get(0);
+            
+            // sprawdź czy typu float
+            TypeChecker tc = new TypeChecker(dVal, getName(), 0, dVal.getErrorInfo(), interpreter, 
+                    DataType.FLOAT);
+            
+            if (tc.isError())
+            {
+                return tc.getError();
+            }
+            
+            // pobierz wartość
+            float val = (float)dVal.getValue();
+            
+            // zwróc czy jest NaN
+            return Data.createBoolData(Float.isNaN(val));
+        }
     }
     
     private class FloorFunction implements IFunction, IOperation

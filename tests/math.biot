@@ -53,7 +53,7 @@ def test_sqrt()
    ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
    bt_assert_eq(SQRT(25), 5)
    bt_assert_eq(SQRT(30), 5.477226)
-   @ bt_assert_eq(SQRT(-4), { 0.0 / 0.0 })
+   bt_assert_true(IS_NAN(SQRT(-4)))
    bt_assert_eq(SQRT(tup1), CR_TUP( 2.828427, 2.0, 1.7320508, 1.4142135 ))
 end
 

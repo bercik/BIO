@@ -10,3 +10,9 @@
 !return (int) 
 !error (BAD_PARAMETER_TYPE) If <i>val</i> is not int or float
 
+!name IS_NAN
+!desc Checks whether given <i>val</i> is NaN (not a number).
+!param val (float) 
+!return (bool) true if <i>val</i> is NaN, otherwise false
+!error (BAD_PARAMETER_TYPE) If <i>val</i> isn't float
+

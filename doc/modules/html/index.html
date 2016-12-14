@@ -712,6 +712,17 @@
                                                                            <li><a href="#FLOOR_funerrors">Errors</a></li>
                                              </ul>
                   </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_NAN
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_NAN_fun">Description</a></li>
+                                                   <li><a href="#IS_NAN_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_NAN_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_NAN_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
                            </ul>
          </li>
                <li class="has-sub">
@@ -3514,7 +3525,7 @@
          <header>
             <h3>TO_FLOAT
                         (val)</h3>
-            <p class="description">Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float</p>
+            <p class="description">Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float. You can pass special strings: "NaN", "Infinity" and "-Infinity" to get special float values.</p>
          </header>
 
                   <section class="parameters" id="TO_FLOAT_funparams">
@@ -4214,6 +4225,39 @@
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
                <dd>If <i>val</i> is not int or float</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="IS_NAN_fun">
+
+         <header>
+            <h3>IS_NAN
+                        (val)</h3>
+            <p class="description">Checks whether given <i>val</i> is NaN (not a number).</p>
+         </header>
+
+                  <section class="parameters" id="IS_NAN_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>val</i> (<u>float</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="IS_NAN_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>true if <i>val</i> is NaN, otherwise false</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="IS_NAN_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>val</i> isn't float</dd>
             </dl>
                      </section>
          

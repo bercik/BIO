@@ -10,4 +10,9 @@ def test()
    bt_assert_eq(FLOOR(10.5), 10, "") @ 10
    bt_assert_eq(FLOOR(10), 10, "") @ 10
    bt_assert_eq(FLOOR(-10.999), -11, "") @ -11
+
+   PRINTLN("IS_NAN")
+   bt_assert_false(IS_NAN(10.0))
+   bt_assert_true(IS_NAN(TO_FLOAT("NaN")))
+   bt_assert_error(IS_NAN(10))
 end
