@@ -7,6 +7,7 @@ package pl.rcebula.module.modules;
 
 import java.util.Arrays;
 import java.util.List;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -47,27 +48,27 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int res = ~nums[0];
             return Data.createIntData(res);
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             boolean res = !bools[0];
             return Data.createBoolData(res);
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -90,13 +91,13 @@ public class LogicModule extends Module
             if (par.getDataType().equals(DataType.INT))
             {
                 int num = (int)par.getValue();
-                return perform(new int[] { num });
+                return perform(new int[] { num }, new ErrorInfo[] { par.getErrorInfo() }, interpreter);
             }
             // jeżeli bool
             else if (par.getDataType().equals(DataType.BOOL))
             {
                 boolean bool = (boolean)par.getValue();
-                return perform(new boolean[] { bool });
+                return perform(new boolean[] { bool }, new ErrorInfo[] { par.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcja
             else
@@ -116,7 +117,7 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int res = nums[0] & nums[1];
             
@@ -129,13 +130,13 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             boolean res = bools[0] & bools[1];
             
@@ -148,7 +149,7 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -229,7 +230,7 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int res = nums[0] | nums[1];
             
@@ -242,13 +243,13 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             boolean res = bools[0] | bools[1];
             
@@ -261,7 +262,7 @@ public class LogicModule extends Module
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }

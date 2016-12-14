@@ -883,25 +883,25 @@ public class MathModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, pl.rcebula.internals.interpreter.Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             return Data.createFloatData((float)Math.sqrt(nums[0]));
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -924,10 +924,7 @@ public class MathModule extends Module
             if (Numbers.isNumber(d))
             {
                 float val = Numbers.getFloat(d);
-                return perform(new float[]
-                {
-                    val
-                });
+                return perform(new float[] { val }, new ErrorInfo[] { d.getErrorInfo() }, null);
             }
             // kolekcja
             else
@@ -946,25 +943,25 @@ public class MathModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, pl.rcebula.internals.interpreter.Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             return Data.createFloatData((float)Math.pow(nums[0], nums[1]));
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -999,10 +996,8 @@ public class MathModule extends Module
                 float base = Numbers.getFloat(par1);
                 float exponent = Numbers.getFloat(par2);
 
-                return perform(new float[]
-                {
-                    base, exponent
-                });
+                return perform(new float[] { base, exponent }, 
+                        new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
             }
             // kolekcja
             else
@@ -1022,25 +1017,35 @@ public class MathModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
+            if (nums[1] == 0)
+            {
+                return ErrorConstruct.DIVISION_BY_ZERO(getName(), errorInfos[1], interpreter);
+            }
+            
             return Data.createIntData(nums[0] % nums[1]);
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
+            if (nums[1] == 0.0f)
+            {
+                return ErrorConstruct.DIVISION_BY_ZERO(getName(), errorInfos[1], interpreter);
+            }
+            
             return Data.createFloatData(nums[0] % nums[1]);
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -1085,14 +1090,16 @@ public class MathModule extends Module
                     float val1 = Numbers.getFloat(par1);
                     float val2 = Numbers.getFloat(par2);
 
-                    return perform(val1, val2);
+                    return perform(new float[] { val1, val2 }, 
+                            new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
                 }
                 // inaczej inty
                 {
                     int val1 = Numbers.getInt(par1);
                     int val2 = Numbers.getInt(par2);
                     
-                    return perform(val1, val2);
+                    return perform(new int[] { val1, val2 },
+                            new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
                 }
             }
             // inaczej kolekcje

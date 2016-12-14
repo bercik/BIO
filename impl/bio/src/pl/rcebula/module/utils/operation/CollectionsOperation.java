@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -163,6 +164,8 @@ public class CollectionsOperation
                 case BOOL:
                     // tablica parametrów
                     boolean[] bparams = new boolean[col.size()];
+                    // tablica errorInfo
+                    ErrorInfo[] errorInfos = new ErrorInfo[col.size()];
                     
                     // przechodzimy po wszystkich kolekcjach
                     for (int k = 0; k < col.size(); ++k)
@@ -179,16 +182,19 @@ public class CollectionsOperation
                         }
                         
                         // dodajemy do tablicy parametrów
-                        bparams[k] = (boolean)col.get(k)[i].getValue();
+                        bparams[k] = (boolean)d.getValue();
+                        errorInfos[k] = d.getErrorInfo();
                     }
                     
                     // wykonujemy działanie
-                    res = op.perform(bparams);
+                    res = op.perform(bparams, errorInfos, interpreter);
                     break;
                     
                 case INT:
                     // tablica parametrów
                     int[] iparams = new int[col.size()];
+                    // tablica errorInfo
+                    errorInfos = new ErrorInfo[col.size()];
                     
                     // przechodzimy po wszystkich kolekcjach
                     for (int k = 0; k < col.size(); ++k)
@@ -205,16 +211,19 @@ public class CollectionsOperation
                         }
                         
                         // dodajemy do tablicy parametrów
-                        iparams[k] = (int)col.get(k)[i].getValue();
+                        iparams[k] = (int)d.getValue();
+                        errorInfos[k] = d.getErrorInfo();
                     }
                     
                     // wykonujemy działanie
-                    res = op.perform(iparams);
+                    res = op.perform(iparams, errorInfos, interpreter);
                     break;
                     
                 case STRING:
                     // tablica parametrów
                     String[] sparams = new String[col.size()];
+                    // tablica errorInfo
+                    errorInfos = new ErrorInfo[col.size()];
                     
                     // przechodzimy po wszystkich kolekcjach
                     for (int k = 0; k < col.size(); ++k)
@@ -232,16 +241,19 @@ public class CollectionsOperation
                         
                         // dodajemy do tablicy parametrów
                         sparams[k] = (String)col.get(k)[i].getValue();
+                        errorInfos[k] = d.getErrorInfo();
                     }
                     
                     // wykonujemy działanie
-                    res = op.perform(sparams);
+                    res = op.perform(sparams, errorInfos, interpreter);
                     break;
                     
                 case FLOAT:
                     // w przypadku float konwertuj inty do float
                     // tablica parametrów
                     float[] fparams = new float[col.size()];
+                    // tablica errorInfo
+                    errorInfos = new ErrorInfo[col.size()];
                     
                     // przechodzimy po wszystkich kolekcjach
                     for (int k = 0; k < col.size(); ++k)
@@ -266,10 +278,11 @@ public class CollectionsOperation
                         {
                             fparams[k] = ((Integer)col.get(k)[i].getValue()).floatValue();
                         }
+                        errorInfos[k] = d.getErrorInfo();
                     }
                     
                     // wykonujemy działanie
-                    res = op.perform(fparams);
+                    res = op.perform(fparams, errorInfos, interpreter);
                     break;
                     
                 case NUMBER:
@@ -277,6 +290,8 @@ public class CollectionsOperation
                     // wtedy konwertuj wszystko do float
                     iparams = new int[col.size()];
                     fparams = new float[col.size()];
+                    // tablica errorInfo
+                    errorInfos = new ErrorInfo[col.size()];
                     boolean isFloat = false;
                     
                     // przechodzimy po wszystkich kolekcjach
@@ -293,6 +308,8 @@ public class CollectionsOperation
                             return tcnc.getError();
                         }
                         
+                        errorInfos[k] = d.getErrorInfo();
+                        
                         // jeżeli do tej pory były same inty
                         if (!isFloat)
                         {
@@ -307,12 +324,12 @@ public class CollectionsOperation
                                 }
                                 
                                 // dodajemy floata
-                                fparams[k] = (float)col.get(k)[i].getValue();
+                                fparams[k] = (float)d.getValue();
                             }
                             // inaczej dodajemy inta
                             else
                             {
-                                iparams[k] = (int)col.get(k)[i].getValue();
+                                iparams[k] = (int)d.getValue();
                             }
                         }
                         // jeżeli już floaty
@@ -333,11 +350,11 @@ public class CollectionsOperation
                     // wykonujemy działanie
                     if (isFloat)
                     {
-                        res = op.perform(fparams);
+                        res = op.perform(fparams, errorInfos, interpreter);
                     }
                     else
                     {
-                        res = op.perform(iparams);
+                        res = op.perform(iparams, errorInfos, interpreter);
                     }
                     break;
                     

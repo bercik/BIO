@@ -6,6 +6,7 @@
 package pl.rcebula.module.modules;
 
 import java.util.List;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -75,7 +76,8 @@ public class IntsModule extends Module
                 int b = (int)par2.getValue();
                 
                 // wykonaj operację
-                return perform(new int[] { a, b });
+                return perform(new int[] { a, b }, 
+                        new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcje
             else
@@ -95,26 +97,26 @@ public class IntsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int xor = nums[0] ^ nums[1];
             return Data.createIntData(xor);
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -129,26 +131,26 @@ public class IntsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int rshift = nums[0] >> nums[1];
             return Data.createIntData(rshift);
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -183,7 +185,8 @@ public class IntsModule extends Module
                 int shift = (int)par2.getValue();
                 
                 // wykonaj operację
-                return perform(new int[] { num, shift });
+                return perform(new int[] { num, shift }, 
+                        new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcje
             else
@@ -212,26 +215,26 @@ public class IntsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int rshift = nums[0] << nums[1];
             return Data.createIntData(rshift);
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -266,7 +269,8 @@ public class IntsModule extends Module
                 int shift = (int)par2.getValue();
                 
                 // wykonaj operację
-                return perform(new int[] { num, shift });
+                return perform(new int[] { num, shift }, 
+                        new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcje
             else
