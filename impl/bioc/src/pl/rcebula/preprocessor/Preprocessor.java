@@ -27,6 +27,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 import java.util.logging.Logger;
@@ -366,7 +367,11 @@ public class Preprocessor
             return readInputStreamAsLines(is, encoding);
         }
 
-        return new ArrayList<>();
+        // zwróc listę z jednym elementem
+        return new ArrayList<String>()
+        {{
+                    add("");
+        }};
     }
 
     private boolean checkIfSameFile(List<Path> paths, Path p)
