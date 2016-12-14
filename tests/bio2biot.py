@@ -2,7 +2,7 @@
 import re 
 import sys
 
-comment_sign = "@"
+comment_sign = "%"
 
 def change_one_line(line):
     if line.strip() == "def onSTART()":
@@ -11,7 +11,7 @@ def change_one_line(line):
     if line == "\n":
         return "end\n"
 
-    reg_exp = '(\s*)PRINT\((.*),\s*"\\\\n"\)\s*' + comment_sign + '\s*(.*)'
+    reg_exp = '(\s*)PRINTLN\((.*)\)\s*' + comment_sign + '\s*(.*)'
     m = re.search(reg_exp, line)
     if m != None:
         indent = m.group(1)
@@ -36,7 +36,7 @@ def change_one_line(line):
 
         return result
     else:
-        reg_exp = '\s*PRINT\("(.*)\\\\n"\)'
+        reg_exp = '\s*PRINTLN\("(.*)"\)'
         m = re.search(reg_exp, line)
         if m != None:
             name = m.group(1)
