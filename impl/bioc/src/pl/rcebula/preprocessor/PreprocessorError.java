@@ -31,4 +31,9 @@ public class PreprocessorError extends Exception
     {
         super("[file: " + file + ", line: " + line + "]: " + message);
     }
+    
+    public PreprocessorError(String file, String message, int line, int ch)
+    {
+        super("[file: " + file + ", line: " + line + ", character: " + ch + "]: " + message);
+    }
 }

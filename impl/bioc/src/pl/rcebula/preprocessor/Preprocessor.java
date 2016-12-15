@@ -27,8 +27,9 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -44,10 +45,15 @@ public class Preprocessor
 {
     // regex
     public final static String startOfDirective = "#";
+
     public final static String includeDirectiveRegex = "^" + startOfDirective + "INCLUDE\\s*\\(\\s*\\\"(.*)\\\"\\s*\\)$";
     private final static Pattern includePattern = Pattern.compile(includeDirectiveRegex);
+
     public final static String importDirectiveRegex = "^" + startOfDirective + "IMPORT\\s*\\(\\s*\\\"(.*)\\\"\\s*\\)$";
     private final static Pattern importPattern = Pattern.compile(importDirectiveRegex);
+
+    private static final String defineDirectiveRegex = "(^" + "#" + "DEFINE\\s*\\(\\s*([_\\p{L}]\\w*)\\s*,\\s*)(.*)$";
+    private static final Pattern definePattern = Pattern.compile(defineDirectiveRegex, Pattern.UNICODE_CHARACTER_CLASS);
 
     private final String input;
     private final List<Path> includedPaths = new ArrayList<>();
@@ -56,8 +62,10 @@ public class Preprocessor
     private final boolean debugInfo;
     private final MyFiles files = new MyFiles();
     private final Modules modules = new Modules();
-    
+
     private final String libPath;
+
+    private final Map<String, Define> definesMap = new HashMap<>();
 
     public Preprocessor(String path, boolean debugInfo)
             throws IOException, PreprocessorError
@@ -66,7 +74,7 @@ public class Preprocessor
         logger.info("Preprocessor");
 
         this.debugInfo = debugInfo;
-        
+
         // odczytujemy ścieżkę do bibliotek z właściwości systemowych
         this.libPath = System.getProperty("libpath");
 
@@ -84,7 +92,7 @@ public class Preprocessor
 
         // dodajemy linię <fe
         lines.add(generateFileEndLine());
-        
+
         // analizujemy pod kątem <fs i <fe
         analyseLinesForFiles(lines);
 
@@ -92,13 +100,18 @@ public class Preprocessor
         input = linesToString(lines);
     }
 
+    public Map<String, Define> getDefinesMap()
+    {
+        return definesMap;
+    }
+
     private void analyseLinesForFiles(List<String> lines)
-    {  
+    {
         Stack<Integer> stack = new Stack<>();
         int intervalStart = -1;
         int intervalEnd = -1;
         File currentFile = null;
-        for (int i = 0; i < lines.size(); )
+        for (int i = 0; i < lines.size();)
         {
             String line = lines.get(i);
             if (line.startsWith("<fs"))
@@ -110,7 +123,7 @@ public class Preprocessor
                     currentFile.addInterval(new File.Interval(intervalStart, intervalEnd));
                     intervalStart = i;
                 }
-                
+
                 // pobieramy wartość num
                 int num = Integer.parseInt(line.substring(3, line.length()));
                 // pobieramy plik pod tym numerem
@@ -152,7 +165,7 @@ public class Preprocessor
                 ++i;
             }
         }
-        
+
         files.normalizeIntervals();
     }
 
@@ -196,7 +209,7 @@ public class Preprocessor
 
                 // zmienna pomocnicza
                 boolean matched = false;
-                
+
                 // obcinamy początkowe i końcowe białe znaki
                 line = line.trim();
                 // sprawdzamy czy linia pasuje do wzorca include
@@ -206,7 +219,7 @@ public class Preprocessor
                     matched = true;
                     // pobieramy ścieżkę do pliku
                     String filePath = m.group(1);
-                    
+
                     // sprawdzamy czy nie zaczyna się od <
                     if (filePath.startsWith("<"))
                     {
@@ -216,14 +229,14 @@ public class Preprocessor
                             String msg = "Missing enclosing > in directive: " + line;
                             throw new PreprocessorError(file, msg, it);
                         }
-                        
+
                         // obcinamy pierwszy i ostatni znak (< i >)
                         filePath = filePath.substring(1, filePath.length() - 1);
-                        
+
                         // dodajemy na początek ścieżkę do katalogu z bibliotekami
                         filePath = libPath + filePath;
                     }
-                    
+
                     Path p;
                     // próbujemy utworzyć obiekt Path
                     try
@@ -279,19 +292,57 @@ public class Preprocessor
                 }
                 else
                 {
-                    matched = true;
                     // sprawdzamy czy linia pasuje do wzorca import
                     m = importPattern.matcher(line);
                     if (m.find())
                     {
+                        matched = true;
                         // pobieramy nazwę importowanego modułu i dodajemy
                         String moduleName = m.group(1);
                         modules.addModule(new Modules.Module(moduleName, file, it));
                         // w tym miejscu wstawiamy pustą linijkę
                         resultLines.add("");
                     }
+                    else
+                    {
+                        // sprawdzamy czy linia pasuje do wzorca define
+                        m = definePattern.matcher(line);
+
+                        if (m.find())
+                        {
+                            matched = true;
+                            // pobieramy start, id i expr
+                            String start = m.group(1);
+                            String id = m.group(2);
+                            String expr = m.group(3);
+
+                            // sprawdzamy czy expr kończy się nawiasem
+                            if (!expr.endsWith(")"))
+                            {
+                                String msg = "Missing enclosing ) in directive: " + line;
+                                throw new PreprocessorError(file, msg, it);
+                            }
+
+                            // usuwamy ostatni nawias i białe znaki
+                            expr = expr.substring(0, expr.length() - 1).trim();
+
+                            // sprawdzamy czy id się nie powtarza
+                            if (definesMap.containsKey(id))
+                            {
+                                String msg = "Define with id " + id + " already exists";
+                                throw new PreprocessorError(file, msg, it);
+                            }
+
+                            // add <id, expr> to map
+                            Define define = new Define(id, expr, file, it, start.length(), line);
+                            definesMap.put(id, define);
+
+                            // w tym miejscu wstawiamy pustą linijkę
+                            resultLines.add("");
+                        }
+                    }
                 }
-                
+
                 if (!matched)
                 {
                     String message = "Bad preprocessor directive: " + line;
@@ -314,12 +365,12 @@ public class Preprocessor
     {
         return modules;
     }
-    
+
     public MyFiles getFiles()
     {
         return files;
     }
-    
+
     public String getInput()
     {
         return input;
@@ -369,9 +420,11 @@ public class Preprocessor
 
         // zwróc listę z jednym elementem
         return new ArrayList<String>()
-        {{
-                    add("");
-        }};
+        {
+            {
+                add("");
+            }
+        };
     }
 
     private boolean checkIfSameFile(List<Path> paths, Path p)

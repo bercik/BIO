@@ -34,6 +34,7 @@ import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
 import pl.rcebula.code_generation.optimization.OptimizationStatistics;
+import pl.rcebula.preprocessor.ResolveDefines;
 import pl.rcebula.utils.TimeProfiler;
 
 /**
@@ -76,6 +77,12 @@ public class App
                 System.out.println("-------------------------");
                 System.out.println(preprocessor.getInput());
             }
+            
+            // builtin functions parser
+            timeProfiler.start("BuiltinFunctionsParser");
+            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(preprocessor.getModules());
+            timeProfiler.stop();
+            List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 
             // lexer
             timeProfiler.start("Lexer");
@@ -103,6 +110,10 @@ public class App
                 printTokens(tokens);
             }
 
+            // resolve defines
+            ResolveDefines resolveDefines = new ResolveDefines(preprocessor.getDefinesMap(), 
+                    tokens, builtinFunctions);
+            
             // parser
             timeProfiler.start("Parser");
             Parser parser = new Parser(tokens);
@@ -128,12 +139,6 @@ public class App
                 System.out.println("-------------------------");
                 System.out.println(pt);
             }
-
-            // builtin functions parser
-            timeProfiler.start("BuiltinFunctionsParser");
-            BuiltinFunctionsParser bfp = new BuiltinFunctionsParser(preprocessor.getModules());
-            timeProfiler.stop();
-            List<BuiltinFunction> builtinFunctions = bfp.getBuiltinFunctions();
 
             // semantic checker
             timeProfiler.start("SemanticChecker");

@@ -17,20 +17,21 @@
 package pl.rcebula.analysis.lexer;
 
 import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfoError;
 
 /**
  *
  * @author robert
  */
-public class LexerError extends Error
+public class LexerError extends ErrorInfoError
 {
     public LexerError(String message)
     {
-        super(message);
+        super(null, message, message);
     }
     
     public LexerError(ErrorInfo ei, String message)
     {
-        super(ei.toString() + ": " + message);
+        super(ei, message, ei.toString() + ": " + message);
     }
 }

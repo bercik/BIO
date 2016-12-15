@@ -1,0 +1,72 @@
+[keyword]: def
+[id]: onSTART
+[open bracket]
+[close bracket]
+[id]: AS_GLOB
+[open bracket]
+[id]: a
+[comma]
+[int]: 10
+[close bracket]
+[id]: PRINTLN
+[open bracket]
+[id]: GG
+[open bracket]
+[id]: a
+[close bracket]
+[close bracket]
+[id]: indent
+[id]: PRINT
+[open bracket]
+[string]: wcięty tekst
+
+[close bracket]
+[id]: PRINTLN
+[open bracket]
+[id]: ADD
+[open bracket]
+[id]: TWICE_SIZE
+[comma]
+[id]: SIZE
+[close bracket]
+[close bracket]
+[id]: AS_LOC
+[open bracket]
+[id]: arr
+[comma]
+[id]: cr_new_arr
+[close bracket]
+[id]: PRINTLN
+[open bracket]
+[id]: SIZE
+[open bracket]
+[id]: arr
+[close bracket]
+[close bracket]
+[id]: AS_LOC
+[open bracket]
+[id struct]: vec.x
+[comma]
+[id]: SIZE
+[comma]
+[id struct]: vec.y
+[comma]
+[id]: TWICE_SIZE
+[close bracket]
+[id]: IF
+[open bracket]
+[id]: HASNT_FIELD
+[open bracket]
+[id]: vec
+[comma]
+[id]: a
+[close bracket]
+[comma]
+[id]: PRINTLN
+[open bracket]
+[string]: struct vec hasn't got field a
+[close bracket]
+[close bracket]
+[keyword]: end
+[end]
+

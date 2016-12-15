@@ -16,10 +16,6 @@
  */
 package pl.rcebula.analysis.lexer;
 
-import pl.rcebula.analysis.lexer.LexerError;
-import pl.rcebula.analysis.lexer.TokenType;
-import pl.rcebula.analysis.lexer.Lexer;
-import pl.rcebula.analysis.lexer.Token;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
