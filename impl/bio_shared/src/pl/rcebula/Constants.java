@@ -11,6 +11,8 @@ package pl.rcebula;
  */
 public class Constants
 {
+    public static final String VERSION_STRING = "1.0.0";
+    
     public static final String mainFunctionName = "onSTART";
     public static final Integer[] mainFunctionParameters = { 0, 1 };
     

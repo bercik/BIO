@@ -212,7 +212,7 @@ public class App
         }
         catch (OptsError ex)
         {
-            System.err.println("Options error: " + ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         catch (PreprocessorError ex)
         {

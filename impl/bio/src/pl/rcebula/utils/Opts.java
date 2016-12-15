@@ -17,6 +17,7 @@
 package pl.rcebula.utils;
 
 import java.util.logging.Logger;
+import pl.rcebula.Constants;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Opts
     private void analyse()
             throws OptsError
     {
-        if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
+        if (args.length < 1)
         {
             String message = constructHelp();
             throw new OptsError(message);
@@ -89,6 +90,15 @@ public class Opts
                     run = true;
                     runOption = true;
                 }
+                else if (opt.equals("-h") || opt.equals("--help"))
+                {
+                    throw new OptsError(constructHelp());
+                }
+                else if (opt.equals("--version"))
+                {
+                    String message = "BIO interpreter version " + Constants.VERSION_STRING;
+                    throw new OptsError(message);
+                }
                 else
                 {
                     String message = "Unrecognized option " + opt + "\n";
@@ -123,7 +133,7 @@ public class Opts
 
     private String constructHelp()
     {
-        String message = "usage: java -jar bio.jar [options] input_file [args]\n";
+        String message = "usage: bio [options] input_file [args]\n";
         message += "using any options causes code to not run except -p and -r\n";
         message += "options:\n";
         message += "  -d disassemble, print compiled code in readable form\n";
