@@ -173,6 +173,7 @@ public class App
             {
                 // optimizations
                 timeProfiler.start("CodeOptimizer");
+                ic.frozeForOptimization();
                 new CodeOptimizer(ic, statistic, preprocessor.getFiles());
                 timeProfiler.stop();
             }
@@ -184,6 +185,14 @@ public class App
                 System.out.println("AFTER OPTIMIZATIONS");
                 System.out.println("-------------------------");
                 System.out.println(ic.toStringWithLinesNumber());
+            }
+            
+            if (opts.isVerbose() || opts.isOptimizationsDiffrence())
+            {
+                System.out.println("");
+                System.out.println("OPTIMIZATION DIFFRENCE");
+                System.out.println("-------------------------");
+                System.out.println(ic.toStringOptimizationDiffrence());
             }
 
             // add informations about files to intermediate code
