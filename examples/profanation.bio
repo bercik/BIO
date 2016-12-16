@@ -1,0 +1,9 @@
+#DEFINE(comma, ,)
+#DEFINE(X_0, 10)
+#DEFINE(TWICE_X_0, { 2 * X_0 })
+
+def onSTART()
+   AS_LOC(a comma X_0)
+   AS_LOC(b comma TWICE_X_0)
+   PRINTLN({ a * b })
+end

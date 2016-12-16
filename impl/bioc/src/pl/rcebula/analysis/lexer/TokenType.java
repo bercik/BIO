@@ -16,6 +16,9 @@
  */
 package pl.rcebula.analysis.lexer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author robert
@@ -49,6 +52,21 @@ public enum TokenType
         return valueType;
     }
 
+    public static List<TokenType> getTokenTypesWithNullType()
+    {
+        List<TokenType> tokenTypes = new ArrayList<>();
+        
+        for (TokenType tt : values())
+        {
+            if (tt.getValueType() == null)
+            {
+                tokenTypes.add(tt);
+            }
+        }
+        
+        return tokenTypes;
+    }
+    
     @Override
     public String toString()
     {

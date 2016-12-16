@@ -1,0 +1,26 @@
+#INCLUDE("<stdlib/test.biom>")
+
+@ prosta podmiana
+#DEFINE(SIZE_DEF, 10)
+#DEFINE(GG, GET_GLOB)
+@ podmiana na funkcję
+#DEFINE(indent, "    ")
+@ podmiana na funkcję z parametrem innym define
+#DEFINE(TWICE_SIZE, MUL(SIZE_DEF, 2))
+@ podmiana na funkcję z dwoma parametrami define i parserem mat-log
+#DEFINE(cr_new_arr, CR_ARR({ TWICE_SIZE + SIZE_DEF }))
+
+def test()
+   AS_GLOB(a, 10)
+   bt_assert_eq(GG(a), 10)
+
+   bt_assert_eq(indent, "    ")
+
+   bt_assert_eq({ TWICE_SIZE + SIZE_DEF }, 30)
+
+   AS_LOC(arr, cr_new_arr)
+   bt_assert_eq(arr, CR_ARR(30))
+
+   AS_LOC(vec.x, SIZE_DEF, vec.y, TWICE_SIZE)
+   bt_assert_eq(vec, CR_STRUCT(x, 10, y, 20))
+end

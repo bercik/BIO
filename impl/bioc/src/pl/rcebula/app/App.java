@@ -113,6 +113,14 @@ public class App
             // resolve defines
             ResolveDefines resolveDefines = new ResolveDefines(preprocessor.getDefinesMap(), 
                     tokens, builtinFunctions);
+            tokens = resolveDefines.getTokens();
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("TOKENS AFTER RESOVLE DEFINES");
+                System.out.println("-------------------------");
+                printTokens(tokens);
+            }
             
             // parser
             timeProfiler.start("Parser");
