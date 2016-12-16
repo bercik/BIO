@@ -17,15 +17,16 @@
 package pl.rcebula.analysis.parser;
 
 import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfoError;
 
 /**
  *
  * @author robert
  */
-public class ParserError extends Exception
+public class ParserError extends ErrorInfoError
 {
     public ParserError(ErrorInfo ei, String message)
     {
-        super(ei.toString() + ": " + message);
+        super(ei, message, ei.toString() + ": " + message);
     }
 }

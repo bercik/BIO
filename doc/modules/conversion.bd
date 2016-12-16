@@ -12,7 +12,7 @@
 !error (CONVERSION_ERROR) If <i>val</i> is string but cannot be converted to int
 
 !name TO_FLOAT
-!desc Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float
+!desc Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float. You can pass special strings: "NaN", "Infinity" and "-Infinity" to get special float values.
 !param val (bool, float, int, string) 
 !return (float) 
 !error (BAD_PARAMETER_TYPE) If <i>val</i> is not bool, float, int or string

@@ -712,6 +712,17 @@
                                                                            <li><a href="#FLOOR_funerrors">Errors</a></li>
                                              </ul>
                   </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_NAN
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_NAN_fun">Description</a></li>
+                                                   <li><a href="#IS_NAN_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_NAN_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_NAN_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
                            </ul>
          </li>
                <li class="has-sub">
@@ -1416,6 +1427,33 @@
          </li>
                <li class="has-sub">
             <a href="javascript:void(0)">
+                time
+                           </a>
+            <ul>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   SLEEP
+                                             </a>
+                     <ul>
+                        <li><a href="#SLEEP_fun">Description</a></li>
+                                                   <li><a href="#SLEEP_funparams">Parameters</a></li>
+                                                                           <li><a href="#SLEEP_funreturns">Returns</a></li>
+                                                                           <li><a href="#SLEEP_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   TIME
+                                             </a>
+                     <ul>
+                        <li><a href="#TIME_fun">Description</a></li>
+                                                                           <li><a href="#TIME_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                           </ul>
+         </li>
+               <li class="has-sub">
+            <a href="javascript:void(0)">
                 type_check
                            </a>
             <ul>
@@ -1677,7 +1715,8 @@
       IF function as condition. Notice that there are few functions that takes error as parameter. Other will
       return error with cause as this given error parameter. This behavior is to prevent errors from
       disappearing</p>
-      <p>Here are all errors with their codes, which you can access by GET_OBJECT function:</p>
+      <p>Here are all errors with their codes, which you can access by GET_OBJECT function. If you include "errors.biom" file from stdlib
+         you will get access to this values directly from source code.</p>
       <div class="scrollable">
          <table class="enhance_table">
             <thead>
@@ -1709,6 +1748,7 @@
 <tr><td>20</td><td>NO_STACK_TRACE </td></tr>
 <tr><td>21</td><td>STACK_OVERFLOW </td></tr>
 <tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
+<tr><td>23</td><td>INTERVAL_LESS_THAN_ZERO</td></tr>
 <tr><td>100</td><td>TCP_CONNECTION_ERROR</td></tr>
 <tr><td>101</td><td>TCP_PORT_OUT_OF_RANGE</td></tr>
 <tr><td>102</td><td>TCP_BAD_IP_ADDRESS</td></tr>
@@ -1849,7 +1889,7 @@
          <h3>Preprocessor</h3>
       </header>
 
-      <p>There are two preprocessor directives: #INCLUDE and #IMPORT. They must be typed alone and one directive per line. So for example:</p>
+      <p>There are three preprocessor directives: #INCLUDE, #IMPORT and #DEFINE. They must be typed alone and one directive per line. So for example:</p>
       <p><code>#IMPORT("reflections")<br/>#INCLUDE("list.biom")<br/></code></p>
       <p>Is ok, but this:</p>
       <p><code>#IMPORT("reflections") #INCLUDE("list.biom")<br/></code></p>
@@ -1858,6 +1898,22 @@
       <p>#IMPORT directive is used when you want to use some module which is marked as optional (you can find this in documentation after module name). Than you need to type <code>#IMPORT("mod_name")</code> somewhere in your source file. <b>Note: </b> you can type <code>#IMPORT("all")</code> to import all optional modules available.</p>
       <h4>#INCLUDE</h4>
       <p>#INCLUDE directive is used when you want to include code from other file into yours. It will literally paste it in place where #INCLUDE directive was. It will also resolve #INCLUDE directives in this included file. Preprocessor take care of not including same file twice. Syntax is: <code>#IMPORT("path_to_file")</code>. You can also type: <code>#IMPORT("&lt;path_to_file&gt;")</code>. It will search for file in lib directory which contains for example stdlib directory with some standard librarys and modules (like list.biom)</p>
+      <h4>#DEFINE</h4>
+      <p>#DEFINE directive is used when you want to provide some substitution of identifiers in your source code with some expression. Syntax is: </p>
+      <p><code>#DEFINE(id, expr)</code></p>
+      <p>Where: </p>
+      <ul>
+         <li>id - valid identifier. It is recommended to use capital letters and underscores between words (same rules as for built-in functions names, for example: <code>SOME_DEFINE</code>).</li>
+         <li>expr - any sequence of characters that can be tokenized by lexer and math-log parser. In addition to this open and close parenthesis have to match.
+             You can use math-log expressions and other defines identifiers inside.</li>
+      </ul>
+      <p>Preprocessor will replace all occurence of identifier in source code that matches one of defines identifier with expr from this matched define. For example if your define look's like this:</p>
+      <p><code>#DEFINE(PORT_NUMBER, 5500)</code></p>
+      <p>And in your source code you have got:</p>
+      <p><code>TCP_LISTEN(PORT_NUMBER)</code></p>
+      <p>Preprocessor will replace PORT_NUMBER identifier with actual value of 5500. So code after preprocessing would look like this:</p>
+      <p><code>TCP_LISTEN(5500)</code></p>
+      
    </section>
 
    <section id="basic-info-math-log-parser">
@@ -3486,7 +3542,7 @@
          <header>
             <h3>TO_FLOAT
                         (val)</h3>
-            <p class="description">Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float</p>
+            <p class="description">Converts given <i>val</i> to float. In case of bool convert true to 1.0 and false to 0.0. In case of string tries to convert it to float. You can pass special strings: "NaN", "Infinity" and "-Infinity" to get special float values.</p>
          </header>
 
                   <section class="parameters" id="TO_FLOAT_funparams">
@@ -4186,6 +4242,39 @@
                         <dl>
                <dt>BAD_PARAMETER_TYPE</dt>
                <dd>If <i>val</i> is not int or float</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="IS_NAN_fun">
+
+         <header>
+            <h3>IS_NAN
+                        (val)</h3>
+            <p class="description">Checks whether given <i>val</i> is NaN (not a number).</p>
+         </header>
+
+                  <section class="parameters" id="IS_NAN_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>val</i> (<u>float</u>)</dt>
+               <dd></dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="IS_NAN_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>true if <i>val</i> is NaN, otherwise false</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="IS_NAN_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>val</i> isn't float</dd>
             </dl>
                      </section>
          
@@ -4972,6 +5061,10 @@
                         <dl>
                <dt>COLLECTIONS_DIFFRENT_SIZES</dt>
                <dd>if given collections have got diffrent sizes</dd>
+            </dl>
+                        <dl>
+               <dt>DIVISION_BY_ZERO</dt>
+               <dd>if <i>b</i> is number and have value of zero. If <i>b</i> is collection and any of it's element is zero than in returned array at this index will be this error.</dd>
             </dl>
                      </section>
          
@@ -6324,6 +6417,71 @@
                <dd>If tcp connection failed</dd>
             </dl>
                      </section>
+         
+      </article>
+         </section>
+</section>
+<section class="module block" id="time">
+   <header>
+      <h2>
+                  time
+               </h2>
+   </header>
+   <section class="functions">
+            <article class="function sub-block" id="SLEEP_fun">
+
+         <header>
+            <h3>SLEEP
+                        (interval)</h3>
+            <p class="description">Causes program to sleep for the <i>interval</i> number of miliseconds.</p>
+         </header>
+
+                  <section class="parameters" id="SLEEP_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>interval</i> (<u>int</u>)</dt>
+               <dd>length of time to sleep in miliseconds</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="SLEEP_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="SLEEP_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if <i>interval</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>INTERVAL_LESS_THAN_ZERO</dt>
+               <dd>if <i>interval</i> is less than zero</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="TIME_fun">
+
+         <header>
+            <h3>TIME
+                        ()</h3>
+            <p class="description">Returns time in miliseconds from first call of this function. <b>Note:</b> because return value is int, after approximately 24 days, 20 hours and 31 minutes this value would overflow.</p>
+         </header>
+
+         
+                  <section class="returns" id="TIME_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int</u>)</dt>
+               <dd>time in miliseconds from first call of this function</dd>
+            </dl>
+         </section>
+         
          
       </article>
          </section>

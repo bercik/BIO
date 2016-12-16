@@ -1,9 +1,0 @@
-#INCLUDE("<stdlib/iter_functions.biom>")
-#INCLUDE("<stdlib/biotest.biom>")
-
-def test()
-   AS_LOC(tup, CR_TUP("abc", "abba", "AbC", "def", "acbd", "a"))
-   AS_LOC(expected, CR_TUP("abc", "abba"))
-   AS_LOC(result, GET_ARRAY_LIST(FOREACH(tup, retListWithStringsStartsWith, "ab")))
-   BT_ASSERT_EQ(expected, result)
-end

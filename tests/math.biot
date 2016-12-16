@@ -1,0 +1,121 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test_sum()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(SUM(tup1), 17)
+end
+
+def test_add()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(ADD(tup1, tup1), CR_TUP( 16, 8, 6, 4 ))
+   bt_assert_eq(ADD(-1, 1, 10), 10)
+end
+
+def test_diff()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(DIFF(tup1), -1)
+end
+
+def test_sub()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(SUB(tup1, tup1), CR_TUP( 0, 0, 0, 0 ))
+   bt_assert_eq(SUB(-1, 1, 10), -12)
+end
+
+def test_product()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(PRODUCT(tup1), 192)
+end
+
+def test_mul()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(MUL(tup1, tup1), CR_TUP( 64, 16, 9, 4 ))
+   bt_assert_eq(MUL(-1, 1, 10), -10)
+end
+
+def test_quotient()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(15, 5, 3, 0))
+   bt_assert_eq(QUOTIENT(tup1), 0)
+   bt_assert_error(QUOTIENT(tup2))
+end
+
+def test_div()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(15, 5, 3, 0))
+   bt_assert_eq(DIV(tup1, tup1), CR_TUP( 1, 1, 1, 1 ))
+   bt_assert_eq(DIV(30, 3, -2), -5)
+   bt_assert_error(DIV(20, 0))
+   bt_assert_error(DIV(tup1, tup2))
+end
+
+def test_sqrt()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(SQRT(25), 5)
+   bt_assert_eq(SQRT(30), 5.477226)
+   bt_assert_true(IS_NAN(SQRT(-4)))
+   bt_assert_eq(SQRT(tup1), CR_TUP( 2.828427, 2.0, 1.7320508, 1.4142135 ))
+end
+
+def test_pow()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   bt_assert_eq(POW(2, 3), 8)
+   bt_assert_eq(POW(-2, 3), -8)
+   bt_assert_eq(POW(4, 0.5), 2)
+   bt_assert_eq(POW(tup1, tup1), CR_TUP( 16777216, 256, 27, 4 ))
+end
+
+def test_mod()
+   ASSIGN_LOCAL(tup1, CREATE_TUPLE(8, 4, 3, 2))
+   ASSIGN_LOCAL(tup2, CREATE_TUPLE(15, 5, 3, 0))
+   bt_assert_eq(MOD(6, 3), 0)
+   bt_assert_eq(MOD(7, 3), 1)
+   bt_assert_eq(MOD(7.5, 2), 1.5)
+   bt_assert_eq(MOD(tup1, tup1), CR_TUP( 0, 0, 0, 0 ))
+   bt_assert_eq(MOD(tup2, tup1), CR_TUP( 7, 1, 0, 0 ))
+   bt_assert_error(GET(MOD(tup1, tup2), 3))
+   bt_assert_error(MOD(5, 0))
+   bt_assert_error(MOD(5.0, 0.0))
+   bt_assert_error(MOD(tup1, CREATE_TUPLE(1, 2, 3)))
+   bt_assert_error(MOD(tup1, CREATE_TUPLE(1, "a", 3, 5)))
+   bt_assert_error(MOD(tup1, true))
+end
+
+def test_inc()
+   ASSIGN_LOCAL(i, 0)
+   ASSIGN_LOCAL(j, INC(i), k, INC(i, 2))
+   bt_assert_eq(i, 3)
+   bt_assert_eq(j, 1)
+   bt_assert_eq(k, 3)
+   INC(i, -2)
+   bt_assert_eq(i, 1)
+   bt_assert_eq(j, 1)
+   bt_assert_eq(k, 3)
+   bt_assert_error(INC(i, 0.5))
+   AS_LOC(i, 0.5)
+   bt_assert_eq(INC(i, 0.75), 1.25)
+   bt_assert_eq(INC(i, 1), 2.25)
+end
+
+def test_dec()
+   ASSIGN_LOCAL(i, 2)
+   ASSIGN_LOCAL(j, DEC(i), k, DEC(i, 2))
+   bt_assert_eq(i, -1)
+   bt_assert_eq(j, 1)
+   bt_assert_eq(k, -1)
+   DEC(i, -2)
+   bt_assert_eq(i, 1)
+   bt_assert_eq(j, 1)
+   bt_assert_eq(k, -1)
+   bt_assert_error(DEC(i, 0.5))
+   AS_LOC(i, 0.5)
+   bt_assert_eq(DEC(i, 0.75), -0.25)
+   bt_assert_eq(DEC(i, 1), -1.25)
+end
+
+def test_negate()
+   bt_assert_eq(NEGATE(20), -20)
+   bt_assert_eq(NEGATE(-20), 20)
+   bt_assert_eq(NEGATE(1.5), -1.5)
+   bt_assert_eq(NEGATE(-0.5), 0.5)
+end

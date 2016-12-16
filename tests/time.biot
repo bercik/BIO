@@ -1,0 +1,13 @@
+#INCLUDE ("<stdlib/test.biom>")
+
+def test_sleep_and_time()
+   AS_LOC(sleep_time, 10)
+   AS_LOC(start_t, TIME())
+
+   SLEEP(sleep_time)
+
+   AS_LOC(end_t, TIME())
+   AS_LOC(diff, { end_t - start_t })
+
+   bt_assert_true({ diff >= sleep_time })
+end

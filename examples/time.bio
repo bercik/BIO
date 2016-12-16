@@ -1,0 +1,28 @@
+def onSTART()
+   FOR
+   (
+      AS_LOC(i, 0),
+      LS(i, 10),
+      CALL
+      (
+         AS_LOC(start_t, TIME()),
+         SLEEP(50),
+         AS_LOC(end_t, TIME()),
+         AS_LOC(diff, { end_t - start_t }),
+         PRINTLN
+         (
+            CR_DICT
+            (
+               "start_t",
+               start_t,
+               "end_t",
+               end_t,
+               "diff",
+               diff
+            ),
+            "--------------------"
+         )
+      ),
+      INC(i)
+   )
+end

@@ -1,3 +1,9 @@
+@ onEACH_ret_list_with_strings_starts_with_case_sensitive(el, obj)
+@ onEACH_ret_list_with_strings_starts_with_case_insensitive(el, obj)
+@ onEACH_println_val(el, obj)
+@ onEACH_println_key_val(el, obj)
+
+
 #INCLUDE("list.biom")
 
 def onEACH_ret_list_with_strings_starts_with_case_sensitive(el, obj)

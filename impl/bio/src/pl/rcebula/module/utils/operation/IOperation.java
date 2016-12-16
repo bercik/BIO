@@ -5,7 +5,9 @@
  */
 package pl.rcebula.module.utils.operation;
 
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.interpreter.Interpreter;
 
 /**
  *
@@ -13,11 +15,11 @@ import pl.rcebula.internals.data_types.Data;
  */
 public interface IOperation
 {
-    public Data perform(int... nums);
+    public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter);
     
-    public Data perform(float... nums);
+    public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter);
     
-    public Data perform(boolean... bools);
+    public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter);
     
-    public Data perform(String... strings);
+    public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter);
 }

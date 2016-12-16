@@ -1,0 +1,11 @@
+!name SLEEP
+!desc Causes program to sleep for the <i>interval</i> number of miliseconds.
+!param interval (int) length of time to sleep in miliseconds
+!return (none) 
+!error (BAD_PARAMETER_TYPE) if <i>interval</i> isn't int
+!error (INTERVAL_LESS_THAN_ZERO) if <i>interval</i> is less than zero
+
+!name TIME
+!desc Returns time in miliseconds from first call of this function. <b>Note:</b> because return value is int, after approximately 24 days, 20 hours and 31 minutes this value would overflow.
+!return (int) time in miliseconds from first call of this function
+

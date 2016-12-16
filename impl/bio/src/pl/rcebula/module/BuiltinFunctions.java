@@ -42,6 +42,7 @@ import pl.rcebula.module.modules.ReflectionsModule;
 import pl.rcebula.module.modules.StringsModule;
 import pl.rcebula.module.modules.StructsModule;
 import pl.rcebula.module.modules.TcpModule;
+import pl.rcebula.module.modules.TimeModule;
 
 /**
  *
@@ -74,6 +75,7 @@ public class BuiltinFunctions
         putModule(new StructsModule());
         putModule(new IterModule());
         putModule(new TcpModule());
+        putModule(new TimeModule());
         // STOP HERE, DON'T EDIT REST OF CODE
 
         createFunctionsInModules(modulesName);

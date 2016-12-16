@@ -1,0 +1,12 @@
+def onSTART()
+   AS_LOC(a, 10, b, 20)
+   PRINTLN( { a @ 212
+            + b @ 202
+            * --(2.0 / b + a) @ 10.1
+            } ) @
+
+   AS_LOC(a.x, 2, a.y, 3)
+   PRINTLN( { 4 ^ a.x ^ a.y + 2 * 3 } ) @ 65542
+
+   PRINTLN( { (2 ^ 3) ^ 4 / 2 ^ 11 * 2 + 10 } ) @ 14
+end

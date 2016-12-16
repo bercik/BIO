@@ -17,6 +17,17 @@ import pl.rcebula.internals.interpreter.Interpreter;
  */
 public class ErrorConstruct
 {
+    public static Data INTERVAL_LESS_THAN_ZERO(String funName, ErrorInfo ei, Interpreter interpreter, 
+            int interval)
+    {
+        String message = "interval " + interval + " is less than zero";
+
+        MyError error = new MyError(funName, message, ErrorCodes.INTERVAL_LESS_THAN_ZERO.getCode(),
+                null, ei, interpreter);
+
+        return Data.createErrorData(error);
+    }
+    
     public static Data TCP_CONNECTION_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter,
             int connId)
     {

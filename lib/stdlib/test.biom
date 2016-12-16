@@ -4,6 +4,7 @@
 @ bt_assert_false(bval, msg=none)
 @ bt_assert_error(val, msg=none)
 
+
 #INCLUDE("list.biom")
 #INCLUDE("iter_functions.biom")
 
@@ -112,7 +113,12 @@ def _error(funName, msg, expVal=none, actVal=none)
    IF
    (
       AND(NOT(IS_NONE(expVal)), NOT(IS_NONE(actVal))),
-      PRINT(". Expected", expVal, "got", actVal)
+      CALL
+      (
+         IF(IS_STR(expVal), AS_LOC(expVal, { "\"" + expVal + "\"" })),
+         IF(IS_STR(actVal), AS_LOC(actVal, { "\"" + actVal + "\"" })),
+         PRINT(". Expected", expVal, "got", actVal)
+      )
    )
    IF(NOT(IS_NONE(msg)), PRINTLN(ADD(": \"", msg, "\"")), PRINTLN())
 end

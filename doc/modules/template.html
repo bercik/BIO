@@ -179,7 +179,8 @@
       IF function as condition. Notice that there are few functions that takes error as parameter. Other will
       return error with cause as this given error parameter. This behavior is to prevent errors from
       disappearing</p>
-      <p>Here are all errors with their codes, which you can access by GET_OBJECT function:</p>
+      <p>Here are all errors with their codes, which you can access by GET_OBJECT function. If you include "errors.biom" file from stdlib
+         you will get access to this values directly from source code.</p>
       <div class="scrollable">
          <table class="enhance_table">
             <thead>
@@ -327,7 +328,7 @@
          <h3>Preprocessor</h3>
       </header>
 
-      <p>There are two preprocessor directives: #INCLUDE and #IMPORT. They must be typed alone and one directive per line. So for example:</p>
+      <p>There are three preprocessor directives: #INCLUDE, #IMPORT and #DEFINE. They must be typed alone and one directive per line. So for example:</p>
       <p><code>#IMPORT("reflections")<br/>#INCLUDE("list.biom")<br/></code></p>
       <p>Is ok, but this:</p>
       <p><code>#IMPORT("reflections") #INCLUDE("list.biom")<br/></code></p>
@@ -336,6 +337,22 @@
       <p>#IMPORT directive is used when you want to use some module which is marked as optional (you can find this in documentation after module name). Than you need to type <code>#IMPORT("mod_name")</code> somewhere in your source file. <b>Note: </b> you can type <code>#IMPORT("all")</code> to import all optional modules available.</p>
       <h4>#INCLUDE</h4>
       <p>#INCLUDE directive is used when you want to include code from other file into yours. It will literally paste it in place where #INCLUDE directive was. It will also resolve #INCLUDE directives in this included file. Preprocessor take care of not including same file twice. Syntax is: <code>#IMPORT("path_to_file")</code>. You can also type: <code>#IMPORT("&lt;path_to_file&gt;")</code>. It will search for file in lib directory which contains for example stdlib directory with some standard librarys and modules (like list.biom)</p>
+      <h4>#DEFINE</h4>
+      <p>#DEFINE directive is used when you want to provide some substitution of identifiers in your source code with some expression. Syntax is: </p>
+      <p><code>#DEFINE(id, expr)</code></p>
+      <p>Where: </p>
+      <ul>
+         <li>id - valid identifier. It is recommended to use capital letters and underscores between words (same rules as for built-in functions names, for example: <code>SOME_DEFINE</code>).</li>
+         <li>expr - any sequence of characters that can be tokenized by lexer and math-log parser. In addition to this open and close parenthesis have to match.
+             You can use math-log expressions and other defines identifiers inside.</li>
+      </ul>
+      <p>Preprocessor will replace all occurence of identifier in source code that matches one of defines identifier with expr from this matched define. For example if your define look's like this:</p>
+      <p><code>#DEFINE(PORT_NUMBER, 5500)</code></p>
+      <p>And in your source code you have got:</p>
+      <p><code>TCP_LISTEN(PORT_NUMBER)</code></p>
+      <p>Preprocessor will replace PORT_NUMBER identifier with actual value of 5500. So code after preprocessing would look like this:</p>
+      <p><code>TCP_LISTEN(5500)</code></p>
+      
    </section>
 
    <section id="basic-info-math-log-parser">

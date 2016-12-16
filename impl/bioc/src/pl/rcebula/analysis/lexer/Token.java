@@ -44,11 +44,6 @@ public class Token<T>
         this.errorInfo = errorInfo;
     }
 
-    public Token(TokenType tokenType, int i, int i0)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public ErrorInfo getErrorInfo()
     {
         return errorInfo;

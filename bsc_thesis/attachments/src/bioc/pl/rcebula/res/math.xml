@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2016 robert
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<functions>
+    <!-- funkcje matematyczne -->
+    <!-- działa na liczbach całkowitych i zmiennoprzecinkowych z wyjątkami -->
+    <!-- sumowanie elementów tablicy, dodawanie (także dla stringów), odejmowanie, mnożenie (także dla stringów),
+    dzielenie, reszta z dzielenia, potęgowanie, pierwiastek kwadratowy, inkrementacja, dekrementacja,
+    zmiana znaku liczby -->
+    <function>
+        <name>
+            SUM
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+           
+    <function>
+        <name>
+            ADD
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DIFF
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SUB
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            PRODUCT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            MUL
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            QUOTIENT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DIV
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            SQRT
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            POW
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            MOD
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            INC
+        </name>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEC
+        </name>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            NEGATE
+        </name>
+        <params>
+            <param>
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            RAND
+        </name>
+        <params>
+        </params>
+    </function>
+</functions>

@@ -17,6 +17,7 @@
 package pl.rcebula.utils;
 
 import java.util.logging.Logger;
+import pl.rcebula.Constants;
 
 /**
  *
@@ -49,9 +50,15 @@ public class Opts
     private void analyse()
             throws OptsError
     {
-        if (args.length < 1 || args[0].equals("--help") || args[0].equals("-h"))
+        if (args.length < 1 || args[0].equals("-h") || args[0].equals("--help"))
         {
             throw new OptsError(constructHelp());
+        }
+
+        if (args[0].equals("--version"))
+        {
+            String message = constructVersion();
+            throw new OptsError(message);
         }
 
         // pierwszy argument to ścieżka do pliku wejściowego
@@ -98,6 +105,15 @@ public class Opts
             {
                 optimizations = false;
             }
+            else if (opt.equals("-h") || opt.equals("--help"))
+            {
+                throw new OptsError(constructHelp());
+            }
+            else if (opt.equals("--version"))
+            {
+                String message = constructVersion();
+                throw new OptsError(message);
+            }
             else
             {
                 String message = "Unrecognized option " + opt + "\n";
@@ -113,9 +129,14 @@ public class Opts
         }
     }
 
+    private String constructVersion()
+    {
+        return "BIO compiler version " + Constants.VERSION_STRING;
+    }
+
     private String constructHelp()
     {
-        String help = "usage: java -jar bioc.jar input_file [options]\n";
+        String help = "usage: bioc input_file [options]\n";
         help += "options:\n";
         help += "  -c disable optimizations, turns off compiler code optimizations\n";
         help += "  -d disassemble, print compiled code in readable form\n";
@@ -126,7 +147,7 @@ public class Opts
         help += "  -s statistics, print optimization statistics\n";
         help += "  -t times, print times spent in each module\n";
         help += "  -v verbose, print all informations about compiling process\n";
-        
+
         return help;
     }
 

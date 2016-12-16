@@ -1,0 +1,58 @@
+#INCLUDE("<stdlib/test.biom>")
+#INCLUDE("<stdlib/list.biom>")
+
+def SOME_EVENT(input)
+   DN()
+end
+
+def FOO1(param)
+   append_to_list(GET_GLOB(list), { "foo1: " + param })
+end
+
+def FOO2(param)
+   append_to_list(GET_GLOB(list), { "foo2: " + param })
+end
+
+def FOO11(param)
+   append_to_list(GET_GLOB(list), { "foo11: " + param })
+end
+
+def FOO21(param)
+   append_to_list(GET_GLOB(list), { "foo21: " + param })
+end
+
+def EVENT(par1, par2)
+   DN()
+end
+
+def CALLBACK(par1, par2, par3)
+   DN()
+end
+
+def test()
+   AS_GLOB(list, create_list())
+
+   ATTACH_TO_EVENT(SOME_EVENT, FOO1, SOME_EVENT, FOO2)
+   ATTACH_TO_EVENT(FOO1, FOO11)
+   ATTACH_TO_EVENT(FOO2, FOO21)
+   SOME_EVENT("test")
+
+   bt_assert_true(IS_ATTACHED(SOME_EVENT, FOO1))
+   bt_assert_false(IS_ATTACHED(onUNHANDLED_ERROR, FOO11))
+   bt_assert_false(IS_ATTACHED(SOME_EVENT, FOO11))
+
+   ATTACH_TO_EVENT(FOO1, FOO2)
+   DETACH_FROM_EVENT(FOO1, FOO11)
+
+   bt_assert_false(IS_ATTACHED(FOO1, FOO11))
+
+   FOO1("test2")
+
+   bt_assert_error(ATTACH_TO_EVENT(FOO1, FOO11, FOO1, FOO11))
+   bt_assert_error(DETACH_FROM_EVENT(FOO1, FOO2, FOO1, FOO2))
+   bt_assert_error(ATTACH_TO_EVENT(EVENT, CALLBACK))
+
+   AS_LOC(list, GET_GLOB(list))
+   bt_assert_eq(get_array_list(list), CR_TUP("foo11: test", "foo1: test", "foo21: test", "foo2: test",
+      "foo21: test2", "foo2: test2", "foo1: test2"))
+end

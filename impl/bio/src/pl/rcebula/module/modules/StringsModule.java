@@ -7,6 +7,7 @@ package pl.rcebula.module.modules;
 
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
+import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -59,25 +60,25 @@ public class StringsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
         
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             return Data.createStringData(strings[0].trim());
         }
@@ -100,7 +101,7 @@ public class StringsModule extends Module
             if (a.getDataType().equals(DataType.STRING))
             {
                 String sstr = (String)a.getValue();
-                return perform(new String[] { sstr });
+                return perform(new String[] { sstr }, new ErrorInfo[] { a.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcja
             else
@@ -444,10 +445,7 @@ public class StringsModule extends Module
             if (par.getDataType().equals(DataType.STRING))
             {
                 String str = (String)par.getValue();
-                return operation.perform(new String[]
-                {
-                    str
-                });
+                return operation.perform(new String[] { str }, new ErrorInfo[] { par.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcja
             else
@@ -470,10 +468,8 @@ public class StringsModule extends Module
                     // pobierz stringa
                     String str = (String)d.getValue();
                     // wykonaj operację i zapisz w nowej tablicy
-                    newDatas[i] = operation.perform(new String[]
-                    {
-                        str
-                    });
+                    newDatas[i] = operation.perform(new String[] { str }, 
+                            new ErrorInfo[] { d.getErrorInfo() }, interpreter);
                 }
 
                 // zwróć tablicę
@@ -497,25 +493,25 @@ public class StringsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             String res = strings[0].toLowerCase();
             return Data.createStringData(res);
@@ -537,25 +533,25 @@ public class StringsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             String res = strings[0].toUpperCase();
             return Data.createStringData(res);
@@ -571,25 +567,25 @@ public class StringsModule extends Module
         }
 
         @Override
-        public Data perform(int... nums)
+        public Data perform(int[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(float... nums)
+        public Data perform(float[] nums, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(boolean... bools)
+        public Data perform(boolean[] bools, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public Data perform(String... strings)
+        public Data perform(String[] strings, ErrorInfo[] errorInfos, Interpreter interpreter)
         {
             int len = strings[0].length();
             return Data.createIntData(len);
@@ -615,7 +611,7 @@ public class StringsModule extends Module
                 // pobierz długość stringa
                 String str = (String)par.getValue();
                 // zwróć
-                return perform(new String[] { str });
+                return perform(new String[] { str }, new ErrorInfo[] { par.getErrorInfo() }, interpreter);
             }
             // inaczej kolekcja
             else 

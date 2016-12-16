@@ -6,10 +6,13 @@ function mycloc()
 }
 
 bio=`mycloc "./bio/"`
+bio_modules=`mycloc "./bio/src/pl/rcebula/module/modules/"`
 bioc=`mycloc "./bioc/"`
 bio_shared=`mycloc "./bio_shared/"`
 total=$(($bio+$bioc+$bio_shared))
 echo "bio: $bio"
+echo "  core: $((bio - bio_modules))"
+echo "  modules: $bio_modules"
 echo "bioc: $bioc"
 echo "bio_shared: $bio_shared"
 echo "total: $total"
