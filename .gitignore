@@ -19,3 +19,7 @@ installer/res
 installer/bio_installer.jar
 
 examples/test.bio
+
+*.hprof
+impl/bio/memprof_bio
+impl/bioc/memprof_bioc
