@@ -19,6 +19,7 @@ syn match equal "=" display contained
 
 syn match includeStmts "#INCLUDE\s*(" contains=openPar
 syn match importStmts "#IMPORT\s*(" contains=openPar
+syn match defineStmts "#DEFINE\s*(" contains=openPar
 
 syn match def "def" display contained
 syn match function "def\s\+[_a-zA-Z\u0100-\uFFFF][_0-9a-zA-Z\u0100-\uFFFF]*\s*(" contains=def,openPar
@@ -40,7 +41,7 @@ syn match bool "\(\s\|\n\|=\|{\|,\|(\)\(true\|TRUE\|True\|false\|False\|FALSE\)\
 
 syn match int "\(\s\|=\|{\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\)\|0\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
 
-syn match float "\(\s\|\n\|=\|{\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.0\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
+syn match float "\(\s\|\n\|=\|{\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.[0-9]*\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
 
 let b:current_syntax = "bio"
 
@@ -52,6 +53,7 @@ hi def link def                      Keyword
 hi def link string                   Constant
 hi def link includeStmts             PreProc
 hi def link importStmts              PreProc
+hi def link defineStmts              PreProc
 hi def link function                 Function
 hi def link functionCall             Function
 hi def link stringEscape             Special
@@ -60,4 +62,4 @@ hi def link bool                     Constant
 hi def link int                      Constant
 hi def link float                    Constant
 hi def link openBrace                Type
-hi def link closeBrace                Type
+hi def link closeBrace               Type
