@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import pl.rcebula.code.InterpreterFunction;
 
 /**
  *
@@ -56,9 +57,9 @@ public class IntermediateCode
     public void insertLine(Line l, int index)
     {
         l.setLine(index);
-        
+
         insertLineForOptimizationDiffrence(l, index);
-        
+
         lines.add(index, l);
         // przesuń etykiety o 1, które są za dodaną linią
         for (int i = index + 1; i < lines.size(); ++i)
@@ -85,40 +86,84 @@ public class IntermediateCode
             // ustaw jako zamrożoną
             line.frozeForOptimization();
 
-            // weź oryginalną linię lini znajdującej się na tym miejscu
-            int origLine = lines.get(index).getLineBeforeOptimization();
+            // weź oryginalną linię lini znajdującej się na miejscu jeden wyżej (jeżeli to możliwe) i zwiększ o jeden
+            int origLine = 0;
+            if (index > 0)
+            {
+                origLine = lines.get(index - 1).getLineBeforeOptimization() + 1;
+            }
+            else
+            {
+                origLine = lines.get(index).getLineBeforeOptimization();
+            }
+            
+            line.setLineBeforeOptimization(origLine);
 
             // dodaj linię do linii przed optymalizacją i przesuń wszystkie poniżej o jeden
             // przesuń także oryginalną linię o jeden w lines od linii oznaczonej indexem
-            Line newLine = new Line(line);
+            Line newLine = new Line(line, origLine);
             newLine.markAsAdded();
             linesBeforeOptimization.add(origLine, newLine);
+
+            // jeżeli nowa linia to JMP lub JMP_IF_FALSE
+            IField firstField = newLine.getField(0);
+            if (firstField instanceof InterpreterFunctionStringField)
+            {
+                InterpreterFunctionStringField ifsf = (InterpreterFunctionStringField)firstField;
+                if (ifsf.getInterpreterFunction().equals(InterpreterFunction.JMP)
+                        || ifsf.getInterpreterFunction().equals(InterpreterFunction.JMP_IF_FALSE))
+                {
+                    // pobierz z linii wyżej wartość docelową skoku i przypisz do nowej lini
+                    IField dstField = lines.get(index - 1).getField(1);
+                    int dst = ((LabelField)dstField).getLabelBeforeOptimization().getLine();
+
+                    LabelField lf = (LabelField)newLine.getField(1);
+                    lf.getLabelBeforeOptimization().setLine(dst);
+                }
+            }
+
             for (int i = origLine + 1; i < linesBeforeOptimization.size(); ++i)
             {
                 linesBeforeOptimization.get(i).move(1);
             }
-            
+
+            for (int i = 0; i < linesBeforeOptimization.size(); ++i)
+            {
+                linesBeforeOptimization.get(i).moveBeforeOptimization(1, origLine);
+            }
+
             for (int i = index; i < lines.size(); ++i)
             {
                 lines.get(i).moveLineBeforeOptimization(1);
             }
+
+            // TODELETE
+//            System.out.println("INSERT");
+//            System.out.println("index: " + index);
+//            System.out.println("origLine: " + origLine);
+//            System.out.println("newLine.getLineBeforeOptimization(): " + newLine.getLineBeforeOptimization());
+//            System.out.println("newLine: " + newLine.toString());
+//            System.out.println(toStringOptimizationDiffrence());
+//            System.out.println("------------------");
         }
     }
-    
+
     public void removeLineForOptimizationDiffrence(int index)
     {
         if (isFrozeForOptimization)
         {
             // pobierz linię przed optymalizacjami
             int origLine = lines.get(index).getLineBeforeOptimization();
-            
-            // TODELETE
-            System.out.println("origLine: " + origLine);
-            System.out.println("currLine: " + index);
-            System.out.println("-----------------");
-            
+
             // oznacz jako usuniętą
             linesBeforeOptimization.get(origLine).markAsRemoved();
+
+            // TODELETE
+//            System.out.println("REMOVE");
+//            System.out.println("origLine: " + origLine);
+//            System.out.println("currLine: " + index);
+//            System.out.println(toStringOptimizationDiffrence());
+//            System.out.println("-----------------");
         }
     }
 
@@ -200,7 +245,7 @@ public class IntermediateCode
             {
                 result += (l.isRemoved() ? "-" : " ");
                 result += (l.isAdded() ? "+" : " ");
-                result += "[" + c.toString() + "] " + l.toString() + "\n";
+                result += "[" + c.toString() + "] " + l.toStringOptimizationDiffrence() + "\n";
                 ++c;
             }
 

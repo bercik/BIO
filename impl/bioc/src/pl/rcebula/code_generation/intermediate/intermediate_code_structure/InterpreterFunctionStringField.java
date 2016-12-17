@@ -34,6 +34,11 @@ public class InterpreterFunctionStringField extends StringField
         this.interpreterFunction = interpreterFunction;
     }
 
+    public InterpreterFunction getInterpreterFunction()
+    {
+        return interpreterFunction;
+    }
+    
     @Override
     public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {

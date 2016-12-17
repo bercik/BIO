@@ -173,7 +173,10 @@ public class App
             {
                 // optimizations
                 timeProfiler.start("CodeOptimizer");
-                ic.frozeForOptimization();
+                if (opts.isVerbose() || opts.isOptimizationsDiffrence())
+                {
+                    ic.frozeForOptimization();
+                }
                 new CodeOptimizer(ic, statistic, preprocessor.getFiles());
                 timeProfiler.stop();
             }
