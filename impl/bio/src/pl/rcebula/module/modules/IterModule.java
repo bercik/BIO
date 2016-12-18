@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.internals.CallFrame;
@@ -20,6 +21,7 @@ import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
 import pl.rcebula.module.utils.Collections;
+import pl.rcebula.module.utils.error_codes.ErrorConstruct;
 import pl.rcebula.module.utils.type_checker.TypeChecker;
 
 /**
@@ -38,6 +40,40 @@ public class IterModule extends Module
     public void createFunctionsAndEvents()
     {
         putFunction(new ForeachFunction());
+        putFunction(new EndForeachFunction());
+    }
+
+    public class EndForeachFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "END_FOREACH";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter,
+                ErrorInfo callErrorInfo)
+        {
+            // parametr: <all>
+            Data par = params.get(0);
+
+            // sprawdź czy wywołanie tej funkcji nastąpiło w funkcji wywołanej przez funkcję FOREACH
+            if (!currentFrame.isCalledFromForeach())
+            {
+                // zwróc błąd
+                return ErrorConstruct.END_FOREACH_NOT_INSIDE_FOREACH(getName(), callErrorInfo, interpreter);
+            }
+
+            // ustaw dla poprzedniej ramki, że ta wartość została zwrócona przez funkcję END_FOREACH
+            // (na pewno istnieje poprzednia ramka, z której została wywołana funkcja FOREACH)
+            CallFrame prevFrame = interpreter.getFrameStack().get(interpreter.getFrameStack().size() - 2);
+            prevFrame.setIsReturnedByEndForeach(true);
+
+            // wywołaj funkcję RETURN z tą wartością i zwróc to co ona zwraca
+            return interpreter.getBuiltinFunctions().callFunction(Constants.returnFunctionName,
+                    Arrays.asList(par), currentFrame, interpreter, par.getErrorInfo());
+        }
     }
 
     public class ForeachFunction implements IFunction
@@ -82,7 +118,7 @@ public class IterModule extends Module
         {
             // referencja do struktury przechowującej dane pomocnicze
             ForeachInfo foreachInfo = currentFrame.getForeachInfo();
-            
+
             // jeżeli pierwsze wywołanie funkcji foreach to przygotowujemy
             if (!currentFrame.isCallForeach())
             {
@@ -160,9 +196,11 @@ public class IterModule extends Module
                 // Została ona odłożona na stos parametrów, więc ściągamy ze stosu aktualnej funkcji jeden 
                 // parametr
                 foreachInfo.lastRetVal = currentFrame.getVariableStack().pop();
-
-                // sprawdź czy nie zwrócono błędu, jeżeli tak to zwróć
-                if (foreachInfo.lastRetVal.getDataType().equals(DataType.ERROR))
+                
+                // sprawdź czy nie zwrócono błędu lub czy zwrócona wartość nie jest wartością zwróconą
+                // z funkcji END_FOREACH, jeżeli tak to zwróć
+                if (foreachInfo.lastRetVal.getDataType().equals(DataType.ERROR) ||
+                        currentFrame.isReturnedByEndForeach())
                 {
                     currentFrame.setCallForeach(false);
                     currentFrame.setForeachInfo(null);
@@ -193,9 +231,10 @@ public class IterModule extends Module
 
                 // wywołaj funkcję CALL_BY_NAME, przekazując do niej 3 parametry: funName, el, obj
                 List<Data> pars = Arrays.asList(foreachInfo.dFunName, el, foreachInfo.obj);
-                Data retData = interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
-                        interpreter, new ErrorInfo(-1, -1, new MyFiles.File(-1, "")));
-                
+
+                Data retData
+                        = new ReflectionsModule.CallByNameFunction().callFromForeach(pars, currentFrame, interpreter);
+
                 // jeżeli funkcja CALL_BY_NAME zwróciła error to zwracamy
                 if (retData != null && retData.getDataType().equals(DataType.ERROR))
                 {
@@ -212,6 +251,7 @@ public class IterModule extends Module
                 {
                     // ustaw, żeby już nie wywoływać funkcji FOREACH
                     currentFrame.setCallForeach(false);
+                    currentFrame.setForeachInfo(null);
                     // zwróc ostatnią wartość
                     return foreachInfo.lastRetVal;
                 }
@@ -223,9 +263,10 @@ public class IterModule extends Module
 
                 // wywołaj funkcję CALL_BY_NAME, przekazując do niej 3 parametry: funName, el, obj
                 List<Data> pars = Arrays.asList(foreachInfo.dFunName, el, foreachInfo.obj);
-                Data retData = interpreter.getBuiltinFunctions().callFunction("CALL_BY_NAME", pars, currentFrame,
-                        interpreter, new ErrorInfo(-1, -1, new MyFiles.File(-1, "")));
-                
+
+                Data retData
+                        = new ReflectionsModule.CallByNameFunction().callFromForeach(pars, currentFrame, interpreter);
+
                 // jeżeli funkcja CALL_BY_NAME zwróciła error to zwracamy
                 if (retData != null && retData.getDataType().equals(DataType.ERROR))
                 {

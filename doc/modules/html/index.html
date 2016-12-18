@@ -819,6 +819,16 @@
                                                                            <li><a href="#FOREACH_funerrors">Errors</a></li>
                                              </ul>
                   </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   END_FOREACH
+                                             </a>
+                     <ul>
+                        <li><a href="#END_FOREACH_fun">Description</a></li>
+                                                   <li><a href="#END_FOREACH_funparams">Parameters</a></li>
+                                                                                                   <li><a href="#END_FOREACH_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
                            </ul>
          </li>
                <li class="has-sub">
@@ -1749,6 +1759,7 @@
 <tr><td>21</td><td>STACK_OVERFLOW </td></tr>
 <tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
 <tr><td>23</td><td>INTERVAL_LESS_THAN_ZERO</td></tr>
+<tr><td>24</td><td>END_FOREACH_NOT_INSIDE_FOREACH</td></tr>
 <tr><td>100</td><td>TCP_CONNECTION_ERROR</td></tr>
 <tr><td>101</td><td>TCP_PORT_OUT_OF_RANGE</td></tr>
 <tr><td>102</td><td>TCP_BAD_IP_ADDRESS</td></tr>
@@ -4537,6 +4548,32 @@
                         <dl>
                <dt>TOO_LITTLE_PARAMETERS</dt>
                <dd>If <i>function</i> takes less parameters than two</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="END_FOREACH_fun">
+
+         <header>
+            <h3>END_FOREACH
+                        (val)</h3>
+            <p class="description">Breaks FOREACH function and returns <i>val</i> from it. <b>Note:</b> you must call this function inside function called by FOREACH.</p>
+         </header>
+
+                  <section class="parameters" id="END_FOREACH_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>val</i> (<u>all</u>)</dt>
+               <dd>value that will be returned from FOREACH</dd>
+                           </dl>
+         </section>
+         
+         
+                  <section class="errors" id="END_FOREACH_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>END_FOREACH_NOT_INSIDE_FOREACH</dt>
+               <dd>if you call this function not inside function that was called by FOREACH function</dd>
             </dl>
                      </section>
          

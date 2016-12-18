@@ -27,6 +27,10 @@ public class CallFrame
     // flaga informująca o tym czy należy wywołać funkcję FOREACH w momencie kiedy
     // zostanie ściągnięta poprzednia ramka
     private boolean callForeach;
+    // flaga informująca czy ta ramka została stworzona w funckji FOREACH
+    private final boolean isCalledFromForeach;
+    // flaga informująca czy wartość została zwrócona z funkcji end foreach
+    private boolean isReturnedByEndForeach;
     // struktura przechowująca informację dla funkcji FOREACH
     private IterModule.ForeachFunction.ForeachInfo foreachInfo;
     // informacja o miejscu występowania w kodzie źródłowym
@@ -50,7 +54,15 @@ public class CallFrame
     public CallFrame(List<Data> passedParameters, UserFunction userFunction, ErrorInfo errorInfo, 
             boolean returnToCaller)
     {
+        this(passedParameters, userFunction, errorInfo, returnToCaller, false);
+    }
+    
+    public CallFrame(List<Data> passedParameters, UserFunction userFunction, ErrorInfo errorInfo, 
+            boolean returnToCaller, boolean isCalledFromForeach)
+    {
         this.returnToCaller = returnToCaller;
+        this.isCalledFromForeach = isCalledFromForeach;
+        this.isReturnedByEndForeach = false;
         this.userFunction = userFunction;
         this.errorInfo = errorInfo;
         // wskaźnik instrukcji jest ustawiany na zero
@@ -80,6 +92,21 @@ public class CallFrame
         this.foreachInfo = foreachInfo;
     }
 
+    public boolean isReturnedByEndForeach()
+    {
+        return isReturnedByEndForeach;
+    }
+
+    public void setIsReturnedByEndForeach(boolean isReturnedByEndForeach)
+    {
+        this.isReturnedByEndForeach = isReturnedByEndForeach;
+    }
+
+    public boolean isCalledFromForeach()
+    {
+        return isCalledFromForeach;
+    }
+    
     public boolean isCallForeach()
     {
         return callForeach;

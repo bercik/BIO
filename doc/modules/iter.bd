@@ -8,3 +8,8 @@
 !error (USER_FUNCTION_DOESNT_EXIST) If user <i>function</i> doesn't exist
 !error (TOO_LITTLE_PARAMETERS) If <i>function</i> takes less parameters than two
 
+!name END_FOREACH
+!desc Breaks FOREACH function and returns <i>val</i> from it. <b>Note:</b> you must call this function inside function called by FOREACH.
+!param val (all) value that will be returned from FOREACH
+!error (END_FOREACH_NOT_INSIDE_FOREACH) if you call this function not inside function that was called by FOREACH function
+
