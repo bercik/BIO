@@ -22,6 +22,9 @@ import pl.rcebula.module.utils.type_checker.TypeChecker;
  *
  * @author robert
  */
+
+// don't take this module as a good example of writing modules!
+
 public class ReflectionsModule extends Module
 {
     @Override
@@ -37,7 +40,8 @@ public class ReflectionsModule extends Module
         putFunction(new GetUserFunctionsNamesFunction());
     }
     
-    private class CallByNameFunction implements IFunction
+    // don't do this normally (that is don't create functions classes as public static)
+    public static class CallByNameFunction implements IFunction
     {
         @Override
         public String getName()
@@ -45,8 +49,13 @@ public class ReflectionsModule extends Module
             return "CALL_BY_NAME";
         }
 
-        @Override
-        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        public Data callFromForeach(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return call(params, currentFrame, interpreter, true);
+        }
+        
+        private Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, 
+                boolean callFromForeach)
         {
             // parametry: <all, <all>*>
             Data name = params.get(0);
@@ -79,13 +88,30 @@ public class ReflectionsModule extends Module
                         sname, ufParamsSize, paramsSize);
             }
             
-            // wywołujemy funkcję sname z parametrami params, zaznaczając, że interesuje nas zwracana przez nią
-            // wartość
-            new PerformCall().perform(params, true, uf, interpreter, name.getErrorInfo());
+            // jeżeli nie została ta funkcja wywołana z funkcji foreach
+            if (!callFromForeach)
+            {
+                // wywołujemy funkcję sname z parametrami params, zaznaczając, że interesuje nas zwracana przez nią
+                // wartość
+                new PerformCall().perform(params, true, uf, interpreter, name.getErrorInfo());
+            }
+            // inaczej
+            else
+            {
+                // wywołujemy funkcję sname z parametrami params, zaznaczając, że interesuje nas zwracana przez nią
+                // wartość i że funkcja ta została wywołana w funkcji FOREACH
+                new PerformCall().perform(params, true, uf, interpreter, name.getErrorInfo(), true);
+            }
             
             // zwracamy null ponieważ chcemy, żeby wartość zwrócona z wywołanej funkcji była brana pod uwagę, 
             // a nie z naszej funkcji
             return null;
+        }
+        
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return call(params, currentFrame, interpreter, false);
         }
     }
     

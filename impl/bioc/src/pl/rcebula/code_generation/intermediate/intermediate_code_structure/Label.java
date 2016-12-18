@@ -27,6 +27,11 @@ public class Label
     public Label()
     {
     }
+    
+    public Label(Label rhs)
+    {
+        this.line = rhs.line;
+    }
 
     public int getLine()
     {

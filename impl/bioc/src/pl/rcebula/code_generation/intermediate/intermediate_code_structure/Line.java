@@ -34,9 +34,41 @@ public class Line
     private final boolean empty;
     private int line = 0;
     
+    // fields for showin diffrence between unoptimized and optimized code
+    private boolean removed = false;
+    private boolean added = false;
+    private int lineBeforeOptimization = 0;
+    
     public Line()
     {
         this.empty = true;
+    }
+    
+    public Line(Line rhs)
+    {
+        this(rhs, rhs.getLineBeforeOptimization());
+    }
+    
+    public Line(Line rhs, int lineBeforeOptimization)
+    {
+        this.removed = rhs.removed;
+        this.added = rhs.added;
+        this.empty = rhs.empty;
+        this.line = rhs.line;
+        this.lineBeforeOptimization = lineBeforeOptimization;
+        
+        for (IField field : rhs.fields)
+        {
+            // TODO 
+            // maybe here should be deep copy of field
+            field.frozeForOptimization();
+            this.fields.add(field);
+        }
+        
+        for (Label label : rhs.labels)
+        {
+            this.labels.add(new Label(label));
+        }
     }
     
     public Line(IField... fields)
@@ -76,6 +108,46 @@ public class Line
         IntStringField isf = new IntStringField(0, "");
         Line line = new Line(isf, true);
         return line;
+    }
+    
+    public void frozeForOptimization()
+    {
+        lineBeforeOptimization = line;
+    }
+    
+    public void markAsAdded()
+    {
+        added = true;
+    }
+
+    public boolean isAdded()
+    {
+        return added;
+    }
+    
+    public void markAsRemoved()
+    {
+        removed = true;
+    }
+
+    public boolean isRemoved()
+    {
+        return removed;
+    }
+    
+    public void moveLineBeforeOptimization(int shift)
+    {
+        lineBeforeOptimization += shift;
+    }
+    
+    public int getLineBeforeOptimization()
+    {
+        return lineBeforeOptimization;
+    }
+
+    public void setLineBeforeOptimization(int lineBeforeOptimization)
+    {
+        this.lineBeforeOptimization = lineBeforeOptimization;
     }
 
     public int getLine()
@@ -133,6 +205,14 @@ public class Line
         
         line += shift;
     }
+    
+    public void moveBeforeOptimization(int shift, int origLine)
+    {
+        for (IField field : fields)
+        {
+            field.moveBeforeOptimization(shift, origLine);
+        }
+    }
 
     @Override
     public String toString()
@@ -145,6 +225,28 @@ public class Line
             if (!f.toString().equals(""))
             {
                 result += f.toString() + Constants.fieldsSeparator;
+                ++added;
+            }
+        }
+        
+        if (added > 0)
+        {
+            result = result.substring(0, result.length() - 1);
+        }
+        
+        return result;
+    }
+    
+    public String toStringOptimizationDiffrence()
+    {
+        String result = "";
+        
+        int added = 0;
+        for (IField f : fields)
+        {
+            if (!f.toString().equals(""))
+            {
+                result += f.toStringOptimizationDiffrence() + Constants.fieldsSeparator;
                 ++added;
             }
         }

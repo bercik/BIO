@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import pl.rcebula.code.InterpreterFunction;
 
 /**
  *
@@ -34,13 +35,31 @@ public class IntermediateCode
 {
     private final List<Line> lines = new ArrayList<>();
 
+    // fields for showing diffrence between unoptimized and optimized code
+    private List<Line> linesBeforeOptimization = new ArrayList<>();
+    private boolean isFrozeForOptimization = false;
+
     public IntermediateCode()
     {
     }
-    
+
+    public void frozeForOptimization()
+    {
+        isFrozeForOptimization = true;
+
+        for (Line line : lines)
+        {
+            line.frozeForOptimization();
+            this.linesBeforeOptimization.add(new Line(line));
+        }
+    }
+
     public void insertLine(Line l, int index)
     {
         l.setLine(index);
+
+        insertLineForOptimizationDiffrence(l, index);
+
         lines.add(index, l);
         // przesuń etykiety o 1, które są za dodaną linią
         for (int i = index + 1; i < lines.size(); ++i)
@@ -49,19 +68,109 @@ public class IntermediateCode
             line.move(1);
         }
     }
-    
+
     public void appendLine(Line l)
     {
         insertLine(l, numberOfLines());
     }
-    
+
     public Line getLine(int index)
     {
         return lines.get(index);
     }
-    
+
+    public void insertLineForOptimizationDiffrence(Line line, int index)
+    {
+        if (isFrozeForOptimization)
+        {
+            // ustaw jako zamrożoną
+            line.frozeForOptimization();
+
+            // weź oryginalną linię lini znajdującej się na miejscu jeden wyżej (jeżeli to możliwe) i zwiększ o jeden
+            int origLine = 0;
+            if (index > 0)
+            {
+                origLine = lines.get(index - 1).getLineBeforeOptimization() + 1;
+            }
+            else
+            {
+                origLine = lines.get(index).getLineBeforeOptimization();
+            }
+            
+            line.setLineBeforeOptimization(origLine);
+
+            // dodaj linię do linii przed optymalizacją i przesuń wszystkie poniżej o jeden
+            // przesuń także oryginalną linię o jeden w lines od linii oznaczonej indexem
+            Line newLine = new Line(line, origLine);
+            newLine.markAsAdded();
+            linesBeforeOptimization.add(origLine, newLine);
+
+            // jeżeli nowa linia to JMP lub JMP_IF_FALSE
+            IField firstField = newLine.getField(0);
+            if (firstField instanceof InterpreterFunctionStringField)
+            {
+                InterpreterFunctionStringField ifsf = (InterpreterFunctionStringField)firstField;
+                if (ifsf.getInterpreterFunction().equals(InterpreterFunction.JMP)
+                        || ifsf.getInterpreterFunction().equals(InterpreterFunction.JMP_IF_FALSE))
+                {
+                    // pobierz z linii wyżej wartość docelową skoku i przypisz do nowej lini
+                    IField dstField = lines.get(index - 1).getField(1);
+                    int dst = ((LabelField)dstField).getLabelBeforeOptimization().getLine();
+
+                    LabelField lf = (LabelField)newLine.getField(1);
+                    lf.getLabelBeforeOptimization().setLine(dst);
+                }
+            }
+
+            for (int i = origLine + 1; i < linesBeforeOptimization.size(); ++i)
+            {
+                linesBeforeOptimization.get(i).move(1);
+            }
+
+            for (int i = 0; i < linesBeforeOptimization.size(); ++i)
+            {
+                linesBeforeOptimization.get(i).moveBeforeOptimization(1, origLine);
+            }
+
+            for (int i = index; i < lines.size(); ++i)
+            {
+                lines.get(i).moveLineBeforeOptimization(1);
+            }
+
+            // TODELETE
+//            System.out.println("INSERT");
+//            System.out.println("index: " + index);
+//            System.out.println("origLine: " + origLine);
+//            System.out.println("newLine.getLineBeforeOptimization(): " + newLine.getLineBeforeOptimization());
+//            System.out.println("newLine: " + newLine.toString());
+//            System.out.println(toStringOptimizationDiffrence());
+//            System.out.println("------------------");
+        }
+    }
+
+    public void removeLineForOptimizationDiffrence(int index)
+    {
+        if (isFrozeForOptimization)
+        {
+            // pobierz linię przed optymalizacjami
+            int origLine = lines.get(index).getLineBeforeOptimization();
+
+            // oznacz jako usuniętą
+            linesBeforeOptimization.get(origLine).markAsRemoved();
+
+            // TODELETE
+//            System.out.println("REMOVE");
+//            System.out.println("origLine: " + origLine);
+//            System.out.println("currLine: " + index);
+//            System.out.println(toStringOptimizationDiffrence());
+//            System.out.println("-----------------");
+        }
+    }
+
     public void removeLine(int index)
     {
+        removeLineForOptimizationDiffrence(index);
+
         // dodaj wszystkie etykiety z usuwanej linii do linii poniżej
         List<Label> labels = lines.get(index).getLabels();
         // jeżeli usuwamy ostatnią linię która zawiera etykiety to jest to błąd
@@ -70,9 +179,9 @@ public class IntermediateCode
             String message = "Deleting last line with labels are prohibited";
             throw new RuntimeException(message);
         }
-        
+
         lines.get(index + 1).addLabels(labels);
-        
+
         lines.remove(index);
         // przesuń etykiety o -1, które są za usuniętą linią
         for (int i = index; i < lines.size(); ++i)
@@ -81,9 +190,11 @@ public class IntermediateCode
             line.move(-1);
         }
     }
-    
+
     public void removeLineWithLabels(int index)
     {
+        removeLineForOptimizationDiffrence(index);
+
         lines.remove(index);
         // przesuń etykiety o -1, które są za usuniętą linią
         for (int i = index; i < lines.size(); ++i)
@@ -92,7 +203,7 @@ public class IntermediateCode
             line.move(-1);
         }
     }
-    
+
     public int numberOfLines()
     {
         return lines.size();
@@ -102,41 +213,64 @@ public class IntermediateCode
     public String toString()
     {
         String result = "";
-        
+
         for (Line l : lines)
         {
             result += l.toString() + "\n";
         }
-        
+
         return result;
     }
-    
+
     private List<String> toLines()
     {
         List<String> stringLines = new ArrayList<>();
-        
+
         for (Line l : lines)
         {
             stringLines.add(l.toString());
         }
-        
+
         return stringLines;
     }
-    
+
+    public String toStringOptimizationDiffrence()
+    {
+        if (isFrozeForOptimization)
+        {
+            String result = "";
+
+            Integer c = 0;
+            for (Line l : linesBeforeOptimization)
+            {
+                result += (l.isRemoved() ? "-" : " ");
+                result += (l.isAdded() ? "+" : " ");
+                result += "[" + c.toString() + "] " + l.toStringOptimizationDiffrence() + "\n";
+                ++c;
+            }
+
+            return result;
+        }
+        else
+        {
+            throw new RuntimeException("You must first call frozeForOptimization() method");
+        }
+    }
+
     public String toStringWithLinesNumber()
     {
         String result = "";
-        
+
         Integer c = 0;
         for (Line l : lines)
         {
-            result += "[" + c.toString() + "] " +  l.toString() + "\n";
+            result += "[" + c.toString() + "] " + l.toString() + "\n";
             ++c;
         }
-        
+
         return result;
     }
-    
+
     public void writeToBinaryFile(DataOutputStream dos)
             throws IOException
     {
@@ -145,17 +279,17 @@ public class IntermediateCode
             l.writeToBinaryFile(dos);
         }
     }
-    
+
     public void writeToFile(String path) throws IOException
     {
         Path p = Paths.get(path);
         Files.write(p, toLines(), Charset.forName("UTF-8"));
     }
-    
+
     public void writeToBinaryFile(String path) throws IOException
     {
         DataOutputStream dos = new DataOutputStream(new FileOutputStream(path));
-        
+
         writeToBinaryFile(dos);
     }
 }

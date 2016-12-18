@@ -22,13 +22,14 @@ import pl.rcebula.internals.data_types.Data;
 public class PerformCall
 {
     public void perform(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, 
-            ErrorInfo ei)
+            ErrorInfo ei, boolean isCalledFromForeach)
     {
         // czyścimy order list
         interpreter.setOrderList(null);
         
-        // tworzymy ramkę i odkładamy na stos zaznaczając, czy interesuje nas wartość zwracana
-        CallFrame cf = new CallFrame(parameters, uf, ei, returnValue);
+        // tworzymy ramkę i odkładamy na stos zaznaczając, czy interesuje nas wartość zwracana i czy 
+        // została wywołana przez funkcję FOREACH
+        CallFrame cf = new CallFrame(parameters, uf, ei, returnValue, isCalledFromForeach);
         interpreter.pushFrameToStack(cf);
 
         // tworzymy ramki dla każdego obserwatora w odwrotnej kolejności w jakiej były dodawane, 
@@ -38,6 +39,12 @@ public class PerformCall
         
         // czyścimy stos parametrów
         interpreter.currentFrame.getStackParameters().clear();
+    }
+    
+    public void perform(List<Data> parameters, boolean returnValue, UserFunction uf, Interpreter interpreter, 
+            ErrorInfo ei)
+    {
+        perform(parameters, returnValue, uf, interpreter, ei, false);
     }
     
     public void perform(Interpreter interpreter, Line line)

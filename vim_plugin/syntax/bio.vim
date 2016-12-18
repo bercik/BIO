@@ -23,7 +23,7 @@ syn match defineStmts "#DEFINE\s*(" contains=openPar
 
 syn match def "def" display contained
 syn match function "def\s\+[_a-zA-Z\u0100-\uFFFF][_0-9a-zA-Z\u0100-\uFFFF]*\s*(" contains=def,openPar
-syn match functionCall "\(FOR\|IF\|CALL\|BREAK\|CONTINUE\|DN\)\(\s\|\n\)*(" contains=openPar
+syn match functionCall "\(FOR\|IF\|CALL\|BREAK\|CONTINUE\|CONT\|DN\)\(\s\|\n\)*(" contains=openPar,int,float,none,bool,string
 
 syn region defEndBlock start="def" end="end" fold transparent
 

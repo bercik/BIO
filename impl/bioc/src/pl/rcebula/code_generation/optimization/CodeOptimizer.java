@@ -32,6 +32,7 @@ public class CodeOptimizer
     public CodeOptimizer(IntermediateCode ic, OptimizationStatistics statistics, MyFiles files)
             throws CodeOptimizationError
     {
+        // TODELETE
         Logger logger = Logger.getGlobal();
         logger.info("CodeOptimizer");
         logger.fine(ic.toStringWithLinesNumber());
@@ -83,6 +84,7 @@ public class CodeOptimizer
             }
         }
         
+        // TODELETE
         logger.fine(ic.toStringWithLinesNumber());
     }
 }

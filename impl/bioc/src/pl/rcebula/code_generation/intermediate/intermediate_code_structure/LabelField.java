@@ -26,6 +26,10 @@ import java.io.IOException;
 public class LabelField implements IField
 {
     private Label label;
+    
+    // fields for diffrence betweend unoptimized and optimized code
+    private boolean isFrozeForOptimization = false;
+    private Label labelBeforeOptimization;
 
     public LabelField(Label label)
     {
@@ -52,5 +56,35 @@ public class LabelField implements IField
     public void writeToBinaryFile(DataOutputStream dos) throws IOException
     {
         dos.writeInt(label.getLine());
+    }
+
+    @Override
+    public void frozeForOptimization()
+    {
+        if (!isFrozeForOptimization)
+        {
+            isFrozeForOptimization = true;
+            labelBeforeOptimization = new Label(label);
+        }
+    }
+
+    @Override
+    public String toStringOptimizationDiffrence()
+    {
+        return labelBeforeOptimization.toString();
+    }
+
+    public Label getLabelBeforeOptimization()
+    {
+        return labelBeforeOptimization;
+    }
+    
+    @Override
+    public void moveBeforeOptimization(int shift, int origLine)
+    {
+        if (labelBeforeOptimization.getLine() >= origLine)
+        {
+            labelBeforeOptimization.move(shift);
+        }
     }
 }

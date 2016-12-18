@@ -32,6 +32,7 @@ public class Opts
     private boolean times = false;
     private boolean debugInfo = false;
     private boolean optimizations = true;
+    private boolean optimizationsDiffrence = false;
     private String inputFilePath;
     private String outputFilePath;
     private static final String defaultOutputFile = "a.cbio";
@@ -114,6 +115,10 @@ public class Opts
                 String message = constructVersion();
                 throw new OptsError(message);
             }
+            else if (opt.equals("-dd"))
+            {
+                optimizationsDiffrence = true;
+            }
             else
             {
                 String message = "Unrecognized option " + opt + "\n";
@@ -140,6 +145,8 @@ public class Opts
         help += "options:\n";
         help += "  -c disable optimizations, turns off compiler code optimizations\n";
         help += "  -d disassemble, print compiled code in readable form\n";
+        help += "  -dd optimization diffrence, show disassembled code with diffrences between "
+                + "unoptimized and optimized version\n";
         help += "  -g debug info, add full files name to compiled file\n";
         help += "  -h --help, show this text\n";
         help += "  -o <file> place the output into <file>, if won't given compiled code will be saved in "
@@ -189,5 +196,10 @@ public class Opts
     public boolean isOptimizations()
     {
         return optimizations;
+    }
+
+    public boolean isOptimizationsDiffrence()
+    {
+        return optimizationsDiffrence;
     }
 }

@@ -29,4 +29,19 @@ public interface IField
     public String toString();
     
     public void writeToBinaryFile(DataOutputStream dos) throws IOException;
+    
+    default public void frozeForOptimization()
+    {
+        
+    }
+    
+    default public void moveBeforeOptimization(int shift, int origLine)
+    {
+        
+    }
+    
+    default public String toStringOptimizationDiffrence()
+    {
+        return toString();
+    }
 }

@@ -10,3 +10,35 @@ def test_foreach()
    AS_LOC(dict, CR_DICT("el1", 1, "el2", 2, "el3", 10))
    bt_assert_eq(FOREACH(dict, onEACH_sum_with_multiplier, 2), 26)
 end
+
+def onEACH_search_string(el, obj)
+   @ if found return true
+   IF({ el.val == obj.add_par }, END_FOREACH(true))
+   @ else return false
+   RETURN(false)
+end
+
+def test_endforeach()
+   AS_LOC(tup, CR_TUP("a", "ab", "abc", "def", "asd"))
+   bt_assert_true(FOREACH(tup, onEACH_search_string, "abc"))
+end
+
+def onEACH_sum_max_5(el, obj)
+   IF(NOT(HAS_FIELD(obj, sum)), AS_LOC(obj.sum, 0))
+
+   IF
+   (
+      { obj.add_par == true },
+      INC(obj.sum, FOREACH(RANGE(0, el.val), onEACH_sum_max_5, false)),
+      INC(obj.sum, el.val)
+   )
+
+   IF({ obj.add_par == false && obj.sum > 5 }, END_FOREACH(5))
+   RET(obj.sum)
+end
+
+@ 1 + 3 + 5
+@ = 9
+def test_nested_foreach_end_foreach()
+   bt_assert_eq(FOREACH(RANGE(1, 3), onEACH_sum_max_5, true), 9)
+end
