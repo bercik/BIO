@@ -8,13 +8,15 @@ def isPrime(num):
             found = False
             break
 
-    if found:
-        print(num)
+    return found
 
 MAX_I = 10000
 if len(sys.argv) > 1:
     MAX_I = int(sys.argv[1])
+    primes = 0
 
 for i in range(2, MAX_I):
-    isPrime(i)
+    if isPrime(i):
+        primes += 1
 
+print(primes)

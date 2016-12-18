@@ -1,3 +1,5 @@
+#DEFINE(DEF_SIZE, 10000)
+
 def IS_PRIME(num)
    ASSIGN_LOCAL(found, true)
    FOR
@@ -11,30 +13,34 @@ def IS_PRIME(num)
          (
             ASSIGN_LOCAL(found, false), 
             BREAK()
-         ),
-         DN()
+         )
       ),
       INC(i)
    )
 
-   IF
-   (
-      EQ(found, true), 
-      PRINT(num, "\n"),
-      DN()
-   )
+   RET(found)
 end
 
-def onSTART()
-   ASSIGN_LOCAL(MAX_I, 100000)
+def onSTART(args)
+   AS_LOC(primes, 0)
+
+   IF
+   (
+      GT(SIZE(args), 1), 
+      AS_LOC(MAX_I, TO_INT({ args[1] })), 
+      AS_LOC(MAX_I, DEF_SIZE)
+   )
+
    FOR
    (
       ASSIGN_LOCAL(i, 2), 
       LS(i, MAX_I), 
       CALL
       (
-         IS_PRIME(i)
+         IF(IS_PRIME(i), INC(primes))
       ),
       INC(i)
    )
+
+   PRINTLN(primes)
 end

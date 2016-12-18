@@ -1,0 +1,43 @@
+#DEFINE(DEF_SIZE, 10000)
+
+def onEACH_check_if_mod_eq_0(el, obj)
+   IF
+   (
+      { obj.add_par % el.val == 0 },
+      END_FOREACH(true)
+   )
+
+   RET(false)
+end
+
+def IS_PRIME(num)
+   IF({ num == 2 }, RET(true))
+
+   RET
+   (
+      NOT(FOREACH(RANGE(2, CEIL(SQRT(num))), onEACH_check_if_mod_eq_0, num))
+   )
+end
+
+def onEACH_count_primes(el, obj)
+   IF(NOT(HAS_FIELD(obj, primes)), AS_LOC(obj.primes, 0))
+
+   IF
+   (
+      IS_PRIME(el.val),
+      INC(obj.primes)
+   )
+
+   RET(obj.primes)
+end
+
+def onSTART(args)
+   IF
+   (
+      GT(SIZE(args), 1), 
+      AS_LOC(MAX_I, TO_INT({ args[1] })), 
+      AS_LOC(MAX_I, DEF_SIZE)
+   )
+
+   PRINTLN(FOREACH(RANGE(2, { MAX_I - 1 }), onEACH_count_primes))
+end

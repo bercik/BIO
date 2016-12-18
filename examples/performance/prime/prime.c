@@ -5,8 +5,13 @@
 #define TRUE 1
 #define FALSE 0
 
-void isPrime(int num)
+int isPrime(int num)
 {
+   if (num == 2)
+   {
+      return TRUE;
+   }
+
    int found = TRUE;
    for (int i = 2; i <= sqrt(num) + 1; ++i)
    {
@@ -17,15 +22,13 @@ void isPrime(int num)
       }
    }
 
-   if (found)
-   {
-      printf("%d\n", num);
-   }
+   return found;
 }
 
 int main(int argc, char **argv)
 {
    int MAX_I = 100;
+   int primes = 0;
 
    if (argc > 1)
    {
@@ -34,6 +37,11 @@ int main(int argc, char **argv)
 
    for (int i = 2; i < MAX_I; ++i)
    {
-      isPrime(i);
+      if (isPrime(i))
+      {
+         ++primes;
+      }
    }
+
+   printf("%d\n", primes);
 }

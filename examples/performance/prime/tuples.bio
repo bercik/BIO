@@ -1,4 +1,8 @@
+#DEFINE(DEF_SIZE, 10000)
+
 def isPrime(num)
+   IF({ num == 2 }, RET(true))
+
    ASSIGN_LOCAL(tup1, RANGE(2, CEIL(SQRT(num))))
    ASSIGN_LOCAL(size, SIZE(tup1))
    ASSIGN_LOCAL(tup2, CREATE_TUPLE_OF_ELEMENTS(size, num))
@@ -7,8 +11,16 @@ def isPrime(num)
    IF(CONTAINS(mod, 0), RETURN(false), RETURN(true))
 end
 
-def onSTART()
-   ASSIGN_LOCAL(MAX_I, 10000)
+def onSTART(args)
+   AS_LOC(primes, 0)
+
+   IF
+   (
+      GT(SIZE(args), 1), 
+      AS_LOC(MAX_I, TO_INT({ args[1] })), 
+      AS_LOC(MAX_I, DEF_SIZE)
+   )
+
    FOR
    (
       ASSIGN_LOCAL(i, 2), 
@@ -16,9 +28,10 @@ def onSTART()
       IF
       (
          isPrime(i),
-         PRINTLN(i),
-         DN()
+         INC(primes)
       ),
       INC(i)
    )
+
+   PRINTLN(primes)
 end
