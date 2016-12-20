@@ -27,17 +27,17 @@ import pl.rcebula.code_generation.intermediate.intermediate_code_structure.Strin
  *
  * @author robert
  */
-public class RemovePopcJmpClearStackSequences implements IOptimizer
+public class RemovePopcOrPushJmpClearStackSequences implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
     private boolean optimize = false;
 
-    public RemovePopcJmpClearStackSequences(IntermediateCode ic, OptimizationStatistics statistics)
+    public RemovePopcOrPushJmpClearStackSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
         this.ic = ic;
         this.statistics = statistics;
-        
+
         analyseAndRemove();
     }
 
@@ -46,21 +46,24 @@ public class RemovePopcJmpClearStackSequences implements IOptimizer
     {
         return optimize;
     }
-    
+
     private void analyseAndRemove()
     {
         int c = 0;
-        
+
         while (c < ic.numberOfLines())
         {
+            boolean removed = false;
+
             Line line = ic.getLine(c);
-            
-            // komenda popc zawsze zawiera ilość usuwanych parametrów ze stosu, więc co najmniej dwa pola
+
+            // komendy popc i push zawsze zawierają co najmniej dwa pola
             if (line.numberOfFields() > 1)
             {
                 String funName = ((StringField)line.getField(0)).getStr();
-                // jeżeli popc
-                if (funName.equals(InterpreterFunction.POPC.toString()))
+                // jeżeli popc lub push
+                if (funName.equals(InterpreterFunction.POPC.toString())
+                        || funName.equals(InterpreterFunction.PUSH.toString()))
                 {
                     // sprawdzamy czy linie poniżej jest komenda jmp
                     line = ic.getLine(c + 1);
@@ -74,11 +77,12 @@ public class RemovePopcJmpClearStackSequences implements IOptimizer
                             Label label = ((LabelField)line.getField(1)).getLabel();
                             // sprawdzamy czy linijka do której skacze ten jmp to clear_stack
                             line = ic.getLine(label.getLine());
-                            
+
                             funName = ((StringField)line.getField(0)).getStr();
                             if (funName.equals(InterpreterFunction.CLEAR_STACK.toString()))
                             {
                                 // usuń linię c
+                                removed = true;
                                 ic.removeLine(c);
                                 statistics.addPopcJmpClearStackRemoved();
                                 optimize = true;
@@ -87,10 +91,17 @@ public class RemovePopcJmpClearStackSequences implements IOptimizer
                     }
                 }
             }
-            
-            // inkrementujemy linijkę bez względu na to czy udało się usunąć czy nie 
-            // (jeżeli udało się usunąć to wiemy, że następną linijką po usuniętej było JMP, które możemy ominąć
-            ++c;
+
+            // inkrementujemy linijkę jeżeli nie udało się usunąć
+            if (!removed)
+            {
+                ++c;
+            }
+            else
+            {
+                // inaczej cofamy o jedną
+                --c;
+            }
         }
     }
 }

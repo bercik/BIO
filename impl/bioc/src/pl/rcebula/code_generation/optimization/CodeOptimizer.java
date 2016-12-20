@@ -71,7 +71,7 @@ public class CodeOptimizer
                 optimize = true;
             }
             
-            optimizer = new RemovePopcJmpClearStackSequences(ic, statistics);
+            optimizer = new RemovePopcOrPushJmpClearStackSequences(ic, statistics);
             if (!optimize && optimizer.isOptimized())
             {
                 optimize = true;

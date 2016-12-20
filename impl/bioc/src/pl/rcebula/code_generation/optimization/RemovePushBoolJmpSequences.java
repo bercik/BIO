@@ -74,8 +74,9 @@ public class RemovePushBoolJmpSequences implements IOptimizer
                 // jeżeli jmp_if_false
                 if (funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
                 {
-                    // sprawdzamy czy dwie linie wyżej (jedną wyżej jest pop,1) jest komenda push
-                    Line l = ic.getLine(c - 2);
+                    // sprawdzamy czy trzy linie wyżej (jedną wyżej jest pop, a dwie wyżej jest peek_jmp_if_not_bool) 
+                    // jest komenda push
+                    Line l = ic.getLine(c - 3);
                     if (l.numberOfFields() > 1)
                     {
                         funName = ((StringField)l.getField(0)).getStr();
@@ -110,16 +111,16 @@ public class RemovePushBoolJmpSequences implements IOptimizer
                                         statistics.removePushBoolSequenceRemoved();
                                         optimize = true;
                                     }
-                                    // usuń linijki c-2,c-1,c
-                                    int i = 3;
+                                    // usuń linijki c-3, c-2,c-1,c
+                                    int i = 4;
                                     while (i-- > 0)
                                     {
-                                        ic.removeLine(c - 2);
+                                        ic.removeLine(c - 3);
                                         statistics.addPushBoolSequenceRemoved();
                                         optimize = true;
                                     }
                                     
-                                    c = c - 2;
+                                    c = c - 3;
                                     continue;
                                 }
                             }

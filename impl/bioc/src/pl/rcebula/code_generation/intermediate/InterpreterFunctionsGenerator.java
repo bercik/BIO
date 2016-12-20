@@ -143,6 +143,43 @@ public class InterpreterFunctionsGenerator
 
         return new Line(fields);
     }
+    
+    public Line generatePeekJmpIfNotBool(Label label, ErrorInfo ei)
+    {
+        List<IField> fields = new ArrayList<>();
+
+        // peek_jmp_if_not_bool, label, line, chNum. fnum
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL));
+        fields.add(new LabelField(label));
+        fields.add(new IntStringField(ei.getLineNum()));
+        fields.add(new IntStringField(ei.getChNum()));
+        fields.add(new IntStringField(ei.getFile().getNum()));
+
+        return new Line(fields);
+    }
+    
+    public Line generatePushErrorBadParameterTypeNotBool(String funName, int paramNum)
+    {
+        List<IField> fields = new ArrayList<>();
+
+        // push_error_bad_parameter_type_not_bool, funName, paramNum
+        fields.add(new InterpreterFunctionStringField(
+                InterpreterFunction.PUSH_ERROR_BAD_PARAMETER_TYPE_NOT_BOOL));
+        fields.add(new StringField(funName));
+        fields.add(new IntStringField(paramNum));
+
+        return new Line(fields);
+    }
+    
+    public Line generateNop()
+    {
+        List<IField> fields = new ArrayList<>();
+
+        // nop
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.NOP));
+
+        return new Line(fields);
+    }
 
     public Line generateClearStack()
     {

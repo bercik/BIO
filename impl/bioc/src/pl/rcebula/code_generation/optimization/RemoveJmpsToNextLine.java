@@ -70,7 +70,8 @@ public class RemoveJmpsToNextLine implements IOptimizer
 
             // jeżeli to skok warunkowy lub bezwarunkowy
             if (funName.equals(InterpreterFunction.JMP.toString())
-                    || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
+                    || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString())
+                    || funName.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
             {
                 LabelField lf = (LabelField)line.getField(1);
                 Label l = lf.getLabel();
@@ -81,8 +82,9 @@ public class RemoveJmpsToNextLine implements IOptimizer
                 {
                     optimize = true;
                     statistics.addJumpsToNextLineRemoved();
-                    // jeżeli JMP to po prostu usuń
-                    if (funName.equals(InterpreterFunction.JMP.toString()))
+                    // jeżeli JMP lub PEEK_JMP_IF_NOT_BOOL to po prostu usuń
+                    if (funName.equals(InterpreterFunction.JMP.toString()) 
+                            || funName.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
                     {
                         ic.removeLine(lnr);
                     }
