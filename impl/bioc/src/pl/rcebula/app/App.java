@@ -65,6 +65,14 @@ public class App
             timeProfiler.start("Opts");
             Opts opts = new Opts(args);
             timeProfiler.stop();
+            
+            // check if input and output file aren't same
+            if (checkIfInputOutputPathsAreSame(opts.getInputFilePath(), opts.getOutputFilePath()))
+            {
+                // throw error
+                String message = "Input and output paths are same. This is prohibited to avoid accidental overwrites";
+                throw new IOException(message);
+            }
 
             // preprocessor
             timeProfiler.start("Preprocessor");
@@ -269,6 +277,14 @@ public class App
         }
     }
 
+    private static boolean checkIfInputOutputPathsAreSame(String input, String output) throws IOException
+    {
+        Path inputPath = Paths.get(input);
+        Path outputPath = Paths.get(output);
+        
+        return inputPath.toAbsolutePath().normalize().equals(outputPath.toAbsolutePath().normalize());
+    }
+    
     private static void initLogger() throws IOException
     {
         Logger logger = Logger.getGlobal();
