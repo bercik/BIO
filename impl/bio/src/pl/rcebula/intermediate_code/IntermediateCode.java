@@ -39,14 +39,14 @@ public class IntermediateCode
     private final Map<String, UserFunction> userFunctions = new HashMap<>();
     private final MyFiles files = new MyFiles(false);
     private final List<String> modulesName = new ArrayList<>();
-    private final Logger logger = Logger.getGlobal();
+//    private final Logger logger = Logger.getGlobal();
 
     public IntermediateCode(String path)
             throws IOException
     {
         // TODELETE
-        logger.info("IntermediateCode");
-        logger.fine("path: " + path);
+//        logger.info("IntermediateCode");
+//        logger.fine("path: " + path);
         
         try
         {

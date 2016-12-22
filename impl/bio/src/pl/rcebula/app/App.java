@@ -40,7 +40,7 @@ public class App
         {
             // TODELETE
             // init logger
-            initLogger();
+//            initLogger();
 
             // Opts
             Opts opts = new Opts(args);

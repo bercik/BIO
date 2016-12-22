@@ -71,8 +71,8 @@ public class Parser
     public Parser(List<Token<?>> tokens)
             throws ParserError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("Parser");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("Parser");
         
         tokensIterator = tokens.iterator();
         currentToken = tokensIterator.next();

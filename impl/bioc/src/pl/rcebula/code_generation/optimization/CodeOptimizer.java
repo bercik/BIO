@@ -33,9 +33,9 @@ public class CodeOptimizer
             throws CodeOptimizationError
     {
         // TODELETE
-        Logger logger = Logger.getGlobal();
-        logger.info("CodeOptimizer");
-        logger.fine(ic.toStringWithLinesNumber());
+//        Logger logger = Logger.getGlobal();
+//        logger.info("CodeOptimizer");
+//        logger.fine(ic.toStringWithLinesNumber());
         
         this.ic = ic;
         
@@ -85,6 +85,6 @@ public class CodeOptimizer
         }
         
         // TODELETE
-        logger.fine(ic.toStringWithLinesNumber());
+//        logger.fine(ic.toStringWithLinesNumber());
     }
 }

@@ -34,7 +34,7 @@ import pl.rcebula.utils.TimeProfiler;
 public final class Interpreter
 {
     // logger
-    static final Logger logger = Logger.getGlobal();
+//    static final Logger logger = Logger.getGlobal();
 
     // time profiler
     final TimeProfiler timeProfiler;
@@ -74,7 +74,7 @@ public final class Interpreter
     public Interpreter(String pathToScript, String[] args, Map<String, UserFunction> userFunctions,
             BuiltinFunctions builtinFunctions, TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
     {
-        logger.info("Interpreter");
+//        logger.info("Interpreter");
 
         this.userFunctions = userFunctions;
         this.builtinFunctions = builtinFunctions;

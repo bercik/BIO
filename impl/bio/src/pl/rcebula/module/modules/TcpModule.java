@@ -14,8 +14,6 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.internals.data_types.Data;

@@ -52,7 +52,7 @@ public class App
         try
         {
             // init logger
-            initLogger();
+//            initLogger();
 
             // time profiler
             TimeProfiler timeProfiler = new TimeProfiler();

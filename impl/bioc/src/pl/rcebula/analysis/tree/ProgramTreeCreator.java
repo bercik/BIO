@@ -31,8 +31,8 @@ public class ProgramTreeCreator
     
     public ProgramTreeCreator(List<Token<?>> tokens, List<Integer> steps)
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("ProgramTreeCreator");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("ProgramTreeCreator");
         
         // aktualny token
         int ct = 0;

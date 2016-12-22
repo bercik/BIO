@@ -35,9 +35,9 @@ public class RemovePushPopcSequences implements IOptimizer
 
     public RemovePushPopcSequences(IntermediateCode ic, OptimizationStatistics statistics)
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("RemovePushPopcSequences");
-        logger.fine(ic.toStringWithLinesNumber());
+//        Logger logger = Logger.getGlobal();
+//        logger.info("RemovePushPopcSequences");
+//        logger.fine(ic.toStringWithLinesNumber());
         
         this.ic = ic;
         this.statistics = statistics;

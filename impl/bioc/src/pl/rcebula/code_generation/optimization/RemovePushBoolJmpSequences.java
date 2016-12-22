@@ -42,9 +42,9 @@ public class RemovePushBoolJmpSequences implements IOptimizer
 
     public RemovePushBoolJmpSequences(IntermediateCode ic, OptimizationStatistics statistics, MyFiles files)
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("RemovePushBoolJmpSequences");
-        logger.fine(ic.toStringWithLinesNumber());
+//        Logger logger = Logger.getGlobal();
+//        logger.info("RemovePushBoolJmpSequences");
+//        logger.fine(ic.toStringWithLinesNumber());
         
         this.ic = ic;
         this.statistics = statistics;

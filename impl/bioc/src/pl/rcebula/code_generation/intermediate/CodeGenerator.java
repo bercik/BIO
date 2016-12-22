@@ -59,8 +59,8 @@ public class CodeGenerator
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions, MyFiles files)
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("CodeGenerator");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("CodeGenerator");
         
         ifg = new InterpreterFunctionsGenerator();
         ic = new IntermediateCode();
