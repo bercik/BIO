@@ -1136,6 +1136,16 @@
                   </li>
                                  <li class="has-sub">
                      <a class="function" href="javascript:void(0)">
+                                                   WHILE
+                                             </a>
+                     <ul>
+                        <li><a href="#WHILE_fun">Description</a></li>
+                                                   <li><a href="#WHILE_funparams">Parameters</a></li>
+                                                                                                   <li><a href="#WHILE_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
                                                    BREAK
                                              </a>
                      <ul>
@@ -5510,12 +5520,40 @@
                      </section>
          
       </article>
+            <article class="function sub-block" id="WHILE_fun">
+
+         <header>
+            <h3>WHILE
+                        (cond, call_statement, &lt;call_statement&gt;*)</h3>
+            <p class="description">Control flow statement for specifying iteration, which allows code to be executed repeatedly. You can use BREAK() and CONTINUE() functions inside for better control of flow</p>
+         </header>
+
+                  <section class="parameters" id="WHILE_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>cond</i> (<u>bool</u>)</dt>
+               <dd>condition value, if false WHILE loop breaks</dd>
+                              <dt><i>call_statement</i> (<u>call</u>)</dt>
+               <dd>function called at every iteration, can be skipped by calling CONTINUE() function</dd>
+                           </dl>
+         </section>
+         
+         
+                  <section class="errors" id="WHILE_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>If <i>cond</i> is not bool</dd>
+            </dl>
+                     </section>
+         
+      </article>
             <article class="function sub-block" id="BREAK_fun">
 
          <header>
             <h3>BREAK
                         ()</h3>
-            <p class="description">Breaks current FOR loop</p>
+            <p class="description">Breaks current FOR or WHILE loop</p>
          </header>
 
          
@@ -5535,7 +5573,7 @@
             <h3>CONTINUE
                         / <i>CONT</i>
                         ()</h3>
-            <p class="description">Continues current FOR loop, meaning that it goes straight to call_increment function and executes it</p>
+            <p class="description">Continues current FOR or WHILE loop, meaning that in case of FOR it goes straight to call_increment function and executes it and in case of WHILE go straight to condition</p>
          </header>
 
          

@@ -54,14 +54,14 @@ public class CodeGenerator
     private final SpecialFunctionsGenerator sfg;
 
     private boolean firstFunction = true;
-    
+
     private final MyFiles files;
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions, MyFiles files)
     {
 //        Logger logger = Logger.getGlobal();
 //        logger.info("CodeGenerator");
-        
+
         ifg = new InterpreterFunctionsGenerator();
         ic = new IntermediateCode();
         this.pt = pt;
@@ -77,7 +77,7 @@ public class CodeGenerator
 
         // dodajemy pustą linię na koniec
         ic.appendLine(Line.generateEmptyByteLine());
-        
+
         removeNops();
     }
 
@@ -87,7 +87,7 @@ public class CodeGenerator
         for (int i = ic.numberOfLines() - 1; i >= 0; --i)
         {
             Line line = ic.getLine(i);
-            
+
             // jeżeli linia posiada jedno pole (instrukcja nop nie ma dodatkowych parametrów)
             if (line.numberOfFields() == 1)
             {
@@ -106,7 +106,7 @@ public class CodeGenerator
             }
         }
     }
-    
+
     private void eval(UserFunction uf)
     {
         // deklaracja funkcji
@@ -245,6 +245,16 @@ public class CodeGenerator
                             sfg.generateFor(call1, cp, call2, call.getErrorInfo());
                         }
                         break;
+                    case SpecialFunctionsName.whileLoopFunctionName:
+                        cp = call.getCallParams().get(0);
+                        call1 = (Call)call.getCallParams().get(1);
+                        List<Call> calls = new ArrayList<>();
+                        for (int i = 2; i < call.getCallParams().size(); ++i)
+                        {
+                            calls.add((Call)call.getCallParams().get(i));
+                        }
+                        sfg.generateWhile(cp, call1, calls, call.getErrorInfo());
+                        break;
                     case SpecialFunctionsName.ifFunctionName:
                         cp = call.getCallParams().get(0);
                         call1 = (Call)call.getCallParams().get(1);
@@ -261,7 +271,7 @@ public class CodeGenerator
                         break;
                     case SpecialFunctionsName.callFunctionName:
                         call1 = (Call)call.getCallParams().get(0);
-                        List<Call> calls = new ArrayList<>();
+                        calls = new ArrayList<>();
                         for (int i = 1; i < call.getCallParams().size(); ++i)
                         {
                             calls.add((Call)call.getCallParams().get(i));
@@ -403,7 +413,7 @@ public class CodeGenerator
     {
         return files;
     }
-    
+
     public IntermediateCode getIc()
     {
         return ic;

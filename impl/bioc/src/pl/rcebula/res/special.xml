@@ -45,6 +45,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            WHILE
+        </name>
+        <special>
+            true
+        </special>
+        <params>
+            <param>
+                all
+            </param>
+            <param>
+                call
+            </param>
+            <param repeat="true">
+                call
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             IF
         </name>
         <special>

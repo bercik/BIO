@@ -45,7 +45,7 @@ public class SemanticChecker
     private final List<BuiltinFunction> builtinFunctions;
     private final MyFiles files;
 
-    private int insideForLoopCounter = 0;
+    private int insideLoopCounter = 0;
 
     private Call lastCallInCheckCall = null;
     
@@ -348,7 +348,7 @@ public class SemanticChecker
         }
     }
 
-    private boolean checkBuiltinFunctionCall(Call call, BuiltinFunction bf, boolean forLoopFunction)
+    private boolean checkBuiltinFunctionCall(Call call, BuiltinFunction bf, boolean loopFunction)
             throws SemanticError
     {
         List<CallParam> callParams = call.getCallParams();
@@ -462,26 +462,28 @@ public class SemanticChecker
         call.setRepeatCycles(cycles);
 
         // warunki specjalne
-        // sprawdź czy funkcja jest pętlą FOR
-        if (call.getName().equals(SpecialFunctionsName.forLoopFunctionName))
+        // sprawdź czy funkcja jest pętlą FOR lub WHILE
+        if (call.getName().equals(SpecialFunctionsName.forLoopFunctionName) 
+                || call.getName().equals(SpecialFunctionsName.whileLoopFunctionName))
         {
-            forLoopFunction = true;
-            ++insideForLoopCounter;
+            loopFunction = true;
+            ++insideLoopCounter;
         }
         // sprawdź czy funkcja jest instrukcją BREAK lub CONTINUE
         else if (call.getName().equals(SpecialFunctionsName.breakFunctionName)
                 || call.getName().equals(SpecialFunctionsName.continueFunctionName))
         {
             // sprawdź czy występuje wewnątrz pętli FOR
-            if (insideForLoopCounter <= 0)
+            if (insideLoopCounter <= 0)
             {
                 String message = "Function " + call.getName() + " must occurs inside "
-                        + SpecialFunctionsName.forLoopFunctionName + " loop";
+                        + SpecialFunctionsName.forLoopFunctionName + " or " + 
+                        SpecialFunctionsName.whileLoopFunctionName + " loop";
                 throw new SemanticError(call.getErrorInfo(), message);
             }
         }
 
-        return forLoopFunction;
+        return loopFunction;
     }
     
     private void checkCall(Call call)
@@ -492,7 +494,7 @@ public class SemanticChecker
         List<CallParam> callParams = call.getCallParams();
         List<UserFunction> userFunctions = programTree.getUserFunctions();
 
-        boolean forLoopFunction = false;
+        boolean loopFunction = false;
 
         boolean functionExists = false;
         // szukaj czy funkcja występuje wśród funkcji użytkownika
@@ -526,7 +528,7 @@ public class SemanticChecker
                 {
                     functionExists = true;
 
-                    forLoopFunction = checkBuiltinFunctionCall(call, bf, forLoopFunction);
+                    loopFunction = checkBuiltinFunctionCall(call, bf, loopFunction);
 
                     break;
                 }
@@ -550,10 +552,10 @@ public class SemanticChecker
             }
         }
 
-        // jeżeli funkcja for to zdekrementuj licznik
-        if (forLoopFunction)
+        // jeżeli funkcja for lub while to zdekrementuj licznik
+        if (loopFunction)
         {
-            --insideForLoopCounter;
+            --insideLoopCounter;
         }
     }
     
