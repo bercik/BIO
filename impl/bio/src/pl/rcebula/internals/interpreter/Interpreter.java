@@ -67,6 +67,9 @@ public final class Interpreter
     private PerformPopc popc = new PerformPopc();
     private PerformPush push = new PerformPush();
     private PerformOrder order = new PerformOrder();
+    private PerformJmpIfNotBool peekJmpIfNotBool = new PerformJmpIfNotBool();
+    private PerformPushErrorBadParameterTypeNotBool pushErrorBadParameterTypeNotBool = 
+            new PerformPushErrorBadParameterTypeNotBool();
 
     public Interpreter(String pathToScript, String[] args, Map<String, UserFunction> userFunctions,
             BuiltinFunctions builtinFunctions, TimeProfiler timeProfiler, IProfiler profiler, MyFiles files)
@@ -187,8 +190,21 @@ public final class Interpreter
                     order.perform(this, line);
                     timeProfiler.stop();
                     break;
+                case JMP_IF_NOT_BOOL:
+                    timeProfiler.start("PEEK_JMP_IF_NOT_BOOL");
+                    peekJmpIfNotBool.perform(this, line);
+                    timeProfiler.stop();
+                    break;
+                case PUSH_ERROR_BAD_PARAMETER_TYPE_NOT_BOOL:
+                    timeProfiler.start("PUSH_ERROR_BAD_PARAMETER_TYPE_NOT_BOOL");
+                    pushErrorBadParameterTypeNotBool.perform(this, line);
+                    timeProfiler.stop();
+                    break;
+                case NOP:
+                    String message = "NOP shouldn't occur in saved intermediate code";
+                    throw new RuntimeException(message);
                 default:
-                    String message = "Don't know what to do with " + line.getInterpreterFunction() + " instruction";
+                    message = "Don't know what to do with " + line.getInterpreterFunction() + " instruction";
                     throw new RuntimeException(message);
             }
         }

@@ -28,6 +28,7 @@ import pl.rcebula.intermediate_code.line.PushLine;
 import pl.rcebula.error_report.MyFiles;
 import pl.rcebula.error_report.MyFiles.File;
 import pl.rcebula.intermediate_code.line.OrderLine;
+import pl.rcebula.intermediate_code.line.PushErrorBadParameterTypeLine;
 
 /**
  *
@@ -229,10 +230,11 @@ public class IntermediateCode
                     case POP:
                     case POPC:
                         int amount = dis.readInt();
-                        line = new PopLine(interpreterFunction, amount, createErrorInfo(lineNum, chNum, fnum, files));
+                        line = new PopLine(interpreterFunction, amount);
                         break;
                     case JMP:
                     case JMP_IF_FALSE:
+                    case JMP_IF_NOT_BOOL:
                         int dest = dis.readInt();
                         // przesuwamy cel skoku tak jakbyśmy linie dla każdej funkcji numerowali od zera
                         dest -= startLnr;
@@ -242,7 +244,7 @@ public class IntermediateCode
                         line = new JmpLine(interpreterFunction, dest, createErrorInfo(lineNum, chNum, fnum, files));
                         break;
                     case CLEAR_STACK:
-                        line = new ClearStackLine(interpreterFunction, createErrorInfo(lineNum, chNum, fnum, files));
+                        line = new ClearStackLine(interpreterFunction);
                         break;
                     case ORDER:
                         List<Integer> orderList = new ArrayList<>();
@@ -252,8 +254,12 @@ public class IntermediateCode
                             orderList.add(readInt);
                             readInt = dis.readInt();
                         }
-                        line = new OrderLine(interpreterFunction, createErrorInfo(lineNum, chNum, fnum, files), 
-                                orderList);
+                        line = new OrderLine(interpreterFunction, orderList);
+                        break;
+                    case PUSH_ERROR_BAD_PARAMETER_TYPE_NOT_BOOL:
+                        String fn = dis.readUTF();
+                        int paramNum = dis.readInt();
+                        line = new PushErrorBadParameterTypeLine(fn, paramNum, interpreterFunction);
                         break;
                     default:
                         throw new RuntimeException("Don't know what to do with " + interpreterFunction.toString());

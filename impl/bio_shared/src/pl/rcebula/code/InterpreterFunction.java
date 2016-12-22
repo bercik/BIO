@@ -20,7 +20,7 @@ public enum InterpreterFunction
     JMP_IF_FALSE((byte)7),
     CLEAR_STACK((byte)8),
     ORDER((byte)9),
-    PEEK_JMP_IF_NOT_BOOL((byte)10),
+    JMP_IF_NOT_BOOL((byte)10),
     PUSH_ERROR_BAD_PARAMETER_TYPE_NOT_BOOL((byte)11),
     NOP((byte)127); // instrukcja zaślepka, umożliwiająca dodawanie etykiet. Usuwana przed zapisaniem kodu do pliku
     

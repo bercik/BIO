@@ -124,7 +124,7 @@ public class FindInfiniteLoops
                 || fn.equals(InterpreterFunction.PUSH.toString()) 
                 || fn.equals(InterpreterFunction.JMP.toString()) 
                 || fn.equals(InterpreterFunction.JMP_IF_FALSE.toString())
-                || fn.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
+                || fn.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
         {
             StringField sf2 = (StringField)line.getField(2);
             l = Integer.parseInt(sf2.getStr());

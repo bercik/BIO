@@ -17,6 +17,11 @@ public abstract class Line
     protected final InterpreterFunction interpreterFunction;
     protected final ErrorInfo errorInfo;
 
+    public Line(InterpreterFunction interpreterFunction)
+    {
+        this(interpreterFunction, null);
+    }
+    
     public Line(InterpreterFunction interpreterFunction, ErrorInfo errorInfo)
     {
         this.interpreterFunction = interpreterFunction;

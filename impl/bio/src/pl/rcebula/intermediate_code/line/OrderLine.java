@@ -18,9 +18,9 @@ public class OrderLine extends Line
 {
     private final List<Integer> orderList;
     
-    public OrderLine(InterpreterFunction interpreterFunction, ErrorInfo errorInfo, List<Integer> orderList)
+    public OrderLine(InterpreterFunction interpreterFunction, List<Integer> orderList)
     {
-        super(interpreterFunction, errorInfo);
+        super(interpreterFunction);
         
         this.orderList = orderList;
     }

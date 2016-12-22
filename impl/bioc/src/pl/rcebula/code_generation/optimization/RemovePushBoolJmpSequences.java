@@ -74,7 +74,7 @@ public class RemovePushBoolJmpSequences implements IOptimizer
                 // jeżeli jmp_if_false
                 if (funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
                 {
-                    // sprawdzamy czy trzy linie wyżej (jedną wyżej jest pop, a dwie wyżej jest peek_jmp_if_not_bool) 
+                    // sprawdzamy czy trzy linie wyżej (jedną wyżej jest jmp_if_not_bool, a dwie wyżej jest pop)
                     // jest komenda push
                     Line l = ic.getLine(c - 3);
                     if (l.numberOfFields() > 1)

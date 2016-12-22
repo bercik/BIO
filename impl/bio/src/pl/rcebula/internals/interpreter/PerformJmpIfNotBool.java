@@ -9,27 +9,24 @@ import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.JmpLine;
 import pl.rcebula.intermediate_code.line.Line;
 import pl.rcebula.internals.data_types.Data;
+import pl.rcebula.internals.data_types.DataType;
 
 /**
  *
  * @author robert
  */
-public class PerformJmpIfFalse
+public class PerformJmpIfNotBool
 {
     public void perform(Interpreter interpreter, Line line)
     {
         JmpLine jmpLine = (JmpLine)line;
-        ErrorInfo ei = jmpLine.getErrorInfo();
-
-        // pobieramy parametr z stack parameters
+        
+        // podglądamy parametr z stack parameters
         Data cond = interpreter.currentFrame.getStackParameters().get(0);
-        // czyścimy stos parametrów
-        interpreter.currentFrame.getStackParameters().clear();
-
-        // sprawdzamy czy false, jeżeli tak to robimy skok
-        boolean val = (boolean)cond.getValue();
-        if (!val)
+        // sprawdzamy czy  jest typu bool, jeżeli nie jest to
+        if (!cond.getDataType().equals(DataType.BOOL))
         {
+            // skaczemy do linii
             int dest = jmpLine.getDest();
             interpreter.currentFrame.setIp(dest);
         }

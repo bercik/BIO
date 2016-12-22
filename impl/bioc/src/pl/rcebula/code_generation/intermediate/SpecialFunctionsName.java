@@ -28,5 +28,4 @@ public class SpecialFunctionsName
     public static final String ifFunctionName = "IF";
     public static final String breakFunctionName = "BREAK";
     public static final String continueFunctionName = "CONTINUE";
-    
 }

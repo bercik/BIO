@@ -1,0 +1,34 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test_FOR()
+   AS_LOC(a, "text")
+
+   AS_LOC
+   (
+      err,
+      FOR
+      (
+         DN(),
+         a,
+         DN()
+      )
+   )
+
+   bt_assert_error(err)
+end
+
+def test_IF()
+   AS_LOC(a, "text")
+
+   AS_LOC
+   (
+      err,
+      IF
+      (
+         a,
+         DN()
+      )
+   )
+
+   bt_assert_error(err)
+end

@@ -63,8 +63,8 @@ public class SpecialFunctionsGenerator
         // forStart:
         // forContinue:
         // callParam
-        // peek_jmp_if_not_bool, error
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, forEnd
         // call2
         // popc, 1
@@ -73,7 +73,7 @@ public class SpecialFunctionsGenerator
         // push, none:
         // jmp, outside
         // error:
-        // push_error_bad_parameter_type_not_bool, 1
+        // push_error_bad_parameter_type_not_bool, 2
         // outside:
         // call1
         cg.eval(call1, forContinue, forEnd);
@@ -95,12 +95,12 @@ public class SpecialFunctionsGenerator
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
 
-        // peek_jmp_if_not_bool, error
-        line = ifg.generatePeekJmpIfNotBool(error, ei);
-        ic.appendLine(line);
-
         // pop, 1
         line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
         ic.appendLine(line);
 
         // jmp_if_false, forEnd
@@ -134,8 +134,8 @@ public class SpecialFunctionsGenerator
         line.addLabel(error);
         ic.appendLine(line);
 
-        // push_error_bad_parameter_type_not_bool (1 ponieważ warunek stoi na drugim miejscu, a numerujemy od zera)
-        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 1);
+        // push_error_bad_parameter_type_not_bool, 2 ponieważ warunek stoi na drugim miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 2);
         ic.appendLine(line);
 
         // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
@@ -158,8 +158,8 @@ public class SpecialFunctionsGenerator
         // popc, 1
         // forStart:
         // callParam
-        // peek_jmp_if_not_bool, error
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, forEnd
         // call2
         // popc, 1
@@ -168,7 +168,7 @@ public class SpecialFunctionsGenerator
         // popc, 1
         // jmp, forStart
         // error:
-        // push_error_bad_parameter_type_not_bool
+        // push_error_bad_parameter_type_not_bool, 2
         // jmp, outside
         // forEnd:
         // push, none:
@@ -191,12 +191,13 @@ public class SpecialFunctionsGenerator
 
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
-
-        // peek_jmp_if_not_bool, error
-        line = ifg.generatePeekJmpIfNotBool(error, ei);
-        ic.appendLine(line);
+        
         // pop, 1
         line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
         ic.appendLine(line);
 
         // jmp_if_false, forEnd
@@ -236,8 +237,8 @@ public class SpecialFunctionsGenerator
         line.addLabel(error);
         ic.appendLine(line);
 
-        // push_error_bad_parameter_type_not_bool (1 ponieważ warunek stoi na drugim miejscu, a numerujemy od zera)
-        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 1);
+        // push_error_bad_parameter_type_not_bool, 2 ponieważ warunek stoi na drugim miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 2);
         ic.appendLine(line);
 
         // jmp, outside
@@ -262,8 +263,8 @@ public class SpecialFunctionsGenerator
     public void generateIf(CallParam callParam, Call call1, Label forStart, Label forEnd, ErrorInfo ei)
     {
         // callParam
-        // peek_jmp_if_not_bool, error
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, etykieta1
         // call1
         // popc, 1
@@ -271,7 +272,7 @@ public class SpecialFunctionsGenerator
         // push, none:
         // jmp, outside
         // error:
-        // push_error_bad_parameter_type_not_bool, 0
+        // push_error_bad_parameter_type_not_bool, 1
         // outside:
         Label l1 = new Label();
         Label error = new Label();
@@ -280,12 +281,12 @@ public class SpecialFunctionsGenerator
         // callParam
         cg.eval(callParam, forStart, forEnd);
 
-        // peek_jmp_if_not_bool, error
-        Line line = ifg.generatePeekJmpIfNotBool(error, ei);
-        ic.appendLine(line);
-
         // pop, 1
-        line = ifg.generatePop(1);
+        Line line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
         ic.appendLine(line);
 
         // jmp_if_false, etykieta1
@@ -316,8 +317,8 @@ public class SpecialFunctionsGenerator
         line.addLabel(error);
         ic.appendLine(line);
         
-        // push_error_bad_parameter_type_not_bool (0 ponieważ warunek stoi na pierwszym miejscu, a numerujemy od zera)
-        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 0);
+        // push_error_bad_parameter_type_not_bool, 1 ponieważ warunek stoi na pierwszym miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 1);
         ic.appendLine(line);
         
         // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
@@ -332,8 +333,8 @@ public class SpecialFunctionsGenerator
             ErrorInfo ei)
     {
         // callParam
-        // peek_jmp_if_not_bool, error
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, etykieta1
         // call1
         // popc, 1
@@ -345,7 +346,7 @@ public class SpecialFunctionsGenerator
         // push, none:
         // jmp, outside
         // error:
-        // push_error_bad_parameter_type_not_bool, 0
+        // push_error_bad_parameter_type_not_bool, 1
         // outside:
         Label l1 = new Label();
         Label l2 = new Label();
@@ -355,12 +356,12 @@ public class SpecialFunctionsGenerator
         // callParam
         cg.eval(callParam, forStart, forEnd);
 
-        // peek_jmp_if_not_bool, error
-        Line line = ifg.generatePeekJmpIfNotBool(error, ei);
-        ic.appendLine(line);
-
         // pop, 1
-        line = ifg.generatePop(1);
+        Line line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
         ic.appendLine(line);
 
         // jmp_if_false, etykieta1
@@ -412,8 +413,8 @@ public class SpecialFunctionsGenerator
         line.addLabel(error);
         ic.appendLine(line);
 
-        // push_error_bad_parameter_type_not_bool (0 ponieważ warunek stoi na pierwszym miejscu, a numerujemy od zera)
-        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 0);
+        // push_error_bad_parameter_type_not_bool, 1 ponieważ warunek stoi na pierwszym miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 1);
         ic.appendLine(line);
 
         // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety

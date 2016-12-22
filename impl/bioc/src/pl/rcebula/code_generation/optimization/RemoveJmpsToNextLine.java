@@ -37,6 +37,7 @@ public class RemoveJmpsToNextLine implements IOptimizer
 
     public RemoveJmpsToNextLine(IntermediateCode ic, OptimizationStatistics statistics)
     {
+        // TODELETE
         logger.info("RemoveJmpsToNextLine");
         logger.fine(ic.toStringWithLinesNumber());
         
@@ -71,7 +72,7 @@ public class RemoveJmpsToNextLine implements IOptimizer
             // jeżeli to skok warunkowy lub bezwarunkowy
             if (funName.equals(InterpreterFunction.JMP.toString())
                     || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString())
-                    || funName.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
+                    || funName.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
             {
                 LabelField lf = (LabelField)line.getField(1);
                 Label l = lf.getLabel();
@@ -82,17 +83,17 @@ public class RemoveJmpsToNextLine implements IOptimizer
                 {
                     optimize = true;
                     statistics.addJumpsToNextLineRemoved();
-                    // jeżeli JMP lub PEEK_JMP_IF_NOT_BOOL to po prostu usuń
+                    // jeżeli JMP lub JMP_IF_FALSE to po prostu usuń
                     if (funName.equals(InterpreterFunction.JMP.toString()) 
-                            || funName.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
+                            || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
                     {
                         ic.removeLine(lnr);
                     }
-                    // jeżeli JMP_IF_FALSE to usuń i zamień powyższy POP na POPC
-                    else if (funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
+                    // jeżeli PEEK_JMP_IF_NOT_BOOL to usuń i zamień powyższy POP na POPC
+                    else if (funName.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
                     {
                         // wiadomość błędu
-                        String errorMsg = "Line above JMP_IF_FALSE should be POP";
+                        String errorMsg = "Line above JMP_IF_NOT_BOOL should be POP";
                         // pobierz linię wyżej
                         Line lineAbove = ic.getLine(lnr - 1);
                         // sprawdź czy ma jakieś pola

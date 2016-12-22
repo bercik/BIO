@@ -128,7 +128,7 @@ public class RemovePushBoolJmpSequencesTest
 
     private Line generatePeekJmpIfNotBool(Label label)
     {
-        return ifg.generatePeekJmpIfNotBool(label, mockErrorInfo);
+        return ifg.generateJmpIfNotBool(label, mockErrorInfo);
     }
     
     private Line generateJmp(Label l)

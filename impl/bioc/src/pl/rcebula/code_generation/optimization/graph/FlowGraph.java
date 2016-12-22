@@ -66,7 +66,7 @@ public class FlowGraph
             // jeżeli funkcja jmp lub jmp_if_false lub peek_jmp_if_false
             if (fn.equals(InterpreterFunction.JMP.toString())
                     || fn.equals(InterpreterFunction.JMP_IF_FALSE.toString())
-                    || fn.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
+                    || fn.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
             {
                 LabelField lf = (LabelField)l.getField(1);
                 int nr = lf.getLabel().getLine();
@@ -117,7 +117,7 @@ public class FlowGraph
             }
             // jeżeli funkcja jmp_if_false lub peek_jmp_if_false
             else if (fn.equals(InterpreterFunction.JMP_IF_FALSE.toString()) 
-                    || fn.equals(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL.toString()))
+                    || fn.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
             {
                 LabelField lf = (LabelField)l.getField(1);
                 int nr = lf.getLabel().getLine();

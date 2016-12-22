@@ -144,12 +144,12 @@ public class InterpreterFunctionsGenerator
         return new Line(fields);
     }
     
-    public Line generatePeekJmpIfNotBool(Label label, ErrorInfo ei)
+    public Line generateJmpIfNotBool(Label label, ErrorInfo ei)
     {
         List<IField> fields = new ArrayList<>();
 
         // peek_jmp_if_not_bool, label, line, chNum. fnum
-        fields.add(new InterpreterFunctionStringField(InterpreterFunction.PEEK_JMP_IF_NOT_BOOL));
+        fields.add(new InterpreterFunctionStringField(InterpreterFunction.JMP_IF_NOT_BOOL));
         fields.add(new LabelField(label));
         fields.add(new IntStringField(ei.getLineNum()));
         fields.add(new IntStringField(ei.getChNum()));
