@@ -52,8 +52,8 @@ public class SemanticChecker
     public SemanticChecker(ProgramTree programTree, List<BuiltinFunction> builtinFunctions, MyFiles files)
             throws SemanticError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("SemanticChecker");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("SemanticChecker");
 
         this.programTree = programTree;
         this.builtinFunctions = builtinFunctions;

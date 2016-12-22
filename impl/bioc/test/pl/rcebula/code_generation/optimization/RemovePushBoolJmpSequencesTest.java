@@ -77,23 +77,29 @@ public class RemovePushBoolJmpSequencesTest
         /*
         [1] call, foo
         [2] push, bool:false
-        [3] pop, 1
-        [4] jmp_if_false, 1
-        [5] clear_stack
-        [6] push, bool:true
-        [7] pop, 1
-        [8] jmp_if_false, 6
-        [9] call, foo
-        [10] 
+        [3] peek_jmp_if_not_bool, outside
+        [4] pop, 1
+        [5] jmp_if_false, 1
+        [6] clear_stack
+        [7] push, bool:true
+        [8] peek_jmp_if_not_bool, outside
+        [9] pop, 1
+        [10] jmp_if_false, 6
+        [11] call, foo
+        [12] outside:
+        [13] call, foo
+        [14] 
          */
         Label l1 = new Label();
         Label l6 = new Label();
+        Label outside = new Label();
 
         Line line = generateCall();
         line.addLabel(l1);
         ic.appendLine(line);
 
         ic.appendLine(generatePushBool(false));
+        ic.appendLine(generatePeekJmpIfNotBool(outside));
         ic.appendLine(generatePop1());
         ic.appendLine(generateJmpIfFalse(l1));
         ic.appendLine(generateClearStack());
@@ -102,6 +108,7 @@ public class RemovePushBoolJmpSequencesTest
         line.addLabel(l6);
         ic.appendLine(line);
 
+        ic.appendLine(generatePeekJmpIfNotBool(outside));
         ic.appendLine(generatePop1());
         ic.appendLine(generateJmpIfFalse(l6));
         ic.appendLine(generateCall());
@@ -119,6 +126,11 @@ public class RemovePushBoolJmpSequencesTest
         assertEquals(expected, ic.toString());
     }
 
+    private Line generatePeekJmpIfNotBool(Label label)
+    {
+        return ifg.generateJmpIfNotBool(label, mockErrorInfo);
+    }
+    
     private Line generateJmp(Label l)
     {
         return ifg.generateJmp(l, mockErrorInfo);

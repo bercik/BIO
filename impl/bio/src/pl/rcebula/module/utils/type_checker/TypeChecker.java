@@ -5,6 +5,7 @@
  */
 package pl.rcebula.module.utils.type_checker;
 
+import java.util.Arrays;
 import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.data_types.Data;
@@ -12,6 +13,7 @@ import pl.rcebula.internals.data_types.DataType;
 import pl.rcebula.internals.data_types.MyError;
 import pl.rcebula.internals.interpreter.Interpreter;
 import pl.rcebula.module.utils.error_codes.ErrorCodes;
+import pl.rcebula.module.utils.error_codes.ErrorConstruct;
 
 /**
  *
@@ -50,22 +52,8 @@ public class TypeChecker implements ITypeChecker
 
         if (isError)
         {
-            String message = "expected " + (paramNum + 1) + " parameter to be ";
-            for (DataType dt : expected)
-            {
-                message += dt.toString() + ", ";
-            }
-            message = message.substring(0, message.length() - 2);
-            message += " got " + actualDataType.toString();
-
-            MyError cause = null;
-            if (actual.getDataType().equals(DataType.ERROR))
-            {
-                cause = (MyError) actual.getValue();
-            }
-            MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(),
-                    cause, ei, interpreter);
-            error = Data.createErrorData(myError);
+            error = ErrorConstruct.BAD_PARAMETER_TYPE(funName, ei, interpreter, actual, paramNum + 1, 
+                    Arrays.asList(expected));
 
             return false;
         }

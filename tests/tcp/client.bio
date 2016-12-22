@@ -9,7 +9,7 @@ def onSTART()
 
    ASSERT_EQ(TCP_RECV_INT(server1), 10)
    TCP_SEND(server2, true)
-   ASSERT_EQ(TCP_RECV_STRING(server2), "test żółć")
+   ASSERT_EQ(TCP_RECV_STR(server2), "test żółć")
    ASSERT_EQ(TCP_RECV_FLOAT(server1), 0.55)
    TCP_SEND(server1, 20)
 

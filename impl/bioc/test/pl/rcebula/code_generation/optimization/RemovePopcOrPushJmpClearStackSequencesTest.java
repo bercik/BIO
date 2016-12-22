@@ -36,32 +36,32 @@ import pl.rcebula.error_report.MyFiles;
  *
  * @author robert
  */
-public class RemovePopcJmpClearStackSequencesTest
+public class RemovePopcOrPushJmpClearStackSequencesTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
-    
+
     private final MyFiles files = new MyFiles();
     private final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, files.addFile("test"));
-    
-    public RemovePopcJmpClearStackSequencesTest()
+
+    public RemovePopcOrPushJmpClearStackSequencesTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
     }
-    
+
     @AfterClass
     public static void tearDownClass()
     {
     }
-    
+
     @Before
     public void setUp()
     {
     }
-    
+
     @After
     public void tearDown()
     {
@@ -71,7 +71,7 @@ public class RemovePopcJmpClearStackSequencesTest
     public void test()
     {
         System.out.println("RemovePopcJmpClearStackSequencesTest.test()");
-        
+
         IntermediateCode ic = new IntermediateCode();
 
         /*
@@ -84,6 +84,8 @@ public class RemovePopcJmpClearStackSequencesTest
         [7] clear_stack
         [8] popc, 1
         [9] jmp_if_false, 7
+        [10] push, bool:false
+        [11] jmp, 7
          */
         Label l7 = new Label();
 
@@ -101,8 +103,11 @@ public class RemovePopcJmpClearStackSequencesTest
         ic.appendLine(generatePopc1());
         ic.appendLine(generateJmpIfFalse(l7));
         
-        RemovePopcJmpClearStackSequences rpjcss = new RemovePopcJmpClearStackSequences(ic, 
-                new OptimizationStatistics());
+        ic.appendLine(generatePushBool(false));
+        ic.appendLine(generateJmp(l7));
+
+        RemovePopcOrPushJmpClearStackSequences rpjcss
+                = new RemovePopcOrPushJmpClearStackSequences(ic, new OptimizationStatistics());
 
         String expected = "push,bool:false,-1,-1,1\n"
                 + "pop,1\n"
@@ -111,12 +116,12 @@ public class RemovePopcJmpClearStackSequencesTest
                 + "push,bool:false,-1,-1,1\n"
                 + "clear_stack\n"
                 + "popc,1\n"
-                + "jmp_if_false,5,-1,-1,1\n";
+                + "jmp_if_false,5,-1,-1,1\n"
+                + "jmp,5,-1,-1,1\n";
 
-        String str = ic.toString();
         assertEquals(expected, ic.toString());
     }
-    
+
     private Line generateJmp(Label l)
     {
         return ifg.generateJmp(l, mockErrorInfo);
@@ -142,7 +147,7 @@ public class RemovePopcJmpClearStackSequencesTest
     {
         return ifg.generatePop(1);
     }
-    
+
     private Line generatePopc1()
     {
         return ifg.generatePopc(1);

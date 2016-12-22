@@ -208,7 +208,7 @@ public class CodeGeneratorTest
         call2 = new Call("ASSIGN_LOCAL", call, generateErrorInfo(6, 1));
         icp = new IdCallParam("sum", generateErrorInfo(6, 2));
         call2.addCallParam(icp);
-        ccp = new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(6, 3)), 
+        ccp = new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(6, 3)),
                 generateErrorInfo(6, 3));
         call2.addCallParam(ccp);
         call.addCallParam(call2);
@@ -217,7 +217,7 @@ public class CodeGeneratorTest
         call2 = new Call("LE", call, generateErrorInfo(7, 1));
         icp = new IdCallParam("p", generateErrorInfo(7, 2));
         call2.addCallParam(icp);
-        ccp = new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(7, 3)), 
+        ccp = new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(7, 3)),
                 generateErrorInfo(7, 3));
         call2.addCallParam(ccp);
         call.addCallParam(call2);
@@ -270,8 +270,9 @@ public class CodeGeneratorTest
                 + "push,int:0,7,3,1\n"
                 + "pop,2\n"
                 + "call_loc,LE,7,1,1\n"
+                + "peek_jmp_if_not_bool,35,5,1,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,34,5,1,1\n"
+                + "jmp_if_false,37,5,1,1\n"
                 + "push,id:p,8,2,1\n"
                 + "pop,1\n"
                 + "call_loc,DEC,8,1,1\n"
@@ -279,6 +280,8 @@ public class CodeGeneratorTest
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
                 + "jmp,21,5,1,1\n"
+                + "push_error_bad_parameter_type_not_bool,FOR,1\n"
+                + "jmp,38,5,1,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "clear_stack\n"
                 + "push,var:sum,10,2,1\n"
@@ -286,7 +289,8 @@ public class CodeGeneratorTest
                 + "call_loc,RETURN,10,1,1\n"
                 + "\n";
 
-        assertEquals(expected, ic.toString());
+        String res = ic.toString();
+        assertEquals(expected, res);
     }
 
     @Test
@@ -327,14 +331,14 @@ public class CodeGeneratorTest
         Call call1 = new Call("ASSIGN_LOCAL", callFor, generateErrorInfo(3, 1));
         callFor.addCallParam(call1);
         call1.addCallParam(new IdCallParam("i", generateErrorInfo(3, 2)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(3, 3)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(3, 3)),
                 generateErrorInfo(3, 3)));
 
         // LS(i, 10),
         call1 = new Call("LS", callFor, generateErrorInfo(4, 1));
         callFor.addCallParam(call1);
         call1.addCallParam(new IdCallParam("i", generateErrorInfo(4, 2)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(4, 3)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(4, 3)),
                 generateErrorInfo(4, 3)));
 
         // CALL2(
@@ -350,14 +354,14 @@ public class CodeGeneratorTest
         call1 = new Call("ASSIGN_LOCAL", insideFor, generateErrorInfo(7, 1));
         insideFor.addCallParam(call1);
         call1.addCallParam(new IdCallParam("j", generateErrorInfo(7, 2)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(7, 3)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(7, 3)),
                 generateErrorInfo(7, 3)));
 
         // LS(j, 10),
         call1 = new Call("LS", insideFor, generateErrorInfo(8, 1));
         insideFor.addCallParam(call1);
         call1.addCallParam(new IdCallParam("j", generateErrorInfo(8, 2)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(8, 3)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(8, 3)),
                 generateErrorInfo(8, 3)));
 
         // CALL(
@@ -405,8 +409,9 @@ public class CodeGeneratorTest
                 + "push,int:10,4,3,1\n"
                 + "pop,2\n"
                 + "call_loc,LS,4,1,1\n"
+                + "peek_jmp_if_not_bool,52,2,1,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,48,2,1,1\n"
+                + "jmp_if_false,54,2,1,1\n"
                 + "push,id:j,7,2,1\n"
                 + "push,int:0,7,3,1\n"
                 + "pop,2\n"
@@ -416,8 +421,9 @@ public class CodeGeneratorTest
                 + "push,int:10,8,3,1\n"
                 + "pop,2\n"
                 + "call_loc,LS,8,1,1\n"
+                + "peek_jmp_if_not_bool,41,6,1,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,39,6,1,1\n"
+                + "jmp_if_false,43,6,1,1\n"
                 + "push,var:i,10,3,1\n"
                 + "push,var:j,10,4,1\n"
                 + "pop,2\n"
@@ -431,7 +437,9 @@ public class CodeGeneratorTest
                 + "popc,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
-                + "jmp,19,6,1,1\n"
+                + "jmp,20,6,1,1\n"
+                + "push_error_bad_parameter_type_not_bool,FOR,1\n"
+                + "jmp,44,6,1,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
                 + "push,id:i,13,2,1\n"
@@ -441,10 +449,13 @@ public class CodeGeneratorTest
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
                 + "jmp,8,2,1,1\n"
+                + "push_error_bad_parameter_type_not_bool,FOR,1\n"
+                + "jmp,55,2,1,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "\n";
 
-        assertEquals(expected, ic.toString());
+        String res = ic.toString();
+        assertEquals(expected, res);
     }
 
     @Test
@@ -475,7 +486,7 @@ public class CodeGeneratorTest
         Call call1 = new Call("ASSIGN_LOCAL", null, generateErrorInfo(2, 1));
         uf.addCall(call1);
         call1.addCallParam(new IdCallParam("i", generateErrorInfo(2, 2)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(2, 3)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 0, generateErrorInfo(2, 3)),
                 generateErrorInfo(2, 3)));
 
         // FOR(
@@ -488,7 +499,7 @@ public class CodeGeneratorTest
         forCall.addCallParam(call1);
 
         // true,
-        forCall.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, generateErrorInfo(5, 1)), 
+        forCall.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, generateErrorInfo(5, 1)),
                 generateErrorInfo(5, 1)));
 
         // CALL2(
@@ -509,7 +520,7 @@ public class CodeGeneratorTest
         call1 = new Call("GT", ifCall, generateErrorInfo(8, 2));
         ifCall.addCallParam(call1);
         call1.addCallParam(new IdCallParam("i", generateErrorInfo(8, 3)));
-        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 9, generateErrorInfo(8, 4)), 
+        call1.addCallParam(new ConstCallParam(new Token(TokenType.INT, 9, generateErrorInfo(8, 4)),
                 generateErrorInfo(8, 4)));
         // BREAK()
         call1 = new Call("BREAK", ifCall, generateErrorInfo(8, 5));
@@ -537,8 +548,9 @@ public class CodeGeneratorTest
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
                 + "push,bool:true,5,1,1\n"
+                + "peek_jmp_if_not_bool,39,3,1,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,35,3,1,1\n"
+                + "jmp_if_false,41,3,1,1\n"
                 + "push,id:i,7,3,1\n"
                 + "pop,1\n"
                 + "call_loc,INC,7,2,1\n"
@@ -549,23 +561,28 @@ public class CodeGeneratorTest
                 + "push,int:9,8,4,1\n"
                 + "pop,2\n"
                 + "call_loc,GT,8,2,1\n"
+                + "peek_jmp_if_not_bool,34,8,1,1\n"
                 + "pop,1\n"
-                + "jmp_if_false,28,8,1,1\n"
-                + "jmp,35,8,5,1\n"
+                + "jmp_if_false,30,8,1,1\n"
+                + "jmp,41,8,5,1\n"
                 + "popc,1\n"
-                + "jmp,30,8,1,1\n"
-                + "jmp,32,8,6,1\n"
+                + "jmp,32,8,1,1\n"
+                + "jmp,36,8,6,1\n"
                 + "popc,1\n"
                 + "push,none:,-1,-1,-1\n"
+                + "jmp,35,8,1,1\n"
+                + "push_error_bad_parameter_type_not_bool,IF,0\n"
                 + "popc,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "popc,1\n"
                 + "jmp,10,3,1,1\n"
+                + "push_error_bad_parameter_type_not_bool,FOR,1\n"
+                + "jmp,42,3,1,1\n"
                 + "push,none:,-1,-1,-1\n"
                 + "\n";
-
-        String str = ic.toString();
-        assertEquals(expected, ic.toString());
+        
+        String res = ic.toString();
+        assertEquals(expected, res);
     }
 
     @Test
@@ -585,11 +602,11 @@ public class CodeGeneratorTest
         Call call = new Call("FOO", null, generateErrorInfo(-1, -1));
         call.addCallParam(new IdCallParam("x", generateErrorInfo(-1, -1)));
         call.addCallParam(new IdCallParam("y", generateErrorInfo(-1, -1)));
-        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(-1, -1)), 
+        call.addCallParam(new ConstCallParam(new Token(TokenType.INT, 10, generateErrorInfo(-1, -1)),
                 generateErrorInfo(-1, -1)));
         call.addCallParam(new IdCallParam("z", generateErrorInfo(-1, -1)));
         call.addCallParam(new Call(SpecialFunctionsName.doNothingFunctionName, call, generateErrorInfo(-1, -1)));
-        call.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, generateErrorInfo(-1, -1)), 
+        call.addCallParam(new ConstCallParam(new Token(TokenType.BOOL, true, generateErrorInfo(-1, -1)),
                 generateErrorInfo(-1, -1)));
         call.setRepeatCycles(2);
         uf.addCall(call);

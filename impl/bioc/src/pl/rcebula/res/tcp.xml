@@ -84,6 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>TCP_RECV_STRING</name>
+        <alias>TCP_RECV_STR</alias>
         <params>
             <param>
                 all

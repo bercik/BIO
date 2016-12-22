@@ -134,7 +134,7 @@ public class BuiltinFunctions
             Param param = new Param(ParamType.NONE, null);
             uf.addLine(new PushLine(InterpreterFunction.PUSH, param, ei));
             // dodajemy linię pop,1
-            uf.addLine(new PopLine(InterpreterFunction.POP, 1, ei));
+            uf.addLine(new PopLine(InterpreterFunction.POP, 1));
             // dodajemy linię call_loc,return,-1,-1,-1
             uf.addLine(new CallLine(InterpreterFunction.CALL_LOC, Constants.returnFunctionName, ei));
 

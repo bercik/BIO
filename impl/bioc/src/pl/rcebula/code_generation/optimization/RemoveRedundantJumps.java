@@ -32,14 +32,14 @@ public class RemoveRedundantJumps implements IOptimizer
 {
     private final IntermediateCode ic;
     private final OptimizationStatistics statistics;
-    private static final Logger logger = Logger.getGlobal();
+//    private static final Logger logger = Logger.getGlobal();
     
     private boolean optimize = false;
 
     public RemoveRedundantJumps(IntermediateCode ic, OptimizationStatistics statistics)
     {
-        logger.info("RemoveRedundantJumps");
-        logger.fine(ic.toStringWithLinesNumber());
+//        logger.info("RemoveRedundantJumps");
+//        logger.fine(ic.toStringWithLinesNumber());
 
         this.ic = ic;
         this.statistics = statistics;
@@ -83,7 +83,8 @@ public class RemoveRedundantJumps implements IOptimizer
 
             // jeżeli to skok warunkowy lub bezwarunkowy
             if (funName.equals(InterpreterFunction.JMP.toString())
-                    || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString()))
+                    || funName.equals(InterpreterFunction.JMP_IF_FALSE.toString())
+                    || funName.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
             {
                 LabelField lfOrig = (LabelField)line.getField(1);
                 Label labelOrig = lfOrig.getLabel();

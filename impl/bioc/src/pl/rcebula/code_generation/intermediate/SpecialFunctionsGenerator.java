@@ -55,21 +55,29 @@ public class SpecialFunctionsGenerator
         Label forStart = new Label();
         Label forContinue = new Label();
         Label forEnd = new Label();
-        
+        Label error = new Label();
+        Label outside = new Label();
+
         // call1
         // popc, 1
         // forStart:
         // forContinue:
         // callParam
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, forEnd
         // call2
         // popc, 1
         // jmp, forStart
         // forEnd:
         // push, none:
-        
+        // jmp, outside
+        // error:
+        // push_error_bad_parameter_type_not_bool, 2
+        // outside:
+        // call1
         cg.eval(call1, forContinue, forEnd);
+        // popc, 1
         Line line = ifg.generatePopc(1);
         ic.appendLine(line);
 
@@ -81,42 +89,77 @@ public class SpecialFunctionsGenerator
         fakeLine.addLabel(forContinue);
         ic.appendLine(fakeLine);
 
+        // callParam
         cg.eval(callParam, forContinue, forEnd);
-        line = ifg.generatePop(1);
-        ic.appendLine(line);
 
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
 
+        // pop, 1
+        line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
+        ic.appendLine(line);
+
+        // jmp_if_false, forEnd
         line = ifg.generateJmpIfFalse(forEnd, ei);
         ic.appendLine(line);
 
+        // call2
         cg.eval(call2, forContinue, forEnd);
+        // popc, 1
         line = ifg.generatePopc(1);
         ic.appendLine(line);
 
+        // jmp, forStart
         line = ifg.generateJmp(forStart, ei);
         ic.appendLine(line);
 
+        // push, none:
         ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
         line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
                 mockErrorInfo));
         line.addLabel(forEnd);
         ic.appendLine(line);
+
+        // jmp, outside
+        line = ifg.generateJmp(outside, ei);
+        ic.appendLine(line);
+
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(error);
+        ic.appendLine(line);
+
+        // push_error_bad_parameter_type_not_bool, 2 ponieważ warunek stoi na drugim miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 2);
+        ic.appendLine(line);
+
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(outside);
+        ic.appendLine(line);
     }
-    
+
     // wersja z 4 parametrami
     public void generateFor(Call call1, CallParam callParam, Call call2, Call call3, ErrorInfo ei)
     {
         Label forStart = new Label();
         Label forContinue = new Label();
         Label forEnd = new Label();
+        Label error = new Label();
+        Label outside = new Label();
 
         // call1
         // popc, 1
         // forStart:
         // callParam
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, forEnd
         // call2
         // popc, 1
@@ -124,8 +167,14 @@ public class SpecialFunctionsGenerator
         // call3
         // popc, 1
         // jmp, forStart
+        // error:
+        // push_error_bad_parameter_type_not_bool, 2
+        // jmp, outside
         // forEnd:
         // push, none:
+        // outside:
+        // call1
+        // popc, 1
         cg.eval(call1, forContinue, forEnd);
         Line line = ifg.generatePopc(1);
         ic.appendLine(line);
@@ -137,16 +186,26 @@ public class SpecialFunctionsGenerator
         fakeLine.addLabel(forStart);
         ic.appendLine(fakeLine);
 
+        // callParam
         cg.eval(callParam, forContinue, forEnd);
-        line = ifg.generatePop(1);
-        ic.appendLine(line);
 
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
+        
+        // pop, 1
+        line = ifg.generatePop(1);
+        ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
+        ic.appendLine(line);
 
+        // jmp_if_false, forEnd
         line = ifg.generateJmpIfFalse(forEnd, ei);
         ic.appendLine(line);
 
+        // call2
+        // popc, 1
         cg.eval(call2, forContinue, forEnd);
         line = ifg.generatePopc(1);
         ic.appendLine(line);
@@ -158,21 +217,45 @@ public class SpecialFunctionsGenerator
         fakeLine.addLabel(forContinue);
         ic.appendLine(fakeLine);
 
+        // call3
         cg.eval(call3, forContinue, forEnd);
 
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
 
+        // popc, 1
         line = ifg.generatePopc(1);
         ic.appendLine(line);
 
+        // jmp, forStart
         line = ifg.generateJmp(forStart, ei);
         ic.appendLine(line);
 
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(error);
+        ic.appendLine(line);
+
+        // push_error_bad_parameter_type_not_bool, 2 ponieważ warunek stoi na drugim miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("FOR", 2);
+        ic.appendLine(line);
+
+        // jmp, outside
+        line = ifg.generateJmp(outside, ei);
+        ic.appendLine(line);
+
+        // push, none:
         ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
         line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
                 mockErrorInfo));
         line.addLabel(forEnd);
+        ic.appendLine(line);
+
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(outside);
         ic.appendLine(line);
     }
 
@@ -181,37 +264,77 @@ public class SpecialFunctionsGenerator
     {
         // callParam
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, etykieta1
         // call1
         // popc, 1
         // etykieta1:
         // push, none:
+        // jmp, outside
+        // error:
+        // push_error_bad_parameter_type_not_bool, 1
+        // outside:
         Label l1 = new Label();
+        Label error = new Label();
+        Label outside = new Label();
 
+        // callParam
         cg.eval(callParam, forStart, forEnd);
+
+        // pop, 1
         Line line = ifg.generatePop(1);
         ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
+        ic.appendLine(line);
 
+        // jmp_if_false, etykieta1
         line = ifg.generateJmpIfFalse(l1, ei);
         ic.appendLine(line);
 
+        // call1
         cg.eval(call1, forStart, forEnd);
+        
+        // popc, 1
         line = ifg.generatePopc(1);
         ic.appendLine(line);
 
+        // push, none:
         ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
         line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
                 mockErrorInfo));
         line.addLabel(l1);
         ic.appendLine(line);
+        
+        // jmp, outside
+        line = ifg.generateJmp(outside, ei);
+        ic.appendLine(line);
+      
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(error);
+        ic.appendLine(line);
+        
+        // push_error_bad_parameter_type_not_bool, 1 ponieważ warunek stoi na pierwszym miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 1);
+        ic.appendLine(line);
+        
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(outside);
+        ic.appendLine(line);
     }
-    
+
     // wersja z dwoma funkcjami
     public void generateIf(CallParam callParam, Call call1, Call call2, Label forStart, Label forEnd,
             ErrorInfo ei)
     {
         // callParam
         // pop, 1
+        // jmp_if_not_bool, error
         // jmp_if_false, etykieta1
         // call1
         // popc, 1
@@ -221,20 +344,38 @@ public class SpecialFunctionsGenerator
         // popc, 1
         // etykieta2:
         // push, none:
+        // jmp, outside
+        // error:
+        // push_error_bad_parameter_type_not_bool, 1
+        // outside:
         Label l1 = new Label();
         Label l2 = new Label();
+        Label error = new Label();
+        Label outside = new Label();
 
+        // callParam
         cg.eval(callParam, forStart, forEnd);
+
+        // pop, 1
         Line line = ifg.generatePop(1);
         ic.appendLine(line);
+        
+        // jmp_if_not_bool, error
+        line = ifg.generateJmpIfNotBool(error, ei);
+        ic.appendLine(line);
 
+        // jmp_if_false, etykieta1
         line = ifg.generateJmpIfFalse(l1, ei);
         ic.appendLine(line);
 
+        // call1
         cg.eval(call1, forStart, forEnd);
+
+        // popc, 1
         line = ifg.generatePopc(1);
         ic.appendLine(line);
 
+        // jmp, etykieta2
         line = ifg.generateJmp(l2, ei);
         ic.appendLine(line);
 
@@ -245,18 +386,41 @@ public class SpecialFunctionsGenerator
         fakeLine.addLabel(l1);
         ic.appendLine(fakeLine);
 
+        // call2
         cg.eval(call2, forStart, forEnd);
 
         // usuwamy wcześniej dodaną fałszywą linię
         ic.removeLine(fakeLineLine);
 
+        // popc, 1
         line = ifg.generatePopc(1);
         ic.appendLine(line);
 
+        // push, none:
         ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, mockFile);
         line = ifg.generatePush(new ConstCallParam(new Token(TokenType.NONE, null, mockErrorInfo),
                 mockErrorInfo));
         line.addLabel(l2);
+        ic.appendLine(line);
+
+        // jmp, outside
+        line = ifg.generateJmp(outside, ei);
+        ic.appendLine(line);
+
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(error);
+        ic.appendLine(line);
+
+        // push_error_bad_parameter_type_not_bool, 1 ponieważ warunek stoi na pierwszym miejscu
+        line = ifg.generatePushErrorBadParameterTypeNotBool("IF", 1);
+        ic.appendLine(line);
+
+        // dodajemy instrukcję nop, która posłuży nam jedynie do dodania etykiety
+        // potem zostanie ona usunięta, a nasza etykieta "wskoczy" w odpowiednie miejsce
+        line = ifg.generateNop();
+        line.addLabel(outside);
         ic.appendLine(line);
     }
 

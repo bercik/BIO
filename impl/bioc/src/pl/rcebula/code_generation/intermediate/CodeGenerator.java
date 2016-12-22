@@ -35,6 +35,8 @@ import pl.rcebula.analysis.tree.IdCallParam;
 import pl.rcebula.analysis.tree.Param;
 import pl.rcebula.analysis.tree.ProgramTree;
 import pl.rcebula.analysis.tree.UserFunction;
+import pl.rcebula.code.InterpreterFunction;
+import pl.rcebula.code_generation.intermediate.intermediate_code_structure.InterpreterFunctionStringField;
 import pl.rcebula.error_report.MyFiles;
 
 /**
@@ -57,8 +59,8 @@ public class CodeGenerator
 
     public CodeGenerator(ProgramTree pt, List<BuiltinFunction> builtinFunctions, MyFiles files)
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("CodeGenerator");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("CodeGenerator");
         
         ifg = new InterpreterFunctionsGenerator();
         ic = new IntermediateCode();
@@ -75,8 +77,36 @@ public class CodeGenerator
 
         // dodajemy pustą linię na koniec
         ic.appendLine(Line.generateEmptyByteLine());
+        
+        removeNops();
     }
 
+    // metoda usuwa wszystkie instrukcje NOP
+    private void removeNops()
+    {
+        for (int i = ic.numberOfLines() - 1; i >= 0; --i)
+        {
+            Line line = ic.getLine(i);
+            
+            // jeżeli linia posiada jedno pole (instrukcja nop nie ma dodatkowych parametrów)
+            if (line.numberOfFields() == 1)
+            {
+                IField field = line.getField(0);
+                // jeżeli to pole jest odpowiedniego typu
+                if (field instanceof InterpreterFunctionStringField)
+                {
+                    InterpreterFunctionStringField ifsf = (InterpreterFunctionStringField)field;
+                    // jeżeli to funkcja nop
+                    if (ifsf.getInterpreterFunction().equals(InterpreterFunction.NOP))
+                    {
+                        // usuń
+                        ic.removeLine(i);
+                    }
+                }
+            }
+        }
+    }
+    
     private void eval(UserFunction uf)
     {
         // deklaracja funkcji

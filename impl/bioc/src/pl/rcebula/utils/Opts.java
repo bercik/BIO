@@ -40,8 +40,8 @@ public class Opts
     public Opts(String[] args)
             throws OptsError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("Opts");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("Opts");
 
         this.args = args;
 

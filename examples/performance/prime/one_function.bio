@@ -1,5 +1,15 @@
-def onSTART()
-   ASSIGN_LOCAL(MAX_I, 10000)
+#DEFINE(DEF_SIZE, 10000)
+
+def onSTART(args)
+   AS_LOC(primes, 0)
+
+   IF
+   (
+      GT(SIZE(args), 1), 
+      AS_LOC(MAX_I, TO_INT({ args[1] })), 
+      AS_LOC(MAX_I, DEF_SIZE)
+   )
+
    FOR
    (
       ASSIGN_LOCAL(i, 2), 
@@ -26,10 +36,12 @@ def onSTART()
          IF
          (
             EQ(found, true), 
-            PRINT(i, "\n"),
-            DN()
+            @ PRINT(i, "\n")
+            INC(primes)
          )
       ),
       INC(i)
    )
+
+   PRINTLN(primes)
 end

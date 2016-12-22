@@ -39,8 +39,8 @@ public class FlowGraphAnalyse implements IOptimizer
             MyFiles files)
             throws CodeOptimizationError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("FlowGraphAnalyse");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("FlowGraphAnalyse");
         
         this.ic = ic;
         this.statistics = statistics;

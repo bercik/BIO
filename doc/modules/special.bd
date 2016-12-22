@@ -4,7 +4,7 @@
 !param call_if_true (call) 
 !optional call_if_false (call) 
 !return (none) 
-!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.
+!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool
 
 !name FOR
 !desc Control flow statement for specifying iteration, which allows code to be executed repeatedly. You can use BREAK() and CONTINUE() functions inside for better control of flow
@@ -12,7 +12,7 @@
 !param cond (bool) condition value, if false FOR loop breaks
 !param call_statement (call) function called at every iteration, can be skipped by calling CONTINUE() function
 !optional call_increment (call) function called at every iteration, can't be skipped by calling CONTINUE() function
-!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool. <b>Note:</b> that this function returns error from current scope, meaning that it exits current user function.
+!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool
 
 !name BREAK
 !desc Breaks current FOR loop

@@ -50,8 +50,8 @@ public class Lexer
     public Lexer(String input, MyFiles files)
             throws LexerError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("Lexer");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("Lexer");
         
         this.files = files;
         

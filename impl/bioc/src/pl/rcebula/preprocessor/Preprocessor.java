@@ -70,8 +70,8 @@ public class Preprocessor
     public Preprocessor(String path, boolean debugInfo)
             throws IOException, PreprocessorError
     {
-        Logger logger = Logger.getGlobal();
-        logger.info("Preprocessor");
+//        Logger logger = Logger.getGlobal();
+//        logger.info("Preprocessor");
 
         this.debugInfo = debugInfo;
 

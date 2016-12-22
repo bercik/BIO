@@ -5,6 +5,7 @@
  */
 package pl.rcebula.module.utils.error_codes;
 
+import java.util.List;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.internals.data_types.Data;
 import pl.rcebula.internals.data_types.DataType;
@@ -17,18 +18,42 @@ import pl.rcebula.internals.interpreter.Interpreter;
  */
 public class ErrorConstruct
 {
-    public static Data END_FOREACH_NOT_INSIDE_FOREACH(String funName, ErrorInfo ei, 
+    public static Data BAD_PARAMETER_TYPE(String funName, ErrorInfo ei,
+            Interpreter interpreter, Data actual, int paramNum, List<DataType> expected)
+    {
+        DataType actualDataType = actual.getDataType();
+        
+        String message = "expected " + paramNum + " parameter to be ";
+        for (DataType dt : expected)
+        {
+            message += dt.toString() + ", ";
+        }
+        message = message.substring(0, message.length() - 2);
+        message += " got " + actualDataType.toString();
+
+        MyError cause = null;
+        if (actual.getDataType().equals(DataType.ERROR))
+        {
+            cause = (MyError)actual.getValue();
+        }
+        MyError myError = new MyError(funName, message, ErrorCodes.BAD_PARAMETER_TYPE.getCode(),
+                cause, ei, interpreter);
+
+        return Data.createErrorData(myError);
+    }
+
+    public static Data END_FOREACH_NOT_INSIDE_FOREACH(String funName, ErrorInfo ei,
             Interpreter interpreter)
     {
         String message = "END_FOREACH function call isn't from function called by FOREACH";
-        
-        MyError error = new MyError(message, 
+
+        MyError error = new MyError(message,
                 ErrorCodes.END_FOREACH_NOT_INSIDE_FOREACH.getCode(), null, ei, interpreter);
-        
+
         return Data.createErrorData(error);
     }
-    
-    public static Data INTERVAL_LESS_THAN_ZERO(String funName, ErrorInfo ei, Interpreter interpreter, 
+
+    public static Data INTERVAL_LESS_THAN_ZERO(String funName, ErrorInfo ei, Interpreter interpreter,
             int interval)
     {
         String message = "interval " + interval + " is less than zero";
@@ -38,13 +63,13 @@ public class ErrorConstruct
 
         return Data.createErrorData(error);
     }
-    
+
     public static Data TCP_CONNECTION_DOESNT_EXIST(String funName, ErrorInfo ei, Interpreter interpreter,
             int connId)
     {
         String message = "tcp connection with " + connId + " id doesn't exist";
 
-        MyError myError = new MyError(funName, message, 
+        MyError myError = new MyError(funName, message,
                 ErrorCodes.TCP_CONNECTION_DOESNT_EXIST.getCode(), null, ei, interpreter);
 
         return Data.createErrorData(myError);
