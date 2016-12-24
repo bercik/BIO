@@ -107,8 +107,9 @@ public class Parser
         }
 
         // TODELETE
+        //System.out.println(input);
         //traverse(root, "");
-        //System.out.println("\n");
+        //System.out.println("----------------\n");
 
         List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
         // TODELETE
@@ -190,6 +191,7 @@ public class Parser
         if (node.jjtGetNumChildren() == 0)
         {
             // jeżeli nie null to znaczy, że node jest typu PRIM
+			// ale nie jest FUN_CALL
             if (node.value != null)
             {
                 return Arrays.asList((pl.rcebula.analysis.lexer.Token)node.value);
@@ -202,7 +204,35 @@ public class Parser
         else if (node.jjtGetNumChildren() == 1)
         {
             SimpleNode center = (SimpleNode)node.jjtGetChild(0);
-            // primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
+
+            // FUN_CALL
+            if (node.toString().equals("PRIM"))
+            {
+                // child jest typu FUN_CALL
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add((pl.rcebula.analysis.lexer.Token)node.value);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // COMMA
+            else if (node.toString().equals("COMMA_EXPR"))
+            {
+                // child jest typu EXPR
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+
+                return newTokens;
+            }
+
+            // expr bez comma_expr, fun_call nawiasy, primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
             if (node.value == null)
             {
                 return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
@@ -272,6 +302,18 @@ public class Parser
         {
             SimpleNode left = (SimpleNode)node.jjtGetChild(0);
             SimpleNode right = (SimpleNode)node.jjtGetChild(1);
+
+            // EXPR, dziećmi są OR_EX i COMMA_EXPR
+            if (node.toString().equals("EXPR"))
+            {
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));                
+                newTokens.addAll(generateCode(right, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+
+                return newTokens;
+            }
 
             // jeżeli nie ma wartości
             if (node.value == null)
@@ -445,6 +487,7 @@ TOKEN : { < MODULO : "%" > }
 TOKEN : { < POWER: "^" > }
 
 TOKEN : { < EXCL_MARK : "!" > }
+TOKEN : { < COMMA : "," > }
 
 TOKEN : { < OPEN_INDX : "[" > }
 TOKEN : { < CLOSE_INDX : "]" > }
@@ -914,7 +957,19 @@ void Expression() #EXPR :
 {
 }
 {
-    or_ex()
+	or_ex()
+	(
+	    comma_expr()
+	)?
+}
+
+
+void comma_expr() #COMMA_EXPR :
+{
+}
+{
+	<COMMA>
+	Expression()
 }
 
 void or_ex() #OR_EX :
@@ -1410,7 +1465,10 @@ void primary() #PRIM :
         }
     }
 |
-    t = <ID>
+	t = <ID>
+	(
+		fun_call()
+	)?
     {
         newLine = t.beginLine + ei.getLineNum() - 1;
         if (t.beginLine == 1)
@@ -1511,3 +1569,13 @@ void primary() #PRIM :
     Expression()
     <CLOSE_PAR>
 }
+
+void fun_call() #FUN_CALL :
+{
+}
+{
+	<OPEN_PAR>
+	Expression()
+	<CLOSE_PAR>
+}
+

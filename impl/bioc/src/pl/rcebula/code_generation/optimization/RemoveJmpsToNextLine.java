@@ -89,7 +89,7 @@ public class RemoveJmpsToNextLine implements IOptimizer
                     {
                         ic.removeLine(lnr);
                     }
-                    // jeżeli PEEK_JMP_IF_NOT_BOOL to usuń i zamień powyższy POP na POPC
+                    // jeżeli JMP_IF_NOT_BOOL to usuń i zamień powyższy POP na POPC
                     else if (funName.equals(InterpreterFunction.JMP_IF_NOT_BOOL.toString()))
                     {
                         // wiadomość błędu

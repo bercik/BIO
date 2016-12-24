@@ -5,29 +5,32 @@ public interface ParserTreeConstants
 {
   public int JJTSTART = 0;
   public int JJTEXPR = 1;
-  public int JJTOR_EX = 2;
-  public int JJTOR_EX_1 = 3;
-  public int JJTAND_EX = 4;
-  public int JJTAND_EX_1 = 5;
-  public int JJTEQ_EX = 6;
-  public int JJTEQ_EX_1 = 7;
-  public int JJTCMP_EX = 8;
-  public int JJTCMP_EX_1 = 9;
-  public int JJTADD_EX = 10;
-  public int JJTADD_EX_1 = 11;
-  public int JJTMUL_EX = 12;
-  public int JJTMUL_EX_1 = 13;
-  public int JJTPOW_EX = 14;
-  public int JJTPOW_EX_1 = 15;
-  public int JJTNEG_EX = 16;
-  public int JJTINDX_EX = 17;
-  public int JJTINDX_EX_1 = 18;
-  public int JJTPRIM = 19;
+  public int JJTCOMMA_EXPR = 2;
+  public int JJTOR_EX = 3;
+  public int JJTOR_EX_1 = 4;
+  public int JJTAND_EX = 5;
+  public int JJTAND_EX_1 = 6;
+  public int JJTEQ_EX = 7;
+  public int JJTEQ_EX_1 = 8;
+  public int JJTCMP_EX = 9;
+  public int JJTCMP_EX_1 = 10;
+  public int JJTADD_EX = 11;
+  public int JJTADD_EX_1 = 12;
+  public int JJTMUL_EX = 13;
+  public int JJTMUL_EX_1 = 14;
+  public int JJTPOW_EX = 15;
+  public int JJTPOW_EX_1 = 16;
+  public int JJTNEG_EX = 17;
+  public int JJTINDX_EX = 18;
+  public int JJTINDX_EX_1 = 19;
+  public int JJTPRIM = 20;
+  public int JJTFUN_CALL = 21;
 
 
   public String[] jjtNodeName = {
     "START",
     "EXPR",
+    "COMMA_EXPR",
     "OR_EX",
     "OR_EX_1",
     "AND_EX",
@@ -46,6 +49,7 @@ public interface ParserTreeConstants
     "INDX_EX",
     "INDX_EX_1",
     "PRIM",
+    "FUN_CALL",
   };
 }
-/* JavaCC - OriginalChecksum=ed7589c61abf1cefd9b55b001b251fa3 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d1a5baa3039264d1a657524284978899 (do not edit this line) */

@@ -72,8 +72,18 @@ public class RemoveJmpsToNextLineTest
 
         IntermediateCode ic = new IntermediateCode();
 
+        // [0] push. bool:true
+        // [1] jmp, 3
+        // [2] jmp, 3
+        // [3] push, bool:false
+        // [4] pop, 1
+        // [5] jmp_if_not_bool, 7
+        // [6] jmp_if_false, 7
+        // [7] push, bool:true
+        // [7] 
+        
         Label l3 = new Label();
-        Label l6 = new Label();
+        Label l7 = new Label();
         
         // 0
         ic.appendLine(generatePushBool(true));
@@ -88,18 +98,20 @@ public class RemoveJmpsToNextLineTest
         // 4
         ic.appendLine(generatePop1());
         // 5
-        ic.appendLine(generateJmpIfFalse(l6));
+        ic.appendLine(generateJmpIfNotBool(l7));
         // 6
-        line = generatePushBool(true);
-        line.addLabel(l6);
-        ic.appendLine(line);
+        ic.appendLine(generateJmpIfFalse(l7));
         // 7
+        line = generatePushBool(true);
+        line.addLabel(l7);
+        ic.appendLine(line);
+        // 8
         ic.appendLine(new Line());
         
         OptimizationStatistics statistics = new OptimizationStatistics();
         new RemoveJmpsToNextLine(ic, statistics);
         
-        assertEquals(statistics.getJumpsToNextLineRemoved(), 3);
+        assertEquals(statistics.getJumpsToNextLineRemoved(), 4);
         
         String expected = "push,bool:true,-1,-1,1\n"
                 + "push,bool:false,-1,-1,1\n"
@@ -107,7 +119,8 @@ public class RemoveJmpsToNextLineTest
                 + "push,bool:true,-1,-1,1\n"
                 + "\n";
         
-        assertEquals(expected, ic.toString());
+        String res = ic.toString();
+        assertEquals(expected, res);
     }
 
     private Line generateJmp(Label l)
@@ -118,6 +131,11 @@ public class RemoveJmpsToNextLineTest
     private Line generateJmpIfFalse(Label l)
     {
         return ifg.generateJmpIfFalse(l, mockErrorInfo);
+    }
+    
+    private Line generateJmpIfNotBool(Label l)
+    {
+        return ifg.generateJmpIfNotBool(l, mockErrorInfo);
     }
     
     private Line generatePushBool(boolean val)

@@ -111,8 +111,9 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         }
 
         // TODELETE
+        //System.out.println(input);
         //traverse(root, "");
-        //System.out.println("\n");
+        //System.out.println("----------------\n");
 
         List<pl.rcebula.analysis.lexer.Token<?>> tokens = generateCode(root);
         // TODELETE
@@ -194,6 +195,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         if (node.jjtGetNumChildren() == 0)
         {
             // je\u017celi nie null to znaczy, \u017ce node jest typu PRIM
+			// ale nie jest FUN_CALL
             if (node.value != null)
             {
                 return Arrays.asList((pl.rcebula.analysis.lexer.Token)node.value);
@@ -206,7 +208,35 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         else if (node.jjtGetNumChildren() == 1)
         {
             SimpleNode center = (SimpleNode)node.jjtGetChild(0);
-            // primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
+
+            // FUN_CALL
+            if (node.toString().equals("PRIM"))
+            {
+                // child jest typu FUN_CALL
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add((pl.rcebula.analysis.lexer.Token)node.value);
+                newTokens.add(getOpenParToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.add(getCloseParToken());
+
+                return newTokens;
+            }
+            // COMMA
+            else if (node.toString().equals("COMMA_EXPR"))
+            {
+                // child jest typu EXPR
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.add(getCommaToken());
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+
+                return newTokens;
+            }
+
+            // expr bez comma_expr, fun_call nawiasy, primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
             if (node.value == null)
             {
                 return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
@@ -276,6 +306,18 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants/*@egen*/
         {
             SimpleNode left = (SimpleNode)node.jjtGetChild(0);
             SimpleNode right = (SimpleNode)node.jjtGetChild(1);
+
+            // EXPR, dzie\u0107mi s\u0105 OR_EX i COMMA_EXPR
+            if (node.toString().equals("EXPR"))
+            {
+                List<pl.rcebula.analysis.lexer.Token<?>> newTokens = 
+                        new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
+        
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));                
+                newTokens.addAll(generateCode(right, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+
+                return newTokens;
+            }
 
             // je\u017celi nie ma warto\u015bci
             if (node.value == null)
@@ -449,6 +491,7 @@ TOKEN : { < MODULO : "%" > }
 TOKEN : { < POWER: "^" > }
 
 TOKEN : { < EXCL_MARK : "!" > }
+TOKEN : { < COMMA : "," > }
 
 TOKEN : { < OPEN_INDX : "[" > }
 TOKEN : { < CLOSE_INDX : "]" > }
@@ -953,28 +996,66 @@ void Expression()       :
 /*@egen*/
 }
 {/*@bgen(jjtree) EXPR */
-    try {
+        try {
 /*@egen*/
-    or_ex()/*@bgen(jjtree)*/
-    } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        throw (RuntimeException)jjte000;
-      }
-      if (jjte000 instanceof ParseException) {
-        throw (ParseException)jjte000;
-      }
-      throw (Error)jjte000;
-    } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-      }
-    }
+	or_ex()
+	(
+	    comma_expr()
+	)?/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+
+void comma_expr()             :
+{/*@bgen(jjtree) COMMA_EXPR */
+  SimpleNode jjtn000 = new SimpleNode(JJTCOMMA_EXPR);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/
+}
+{/*@bgen(jjtree) COMMA_EXPR */
+        try {
+/*@egen*/
+	<COMMA>
+	Expression()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
 /*@egen*/
 }
 
@@ -1863,7 +1944,7 @@ void indx_ex_1()            :
         t = <OPEN_INDX>
         Expression()
         <CLOSE_INDX>
-	    indx_ex_1()
+	indx_ex_1()
         {
             int newLine = t.beginLine + ei.getLineNum() - 1;
             int newCh;
@@ -1970,7 +2051,10 @@ void primary()       :
         }
     }
 |
-    t = <ID>/*@bgen(jjtree)*/
+	t = <ID>
+	(
+		fun_call()
+	)?/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
@@ -2121,3 +2205,39 @@ void primary()       :
     }
 /*@egen*/
 }
+
+void fun_call()           :
+{/*@bgen(jjtree) FUN_CALL */
+  SimpleNode jjtn000 = new SimpleNode(JJTFUN_CALL);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/
+}
+{/*@bgen(jjtree) FUN_CALL */
+        try {
+/*@egen*/
+	<OPEN_PAR>
+	Expression()
+	<CLOSE_PAR>/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
