@@ -198,7 +198,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             SimpleNode center = (SimpleNode)node.jjtGetChild(0);
 
             // FUN_CALL
-            if (node.toString().equals("PRIM"))
+            if (node.toString().equals("PRIM") && node.value != null)
             {
                 // child jest typu FUN_CALL
                 List<pl.rcebula.analysis.lexer.Token<?>> newTokens =

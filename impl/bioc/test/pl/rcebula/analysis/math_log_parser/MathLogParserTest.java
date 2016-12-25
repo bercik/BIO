@@ -61,7 +61,7 @@ public class MathLogParserTest
     {
     }
 
-    //@Test
+    @Test
     public void testLeftAssociative()
             throws Exception
     {
@@ -94,7 +94,7 @@ public class MathLogParserTest
         assertThat(result, is(expected));
     }
     
-    //@Test
+    @Test
     public void testRightAssociative()
             throws Exception
     {
@@ -153,6 +153,38 @@ public class MathLogParserTest
         
         MathLogParser instance = new MathLogParser(tokens, files);
         List<Token<?>> result = instance.getTokens();
+        
+        assertThat(result, is(expected));
+    }
+    
+    @Test
+    public void testBrackets()
+            throws Exception
+    {
+        MyFiles files = new MyFiles(true);
+        List<Token<?>> tokens = new ArrayList<>();
+        ErrorInfo ei = new ErrorInfo(-1, -1, files.getFileGeneratedByCompiler());
+        
+        tokens.add(new Token(TokenType.EXPRESSION, " (2 + 3) * 5", genErrorInfo(0, 0, files)));
+        
+        List<Token> expected = new ArrayList<>();
+        // MUL(ADD(2, 3), 5)
+        expected.add(new Token(TokenType.ID, "MUL", genErrorInfo(9, 0, files)));
+        expected.add(new Token(TokenType.OPEN_BRACKET, null, ei));
+        expected.add(new Token(TokenType.ID, "ADD", genErrorInfo(4, 0, files)));
+        expected.add(new Token(TokenType.OPEN_BRACKET, null, ei));
+        expected.add(new Token(TokenType.INT, 2, genErrorInfo(2, 0, files)));
+        expected.add(new Token(TokenType.COMMA, null, ei));
+        expected.add(new Token(TokenType.INT, 3, genErrorInfo(6, 0, files)));
+        expected.add(new Token(TokenType.CLOSE_BRACKET, null, ei));
+        expected.add(new Token(TokenType.COMMA, null, ei));
+        expected.add(new Token(TokenType.INT, 5, genErrorInfo(11, 0, files)));
+        expected.add(new Token(TokenType.CLOSE_BRACKET, null, ei));
+        
+        MathLogParser instance = new MathLogParser(tokens, files);
+        List<Token<?>> result = instance.getTokens();
+        
+        // MUL(null(ADD(2, 3)), 5)
         
         assertThat(result, is(expected));
     }
