@@ -37,3 +37,9 @@ def test()
    @ 2 - 4 - 12 * 4^3^2
    bt_assert_eq({ arr[1][2] - arr[2][2] - arr[3][4] * 4^3^arr[1][2] }, -3145730)
 end
+
+def test_fun_call()
+   AS_LOC(tup, RANGE(1, 4))
+   AS_LOC(a, 4, b, 9)
+   bt_assert_eq({ SQRT(a^2 + b^2) + SIZE(tup) / a }, 10.848857802)
+end

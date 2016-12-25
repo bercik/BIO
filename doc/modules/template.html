@@ -365,7 +365,7 @@
       <p><code>IF({ num % 2 == 0 }, PRINT("even"), PRINT("odd"))</code></p>
       <p>It's obvious that second version is easier to write and read.</p>
       <br/>
-      <p>You can use math-log parser in any place in your code (except preprocessor directives). So for example you can write something like this:</p>
+      <p>You can use math-log parser in any place in your code. So for example you can write something like this:</p>
       <p><code>def foo(arg={2^4})</code></p>
       <p>and function foo will have got default argument <code>arg</code> with value <code>POW(2, 4)</code> (it's important to notice, that compiler <b>would not</b> evaluate result of expression <i>2^4</i>, but instead translate it to BIO code which is <i>POW(2, 4)</i>. This is true for all math-log expressions)</p>
       <p>So as we saw, math-log parser translates expressions that are inside "{}" to BIO code, which are than parse by main BIO parser. As a result if you write something like this:</p>
@@ -386,15 +386,23 @@
 </tr>
 
 <tr>
-   <th> 1
+   <th rowspan="2"> 1
    </th>
 
    <td> <code>(expression)</code>
    </td>
    <td> </td>
-   <td style="vertical-align: top" rowspan="1">
+   <td style="vertical-align: top" rowspan="2">
    </td>
 </tr>
+
+<tr>
+   <td style=""> <code>fun_name()</code>
+   </td>
+   <td style=""> fun_name()
+   </td>
+</tr>
+
 <tr>
    <th> 2
    </th>
@@ -405,6 +413,7 @@
    <td style="vertical-align: top" rowspan="1"> Left-to-right
    </td>
 </tr>
+
 <tr>
    <th rowspan="2"> 3
    </th>
@@ -439,7 +448,7 @@
    </td>
    <td> MUL(a, b)
    </td>
-   <td style="vertical-align: top" rowspan="13"> Left-to-right
+   <td style="vertical-align: top" rowspan="14"> Left-to-right
    </td>
 </tr>
 
@@ -537,6 +546,15 @@
    </td>
 </tr>
 
+<tr>
+   <th rowspan="1"> 11
+   </th>
+   <td> <code>a,b</code>
+   </td>
+   <td> a, b
+   </td>
+</tr>
+
 </table>
 </div>
 
@@ -546,10 +564,14 @@
 <p>Than math-log parser would change this into:</p>
 <p><code>AND(expr1, expr2)</code></p>
 <p>So as result, first <b>both</b> expressions will be evaluated, and than used in AND function. This behavior differs from this known from other languages like c++ or python, where first expr1 is evaluated and then if needed expr2.</p>
+<br/>
+<p><b>Note: </b> that you can't use <i>comma</i> (,) outside function call, so for example this:</p>
+<p><code>{ (1, 2) * 10 }</code></p>
+<p>will give you an error.</p>
 
+<br/>
+<p>One more thing to notice is what types you can use inside expressions. You can use all types that are presented in BIO language, that is: ints (10), floats (10.5), strings ("10"), bools (true), nones (none), ids (x) and struct ids (a.x). You can also call functions (fun_name(par1, par2)).</p>
 
-      <br/>
-      <p>One more thing to notice is what types you can use inside expressions. You can use all types that are presented in BIO language, that is: ints (10), floats (10.5), strings ("10"), bools (true), nones (none), ids (x) and struct ids (a.x). One thing you cannot do is calling functions.</p>
    </section>
 
    <section id="basic-info-structs">

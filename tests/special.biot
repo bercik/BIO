@@ -32,3 +32,19 @@ def test_IF()
 
    bt_assert_error(err)
 end
+
+def test_WHILE()
+   AS_LOC(a, "text")
+
+   AS_LOC
+   (
+      err,
+      WHILE
+      (
+         a,
+         DN()
+      )
+   )
+
+   bt_assert_error(err)
+end

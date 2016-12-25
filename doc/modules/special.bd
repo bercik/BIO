@@ -11,17 +11,24 @@
 !param call_init (call) function called at start of FOR loop
 !param cond (bool) condition value, if false FOR loop breaks
 !param call_statement (call) function called at every iteration, can be skipped by calling CONTINUE() function
+!return (none) 
 !optional call_increment (call) function called at every iteration, can't be skipped by calling CONTINUE() function
 !error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool
 
-!name BREAK
-!desc Breaks current FOR loop
+!name WHILE
+!desc Control flow statement for specifying iteration, which allows code to be executed repeatedly. You can use BREAK() and CONTINUE() functions inside for better control of flow
+!param cond (bool) condition value, if false WHILE loop breaks
+!param call_statement (call) function called at every iteration, can be skipped by calling CONTINUE() function
+!repeat call_statement (call) function called at every iteration, can be skipped by calling CONTINUE() function
 !return (none) 
+!error (BAD_PARAMETER_TYPE) If <i>cond</i> is not bool
+
+!name BREAK
+!desc Breaks current FOR or WHILE loop
 
 !name CONTINUE
 !alias CONT
-!desc Continues current FOR loop, meaning that it goes straight to call_increment function and executes it
-!return (none) 
+!desc Continues current FOR or WHILE loop, meaning that in case of FOR it goes straight to call_increment function and executes it and in case of WHILE go straight to condition
 
 !name CALL
 !desc Calls every function passed to it, returns what last passed function returned
