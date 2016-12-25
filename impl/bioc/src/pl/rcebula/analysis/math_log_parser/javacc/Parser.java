@@ -16,6 +16,8 @@ import pl.rcebula.analysis.lexer.LexerError;
 import pl.rcebula.analysis.parser.ParserError;
 import pl.rcebula.analysis.math_log_parser.MyNumberFormatException;
 
+import java.lang.RuntimeException;
+
 
 public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConstants {/*@bgen(jjtree)*/
   protected JJTParserState jjtree = new JJTParserState();private static ErrorInfo ei;
@@ -172,13 +174,20 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         }
     }
 
-    private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node)
+    private static boolean isParentFunCall(SimpleNode node)
     {
-        return generateCode(node, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+        return (node.jjtGetParent().toString().equals("FUN_CALL"));
+    }
+
+    private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node)
+    throws ParserError
+    {
+        return generateCode(node, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), false);
     }
 
     private static List<pl.rcebula.analysis.lexer.Token<?>> generateCode(SimpleNode node,
-        List<pl.rcebula.analysis.lexer.Token<?>> prevTokens)
+        List<pl.rcebula.analysis.lexer.Token<?>> prevTokens, boolean insideFunCall)
+    throws ParserError
     {
         if (node.jjtGetNumChildren() == 0)
         {
@@ -206,7 +215,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
                 newTokens.add((pl.rcebula.analysis.lexer.Token)node.value);
                 newTokens.add(getOpenParToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
                 newTokens.add(getCloseParToken());
 
                 return newTokens;
@@ -214,20 +223,33 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             // COMMA
             else if (node.toString().equals("COMMA_EXPR"))
             {
+                // sprawdź czy wewnątrz fun_call, jeżeli nie to wyrzuć wyjątek
+                if (!insideFunCall)
+                {
+                    String msg = "You can't use comma outside function call";
+                    ErrorInfo ei = ((ValueErrorInfo)node.value).errorInfo;
+                    throw new ParserError(ei, msg);
+                }
+
                 // child jest typu EXPR
                 List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
                         new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
                 newTokens.add(getCommaToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
 
                 return newTokens;
+            }
+            else if (node.toString().equals("EXPR"))
+            {
+                // sprawdź czy to od fun_call
+                insideFunCall = isParentFunCall(node);
             }
 
             // expr bez comma_expr, fun_call nawiasy, primary nawiasy, neg_ex nic, not_ex nic, indx_ex nic
             if (node.value == null)
             {
-                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall);
             }
             // neg_ex znak minus
             else if (node.value.equals("-"))
@@ -240,7 +262,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
                 newTokens.add(funTok);
                 newTokens.add(getOpenParToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
                 newTokens.add(getCloseParToken());
 
                 return newTokens;
@@ -256,7 +278,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
                 newTokens.add(funTok);
                 newTokens.add(getOpenParToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
                 newTokens.add(getCloseParToken());
 
                 return newTokens;
@@ -264,7 +286,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             // neg_ex znak plus
             else if (node.value.equals("+"))
             {
-                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>());
+                return generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall);
             }
             // pow_ex potęga
             else if (node.value.equals("^"))
@@ -279,7 +301,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                 newTokens.add(getOpenParToken());
                 newTokens.addAll(prevTokens);
                 newTokens.add(getCommaToken());
-                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(center, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
                 newTokens.add(getCloseParToken());
 
                 return newTokens;
@@ -298,11 +320,14 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             // EXPR, dziećmi są OR_EX i COMMA_EXPR
             if (node.toString().equals("EXPR"))
             {
+                // sprawdź czy to od fun_call
+                insideFunCall = isParentFunCall(node);
+
                 List<pl.rcebula.analysis.lexer.Token<?>> newTokens =
                         new ArrayList<pl.rcebula.analysis.lexer.Token<?>>();
 
-                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
-                newTokens.addAll(generateCode(right, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
+                newTokens.addAll(generateCode(right, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
 
                 return newTokens;
             }
@@ -310,7 +335,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
             // jeżeli nie ma wartości
             if (node.value == null)
             {
-                return generateCode(right, generateCode(left, prevTokens));
+                return generateCode(right, generateCode(left, prevTokens, insideFunCall), insideFunCall);
             }
             else
             {
@@ -398,10 +423,10 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                 newTokens.add(getOpenParToken());
                 newTokens.addAll(prevTokens);
                 newTokens.add(getCommaToken());
-                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>()));
+                newTokens.addAll(generateCode(left, new ArrayList<pl.rcebula.analysis.lexer.Token<?>>(), insideFunCall));
                 newTokens.add(getCloseParToken());
 
-                return generateCode(right, newTokens);
+                return generateCode(right, newTokens, insideFunCall);
             }
         }
         else
@@ -500,12 +525,25 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
   final public void comma_expr() throws ParseException {
  /*@bgen(jjtree) COMMA_EXPR */
-  SimpleNode jjtn000 = new SimpleNode(JJTCOMMA_EXPR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+    SimpleNode jjtn000 = new SimpleNode(JJTCOMMA_EXPR);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);Token t;
     try {
-      jj_consume_token(COMMA);
+      t = jj_consume_token(COMMA);
       Expression();
+      jjtree.closeNodeScope(jjtn000, true);
+      jjtc000 = false;
+        int newLine = t.beginLine + ei.getLineNum() - 1;
+        int newCh;
+        if (t.beginLine == 1)
+        {
+            newCh = t.beginColumn + ei.getChNum() - 1;
+        }
+        else
+        {
+            newCh = t.beginColumn;
+        }
+        jjtn000.value = new ValueErrorInfo(",", new ErrorInfo(newLine, newCh, ei.getFile()));
     } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
