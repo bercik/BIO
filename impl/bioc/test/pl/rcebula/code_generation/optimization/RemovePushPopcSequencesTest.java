@@ -35,12 +35,12 @@ import pl.rcebula.error_report.MyFiles;
  *
  * @author robert
  */
-public class RemovePushSequencesTest
+public class RemovePushPopcSequencesTest
 {
     private static final InterpreterFunctionsGenerator ifg = new InterpreterFunctionsGenerator();
     private static final ErrorInfo mockErrorInfo = new ErrorInfo(-1, -1, new MyFiles.File(1, "test"));
 
-    public RemovePushSequencesTest()
+    public RemovePushPopcSequencesTest()
     {
     }
 
@@ -102,7 +102,7 @@ public class RemovePushSequencesTest
         
         assertEquals(expected, ic.toString());
     }
-
+    
     private Line generateCallLine()
     {
         return ifg.generateCall("foo", mockErrorInfo);
@@ -117,11 +117,6 @@ public class RemovePushSequencesTest
     private Line generatePopcLine(int pops)
     {
         return ifg.generatePopc(pops);
-    }
-
-    private Line generatePopLine(int pops)
-    {
-        return ifg.generatePop(pops);
     }
 
     private Line generateClearStackLine()

@@ -51,7 +51,7 @@ public class RemovePushPopcSequences implements IOptimizer
     {
         return optimize;
     }
-
+    
     private boolean analyseAndRemove()
     {
         boolean removed = false;
@@ -130,7 +130,7 @@ public class RemovePushPopcSequences implements IOptimizer
         
         return removed;
     }
-
+    
     private boolean isPush(Line line)
     {
         if (line.numberOfFields() > 0)
