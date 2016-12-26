@@ -15,6 +15,9 @@ syn match openPar "(" display contained
 syn match openBrace "{" display contained
 syn match closeBrace "}" display contained
 
+syn match openSquareBrace "\[" display contained
+syn match closeSquareBrace "\]" display contained
+
 syn match equal "=" display contained
 
 syn match includeStmts "#INCLUDE\s*(" contains=openPar
@@ -23,7 +26,7 @@ syn match defineStmts "#DEFINE\s*(" contains=openPar
 
 syn match def "def" display contained
 syn match function "def\s\+[_a-zA-Z\u0100-\uFFFF][_0-9a-zA-Z\u0100-\uFFFF]*\s*(" contains=def,openPar
-syn match functionCall "\(FOR\|IF\|CALL\|BREAK\|CONTINUE\|CONT\|DN\)\(\s\|\n\)*(" contains=openPar,int,float,none,bool,string
+syn match functionCall "\(WHILE\|FOR\|IF\|CALL\|BREAK\|CONTINUE\|CONT\|DN\)\(\s\|\n\)*(" contains=openPar,int,float,none,bool,string
 
 syn region defEndBlock start="def" end="end" fold transparent
 
@@ -35,13 +38,22 @@ syn match stringEscape "\\[nrfbt\\]" display contained
 syn region string start="\"" skip="\\\"" end="\"" contains=stringEscape
 
 syn match comma "," display contained
-syn match none "\(\s\|=\|{\|\n\|,\|(\)\(none\|NONE\|None\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
 
-syn match bool "\(\s\|\n\|=\|{\|,\|(\)\(true\|TRUE\|True\|false\|False\|FALSE\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
+" syn match none "\(\[\|\s\|=\|{\|\n\|,\|(\)\(none\|NONE\|None\)\(\s\|\n\|}\|,\|\|\])\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal,openSquareBrace,closeSquareBrace
 
-syn match int "\(\s\|=\|{\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\)\|0\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
+syn match none "\<none\|None\|NONE\>" display
 
-syn match float "\(\s\|\n\|=\|{\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.[0-9]*\)\(\s\|\n\|}\|,\|)\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal
+" syn match bool "\(\[\|\s\|\n\|=\|{\|,\|(\)\(true\|TRUE\|True\|false\|False\|FALSE\)\(\s\|\n\|}\|,\|)\|\]\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal,openSquareBrace,closeSquareBrace
+
+syn match bool "\<true\|True\|TRUE\|false\|False\|FALSE\>" display
+
+" syn match int "\(\[\|\s\|=\|{\|\n\|,\|(\)\(\([+-]\?[1-9][0-9]*\)\|0\)\(\s\|\n\|}\|,\|)\|\]\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal,openSquareBrace,closeSquareBrace
+
+syn match int "\<\(\([+-]\?[1-9][0-9]*\)\|0\)\>" display
+
+" syn match float "\(\[\|\s\|\n\|=\|{\|,\|(\)\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.[0-9]*\)\(\s\|\n\|}\|,\|)\|\]\)" display contains=openPar,closePar,comma,openBrace,closeBrace,equal,openSquareBrace,closeSquareBrace
+
+syn match float "\<\(\([+-]\?[1-9][0-9]*\.[0-9]\+\)\|0\.[0-9]*\)\>" display
 
 let b:current_syntax = "bio"
 
