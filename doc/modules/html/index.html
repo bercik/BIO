@@ -294,6 +294,16 @@
                   </li>
                                  <li class="has-sub">
                      <a class="function" href="javascript:void(0)">
+                                                   ASSIGN_STATIC/<wbr><i>AS_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#ASSIGN_STATIC_fun">Description</a></li>
+                                                   <li><a href="#ASSIGN_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#ASSIGN_STATIC_funreturns">Returns</a></li>
+                                                                     </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
                                                    IS_LOCAL/<wbr><i>IS_LOC</i>
                                              </a>
                      <ul>
@@ -332,6 +342,39 @@
                                                    <li><a href="#GET_GLOBAL_funparams">Parameters</a></li>
                                                                            <li><a href="#GET_GLOBAL_funreturns">Returns</a></li>
                                                                            <li><a href="#GET_GLOBAL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   IS_STATIC/<wbr><i>IS_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#IS_STATIC_fun">Description</a></li>
+                                                   <li><a href="#IS_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#IS_STATIC_funreturns">Returns</a></li>
+                                                                           <li><a href="#IS_STATIC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   GET_STATIC/<wbr><i>GET_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#GET_STATIC_fun">Description</a></li>
+                                                   <li><a href="#GET_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#GET_STATIC_funreturns">Returns</a></li>
+                                                                           <li><a href="#GET_STATIC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   CLEAR_STATIC/<wbr><i>CLEAR_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#CLEAR_STATIC_fun">Description</a></li>
+                                                   <li><a href="#CLEAR_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#CLEAR_STATIC_funreturns">Returns</a></li>
+                                                                           <li><a href="#CLEAR_STATIC_funerrors">Errors</a></li>
                                              </ul>
                   </li>
                                  <li class="has-sub">
@@ -1769,6 +1812,7 @@
 <tr><td>22</td><td>HEAP_OVERFLOW </td></tr>
 <tr><td>23</td><td>INTERVAL_LESS_THAN_ZERO</td></tr>
 <tr><td>24</td><td>END_FOREACH_NOT_INSIDE_FOREACH</td></tr>
+<tr><td>25</td><td>NO_STATIC_VARIABLE</td></tr>
 <tr><td>100</td><td>TCP_CONNECTION_ERROR</td></tr>
 <tr><td>101</td><td>TCP_PORT_OUT_OF_RANGE</td></tr>
 <tr><td>102</td><td>TCP_BAD_IP_ADDRESS</td></tr>
@@ -3005,7 +3049,7 @@
             <h3>ASSIGN_LOCAL
                         / <i>AS_LOC</i>
                         (id, val, &lt;id, val&gt;*)</h3>
-            <p class="description">Creates or updates local variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p>
+            <p class="description">Creates or updates local variables with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.</p>
          </header>
 
                   <section class="parameters" id="ASSIGN_LOCAL_funparams">
@@ -3034,7 +3078,7 @@
             <h3>ASSIGN_GLOBAL
                         / <i>AS_GLOB</i>
                         (id, val, &lt;id, val&gt;*)</h3>
-            <p class="description">Creates or updates global variables with identifier <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p>
+            <p class="description">Creates or updates global variables with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p>
          </header>
 
                   <section class="parameters" id="ASSIGN_GLOBAL_funparams">
@@ -3048,6 +3092,35 @@
          </section>
          
                   <section class="returns" id="ASSIGN_GLOBAL_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+         
+      </article>
+            <article class="function sub-block" id="ASSIGN_STATIC_fun">
+
+         <header>
+            <h3>ASSIGN_STATIC
+                        / <i>AS_STAT</i>
+                        (id, val, &lt;id, val&gt;*)</h3>
+            <p class="description">Creates or updates static variables for current function with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_STATIC(i, 0, j, GET_STATIC(i)) you will get an error about non existing global variable i. You must split above instruction in two.</p>
+         </header>
+
+                  <section class="parameters" id="ASSIGN_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>variable identifier</dd>
+                              <dt><i>val</i> (<u>all</u>)</dt>
+               <dd>variable value</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="ASSIGN_STATIC_funreturns">
             <h5>Returns</h5>
             <dl>
                <dt>(<u>none</u>)</dt>
@@ -3151,7 +3224,7 @@
             <h3>GET_GLOBAL
                         / <i>GET_GLOB</i>
                         (id)</h3>
-            <p class="description">Returnes global variable with identifier <i>id</i></p>
+            <p class="description">Returnes global variable with identifier <i>id</i>.</p>
          </header>
 
                   <section class="parameters" id="GET_GLOBAL_funparams">
@@ -3175,6 +3248,116 @@
                         <dl>
                <dt>NO_GLOBAL_VARIABLE</dt>
                <dd>if there is no global variable with <i>id</i> identifier</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="IS_STATIC_fun">
+
+         <header>
+            <h3>IS_STATIC
+                        / <i>IS_STAT</i>
+                        (id, &lt;fun_name&gt;?)</h3>
+            <p class="description">Checks whether variable with identifier <i>id</i> exists and is static for current function or if given for user function with <i>fun_name</i>.</p>
+         </header>
+
+                  <section class="parameters" id="IS_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>variable identifier</dd>
+                              <dt><i>fun_name</i> (<u>id</u>)</dt>
+               <dd>function name </dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="IS_STATIC_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>bool</u>)</dt>
+               <dd>true if variable exists, otherwise false</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="IS_STATIC_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>USER_FUNCTION_DOESNT_EXIST</dt>
+               <dd>If user function with <i>fun_name</i> doesn't exist</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="GET_STATIC_fun">
+
+         <header>
+            <h3>GET_STATIC
+                        / <i>GET_STAT</i>
+                        (id, &lt;fun_name&gt;?)</h3>
+            <p class="description">Returns static variable with identifier <i>id</i> for current function or if given for user function with <i>fun_name</i>.</p>
+         </header>
+
+                  <section class="parameters" id="GET_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>global variable identifier</dd>
+                              <dt><i>fun_name</i> (<u>id</u>)</dt>
+               <dd>function name</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="GET_STATIC_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>all</u>)</dt>
+               <dd>static variable value</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="GET_STATIC_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>NO_STATIC_VARIABLE</dt>
+               <dd>if there is no static variable with <i>id</i> identifier for <i>fun_name</i> user function</dd>
+            </dl>
+                        <dl>
+               <dt>USER_FUNCTION_DOESNT_EXIST</dt>
+               <dd>If user function with <i>fun_name</i> doesn't exist</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="CLEAR_STATIC_fun">
+
+         <header>
+            <h3>CLEAR_STATIC
+                        / <i>CLEAR_STAT</i>
+                        (&lt;fun_name&gt;?)</h3>
+            <p class="description">Clears static variables for current function or if given for user function with <i>fun_name</i>.</p>
+         </header>
+
+                  <section class="parameters" id="CLEAR_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>fun_name</i> (<u>id</u>)</dt>
+               <dd>function name</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="CLEAR_STATIC_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>none</u>)</dt>
+               <dd></dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="CLEAR_STATIC_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>USER_FUNCTION_DOESNT_EXIST</dt>
+               <dd>If user function with <i>fun_name</i> doesn't exist</dd>
             </dl>
                      </section>
          

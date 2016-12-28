@@ -69,6 +69,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            ASSIGN_STATIC
+        </name>
+        <alias>
+            AS_STAT
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param>
+                all
+            </param>
+            <param repeat="true">
+                id
+            </param>
+            <param repeat="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             IS_LOCAL
         </name>
         <alias>
@@ -118,6 +141,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </alias>
         <params>
             <param>
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            IS_STATIC
+        </name>
+        <alias>
+            IS_STAT
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            GET_STATIC
+        </name>
+        <alias>
+            GET_STAT
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                id
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            CLEAR_STATIC
+        </name>
+        <alias>
+            CLEAR_STAT
+        </alias>
+        <params>
+            <param optional="true">
                 id
             </param>
         </params>

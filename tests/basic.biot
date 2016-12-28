@@ -3,10 +3,15 @@
 def test()
    AS_LOC(x, "test local x")
    AS_GLOB(x, "test global x")
+   AS_STAT(x, "test static x")
    bt_assert_eq(GET_GLOB(x), "test global x", "")
+   bt_assert_eq(GET_STAT(x), "test static x", "")
    foo()
    bt_assert_eq(x, "test local x", "")
    bt_assert_eq(GET_GLOB(x), "foo global x", "")
+   bt_assert_eq(GET_STAT(x), "test static x", "")
+   bt_assert_eq(GET_STAT(x, foo), "foo static x", "")
+   bt_assert_error(IS_STAT(x, foo100))
    bt_assert_error(GET_GLOB(z), "")
 end
 
@@ -14,4 +19,19 @@ def foo()
    AS_LOC(x, "local x")
    bt_assert_eq(x, GET_LOC(x), "")
    AS_GLOB(x, "foo global x")
+   AS_STAT(x, "foo static x")
+end
+
+def test_static()
+   foo2()
+   foo2()
+   bt_assert_eq(GET_STAT(counter, foo2), 2)
+   CLEAR_STATIC(foo2)
+   foo2()
+   bt_assert_eq(GET_STAT(counter, foo2), 1)
+end
+
+def foo2()
+   IF({ !IS_STAT(counter) }, AS_STAT(counter, 0))
+   AS_STAT(counter, ADD(GET_STAT(counter), 1))
 end

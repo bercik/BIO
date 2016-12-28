@@ -8,6 +8,7 @@ package pl.rcebula.module.modules;
 import java.util.List;
 import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.intermediate_code.UserFunction;
 import pl.rcebula.internals.CallFrame;
 import pl.rcebula.module.utils.error_codes.ErrorCodes;
 import pl.rcebula.internals.interpreter.Interpreter;
@@ -17,6 +18,7 @@ import pl.rcebula.internals.data_types.Struct;
 import pl.rcebula.module.IEvent;
 import pl.rcebula.module.IFunction;
 import pl.rcebula.module.Module;
+import pl.rcebula.module.utils.error_codes.ErrorConstruct;
 import pl.rcebula.utils.Pair;
 import pl.rcebula.utils.Triple;
 
@@ -41,16 +43,83 @@ public class BasicModule extends Module
     {
         putFunction(new AssignLocalFunction());
         putFunction(new AssignGlobalFunction());
+        putFunction(new AssignStaticFunction());
         putFunction(new IsLocalFunction());
         putFunction(new IsGlobalFunction());
+        putFunction(new IsStaticFunction());
         putFunction(new GetGlobalFunction());
-        putFunction(new ReturnFunction());
         putFunction(new GetLocalFunction());
+        putFunction(new GetStaticFunction());
+        putFunction(new ClearStaticFunction());
+        putFunction(new ReturnFunction());
         putFunction(new ExitFunction());
         
         putEvent(new OnUnhandledErrorEvent());
     }
 
+    private class ClearStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "CLEAR_STATIC";
+        }
+        
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter, ErrorInfo callErrorInfo)
+        {
+            // parametr: <id>?
+            UserFunction uf = currentFrame.getUserFunction();
+            
+            // jeżeli przekazano opcjonalny parametr
+            if (params.size() > 0)
+            {
+                Data dFunName = params.get(0);
+                String funName = (String)dFunName.getValue();
+                
+                uf = interpreter.getUserFunctions().get(funName);
+                if (uf == null)
+                {
+                    return ErrorConstruct.USER_FUNCTION_DOESNT_EXIST(getName(), dFunName.getErrorInfo(), 
+                            interpreter, funName);
+                }
+            }
+            
+            uf.getStaticVariables().clear();
+            
+            return Data.createNoneData();
+        }
+    }
+    
+    private class AssignStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "ASSIGN_STATIC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            Data var = null;
+            // parametry <id, var>+
+            for (int i = 0; i < params.size(); i += 2)
+            {
+                String id = (String)params.get(i).getValue();
+                var = params.get(i + 1);
+
+                Pair<String, Data> p = Struct.create(id, var, currentFrame.getUserFunction().getStaticVariables());
+                id = p.getLeft();
+                var = p.getRight();
+                
+                currentFrame.getUserFunction().getStaticVariables().put(id, var);
+            }
+
+            return Data.createNoneData();
+        }
+    }
+    
     private class AssignLocalFunction implements IFunction
     {
         @Override
@@ -145,6 +214,41 @@ public class BasicModule extends Module
         }
     }
     
+    private class IsStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "IS_STATIC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: id, <id>?
+            String id = (String)params.get(0).getValue();
+            
+            UserFunction uf = currentFrame.getUserFunction();
+            
+            // jeżeli podano opcjonalny parametr to szukamy w funkcji podanej jako parametr
+            if (params.size() > 1)
+            {
+                Data dFunName = params.get(1);
+                String funName = (String)dFunName.getValue();
+                
+                uf = interpreter.getUserFunctions().get(funName);
+                if (uf == null)
+                {
+                    return ErrorConstruct.USER_FUNCTION_DOESNT_EXIST(getName(), dFunName.getErrorInfo(), 
+                            interpreter, funName);
+                }
+            }
+            
+            boolean isStatic = Struct.exists(id, uf.getStaticVariables());
+            return Data.createBoolData(isStatic);
+        }
+    }
+    
     private class GetLocalFunction implements IFunction
     {
         @Override
@@ -209,6 +313,62 @@ public class BasicModule extends Module
                         cause, did.getErrorInfo(), interpreter);
                 return Data.createErrorData(error);
             }
+            return new Data(var);
+        }
+    }
+    
+    private class GetStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "GET_STATIC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            // parametry: id, <id>?
+            Data did = params.get(0);
+            String id = (String)did.getValue();
+            
+            UserFunction uf = currentFrame.getUserFunction();
+            Data dFunName = null;
+            String funName = null;
+            
+            // jeżeli podano opcjonalny parametr
+            if (params.size() > 1)
+            {
+                dFunName = params.get(1);
+                funName = (String)dFunName.getValue();
+                
+                uf = interpreter.getUserFunctions().get(funName);
+                if (uf == null)
+                {
+                    return ErrorConstruct.USER_FUNCTION_DOESNT_EXIST(getName(), dFunName.getErrorInfo(), 
+                            interpreter, funName);
+                }
+            }
+            
+            // pobierz zmienną statyczną
+            Triple<Data, String, MyError> triple = Struct.get(id, uf.getStaticVariables());
+            Data var = triple.getFirst();
+            // jeżeli nie istnieje
+            if (var == null)
+            {
+                String message = "there is no static variable " + id;
+                if (dFunName != null)
+                {
+                    message += " in function " + funName;
+                }
+                message += ". " + triple.getSecond();
+                
+                MyError cause = triple.getThird();
+                MyError error = new MyError(getName(), message, ErrorCodes.NO_STATIC_VARIABLE.getCode(),
+                        cause, did.getErrorInfo(), interpreter);
+                return Data.createErrorData(error);
+            }
+            
             return new Data(var);
         }
     }
