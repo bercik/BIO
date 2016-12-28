@@ -33,5 +33,5 @@ end
 
 def foo2()
    IF({ !IS_STAT(counter) }, AS_STAT(counter, 0))
-   AS_STAT(counter, ADD(GET_STAT(counter), 1))
+   INC_STAT(counter)
 end

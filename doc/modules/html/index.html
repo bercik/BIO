@@ -1064,6 +1064,50 @@
                   </li>
                                  <li class="has-sub">
                      <a class="function" href="javascript:void(0)">
+                                                   INC_GLOBAL/<wbr><i>INC_GLOB</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#INC_GLOBAL_fun">Description</a></li>
+                                                   <li><a href="#INC_GLOBAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#INC_GLOBAL_funreturns">Returns</a></li>
+                                                                           <li><a href="#INC_GLOBAL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DEC_GLOBAL/<wbr><i>DEC_GLOB</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#DEC_GLOBAL_fun">Description</a></li>
+                                                   <li><a href="#DEC_GLOBAL_funparams">Parameters</a></li>
+                                                                           <li><a href="#DEC_GLOBAL_funreturns">Returns</a></li>
+                                                                           <li><a href="#DEC_GLOBAL_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   INC_STATIC/<wbr><i>INC_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#INC_STATIC_fun">Description</a></li>
+                                                   <li><a href="#INC_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#INC_STATIC_funreturns">Returns</a></li>
+                                                                           <li><a href="#INC_STATIC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
+                                                   DEC_STATIC/<wbr><i>DEC_STAT</i>
+                                             </a>
+                     <ul>
+                        <li><a href="#DEC_STATIC_fun">Description</a></li>
+                                                   <li><a href="#DEC_STATIC_funparams">Parameters</a></li>
+                                                                           <li><a href="#DEC_STATIC_funreturns">Returns</a></li>
+                                                                           <li><a href="#DEC_STATIC_funerrors">Errors</a></li>
+                                             </ul>
+                  </li>
+                                 <li class="has-sub">
+                     <a class="function" href="javascript:void(0)">
                                                    NEGATE
                                              </a>
                      <ul>
@@ -5394,6 +5438,166 @@
                         <dl>
                <dt>NO_LOCAL_VARIABLE</dt>
                <dd>if there is no local variable with <i>id</i> identifier</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="INC_GLOBAL_fun">
+
+         <header>
+            <h3>INC_GLOBAL
+                        / <i>INC_GLOB</i>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Increments global number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.</p>
+         </header>
+
+                  <section class="parameters" id="INC_GLOBAL_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>global number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be incremented</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="INC_GLOBAL_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int, float</u>)</dt>
+               <dd>return incremented value. If variable was of type int then it will return int, otherwise float</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="INC_GLOBAL_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>NO_GLOBAL_VARIABLE</dt>
+               <dd>if there is no global variable with <i>id</i> identifier</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="DEC_GLOBAL_fun">
+
+         <header>
+            <h3>DEC_GLOBAL
+                        / <i>DEC_GLOB</i>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Decrements global number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.</p>
+         </header>
+
+                  <section class="parameters" id="DEC_GLOBAL_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>global number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be decremented</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="DEC_GLOBAL_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int, float</u>)</dt>
+               <dd>return decremented value. If variable was of type int then it will return int, otherwise float</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="DEC_GLOBAL_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>NO_GLOBAL_VARIABLE</dt>
+               <dd>if there is no global variable with <i>id</i> identifier</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="INC_STATIC_fun">
+
+         <header>
+            <h3>INC_STATIC
+                        / <i>INC_STAT</i>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Increments static number for current function with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.</p>
+         </header>
+
+                  <section class="parameters" id="INC_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>static number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be incremented</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="INC_STATIC_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int, float</u>)</dt>
+               <dd>return incremented value. If variable was of type int then it will return int, otherwise float</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="INC_STATIC_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>NO_STATIC_VARIABLE</dt>
+               <dd>if there is no static variable with <i>id</i> identifier</dd>
+            </dl>
+                     </section>
+         
+      </article>
+            <article class="function sub-block" id="DEC_STATIC_fun">
+
+         <header>
+            <h3>DEC_STATIC
+                        / <i>DEC_STAT</i>
+                        (id, &lt;val&gt;?)</h3>
+            <p class="description">Decrements static number for current function with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.</p>
+         </header>
+
+                  <section class="parameters" id="DEC_STATIC_funparams">
+            <h5>Parameters</h5>
+            <dl>
+                              <dt><i>id</i> (<u>id</u>)</dt>
+               <dd>static number identifier</dd>
+                              <dt><i>val</i> (<u>int, float</u>)</dt>
+               <dd>number by which will be decremented</dd>
+                           </dl>
+         </section>
+         
+                  <section class="returns" id="DEC_STATIC_funreturns">
+            <h5>Returns</h5>
+            <dl>
+               <dt>(<u>int, float</u>)</dt>
+               <dd>return decremented value. If variable was of type int then it will return int, otherwise float</dd>
+            </dl>
+         </section>
+         
+                  <section class="errors" id="DEC_STATIC_funerrors">
+            <h5>Errors</h5>
+                        <dl>
+               <dt>BAD_PARAMETER_TYPE</dt>
+               <dd>if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int</dd>
+            </dl>
+                        <dl>
+               <dt>NO_STATIC_VARIABLE</dt>
+               <dd>if there is no static variable with <i>id</i> identifier</dd>
             </dl>
                      </section>
          
