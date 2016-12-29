@@ -35,3 +35,35 @@ def foo2()
    IF({ !IS_STAT(counter) }, AS_STAT(counter, 0))
    INC_STAT(counter)
 end
+
+def test_first_assign()
+   AS_LOC(y, "y")
+   AS_LOC(vec, CR_STRUCT())
+   AS_LOC(st.z, "st.z")
+   FIRST_AS_LOC(x, "x", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq(y, "y")
+   bt_assert_eq(x, "x")
+   bt_assert_eq(vec.y, "vec.y")
+   bt_assert_eq(st.z, "st.z")
+
+   AS_GLOB(y, "y")
+   AS_GLOB(vec, CR_STRUCT())
+   AS_GLOB(st.z, "st.z")
+   FIRST_AS_GLOB(xx, "xx", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq($$y, "y")
+   bt_assert_eq($$xx, "xx")
+   bt_assert_eq($$vec.y, "vec.y")
+   bt_assert_eq($$st.z, "st.z")
+
+   AS_STAT(y, "y")
+   AS_STAT(vec, CR_STRUCT())
+   AS_STAT(st.z, "st.z")
+   FIRST_AS_STAT(xx, "xx", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq($y, "y")
+   bt_assert_eq($xx, "xx")
+   bt_assert_eq($vec.y, "vec.y")
+   bt_assert_eq($st.z, "st.z")
+end
