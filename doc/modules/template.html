@@ -21,6 +21,7 @@
          <ul>
             <li><a href="#basic-info-data-types">Data types</a></li>
             <li><a href="#basic-info-naming-conventions">Naming conventions</a></li>
+            <li><a href="#basic-info-variable-scopes">Variable scopes</a></li>
             <li><a href="#basic-info-errors">Errors</a></li>
             <li><a href="#basic-info-conversions">Conversions</a></li>
             <li><a href="#basic-info-aliases">Aliases</a></li>
@@ -126,10 +127,11 @@
                </tr>
             </thead>
             <tbody>
-               <tr><td>variable name (local and global)</td><td>var_name</td></tr>
+               <tr><td>variable name (local, static and global)</td><td>var_name</td></tr>
                <tr><td>user function name</td><td>fun_name</td></tr>
                <tr><td>private user function name</td><td>_fun_name</td></tr>
                <tr><td>built-in function name</td><td>FUN_NAME</td></tr>
+               <tr><td>define identifier</td><td>DEFINE_ID</td></tr>
                <tr><td>user event name</td><td>on_event_name</td></tr>
                <tr><td>built-in event name</td><td>onEVENT_NAME</td></tr>
                <tr><td>FOREACH function name</td><td>onEACH_function_name</td></tr>
@@ -164,6 +166,34 @@
       <p>Library should contain only <code>#INCLUDE</code> and <code>#IMPORT</code> preprocessor statements.</p>
       <h4>About test modules</h4>
       <p>Test module is one that contains include of test.biom module.</p>
+   </section>
+
+   <section id="basic-info-variable-scopes">
+      <header>
+         <h3>Variable scopes</h3>
+      </header>
+      <p>There are three variable scopes available in BIO language:</p>
+      <ol>
+         <li> <b>local</b> - variables are accessible in current function call and are destroyed after returning from this function</li>
+         <li> <b>static</b> - variables are accessible in current function call and aren't destroyed after returning from this function</li>
+         <li> <b>global</b> - variables are accessible from every function in program from the beginning to the end of a program run</li>
+      </ol>
+      <p>You can name variables in diffrent scope with the same identifier and it wouln't be recognized as the same variable. For example:</p>
+      <p><code>ASSIGN_GLOBAL(x, 10)<br/>ASSIGN_LOCAL(x, "text")<br/>ASSIGN_STATIC(x, true)</code></p>
+      <p>would assign three diffrent variables, all named with "x" identifier.</p>
+      <p>Additionally you can get static variable from another function by calling <code>GET_STATIC</code> function with second parameter as name of this function:</p>
+      <p><code>GET_STATIC(x, fun_name)</code></p>
+      <p>Code above would get static variable named "x" from function named "fun_name".</p>
+      <p>You can also clear all static variables for current function or function with name passed as parameter to <code>CLEAR_STATIC</code> function:</p>
+      <p><code>CLEAR_STATIC(fun_name)</code></p>
+      <p>Code above would clear all static variables for function "fun_name".</p>
+      <br/>
+      <p>Finally instead of writing:</p>
+      <p><code>GET_GLOB(glob_id)<br/>GET_STAT(stat_id)</code></p>
+      <p>You can write:</p>
+      <p><code>$$glob_id<br/>$stat_id</code></p>
+      <p>And this will be resolved to the code above.</p>
+      <p><b>Note:</b> that for getting static variable one dollar sign is used ($) and for global variable two dollar sings are used ($$).</p>
 
    </section>
 
