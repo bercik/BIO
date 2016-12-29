@@ -17,6 +17,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import pl.rcebula.analysis.dollar_expressions.ResolveDollarExpressions;
 import pl.rcebula.analysis.math_log_parser.MathLogParser;
 import pl.rcebula.analysis.semantic.BuiltinFunction;
 import pl.rcebula.analysis.semantic.BuiltinFunctionsParser;
@@ -119,13 +120,28 @@ public class App
             }
 
             // resolve defines
+            timeProfiler.start("ResolveDefines");
             ResolveDefines resolveDefines = new ResolveDefines(preprocessor.getDefinesMap(), 
                     tokens, builtinFunctions);
+            timeProfiler.stop();
             tokens = resolveDefines.getTokens();
             if (opts.isVerbose())
             {
                 // print
                 System.out.println("TOKENS AFTER RESOVLE DEFINES");
+                System.out.println("-------------------------");
+                printTokens(tokens);
+            }
+            
+            // resolve dollar expressions
+            timeProfiler.start("ResolveDollarExpressions");
+            ResolveDollarExpressions resolveDollarExpressions = new ResolveDollarExpressions(tokens);
+            timeProfiler.stop();
+            tokens = resolveDollarExpressions.getTokens();
+            if (opts.isVerbose())
+            {
+                // print
+                System.out.println("TOKENS AFTER RESOVLE DOLLAR EXPRESSIONS");
                 System.out.println("-------------------------");
                 printTokens(tokens);
             }

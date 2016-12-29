@@ -1709,10 +1709,10 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x100000,0x20,0x40,0x180,0x180,0x1e00,0x1e00,0x6000,0x6000,0x38000,0x38000,0x40000,0x7c886000,0x7c880000,0x200000,0x800000,0x7c800000,};
+      jj_la1_0 = new int[] {0x100000,0x20,0x40,0x180,0x180,0x1e00,0x1e00,0x6000,0x6000,0x38000,0x38000,0x40000,0xf9086000,0xf9080000,0x400000,0x1000000,0xf9000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4c,0x4c,0x0,0x0,0x4c,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x118,0x118,0x0,0x0,0x118,};
    }
 
   /** Constructor with InputStream. */
@@ -1832,7 +1832,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[39];
+    boolean[] la1tokens = new boolean[41];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -1849,7 +1849,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         }
       }
     }
-    for (int i = 0; i < 39; i++) {
+    for (int i = 0; i < 41; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

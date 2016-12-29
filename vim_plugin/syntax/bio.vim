@@ -20,6 +20,10 @@ syn match closeSquareBrace "\]" display contained
 
 syn match equal "=" display contained
 
+syn match single_dollar "\$" display contained
+syn match double_dollar "\$\$" display contained
+syn match id "\$\?\$\?[_a-zA-Z\u0100-\uFFFF]" contains=single_dollar,double_dollar
+
 syn match includeStmts "#INCLUDE\s*(" contains=openPar
 syn match importStmts "#IMPORT\s*(" contains=openPar
 syn match defineStmts "#DEFINE\s*(" contains=openPar
@@ -75,3 +79,5 @@ hi def link int                      Constant
 hi def link float                    Constant
 hi def link openBrace                Type
 hi def link closeBrace               Type
+hi def link single_dollar            Statement
+hi def link double_dollar            Function

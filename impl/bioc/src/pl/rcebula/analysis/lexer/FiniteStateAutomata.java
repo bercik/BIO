@@ -56,9 +56,9 @@ public class FiniteStateAutomata
     private final Integer commentState = 9;
 
     // liczba stanów
-    private final Integer states = 27;
+    private final Integer states = 29;
     // liczba symboli (maksymalna wartość zwracana przez getCharCol() plus dwa)
-    private final Integer symbols = 24;
+    private final Integer symbols = 25;
     // tablica przejść, zawiera informację o następnym stanie dla danej 
     // pary stan-symbol. -1 oznacza zabronione przejście
     private final Integer[][] transitionsTable = new Integer[states][symbols];
@@ -406,7 +406,6 @@ public class FiniteStateAutomata
         transitionsTable[0][getCharCol('0')] = 10; // cyfra zero
         transitionsTable[0][getCharCol('1')] = 2; // dowolna cyfra poza zerem
         transitionsTable[0][getCharCol('a')] = 3; // dowolna litera z wyjątkiem 
-        // liter n, E, O, F
         transitionsTable[0][getCharCol('_')] = 4; // podkreślnik
         transitionsTable[0][getCharCol('<')] = 16; // znak mniejszości
         transitionsTable[0][getCharCol('"')] = 5; // cudzysłów
@@ -415,6 +414,7 @@ public class FiniteStateAutomata
         transitionsTable[0][getCharCol('E')] = 3; // litera E
         transitionsTable[0][getCharCol('O')] = 3; // litera O
         transitionsTable[0][getCharCol('F')] = 3; // litera F
+        transitionsTable[0][getCharCol('$')] = 27; // dolar
 
         // stan 1
         transitionsTable[1][getCharCol('1')] = 2; // dowolna cyfra poza zerem
@@ -504,6 +504,21 @@ public class FiniteStateAutomata
         transitionsTable[26][getCharCol('O')] = 26; // litera O
         transitionsTable[26][getCharCol('F')] = 26; // litera F
         transitionsTable[26][getCharCol('.')] = 25; // kropka
+        
+        // stan 27
+        transitionsTable[27][getCharCol('$')] = 28; // dolar
+        transitionsTable[27][getCharCol('a')] = 4; // dowolna litera z wyjątkiem
+        transitionsTable[27][getCharCol('_')] = 4; // podkreślnik
+        transitionsTable[27][getCharCol('E')] = 4; // litera E
+        transitionsTable[27][getCharCol('O')] = 4; // litera O
+        transitionsTable[27][getCharCol('F')] = 4; // litera F
+        
+        // stan 28
+        transitionsTable[28][getCharCol('a')] = 4; // dowolna litera z wyjątkiem
+        transitionsTable[28][getCharCol('_')] = 4; // podkreślnik
+        transitionsTable[28][getCharCol('E')] = 4; // litera E
+        transitionsTable[28][getCharCol('O')] = 4; // litera O
+        transitionsTable[28][getCharCol('F')] = 4; // litera F
     }
 
     // funkcja która mapuje znak na kolumnę w tablicy przejść
@@ -600,6 +615,10 @@ public class FiniteStateAutomata
         if (ch == '.')
         {
             return 22;
+        }
+        if (ch == '$')
+        {
+            return 23;
         }
 
         return getEveryCharCol();
