@@ -6,7 +6,7 @@
    xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
    <info>
       <appname>BIO</appname>
-      <appversion>1.1.0</appversion>
+      <appversion>1.2.0</appversion>
       <authors>
          <author name="bercik" email="robert.cebula1@gmail.com" />
       </authors>
