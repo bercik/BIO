@@ -54,6 +54,10 @@ public class MathModule extends Module
         putFunction(new ModFunction());
         putFunction(new IncFunction());
         putFunction(new DecFunction());
+        putFunction(new IncStaticFunction());
+        putFunction(new DecStaticFunction());
+        putFunction(new IncGlobalFunction());
+        putFunction(new DecGlobalFunction());
         putFunction(new NegateFunction());
         putFunction(new RandFunction());
     }
@@ -553,8 +557,7 @@ public class MathModule extends Module
                     }
                 }
                 else // wykonujemy operację na liczbie
-                {
-                    if (!isFloat)
+                 if (!isFloat)
                     {
                         int val = (int)d.getValue();
                         switch (operation)
@@ -607,7 +610,6 @@ public class MathModule extends Module
                                 throw new RuntimeException("Unknown " + operation.toString() + " operation");
                         }
                     }
-                }
             }
 
             // zwracamy float lub int
@@ -679,7 +681,8 @@ public class MathModule extends Module
                         }
                     }
                     else // wykonujemy operację
-                     if (!isFloat)
+                    {
+                        if (!isFloat)
                         {
                             int val = (int)d.getValue();
                             switch (operation)
@@ -731,6 +734,7 @@ public class MathModule extends Module
                                     throw new RuntimeException("Unknown operation " + operation.toString());
                             }
                         }
+                    }
                 }
 
                 // zwracamy float lub int
@@ -924,7 +928,13 @@ public class MathModule extends Module
             if (Numbers.isNumber(d))
             {
                 float val = Numbers.getFloat(d);
-                return perform(new float[] { val }, new ErrorInfo[] { d.getErrorInfo() }, null);
+                return perform(new float[]
+                {
+                    val
+                }, new ErrorInfo[]
+                {
+                    d.getErrorInfo()
+                }, null);
             }
             // kolekcja
             else
@@ -996,8 +1006,14 @@ public class MathModule extends Module
                 float base = Numbers.getFloat(par1);
                 float exponent = Numbers.getFloat(par2);
 
-                return perform(new float[] { base, exponent }, 
-                        new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
+                return perform(new float[]
+                {
+                    base, exponent
+                },
+                        new ErrorInfo[]
+                        {
+                            par1.getErrorInfo(), par2.getErrorInfo()
+                        }, interpreter);
             }
             // kolekcja
             else
@@ -1023,7 +1039,7 @@ public class MathModule extends Module
             {
                 return ErrorConstruct.DIVISION_BY_ZERO(getName(), errorInfos[1], interpreter);
             }
-            
+
             return Data.createIntData(nums[0] % nums[1]);
         }
 
@@ -1034,7 +1050,7 @@ public class MathModule extends Module
             {
                 return ErrorConstruct.DIVISION_BY_ZERO(getName(), errorInfos[1], interpreter);
             }
-            
+
             return Data.createFloatData(nums[0] % nums[1]);
         }
 
@@ -1090,16 +1106,28 @@ public class MathModule extends Module
                     float val1 = Numbers.getFloat(par1);
                     float val2 = Numbers.getFloat(par2);
 
-                    return perform(new float[] { val1, val2 }, 
-                            new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
+                    return perform(new float[]
+                    {
+                        val1, val2
+                    },
+                            new ErrorInfo[]
+                            {
+                                par1.getErrorInfo(), par2.getErrorInfo()
+                            }, interpreter);
                 }
                 // inaczej inty
                 {
                     int val1 = Numbers.getInt(par1);
                     int val2 = Numbers.getInt(par2);
-                    
-                    return perform(new int[] { val1, val2 },
-                            new ErrorInfo[] { par1.getErrorInfo(), par2.getErrorInfo() }, interpreter);
+
+                    return perform(new int[]
+                    {
+                        val1, val2
+                    },
+                            new ErrorInfo[]
+                            {
+                                par1.getErrorInfo(), par2.getErrorInfo()
+                            }, interpreter);
                 }
             }
             // inaczej kolekcje
@@ -1119,13 +1147,41 @@ public class MathModule extends Module
             DEC;
         }
 
-        private static Data perform(List<Data> params, CallFrame currentFrame, Interpreter interpreter, FUN fun,
-                String funName)
+        private enum VAR_SCOPE
         {
+            LOCAL,
+            STATIC,
+            GLOBAL;
+        }
+
+        private static Data perform(List<Data> params, CallFrame currentFrame, Interpreter interpreter, FUN fun,
+                String funName, VAR_SCOPE varScope)
+        {
+            String getFunName;
+            String assignFunName;
+
+            switch (varScope)
+            {
+                case LOCAL:
+                    getFunName = "GET_LOCAL";
+                    assignFunName = "ASSIGN_LOCAL";
+                    break;
+                case GLOBAL:
+                    getFunName = "GET_GLOBAL";
+                    assignFunName = "ASSIGN_GLOBAL";
+                    break;
+                case STATIC:
+                    getFunName = "GET_STATIC";
+                    assignFunName = "ASSIGN_STATIC";
+                    break;
+                default:
+                    throw new RuntimeException("Don't know what to do with " + varScope.toString());
+            }
+
             // parametr: <id>, <val>?
             Data idData = params.get(0);
-            Data data = interpreter.getBuiltinFunctions().callFunction("GET_LOCAL", params, currentFrame,
-                    interpreter, idData.getErrorInfo());
+            Data data = interpreter.getBuiltinFunctions().callFunction(getFunName, Arrays.asList(idData),
+                    currentFrame, interpreter, idData.getErrorInfo());
 
             // jeżeli error to zwróć
             if (data.getDataType().equals(DataType.ERROR))
@@ -1197,19 +1253,16 @@ public class MathModule extends Module
                         dataVal -= finc;
                     }
                 }
+                else if (fun.equals(FUN.INC))
+                {
+                    ++dataVal;
+                }
                 else
                 {
-                    if (fun.equals(FUN.INC))
-                    {
-                        ++dataVal;
-                    }
-                    else
-                    {
-                        --dataVal;
-                    }
+                    --dataVal;
                 }
                 Data newData = Data.createFloatData(dataVal);
-                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
+                interpreter.getBuiltinFunctions().callFunction(assignFunName, Arrays.asList(idData, newData),
                         currentFrame, interpreter, idData.getErrorInfo());
                 return newData;
             }
@@ -1228,19 +1281,16 @@ public class MathModule extends Module
                         dataVal -= iinc;
                     }
                 }
+                else if (fun.equals(FUN.INC))
+                {
+                    ++dataVal;
+                }
                 else
                 {
-                    if (fun.equals(FUN.INC))
-                    {
-                        ++dataVal;
-                    }
-                    else
-                    {
-                        --dataVal;
-                    }
+                    --dataVal;
                 }
                 Data newData = Data.createIntData(dataVal);
-                interpreter.getBuiltinFunctions().callFunction("ASSIGN_LOCAL", Arrays.asList(idData, newData),
+                interpreter.getBuiltinFunctions().callFunction(assignFunName, Arrays.asList(idData, newData),
                         currentFrame, interpreter, idData.getErrorInfo());
                 return newData;
             }
@@ -1258,8 +1308,8 @@ public class MathModule extends Module
         @Override
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
-            return IncDecFunction.perform(params, currentFrame, interpreter, 
-                    IncDecFunction.FUN.INC, getName());
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.INC, getName(), IncDecFunction.VAR_SCOPE.LOCAL);
         }
     }
 
@@ -1274,8 +1324,72 @@ public class MathModule extends Module
         @Override
         public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
         {
-            return IncDecFunction.perform(params, currentFrame, interpreter, 
-                    IncDecFunction.FUN.DEC, getName());
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.DEC, getName(), IncDecFunction.VAR_SCOPE.LOCAL);
+        }
+    }
+    
+    private class IncStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INC_STATIC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.INC, getName(), IncDecFunction.VAR_SCOPE.STATIC);
+        }
+    }
+
+    private class DecStaticFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DEC_STATIC";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.DEC, getName(), IncDecFunction.VAR_SCOPE.STATIC);
+        }
+    }
+    
+    private class IncGlobalFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "INC_GLOBAL";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.INC, getName(), IncDecFunction.VAR_SCOPE.GLOBAL);
+        }
+    }
+
+    private class DecGlobalFunction implements IFunction
+    {
+        @Override
+        public String getName()
+        {
+            return "DEC_GLOBAL";
+        }
+
+        @Override
+        public Data call(List<Data> params, CallFrame currentFrame, Interpreter interpreter)
+        {
+            return IncDecFunction.perform(params, currentFrame, interpreter,
+                    IncDecFunction.FUN.DEC, getName(), IncDecFunction.VAR_SCOPE.GLOBAL);
         }
     }
 

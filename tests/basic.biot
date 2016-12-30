@@ -3,10 +3,15 @@
 def test()
    AS_LOC(x, "test local x")
    AS_GLOB(x, "test global x")
+   AS_STAT(x, "test static x")
    bt_assert_eq(GET_GLOB(x), "test global x", "")
+   bt_assert_eq(GET_STAT(x), "test static x", "")
    foo()
    bt_assert_eq(x, "test local x", "")
    bt_assert_eq(GET_GLOB(x), "foo global x", "")
+   bt_assert_eq(GET_STAT(x), "test static x", "")
+   bt_assert_eq(GET_STAT(x, foo), "foo static x", "")
+   bt_assert_error(IS_STAT(x, foo100))
    bt_assert_error(GET_GLOB(z), "")
 end
 
@@ -14,4 +19,51 @@ def foo()
    AS_LOC(x, "local x")
    bt_assert_eq(x, GET_LOC(x), "")
    AS_GLOB(x, "foo global x")
+   AS_STAT(x, "foo static x")
+end
+
+def test_static()
+   foo2()
+   foo2()
+   bt_assert_eq(GET_STAT(counter, foo2), 2)
+   CLEAR_STATIC(foo2)
+   foo2()
+   bt_assert_eq(GET_STAT(counter, foo2), 1)
+end
+
+def foo2()
+   IF({ !IS_STAT(counter) }, AS_STAT(counter, 0))
+   INC_STAT(counter)
+end
+
+def test_first_assign()
+   AS_LOC(y, "y")
+   AS_LOC(vec, CR_STRUCT())
+   AS_LOC(st.z, "st.z")
+   FIRST_AS_LOC(x, "x", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq(y, "y")
+   bt_assert_eq(x, "x")
+   bt_assert_eq(vec.y, "vec.y")
+   bt_assert_eq(st.z, "st.z")
+
+   AS_GLOB(y, "y")
+   AS_GLOB(vec, CR_STRUCT())
+   AS_GLOB(st.z, "st.z")
+   FIRST_AS_GLOB(xx, "xx", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq($$y, "y")
+   bt_assert_eq($$xx, "xx")
+   bt_assert_eq($$vec.y, "vec.y")
+   bt_assert_eq($$st.z, "st.z")
+
+   AS_STAT(y, "y")
+   AS_STAT(vec, CR_STRUCT())
+   AS_STAT(st.z, "st.z")
+   FIRST_AS_STAT(xx, "xx", y, "yy", vec.y, "vec.y", st.z, "stst.zz")
+
+   bt_assert_eq($y, "y")
+   bt_assert_eq($xx, "xx")
+   bt_assert_eq($vec.y, "vec.y")
+   bt_assert_eq($st.z, "st.z")
 end

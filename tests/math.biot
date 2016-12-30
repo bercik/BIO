@@ -81,6 +81,50 @@ def test_mod()
    bt_assert_error(MOD(tup1, true))
 end
 
+def _inc_global()
+   INC_GLOB(glob, 2)
+end
+
+def test_inc_global()
+   AS_GLOB(glob, 0)
+   _inc_global()
+   _inc_global()
+   bt_assert_eq(GET_GLOB(glob), 4)
+end
+
+def _dec_global()
+   DEC_GLOB(glob, 2)
+end
+
+def test_dec_global()
+   AS_GLOB(glob, 0)
+   _dec_global()
+   _dec_global()
+   bt_assert_eq(GET_GLOB(glob), -4)
+end
+
+def _inc_static()
+   IF({ !IS_STATIC(static) }, AS_STAT(static, 0))
+   INC_STATIC(static, 2)
+end
+
+def test_inc_static()
+   _inc_static()
+   _inc_static()
+   bt_assert_eq(GET_STAT(static, _inc_static), 4)
+end
+
+def _dec_static()
+   IF({ !IS_STATIC(static) }, AS_STAT(static, 0))
+   DEC_STATIC(static, 2)
+end
+
+def test_dec_static()
+   _dec_static()
+   _dec_static()
+   bt_assert_eq(GET_STAT(static, _dec_static), -4)
+end
+
 def test_inc()
    ASSIGN_LOCAL(i, 0)
    ASSIGN_LOCAL(j, INC(i), k, INC(i, 2))

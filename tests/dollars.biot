@@ -1,0 +1,22 @@
+#INCLUDE("<stdlib/test.biom>")
+
+def test()
+   foo()
+   AS_STAT(vec.x, -10)
+   AS_STAT(x, -20)
+
+   bt_assert_eq($vec.x, -10)
+   bt_assert_eq($x, -20)
+   bt_assert_eq($$vec.x, 10)
+   bt_assert_eq($$x, 20)
+
+   bt_assert_eq(ADD($x, $$x), 0)
+   bt_assert_eq(ADD($vec.x, $$vec.x), 0)
+   
+   bt_assert_eq({ $vec.x + $x * $$vec.x - $$x }, -230)
+end
+
+def foo()
+   AS_GLOB(vec.x, 10)
+   AS_GLOB(x, 20)
+end

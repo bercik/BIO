@@ -6,11 +6,14 @@
 package pl.rcebula.intermediate_code;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import pl.rcebula.Constants;
 import pl.rcebula.error_report.ErrorInfo;
 import pl.rcebula.intermediate_code.line.Line;
+import pl.rcebula.internals.data_types.Data;
 
 /**
  *
@@ -23,12 +26,20 @@ public class UserFunction
     private final ErrorInfo errorInfo;
     private final List<Line> lines = new ArrayList<>();
     
+    // wartości lokalne funkcji
+    private final Map<String, Data> staticVariables = new HashMap<>();
+    
     private final TreeSet<String> observers = new TreeSet<>();
 
     public UserFunction(String name, ErrorInfo errorInfo)
     {
         this.name = name;
         this.errorInfo = errorInfo;
+    }
+
+    public Map<String, Data> getStaticVariables()
+    {
+        return staticVariables;
     }
     
     public void addParams(List<String> params)

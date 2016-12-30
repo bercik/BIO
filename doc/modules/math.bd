@@ -99,6 +99,42 @@
 !error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
 !error (NO_LOCAL_VARIABLE) if there is no local variable with <i>id</i> identifier
 
+!name INC_GLOBAL
+!alias INC_GLOB
+!desc Increments global number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.
+!param id (id) global number identifier
+!optional val (int, float) number by which will be incremented
+!return (int, float) return incremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
+!error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier
+
+!name DEC_GLOBAL
+!alias DEC_GLOB
+!desc Decrements global number with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.
+!param id (id) global number identifier
+!optional val (int, float) number by which will be decremented
+!return (int, float) return decremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
+!error (NO_GLOBAL_VARIABLE) if there is no global variable with <i>id</i> identifier
+
+!name INC_STATIC
+!alias INC_STAT
+!desc Increments static number for current function with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't increment int value by float.
+!param id (id) static number identifier
+!optional val (int, float) number by which will be incremented
+!return (int, float) return incremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
+!error (NO_STATIC_VARIABLE) if there is no static variable with <i>id</i> identifier
+
+!name DEC_STATIC
+!alias DEC_STAT
+!desc Decrements static number for current function with given <i>id</i> by <i>val</i> if given or by one if not. <b>Note:</b> you can't decrement int value by float.
+!param id (id) static number identifier
+!optional val (int, float) number by which will be decremented
+!return (int, float) return decremented value. If variable was of type int then it will return int, otherwise float
+!error (BAD_PARAMETER_TYPE) if variable under <i>id</i> identifier is not int or float, if <i>id</i> is float and <i>val</i> isn't number or if <i>id</i> is int and <i>val</i> isn't int
+!error (NO_STATIC_VARIABLE) if there is no static variable with <i>id</i> identifier
+
 !name NEGATE
 !desc Negates given float or int
 !param val (int, float) number to be negated

@@ -204,6 +204,74 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <function>
         <name>
+            INC_STATIC
+        </name>
+        <alias>
+            INC_STAT
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEC_STATIC
+        </name>
+        <alias>
+            DEC_STAT
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            INC_GLOBAL
+        </name>
+        <alias>
+            INC_GLOB
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
+            DEC_GLOBAL
+        </name>
+        <alias>
+            DEC_GLOB
+        </alias>
+        <params>
+            <param>
+                id
+            </param>
+            <param optional="true">
+                all
+            </param>
+        </params>
+    </function>
+    
+    <function>
+        <name>
             NEGATE
         </name>
         <params>

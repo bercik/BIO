@@ -514,6 +514,8 @@ TOKEN : { < POWER: "^" > }
 TOKEN : { < EXCL_MARK : "!" > }
 TOKEN : { < COMMA : "," > }
 
+TOKEN : { < #DOLLAR : "$" > }
+
 TOKEN : { < OPEN_INDX : "[" > }
 TOKEN : { < CLOSE_INDX : "]" > }
 
@@ -532,8 +534,9 @@ TOKEN : { < #DOT : "." > }
 TOKEN : { < #DIGIT_NON_ZERO : ["1"-"9"] > }
 TOKEN : { < #DIGIT : ["0"-"9"] > }
 
-TOKEN : { < ID_STRUCT : <ID> (<DOT> <ID>)+ > }
-TOKEN : { < ID : (<UTF_LETTER> | <UNDERLINE>) (<UTF_LETTER> | <UNDERLINE> | <DIGIT>)* > }
+TOKEN : { < ID_STRUCT : <ID> (<DOT> <SIMPLE_ID>)+ > }
+TOKEN : { < ID : (<DOLLAR>)? (<DOLLAR>)? <SIMPLE_ID> > }
+TOKEN : { < #SIMPLE_ID : (<UTF_LETTER> | <UNDERLINE>) (<UTF_LETTER> | <UNDERLINE> | <DIGIT>)* > }
 
 TOKEN : { < #UNDERLINE : ["_"] > }
 TOKEN : { < #UTF_LETTER : [

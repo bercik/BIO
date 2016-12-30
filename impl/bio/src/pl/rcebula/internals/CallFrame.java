@@ -116,7 +116,7 @@ public class CallFrame
     {
         this.callForeach = callForeach;
     }
-    
+
     public Map<String, Data> getLocalVariables()
     {
         return localVariables;

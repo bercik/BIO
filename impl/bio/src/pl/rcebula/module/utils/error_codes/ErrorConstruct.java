@@ -22,7 +22,7 @@ public class ErrorConstruct
             Interpreter interpreter, Data actual, int paramNum, List<DataType> expected)
     {
         DataType actualDataType = actual.getDataType();
-        
+
         String message = "expected " + paramNum + " parameter to be ";
         for (DataType dt : expected)
         {

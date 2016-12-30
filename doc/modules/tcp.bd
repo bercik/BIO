@@ -35,6 +35,7 @@
 !error (TCP_CONNECTION_ERROR) If tcp connection failed
 
 !name TCP_RECV_STRING
+!alias TCP_RECV_STR
 !desc Receives string value from connection with given <i>conn_id</i> id.
 !param conn_id (int) 
 !return (string) received string value
