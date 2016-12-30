@@ -7,6 +7,15 @@
 !repeat val (all) variable value
 !return (none) 
 
+!name FIRST_ASSIGN_LOCAL
+!alias FIRST_AS_LOC
+!desc Creates or updates local variables with identifiers <i>id</i> and values <i>val</i> if this variable don't exist (meaning weren't assign earlier). Internally this function uses IS_LOCAL function to check if variable exists and ASSIGN_LOCAL function to assign value to variable. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: FIRST_ASSIGN_LOCAL(i, 0, j, i) you will get an error about non existing local variable i. You must split above instruction in two.
+!param id (id) variable identifier
+!param val (all) variable value
+!repeat id (id) variable identifier
+!repeat val (all) variable value
+!return (none) 
+
 !name ASSIGN_GLOBAL
 !alias AS_GLOB
 !desc Creates or updates global variables with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_GLOBAL(i, 0, j, GET_GLOBAL(i)) you will get an error about non existing global variable i. You must split above instruction in two.
@@ -16,9 +25,27 @@
 !repeat val (all) variable value
 !return (none) 
 
+!name FIRST_ASSIGN_GLOBAL
+!alias FIRST_AS_GLOB
+!desc Creates or updates global variables with identifiers <i>id</i> and values <i>val</i> if this variable don't exist (meaning weren't assign earlier). Internally this function uses IS_GLOBAL function to check if variable exists and ASSIGN_GLOBAL function to assign value to variable. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: FIRST_ASSIGN_GLOBAL(i, 0, j, i) you will get an error about non existing global variable i. You must split above instruction in two.
+!param id (id) variable identifier
+!param val (all) variable value
+!repeat id (id) variable identifier
+!repeat val (all) variable value
+!return (none) 
+
 !name ASSIGN_STATIC
 !alias AS_STAT
-!desc Creates or updates static variables for current function with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_STATIC(i, 0, j, GET_STATIC(i)) you will get an error about non existing global variable i. You must split above instruction in two.
+!desc Creates or updates static variables for current function with identifiers <i>id</i> and values <i>val</i>. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: ASSIGN_STATIC(i, 0, j, GET_STATIC(i)) you will get an error about non existing static variable i. You must split above instruction in two.
+!param id (id) variable identifier
+!param val (all) variable value
+!repeat id (id) variable identifier
+!repeat val (all) variable value
+!return (none) 
+
+!name FIRST_ASSIGN_STATIC
+!alias FIRST_AS_STAT
+!desc Creates or updates static variables with identifiers <i>id</i> and values <i>val</i> if this variable don't exist (meaning weren't assign earlier). Internally this function uses IS_STATIC function to check if variable exists and ASSIGN_STATIC function to assign value to variable. <b>Caution</b> be carefull when you mix variable assigning and getting their value. For example if you do: FIRST_ASSIGN_STATIC(i, 0, j, i) you will get an error about non existing static variable i. You must split above instruction in two.
 !param id (id) variable identifier
 !param val (all) variable value
 !repeat id (id) variable identifier
