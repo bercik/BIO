@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 robert
+ * Copyright (C) 2017 robert
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,24 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package pl.rcebula.code_generation.optimization;
+package pl.rcebula.preprocessor;
 
-import pl.rcebula.error_report.ErrorInfo;
-import pl.rcebula.error_report.ErrorInfoError;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author robert
  */
-public class CodeOptimizationError extends ErrorInfoError
+public class FilesContent
 {
-    public CodeOptimizationError(String message)
+    private Map<Integer, List<String>> filesContentMap = new HashMap<>();
+    
+    public void addFileContent(List<String> lines, int fileNum)
     {
-        super(null, message, message);
+        filesContentMap.put(fileNum, new ArrayList<>(lines));
     }
     
-    public CodeOptimizationError(String message, ErrorInfo ei)
+    // line numerowane od zera
+    public String getFileContentLine(int fileNum, int line)
     {
-        super(ei, message, ei.toString() + ": " + message);
+        return filesContentMap.get(fileNum).get(line);
     }
 }

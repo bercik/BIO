@@ -35,7 +35,9 @@ import pl.rcebula.preprocessor.PreprocessorError;
 import pl.rcebula.utils.Opts;
 import pl.rcebula.utils.OptsError;
 import pl.rcebula.code_generation.optimization.OptimizationStatistics;
+import pl.rcebula.preprocessor.FilesContent;
 import pl.rcebula.preprocessor.ResolveDefines;
+import pl.rcebula.utils.ShowErrorLine;
 import pl.rcebula.utils.TimeProfiler;
 
 /**
@@ -50,6 +52,8 @@ public class App
      */
     public static void main(String[] args)
     {
+        FilesContent filesContent = null;
+        
         try
         {
             // init logger
@@ -79,6 +83,7 @@ public class App
             timeProfiler.start("Preprocessor");
             Preprocessor preprocessor = new Preprocessor(opts.getInputFilePath(), opts.isDebugInfo());
             timeProfiler.stop();
+            filesContent = preprocessor.getFilesContent();
             if (opts.isVerbose())
             {
                 // print
@@ -270,18 +275,22 @@ public class App
         catch (LexerError ex)
         {
             System.err.println("Lexer error: " + ex.getMessage());
+            ShowErrorLine.show(ex, filesContent);
         }
         catch (ParserError ex)
         {
             System.err.println("Parser error: " + ex.getMessage());
+            ShowErrorLine.show(ex, filesContent);
         }
         catch (SemanticError ex)
         {
             System.err.println("Semantic error: " + ex.getMessage());
+            ShowErrorLine.show(ex, filesContent);
         }
         catch (CodeOptimizationError ex)
         {
             System.err.println("Code optimization error: " + ex.getMessage());
+            ShowErrorLine.show(ex, filesContent);
         }
         catch (IOException ex)
         {

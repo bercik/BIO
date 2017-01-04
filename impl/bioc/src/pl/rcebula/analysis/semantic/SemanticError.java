@@ -17,27 +17,28 @@
 package pl.rcebula.analysis.semantic;
 
 import pl.rcebula.error_report.ErrorInfo;
+import pl.rcebula.error_report.ErrorInfoError;
 
 /**
  *
  * @author robert
  */
-public class SemanticError extends Exception
+public class SemanticError extends ErrorInfoError
 {
     public SemanticError(String message)
     {
-        super(message);
+        super(null, message, message);
     }
     
     public SemanticError(ErrorInfo ei, String message)
     {
-        super(ei.toString() + ": " + message);
+        super(ei, message, ei.toString() + ": " + message);
     }
     
     public SemanticError(ErrorInfo ei1, String message1, 
             ErrorInfo ei2, String message2)
     {
-        super(ei1.toString() + ": " + message1 + 
+        super(ei1, message1, ei1.toString() + ": " + message1 + 
                 ei2.toString() + ": " + message2);
     }
 }

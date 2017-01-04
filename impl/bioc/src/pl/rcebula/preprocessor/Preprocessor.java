@@ -61,6 +61,7 @@ public class Preprocessor
 
     private final boolean debugInfo;
     private final MyFiles files = new MyFiles();
+    private final FilesContent filesContent = new FilesContent();
     private final Modules modules = new Modules();
 
     private final String libPath;
@@ -81,8 +82,11 @@ public class Preprocessor
         // wczytujemy plik główny
         Path p = Paths.get(path);
         List<String> lines = readExternalFile(p, "UTF-8", -1);
-        // tworzymy obiekt pliku i wstawiamy linijkę <fsnum
+        // tworzymy obiekt pliku
         File file = files.addFile(getFileName(p));
+        // tworzymy file content
+        filesContent.addFileContent(lines, file.getNum());
+        // wstawiamy linijkę <fsnum
         lines.add(0, generateFileStartLine(file.getNum()));
 
         // analizujemy linijki
@@ -100,6 +104,11 @@ public class Preprocessor
         input = linesToString(lines);
     }
 
+    public FilesContent getFilesContent()
+    {
+        return filesContent;
+    }
+    
     public Map<String, Define> getDefinesMap()
     {
         return definesMap;
@@ -266,8 +275,11 @@ public class Preprocessor
                     // jeżeli plik nie był do tej pory wczytany
                     if (tmpLines.size() > 0)
                     {
-                        // tworzymy obiekt pliku i wstawiamy linijkę <fsnum
+                        // tworzymy obiekt pliku
                         File ff = files.addFile(getFileName(finalPath));
+                        // tworzymy file content
+                        filesContent.addFileContent(tmpLines, ff.getNum());
+                        // wstawiamy linijkę <fsnum
                         tmpLines.add(0, generateFileStartLine(ff.getNum()));
                     }
                     // analizujemy rekurencyjnie linie
