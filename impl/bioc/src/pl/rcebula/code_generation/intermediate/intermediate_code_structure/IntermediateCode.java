@@ -136,15 +136,6 @@ public class IntermediateCode
             {
                 lines.get(i).moveLineBeforeOptimization(1);
             }
-
-            // TODELETE
-//            System.out.println("INSERT");
-//            System.out.println("index: " + index);
-//            System.out.println("origLine: " + origLine);
-//            System.out.println("newLine.getLineBeforeOptimization(): " + newLine.getLineBeforeOptimization());
-//            System.out.println("newLine: " + newLine.toString());
-//            System.out.println(toStringOptimizationDiffrence());
-//            System.out.println("------------------");
         }
     }
 
@@ -157,13 +148,6 @@ public class IntermediateCode
 
             // oznacz jako usuniętą
             linesBeforeOptimization.get(origLine).markAsRemoved();
-
-            // TODELETE
-//            System.out.println("REMOVE");
-//            System.out.println("origLine: " + origLine);
-//            System.out.println("currLine: " + index);
-//            System.out.println(toStringOptimizationDiffrence());
-//            System.out.println("-----------------");
         }
     }
 

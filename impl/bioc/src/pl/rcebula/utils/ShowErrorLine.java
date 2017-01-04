@@ -30,7 +30,9 @@ public class ShowErrorLine
     
     public static void show(ErrorInfoError err, FilesContent filesContent)
     {
-        if (err.getErrorInfo() != null)
+        // sprawdzamy czy istnieje error info i czy numer pliku to nie -1 (czyli nie jest to kod wygenerowany 
+        // przez kompilator)
+        if (err.getErrorInfo() != null && err.getErrorInfo().getFile().getNum() != -1)
         {
             ErrorInfo ei = err.getErrorInfo();
             int lineNum = ei.getLineNum();
