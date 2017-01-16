@@ -1,0 +1,25 @@
+
+#IMPORT("tcp")
+
+def msg_recv(msg)
+   DN()
+end
+
+def on_msg_recv_1(msg)
+   PRINTLN({ "on_msg_recv_1: " + msg })
+end
+
+def on_msg_recv_2(msg)
+   PRINTLN({ "on_msg_recv_2: " + msg })
+end
+
+def onSTART()
+   @ przypisz funkcje obserwatorów do funckji msg_recv
+   ATTACH_TO_EVENT(msg_recv, on_msg_recv_1, msg_recv, on_msg_recv_2)
+   @ nasłuchuj połączenia
+   AS_LOC(conn, TCP_LISTEN(5500))
+   @ odbierz stringa
+   msg_recv(TCP_RECV_STR(conn))
+   @ zamknij połączenie
+   TCP_CLOSE(conn)
+end

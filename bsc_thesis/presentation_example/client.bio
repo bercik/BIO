@@ -1,0 +1,12 @@
+
+
+#IMPORT("tcp")
+
+def onSTART()
+   @ połącz się z serwerem
+   AS_LOC(conn, TCP_CONNECT("127.0.0.1", 5500))
+   @ wyślij mu stringa wczytanego z konsoli
+   TCP_SEND(conn, INPUT("Message to server: "))
+   @ zamknij połączenie
+   TCP_CLOSE(conn)
+end

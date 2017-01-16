@@ -11,7 +11,7 @@
 def add_msg(list_name, msg)
    AS_LOC(msgs, GET_GLOB(msgs))
    AS_LOC(msg_list, { msgs[list_name] })
-   APPEND_TO_LIST(msg_list, msg)
+   append_to_list(msg_list, msg)
 end
 
 def all(msg)
@@ -44,7 +44,7 @@ end
 
 def onEach_print_msgs(el, obj)
    PRINT({ el.key + ": "})
-   PRINT_LIST(el.val)
+   print_list(el.val)
 end
 
 #INCLUDE("<stdlib/list.biom>")
@@ -57,13 +57,13 @@ def onSTART()
       msgs,
       CR_DICT
       (
-         "all", CREATE_LIST(),
-         "sport", CREATE_LIST(),
-         "art", CREATE_LIST(),
-         "football", CREATE_LIST(),
-         "golf", CREATE_LIST(),
-         "film", CREATE_LIST(),
-         "music", CREATE_LIST()
+         "all", create_list(),
+         "sport", create_list(),
+         "art", create_list(),
+         "football", create_list(),
+         "golf", create_list(),
+         "film", create_list(),
+         "music", create_list()
       )
    )
 
