@@ -154,6 +154,7 @@ public class Opts
         help += "  -s statistics, print optimization statistics\n";
         help += "  -t times, print times spent in each module\n";
         help += "  -v verbose, print all informations about compiling process\n";
+        help += "  --version, print current compiler version\n";
 
         return help;
     }

@@ -141,6 +141,7 @@ public class Opts
         message += "  -p profiler, turns on profiler which measures time spent in each function\n";
         message += "  -r run, runs code instead of any option\n";
         message += "  -t times, print times spent on each module\n";
+        message += "  --version, print current interpreter version\n";
         
         return message;
     }
