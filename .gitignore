@@ -11,6 +11,7 @@ private/
 
 *.swp
 *.cbio
+*.out
 *.pyc
 __pycache__/
 *.css.map
